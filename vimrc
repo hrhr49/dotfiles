@@ -7,7 +7,14 @@ set shellslash
 filetype plugin indent on
 syntax on
 
+" gdb使用の設定
+packadd termdebug
+
 set mouse=a
+
+" gdb使用の設定
+let g:termdebug_wide = 163
+
 " mapping
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
@@ -18,6 +25,16 @@ nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
 nnoremap n nzz
 nnoremap N Nzz
+
+nnoremap <C-S-e> :Ex<CR>
+map <MiddleMouse> <Nop>
+imap <MiddleMouse> <Nop>
+map <2-MiddleMouse> <Nop>
+imap <2-MiddleMouse> <Nop>
+map <3-MiddleMouse> <Nop>
+imap <3-MiddleMouse> <Nop>
+map <4-MiddleMouse> <Nop>
+imap <4-MiddleMouse> <Nop>
 
 " nnoremap vv <S-v>
 
@@ -58,8 +75,9 @@ nnoremap sn gt
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
 
-"nn <C-k> k:call search ("^". matchstr (getline (line (".")+ 1), '\(\s*\)') ."\\S", 'b')<CR>^
-"nn <C-j> :call search ("^". matchstr (getline (line (".")), '\(\s*\)') ."\\S")<CR>^
+" 選択中のテキストを*で検索
+vnoremap * "zy:let @/ = @z<CR>n
+
 let loaded_matchparen = 1
 let g:netrw_keepdir = 0
 "let g:markdown_folding=1
@@ -80,7 +98,8 @@ set ignorecase
 set smartcase
 
 set nobackup
-set nohlsearch
+"set nohlsearch
+nnoremap <Esc> :noh<CR>
 set noswapfile
 set noundofile
 set number
@@ -95,7 +114,9 @@ set incsearch
 "set cursorline
 
 set tags+=tags;
-set laststatus=2
+" set laststatus=2
+
+nnoremap <F9> :w\|!python -m doctest %<CR>
 
 augroup RunProgram
 autocmd FileType python nnoremap <F5> :w\|!python %<CR>
@@ -111,25 +132,20 @@ autocmd FileType markdown nnoremap <F5> :w\|!google-chrome %<CR>
 autocmd FileType markdown nnoremap <F6> :w\|!pandoc -t html5 -s --mathjax 
             \ -f markdown+hard_line_breaks --highlight-style=pygments
             \ -c ~/memo/pandoc/github.css --filter ~/memo/pandoc/my_pandoc_filter.py -o %:r.html %<CR>
-autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
+" autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
 autocmd FileType typescript nnoremap <F5> :w \| !tsc % \| node %:r.js<CR>
 autocmd BufRead,BufNewFile *.ts set filetype=typescript
 autocmd BufRead,BufNewFile *.pu nnoremap <F5> :w \| !plantuml %<CR>
 autocmd BufRead,BufNewFile *.dot nnoremap <F5> :w \| !dot % -O -Tpng<CR>
 autocmd BufRead,BufNewFile *.adoc nnoremap <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
+autocmd BufRead,BufNewFile *.sh nnoremap <F5> :w \| !%:p<CR>
+autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
 augroup END
 nnoremap <F6> :make<CR>
 
-try
-colorscheme molokai
-"colorscheme gruvbox
-set guioptions-=m
-set guioptions-=T
-set guifont=Monospace\ 14
-catch
-endtry
 
 try
 set path+=~/memo/**
@@ -159,7 +175,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'MattesGroeger/vim-bookmarks'
+" Plug 'MattesGroeger/vim-bookmarks'
 Plug 'michaeljsmith/vim-indent-object'
 "Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
@@ -184,10 +200,14 @@ else
 endif
 
 " for markdown
-Plug 'previm/previm'
+" Plug 'previm/previm'
 Plug 'vim-scripts/DrawIt'
 " Initialize plugin system
 Plug 'mattn/emmet-vim'
+" Plug 'jtratner/vim-flavored-markdown'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
@@ -206,7 +226,7 @@ let g:deoplete#enable_at_startup = 1
 "let g:jedi#show_call_signatures = 0 "関数の引数を表示しない(numpyやpandasだとうざかったので)
 autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
 
-let g:ale_echo_cursor = 0
+" let g:ale_echo_cursor = 0
 
 
 "map [- <Plug>(IndentWisePreviousLesserIndent)
@@ -277,7 +297,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     \ 'python': ['pyls'],
-    \ }
+    \}
 "'c': ['clangd-6.0'],
 " let g:LanguageClient_windowLogMessageLevel = 'Info'
 " let g:LanguageClient_diagnosticsEnable = 0
@@ -294,87 +314,32 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 nnoremap <Space>q <C-w>q
 
-" Easy-Motion
-" map s <Plug>(easymotion-prefix)
+
 try
+" colorscheme molokai
 "colorscheme gruvbox
 catch
 endtry
-hi clear SpellCap
-hi clear SpellLocal
-hi clear SpellRare
-hi clear SpellBad
+try
 
-" for previm
-let g:previm_open_cmd = "google-chrome"
+set guioptions-=m
+set guioptions-=T
+set guifont=Monospace\ 14
+catch
+endtry
 
-"function! s:get_syn_id(transparent)
-"  let synid = synID(line("."), col("."), 1)
-"  if a:transparent
-"    return synIDtrans(synid)
-"  else
-"    return synid
-"  endif
-"endfunction
-"function! s:get_syn_attr(synid)
-"  let name = synIDattr(a:synid, "name")
-"  let ctermfg = synIDattr(a:synid, "fg", "cterm")
-"  let ctermbg = synIDattr(a:synid, "bg", "cterm")
-"  let guifg = synIDattr(a:synid, "fg", "gui")
-"  let guibg = synIDattr(a:synid, "bg", "gui")
-"  return {
-"        \ "name": name,
-"        \ "ctermfg": ctermfg,
-"        \ "ctermbg": ctermbg,
-"        \ "guifg": guifg,
-"        \ "guibg": guibg}
-"endfunction
-"function! s:get_syn_info()
-"  let baseSyn = s:get_syn_attr(s:get_syn_id(0))
-"  echo "name: " . baseSyn.name .
-"        \ " ctermfg: " . baseSyn.ctermfg .
-"        \ " ctermbg: " . baseSyn.ctermbg .
-"        \ " guifg: " . baseSyn.guifg .
-"        \ " guibg: " . baseSyn.guibg
-"  let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
-"  echo "link to"
-"  echo "name: " . linkedSyn.name .
-"        \ " ctermfg: " . linkedSyn.ctermfg .
-"        \ " ctermbg: " . linkedSyn.ctermbg .
-"        \ " guifg: " . linkedSyn.guifg .
-"        \ " guibg: " . linkedSyn.guibg
-"endfunction
-"command! SyntaxInfo call s:get_syn_info()
+" hilight current line number
+set cursorline
+hi clear CursorLine
 
-"inoremap <expr> ;  <SID>sticky_func()
-"cnoremap <expr> ;  <SID>sticky_func()
-"snoremap <expr> ;  <SID>sticky_func()
-"
-"function! s:sticky_func()
-"    let l:sticky_table = {
-"                \',' : '<', '.' : '>', '/' : '?',
-"                \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
-"                \'6' : '&', '7' : "'", '8' : '(', '9' : ')', '0' : ')', '-' : '=', '^' : '~',
-"                \';' : '+', '[' : '{', ']' : '}', '@' : '`', ":" : "*", '\' : '|'
-"                \}
-"    " let l:sticky_table = {
-"    "             \',' : '<', '.' : '>', '/' : '?',
-"    "             \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
-"    "             \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
-"    "             \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
-"    "             \}
-"    let l:special_table = {
-"                \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
-"                \}
-"
-"    let l:key = getchar()
-"    if nr2char(l:key) =~ '\l'
-"        return toupper(nr2char(l:key))
-"    elseif has_key(l:sticky_table, nr2char(l:key))
-"        return l:sticky_table[nr2char(l:key)]
-"    elseif has_key(l:special_table, nr2char(l:key))
-"        return l:special_table[nr2char(l:key)]
-"    else
-"        return ''
-"    endif
-"endfunction
+" rangerの設定
+function RangerExplorer()
+    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+    if filereadable('/tmp/vim_ranger_current_file')
+        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
+        call system('rm /tmp/vim_ranger_current_file')
+    endif
+    redraw!
+endfun
+" map <Leader>x :call RangerExplorer()<CR>
+map <Space>x :call RangerExplorer()<CR>
