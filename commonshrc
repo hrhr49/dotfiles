@@ -1,0 +1,12 @@
+# bashrc, zshrc共通の設定。source このファイルのパスを実行して読み込む
+
+# zコマンドでMRUファイルをfzfできる(fasdが必要)
+# 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
+unalias z
+z() {
+  if [[ -z "$*" ]]; then
+    cd "$(fasd_cd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')"
+  else
+    cd "$(fasd_cd -d | fzf --query="$*" -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')"
+  fi
+}

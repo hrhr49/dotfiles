@@ -21,10 +21,12 @@ inoremap <C-l> <C-x><C-l>
 inoremap jj <ESC>
 inoremap jk <C-n>
 inoremap <C-k> <Esc>gg/aaa<CR>cgn
+inoremap <C-;> <Esc>cgn
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
 nnoremap n nzz
 nnoremap N Nzz
+nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
 
 nnoremap <C-S-e> :Ex<CR>
 map <MiddleMouse> <Nop>
@@ -297,8 +299,8 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     \ 'python': ['pyls'],
+    \ 'c': ['clangd-6.0'],
     \}
-"'c': ['clangd-6.0'],
 " let g:LanguageClient_windowLogMessageLevel = 'Info'
 " let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_useVirtualText = 0
@@ -316,7 +318,7 @@ nnoremap <Space>q <C-w>q
 
 
 try
-" colorscheme molokai
+colorscheme molokai
 "colorscheme gruvbox
 catch
 endtry

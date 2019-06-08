@@ -407,3 +407,8 @@ XTerm.Scrollbar.foreground:#333333
 
 !!##########################################################
 !!END OF FILE
+!
+! add my setting
+! URxvt.perl-ext-common: ...,xim-onthespot,...
+! URxvt.inputMethod: fcitx
+! URxvt.preeditType: OnTheSpot
