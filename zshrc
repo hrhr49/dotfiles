@@ -8,3 +8,12 @@
 
 # ディレクトリ名でcdになるのを無効。(コマンドとのバッティングがうざかったため)
 unsetopt auto_cd
+ 
+# 移動したディレクトリを記録しておく。"cd -[Tab]"で移動履歴を一覧
+setopt auto_pushd
+
+# 補完候補表示時などにピッピとビープ音をならないように設定
+setopt nolistbeep
+
+# ビープ音を出さない
+setopt no_beep

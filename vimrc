@@ -1,84 +1,13 @@
+" vim:set foldmethod=marker foldlevel=0:
 set encoding=utf-8
 scriptencoding utf-8
 set shellslash
 
+" 一般{{{
 "以下のを入れると、プラグイン関連での補完関連でエラーが出ちゃう
 "autocmd CompleteDone * pclose
 filetype plugin indent on
 syntax on
-
-" gdb使用の設定
-packadd termdebug
-
-set mouse=a
-
-" gdb使用の設定
-let g:termdebug_wide = 163
-
-" mapping
-inoremap <C-r> <C-r><C-p>
-inoremap <C-l> <C-x><C-l>
-inoremap jj <ESC>
-inoremap jk <C-n>
-inoremap <C-k> <Esc>gg/aaa<CR>cgn
-inoremap <C-;> <Esc>cgn
-nnoremap <M-d> <C-d>
-nnoremap <M-u> <C-u>
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
-
-nnoremap <C-S-e> :Ex<CR>
-map <MiddleMouse> <Nop>
-imap <MiddleMouse> <Nop>
-map <2-MiddleMouse> <Nop>
-imap <2-MiddleMouse> <Nop>
-map <3-MiddleMouse> <Nop>
-imap <3-MiddleMouse> <Nop>
-map <4-MiddleMouse> <Nop>
-imap <4-MiddleMouse> <Nop>
-
-" nnoremap vv <S-v>
-
-" " mapping for left little finger
-" let i=char2nr('!')
-" while 1
-"     let c=nr2char(i)
-"     if c=='|'
-"         let c='\\|'
-"     endif
-"     execute 'noremap <Space>' . c . ' <C-' . c . '>'
-"     execute 'nmap <ESC>' . c . ' <M-' . c . '>'
-"     execute 'noremap <M-' . c . '> <C-' . c . '>'
-"     execute 'cnoremap <M-' . c . '> <C-' . c . '>'
-"     execute 'inoremap <M-' . c . '> <C-' . c . '>'
-"     if c=='~'
-"         break
-"     endif
-"     let i=i+1
-" endwhile
-
-nnoremap <Space>j <C-f>
-nnoremap <Space>k <C-b>
-nnoremap sh <C-w>h
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
-nnoremap ss <C-w>s
-nnoremap sv <C-w>v
-nnoremap sq <C-w>q
-nnoremap su <C-u>
-nnoremap sd <C-d>
-nnoremap s^ <C-^>
-nnoremap st :tabnew<CR>
-nnoremap sp gT
-nnoremap sn gt
-
-vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
-vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
-
-" 選択中のテキストを*で検索
-vnoremap * "zy:let @/ = @z<CR>n
 
 let loaded_matchparen = 1
 let g:netrw_keepdir = 0
@@ -114,12 +43,69 @@ set wildmenu
 set wrapscan
 set incsearch
 "set cursorline
-
+set mouse=a
+try
+set path+=~/memo/**
+catch
+endtry
 set tags+=tags;
 " set laststatus=2
 
-nnoremap <F9> :w\|!python -m doctest %<CR>
+" }}}
+" キーマッピング(一般){{{
+inoremap <C-r> <C-r><C-p>
+inoremap <C-l> <C-x><C-l>
+inoremap jj <ESC>
+inoremap jk <C-n>
+inoremap <C-k> <Esc>gg/aaa<CR>cgn
+inoremap <C-;> <Esc>cgn
+nnoremap <M-d> <C-d>
+nnoremap <M-u> <C-u>
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
+nnoremap <Space>j <C-f>
+nnoremap <Space>k <C-b>
+nnoremap sH <C-w>H
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sT <C-w>T
+nnoremap s^ <C-^>
+nnoremap sd <C-d>
+nnoremap sh <C-w>h
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sn gt
+nnoremap so <C-w>o
+nnoremap sp gT
+nnoremap sq <C-w>q
+nnoremap ss <C-w>s
+nnoremap st :tabnew<CR>
+nnoremap su <C-u>
+nnoremap sv <C-w>v
 
+nnoremap <F6> :make<CR>
+nnoremap <C-S-e> :Ex<CR>
+map <MiddleMouse> <Nop>
+imap <MiddleMouse> <Nop>
+map <2-MiddleMouse> <Nop>
+imap <2-MiddleMouse> <Nop>
+map <3-MiddleMouse> <Nop>
+imap <3-MiddleMouse> <Nop>
+map <4-MiddleMouse> <Nop>
+imap <4-MiddleMouse> <Nop>
+
+" 選択中のテキストを*で検索
+vnoremap * "zy:let @/ = @z<CR>n
+
+" 外部コマンドとの連携
+vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
+vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
+"}}}
+" ファイル別設定{{{
+nnoremap <F9> :w\|!python -m doctest %<CR>
 augroup RunProgram
 autocmd FileType python nnoremap <F5> :w\|!python %<CR>
 autocmd FileType ruby nnoremap <F5> :w\|!ruby %<CR>
@@ -145,29 +131,8 @@ autocmd BufRead,BufNewFile *.sh nnoremap <F5> :w \| !%:p<CR>
 autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
-augroup END
-nnoremap <F6> :make<CR>
-
-
-try
-set path+=~/memo/**
-catch
-endtry
-
-" hi MatchParen ctermbg=1
-
-" for completion==============================
-"set completeopt=menuone
-"for k in split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_",'\zs')
-"  exec "imap " . k . " " . k . "<C-N><C-P>"
-"endfor
-
-"imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
-"imap <expr> . pumvisible() ? "\<C-Y>.\<C-X>\<C-O>\<C-P>" : ".\<C-X>\<C-O>\<C-P>"
-
-" ============================================
-" Plugins
-" ============================================
+augroup END"}}}
+" プラグイン一覧{{{
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -188,6 +153,16 @@ Plug 'tpope/vim-commentary'
 " Plug 'prabirshrestha/asyncomplete.vim'
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'flazz/vim-colorschemes'
+Plug 'ayu-theme/ayu-vim' " or other package manager
+"...
+set termguicolors     " enable true colors support
+" let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="dark"   " for dark version of theme
+" colorscheme ayu
+
+" Plug 'rakr/vim-one'
+" set background=dark
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -210,8 +185,8 @@ Plug 'mattn/emmet-vim'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-call plug#end()
-
+call plug#end()"}}}
+" プラグイン設定{{{
 let g:deoplete#enable_at_startup = 1
 
 ""let g:jedi#use_tabs_not_buffers = 1 "補完で次の候補に進むときにtabを使えるという設定にしたつもりですができませんでした。
@@ -313,12 +288,16 @@ nnoremap <F2> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 "nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
+" gdb使用の設定
+packadd termdebug
 
-nnoremap <Space>q <C-w>q
-
-
+" gdb使用の設定
+let g:termdebug_wide = 163
+"}}}
+" 表示{{{
 try
-colorscheme molokai
+" colorscheme molokai
+colorscheme ayu
 "colorscheme gruvbox
 catch
 endtry
@@ -333,7 +312,8 @@ endtry
 " hilight current line number
 set cursorline
 hi clear CursorLine
-
+"}}}
+" スクリプト{{{
 " rangerの設定
 function RangerExplorer()
     exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
@@ -345,3 +325,45 @@ function RangerExplorer()
 endfun
 " map <Leader>x :call RangerExplorer()<CR>
 map <Space>x :call RangerExplorer()<CR>
+
+
+function RandomColorScheme()
+  let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n") 
+  exe 'so ' . mycolors[localtime() % len(mycolors)]
+endfun
+"}}}
+" 過去の遺産{{{
+" call RandomColorScheme()
+
+" :command NewColor call RandomColorScheme()
+"
+" nnoremap vv <S-v>
+
+" " mapping for left little finger
+" let i=char2nr('!')
+" while 1
+"     let c=nr2char(i)
+"     if c=='|'
+"         let c='\\|'
+"     endif
+"     execute 'noremap <Space>' . c . ' <C-' . c . '>'
+"     execute 'nmap <ESC>' . c . ' <M-' . c . '>'
+"     execute 'noremap <M-' . c . '> <C-' . c . '>'
+"     execute 'cnoremap <M-' . c . '> <C-' . c . '>'
+"     execute 'inoremap <M-' . c . '> <C-' . c . '>'
+"     if c=='~'
+"         break
+"     endif
+"     let i=i+1
+" endwhile
+" hi MatchParen ctermbg=1
+
+" for completion==============================
+"set completeopt=menuone
+"for k in split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_",'\zs')
+"  exec "imap " . k . " " . k . "<C-N><C-P>"
+"endfor
+
+"imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
+"imap <expr> . pumvisible() ? "\<C-Y>.\<C-X>\<C-O>\<C-P>" : ".\<C-X>\<C-O>\<C-P>"
+"}}}

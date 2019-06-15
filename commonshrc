@@ -10,3 +10,7 @@ z() {
     cd "$(fasd_cd -d | fzf --query="$*" -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')"
   fi
 }
+
+alias apts="apt search"
+alias apti="sudo apt install"
+alias aptu="sudo apt update"
