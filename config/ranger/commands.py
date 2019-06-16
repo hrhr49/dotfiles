@@ -152,9 +152,29 @@ class fzf_select(Command):
 
 class fcd(Command):
     """
-    :fasd_cd
+    :fcd
 
     fasdの履歴からfzfで絞り込んで移動
+    参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
+    """
+    def execute(self):
+        import subprocess
+        import os.path
+        fzf = self.fm.execute_command("fasd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//'",
+                shell=True, universal_newlines=True, stdout=subprocess.PIPE)
+        stdout, stderr = fzf.communicate()
+        if fzf.returncode == 0:
+            fzf_file = os.path.abspath(stdout.rstrip('\n'))
+            if os.path.isdir(fzf_file):
+                self.fm.cd(fzf_file)
+            else:
+                self.fm.select_file(fzf_file)
+
+class z(Command):
+    """
+    :z
+
+    fcdとおなじ.fasdの履歴からfzfで絞り込んで移動
     参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
     """
     def execute(self):

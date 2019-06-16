@@ -11,6 +11,15 @@ z() {
   fi
 }
 
+# rangerの多重起動を回避
+# 参考: https://wiki.archlinux.org/index.php/Ranger#Preventing_nested_ranger_instances
+ranger() {
+    if [ -z "$RANGER_LEVEL" ]; then
+        /usr/bin/ranger "$@"
+    else
+        exit
+    fi
+}
 alias apts="apt search"
 alias apti="sudo apt install"
 alias aptu="sudo apt update"

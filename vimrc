@@ -100,13 +100,16 @@ imap <4-MiddleMouse> <Nop>
 " 選択中のテキストを*で検索
 vnoremap * "zy:let @/ = @z<CR>n
 
+" ペーストしたテキストをビジュアルモードで選択
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " 外部コマンドとの連携
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
 "}}}
 " ファイル別設定{{{
-nnoremap <F9> :w\|!python -m doctest %<CR>
 augroup RunProgram
+autocmd!
 autocmd FileType python nnoremap <F5> :w\|!python %<CR>
 autocmd FileType ruby nnoremap <F5> :w\|!ruby %<CR>
 autocmd FileType perl nnoremap <F5> :w\|!perl %<CR>
@@ -133,59 +136,77 @@ autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
 augroup END"}}}
 " プラグイン一覧{{{
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+try
+  " Specify a directory for plugins
+  " - For Neovim: ~/.local/share/nvim/plugged
+  " - Avoid using standard Vim directory names like 'plugin'
+  call plug#begin('~/.vim/plugged')
+  
+  " Make sure you use single quotes
+  
+  " Plug 'scrooloose/nerdtree'
+  if executable('fzf')
+    Plug '~/.fzf/'
+    Plug 'junegunn/fzf.vim'
+  else
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'ompugao/ctrlp-history'
+  endif
+  
+  " Plug 'MattesGroeger/vim-bookmarks'
+  Plug 'michaeljsmith/vim-indent-object'
+  "Plug 'w0rp/ale'
+  Plug 'majutsushi/tagbar'
+  Plug 'itchyny/lightline.vim'
+  Plug 'tpope/vim-commentary'
+  " Plug 'prabirshrestha/async.vim'
+  " Plug 'prabirshrestha/vim-lsp'
+  " Plug 'prabirshrestha/asyncomplete.vim'
+  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'flazz/vim-colorschemes'
+  Plug 'ayu-theme/ayu-vim' " or other package manager
+  "...
+  set termguicolors     " enable true colors support
+  " let ayucolor="light"  " for light version of theme
+  let ayucolor="mirage" " for mirage version of theme
+  " let ayucolor="dark"   " for dark version of theme
+  " colorscheme ayu
+  
+  " Plug 'rakr/vim-one'
+  " set background=dark
+  
+  Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+  
+  " for markdown
+  " Plug 'previm/previm'
+  Plug 'vim-scripts/DrawIt'
+  " Initialize plugin system
+  Plug 'mattn/emmet-vim'
+  " Plug 'jtratner/vim-flavored-markdown'
+  
+  Plug 'airblade/vim-gitgutter'
+  Plug 'tpope/vim-fugitive'
+  Plug 'sjl/gundo.vim'
+  Plug 'francoiscabrol/ranger.vim'
+  Plug 'rbgrouleff/bclose.vim'
+  Plug 'easymotion/vim-easymotion'
+  Plug 'junegunn/vim-easy-align'
+  call plug#end()
+catch
+  echo 'vim-plug is not found'
+endtry
 
-" Make sure you use single quotes
-
-" Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'MattesGroeger/vim-bookmarks'
-Plug 'michaeljsmith/vim-indent-object'
-"Plug 'w0rp/ale'
-Plug 'majutsushi/tagbar'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-commentary'
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'flazz/vim-colorschemes'
-Plug 'ayu-theme/ayu-vim' " or other package manager
-"...
-set termguicolors     " enable true colors support
-" let ayucolor="light"  " for light version of theme
-let ayucolor="mirage" " for mirage version of theme
-" let ayucolor="dark"   " for dark version of theme
-" colorscheme ayu
-
-" Plug 'rakr/vim-one'
-" set background=dark
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-" for markdown
-" Plug 'previm/previm'
-Plug 'vim-scripts/DrawIt'
-" Initialize plugin system
-Plug 'mattn/emmet-vim'
-" Plug 'jtratner/vim-flavored-markdown'
-
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-call plug#end()"}}}
+"}}}
 " プラグイン設定{{{
 let g:deoplete#enable_at_startup = 1
 
@@ -217,20 +238,37 @@ autocmd FileType python setlocal completeopt-=preview "ポップアップを表�
 "map [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 "map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 
-" CtrlP
-let g:ctrlp_map = '<C-p>'
-" let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_match_window = 'max:20'
-nnoremap <Space>t :<C-u>CtrlPTag<CR>
-nnoremap <Space>p :<C-u>CtrlP<CR>
-nnoremap <Space>m :<C-u>CtrlPMixed<CR>
-nnoremap <Space>r :<C-u>CtrlPMRU<CR>
-nnoremap <Space>b :<C-u>CtrlPBuffer<CR>
-nnoremap <Space>l :<C-u>CtrlPLine<CR>
-nnoremap <Space>c :<C-u>CtrlP ~/memo/<CR>
+if executable('fzf')
+    " fzf
+    nnoremap <Space>t :<C-u>Tags<CR>
+    nnoremap <Space>p :<C-u>Files<CR>
+    nnoremap <Space>r :<C-u>History<CR>
+    nnoremap <Space>b :<C-u>Buffers<CR>
+    nnoremap <Space>l :<C-u>BLines<CR>
+    nnoremap <Space>c :<C-u>Colors<CR>
+    nnoremap <Space>h :<C-u>History:<CR>
+    nnoremap <Space>s :<C-u>History/<CR>
+    nnoremap <Space>/ :<C-u>History/<CR>
+    nnoremap <Space>m :<C-u>Files ~/memo/<CR>
+else
+    " CtrlP
+    let g:ctrlp_map = '<C-p>'
+    " let g:ctrlp_cmd = 'CtrlPMixed'
+    let g:ctrlp_match_window = 'max:20'
+    nnoremap <Space>t :<C-u>CtrlPTag<CR>
+    nnoremap <Space>p :<C-u>CtrlP<CR>
+    nnoremap <Space>m :<C-u>CtrlPMixed<CR>
+    nnoremap <Space>r :<C-u>CtrlPMRU<CR>
+    nnoremap <Space>b :<C-u>CtrlPBuffer<CR>
+    nnoremap <Space>l :<C-u>CtrlPLine<CR>
+    nnoremap <Space>c :<C-u>CtrlP ~/memo/<CR>
+
+    " CtrlP History
+    nnoremap <Space>h :<C-u>CtrlPCmdHistory<CR>
+    nnoremap <Space>s :<C-u>CtrlPSearchHistory<CR>
+endif
 
 " Tagbar
-
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <Space>o :TagbarToggle<CR>
 
@@ -293,12 +331,40 @@ packadd termdebug
 
 " gdb使用の設定
 let g:termdebug_wide = 163
+
+" Gundoの設定
+nnoremap <F9> :GundoToggle<CR>
+
+" rangerの設定
+if executable("ranger")
+    nnoremap <Space>f :Ranger<CR>
+endif
+
+" EasyMotionの設定
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+" Easy Alignの設定
+vmap ga <Plug>(EasyAlign)
+
 "}}}
 " 表示{{{
 try
 " colorscheme molokai
 colorscheme ayu
-"colorscheme gruvbox
+" colorscheme gruvbox
 catch
 endtry
 try
@@ -311,9 +377,22 @@ endtry
 
 " hilight current line number
 set cursorline
-hi clear CursorLine
+" hi clear CursorLine
 "}}}
 " スクリプト{{{
+
+" 折りたたみ情報を保持する 参考: http://nametake-1009.hatenablog.com/entry/2016/10/02/212629
+let tmp_viewdir=$HOME . '/.vim/view'
+execute 'set viewdir=' . tmp_viewdir
+
+augroup SaveFoldings
+autocmd!
+autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | try | silent loadview | catch | endtry | endif
+augroup END
+" Don't save options.
+set viewoptions-=options
+
 " rangerの設定
 function RangerExplorer()
     exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
