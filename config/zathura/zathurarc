@@ -15,3 +15,8 @@ set selection-clipboard clipboard
 # enable incremental search
 set incremental-search true
 set show-scrollbars true
+
+# key mappings
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
