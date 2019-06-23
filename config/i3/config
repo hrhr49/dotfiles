@@ -152,7 +152,22 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
+# bar {
+#         status_command i3status
+# }
+
 bar {
+        colors {
+        background #2f343f
+        statusline #2f343f
+        separator #4b5262
+
+        # colour of border, background, and text
+        focused_workspace       #2f343f #bf616a #d8dee8
+        active_workspace        #2f343f #2f343f #d8dee8
+        inactive_workspace      #2f343f #2f343f #d8dee8
+        urgent_workspacei       #2f343f #ebcb8b #2f343f
+    }
         status_command i3status
 }
 
@@ -165,64 +180,66 @@ bar {
 # Set inner/outer gaps
 # ウィンドウに枠線をつける
 for_window [class="^.*"] border pixel 3
-gaps inner 12
-gaps outer 1
-
-# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
-# gaps inner|outer current|all set|plus|minus <px>
-# gaps inner all set 10
-# gaps outer all plus 5
-
-# Smart gaps (gaps used if only more than one container on the workspace)
-#smart_gaps on
-
-# Smart borders (draw borders around container only if it is not the only container on this workspace) 
-# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
-# ワークスペースにひとつだけのウィンドウなら枠線を表示しない
-# smart_borders on
-
-# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
+# gaps inner 12
+# gaps outer 1
+# 
+# # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# # gaps inner|outer current|all set|plus|minus <px>
+# # gaps inner all set 10
+# # gaps outer all plus 5
+# 
+# # Smart gaps (gaps used if only more than one container on the workspace)
+# #smart_gaps on
+# 
+# # Smart borders (draw borders around container only if it is not the only container on this workspace) 
+# # on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+# # ワークスペースにひとつだけのウィンドウなら枠線を表示しない
+# # smart_borders on
+# 
+# # Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+# set $mode_gaps Gaps: (o) outer, (i) inner
+# set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+# set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+# bindsym $mod+Shift+g mode "$mode_gaps"
+# 
+# mode "$mode_gaps" {
+#         bindsym o      mode "$mode_gaps_outer"
+#         bindsym i      mode "$mode_gaps_inner"
+#         bindsym Return mode "default"
+#         bindsym Escape mode "default"
+# }
+# mode "$mode_gaps_inner" {
+#         bindsym plus  gaps inner current plus 5
+#         bindsym minus gaps inner current minus 5
+#         bindsym 0     gaps inner current set 0
+# 
+#         bindsym Shift+plus  gaps inner all plus 5
+#         bindsym Shift+minus gaps inner all minus 5
+#         bindsym Shift+0     gaps inner all set 0
+# 
+#         bindsym Return mode "default"
+#         bindsym Escape mode "default"
+# }
+# mode "$mode_gaps_outer" {
+#         bindsym plus  gaps outer current plus 5
+#         bindsym minus gaps outer current minus 5
+#         bindsym 0     gaps outer current set 0
+# 
+#         bindsym Shift+plus  gaps outer all plus 5
+#         bindsym Shift+minus gaps outer all minus 5
+#         bindsym Shift+0     gaps outer all set 0
+# 
+#         bindsym Return mode "default"
+#         bindsym Escape mode "default"
+# }
+# 
 
 # my settings
 
 # 壁紙を設定する。fehコマンドが必要
 exec --no-startup-id "feh --bg-scale ~/Pictures/i3wm_cheatsheet.png"
+
+exec --no-startup-id xsettingsd &
 
 # display setting
 workspace 2 output VGA-1
@@ -254,3 +271,94 @@ bindsym $mod+q kill
 
 # マウスの中ボタンでウィンドウ削除
 bindsym button2 kill
+
+# regolith linux からのパクリ
+set $base03    #002b36
+set $base02    #073642
+set $base01    #586e75
+set $base00    #657b83
+set $base0     #839496
+set $base1     #93a1a1
+set $base2     #eee8d5
+set $base3     #fdf6e3
+set $yellow    #b58900
+set $orange    #cb4b10
+set $red       #dc322f
+set $magenta   #d33682
+set $violet    #6c71c4
+set $blue      #268bd2
+set $cyan      #2aa198
+set $green     #859900
+set $transparent #00000000
+set $lucent    #00000088
+
+
+# bar {
+#   font pango:Source Code Pro Medium 13, FontAwesome 13
+#   separator_symbol " "
+#   # status_command i3blocks
+#   tray_output none
+
+#   colors {
+#       background $base03
+#       statusline $base1
+#       separator  $blue
+# #                        BORDER  BACKGROUND TEXT
+#       focused_workspace  $base02  $base02  $base2
+#       active_workspace   $base02  $base02  $base01
+#       inactive_workspace $base03  $base03  $base01
+#       urgent_workspace   $red     $red     $base3
+#   }
+# }
+#
+# cycle between workspace
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# put the system to sleep
+bindsym $mod+Shift+s exec systemctl suspend
+
+exec --no-startup-id compton -f --config /etc/xdg/compton.conf
+# set $ws1   " 1 <span foreground='#268bd2'></span> "
+# set $ws2   " 2 <span foreground='#2aa198'></span> "
+# set $ws3   " 3 <span foreground='#859900'></span> "
+# set $ws4   " 4 <span foreground='#b58900'></span> "
+# set $ws5   " 5 <span foreground='#cb4b10'></span> "
+# set $ws6   " 6 <span foreground='#dc322f'></span> "
+# set $ws7   " 7 <span foreground='#d33682'></span> "
+# set $ws8   " 8 <span foreground='#6c71c4'></span> "
+# set $ws9   " 9 <span foreground='#93a1a1'></span>  "
+# set $ws10  "10 <span foreground='#268bd2'></span>  "
+# set $ws11  "11 <span foreground='#2aa198'></span>  "
+# set $ws12  "12 <span foreground='#859900'></span>  "
+# set $ws13  "13 <span foreground='#b58900'></span>  "
+# set $ws14  "14 <span foreground='#cb4b10'></span>  "
+# set $ws15  "15 <span foreground='#dc322f'></span>  "
+# set $ws16  "16 <span foreground='#d33682'></span>  "
+# set $ws17  "17 <span foreground='#6c71c4'></span>  "
+# set $ws18  "18 <span foreground='#93a1a1'></span>  "
+# set $ws19  "19 <span foreground='#268bd2'></span>  "
+
+# # switch to workspace
+# bindsym $mod+1 workspace $ws1
+# bindsym $mod+2 workspace $ws2
+# bindsym $mod+3 workspace $ws3
+# bindsym $mod+4 workspace $ws4
+# bindsym $mod+5 workspace $ws5
+# bindsym $mod+6 workspace $ws6
+# bindsym $mod+7 workspace $ws7
+# bindsym $mod+8 workspace $ws8
+# bindsym $mod+9 workspace $ws9
+# bindsym $mod+0 workspace $ws10
+
+# # move focused container to workspace
+# bindsym $mod+Shift+1 move container to workspace $ws1
+# bindsym $mod+Shift+2 move container to workspace $ws2
+# bindsym $mod+Shift+3 move container to workspace $ws3
+# bindsym $mod+Shift+4 move container to workspace $ws4
+# bindsym $mod+Shift+5 move container to workspace $ws5
+# bindsym $mod+Shift+6 move container to workspace $ws6
+# bindsym $mod+Shift+7 move container to workspace $ws7
+# bindsym $mod+Shift+8 move container to workspace $ws8
+# bindsym $mod+Shift+9 move container to workspace $ws9
+# bindsym $mod+Shift+0 move container to workspace $ws10

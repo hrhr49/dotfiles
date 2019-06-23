@@ -143,7 +143,8 @@ try
   call plug#begin('~/.vim/plugged')
   
   " Make sure you use single quotes
-  
+
+  Plug 'vim-jp/vimdoc-ja'
   " Plug 'scrooloose/nerdtree'
   if executable('fzf')
     Plug '~/.fzf/'
@@ -363,7 +364,7 @@ vmap ga <Plug>(EasyAlign)
 " 表示{{{
 try
 " colorscheme molokai
-colorscheme ayu
+" colorscheme ayu
 " colorscheme gruvbox
 catch
 endtry
