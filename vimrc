@@ -132,6 +132,7 @@ autocmd BufRead,BufNewFile *.dot nnoremap <F5> :w \| !dot % -O -Tpng<CR>
 autocmd BufRead,BufNewFile *.adoc nnoremap <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
 autocmd BufRead,BufNewFile *.sh nnoremap <F5> :w \| !%:p<CR>
 autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
+autocmd BufRead,BufNewFile *.tcl nnoremap <F5> :w \| !wish %<CR>
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
 augroup END"}}}
@@ -144,8 +145,13 @@ try
   
   " Make sure you use single quotes
 
+  " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
+
+
   " Plug 'scrooloose/nerdtree'
+
+  " ファイルなどのあいまい検索
   if executable('fzf')
     Plug '~/.fzf/'
     Plug 'junegunn/fzf.vim'
