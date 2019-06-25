@@ -328,6 +328,9 @@ set $lucent    #00000088
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
+# mod + t でステータスバーの表示/非表示
+bindsym $mod+t exec i3-msg bar mode toggle
+
 # put the system to sleep
 bindsym $mod+Shift+s exec systemctl suspend
 
