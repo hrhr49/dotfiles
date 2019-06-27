@@ -15,6 +15,11 @@ init_gui:
 
 # 初回設定ファイルインストール。強制の場合はvsfにオプションを変える
 init_dotfiles:
+	mkdir -p ${HOME}/.config/i3
+	mkdir -p ${HOME}/.config/i3status
+	mkdir -p ${HOME}/.config/nvim
+	mkdir -p ${HOME}/.config/ranger
+	mkdir -p ${HOME}/.config/rofi
 	ln -vs ${PWD}/vimrc ${HOME}/.vimrc
 	ln -vs ${PWD}/tmux.conf ${HOME}/.tmux.conf
 	ln -vs ${PWD}/Xresources ${HOME}/.Xresources
@@ -28,7 +33,6 @@ init_dotfiles:
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
 	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
-
 
 init_install:
 	$(INSTALL) build-essential vim tmux git ranger \
