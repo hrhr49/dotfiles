@@ -62,13 +62,15 @@ pip_install:
 
 # pyenvのインストール
 pyenv:
-	git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.bashrc
-	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.bashrc
-	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ~/.bashrc
-	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.zshrc
-	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.zshrc
-	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ~/.zshrc
+	if [ -e ${HOME}/.pyenv ]; then \
+	git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv; \
+	fi
+	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.bashrc
+	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.bashrc
+	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.bashrc
+	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.zshrc
+	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.zshrc
+	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.zshrc
 	exec "$${SHELL}"
 	pyenv install 3.6.8
 
@@ -78,7 +80,7 @@ neovim:
 	sudo add-apt-repository ppa:neovim-ppa/stable
 	sudo apt-get update
 	sudo apt-get install neovim
-	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+	curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # i3wmの設定
