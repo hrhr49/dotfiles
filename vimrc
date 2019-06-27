@@ -123,6 +123,7 @@ autocmd FileType markdown nnoremap <F5> :w\|!google-chrome %<CR>
 autocmd FileType markdown nnoremap <F6> :w\|!pandoc -t html5 -s --mathjax 
             \ -f markdown+hard_line_breaks --highlight-style=pygments
             \ -c ~/memo/pandoc/github.css --filter ~/memo/pandoc/my_pandoc_filter.py -o %:r.html %<CR>
+autocmd FileType vim setlocal ts=2 sts=2 sw=2
 autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 " autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
 autocmd FileType typescript nnoremap <F5> :w \| !tsc % \| node %:r.js<CR>
@@ -133,6 +134,7 @@ autocmd BufRead,BufNewFile *.adoc nnoremap <F5> :w \| !asciidoctor -r asciidocto
 autocmd BufRead,BufNewFile *.sh nnoremap <F5> :w \| !%:p<CR>
 autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
 autocmd BufRead,BufNewFile *.tcl nnoremap <F5> :w \| !wish %<CR>
+autocmd BufRead,BufNewFile *.scm nnoremap <F5> :w \| !gosh %<CR>
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
 augroup END"}}}
@@ -157,7 +159,7 @@ try
     Plug 'junegunn/fzf.vim'
   else
     Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'ompugao/ctrlp-history'
+    " Plug 'ompugao/ctrlp-history'
   endif
   
   " Plug 'MattesGroeger/vim-bookmarks'
@@ -208,6 +210,8 @@ try
   Plug 'rbgrouleff/bclose.vim'
   Plug 'easymotion/vim-easymotion'
   Plug 'junegunn/vim-easy-align'
+  Plug 'LeafCage/yankround.vim'
+  " Plug 'maxbrunsfeld/vim-yankstack'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -259,12 +263,15 @@ if executable('fzf')
     nnoremap <Space>m :<C-u>Files ~/memo/<CR>
 else
     " CtrlP
-    let g:ctrlp_map = '<C-p>'
+    " <Nop>という文字列になってしまうことがあった。
+    " 空文字ならうまく行く？
+    let g:ctrlp_map = ''
     " let g:ctrlp_cmd = 'CtrlPMixed'
     let g:ctrlp_match_window = 'max:20'
     nnoremap <Space>t :<C-u>CtrlPTag<CR>
     nnoremap <Space>p :<C-u>CtrlP<CR>
-    nnoremap <Space>m :<C-u>CtrlPMixed<CR>
+    " nnoremap <Space>m :<C-u>CtrlPMixed<CR>
+    nnoremap <Space>m :<C-u>CtrlP ~/memo/<CR>
     nnoremap <Space>r :<C-u>CtrlPMRU<CR>
     nnoremap <Space>b :<C-u>CtrlPBuffer<CR>
     nnoremap <Space>l :<C-u>CtrlPLine<CR>
@@ -365,6 +372,24 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 " Easy Alignの設定
 vmap ga <Plug>(EasyAlign)
+
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+" yankroundの設定
+nmap p <Plug>(yankround-p)
+xmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+xmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+let g:yankround_max_history = 50
+" 下なんかうまく動かない
+" nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
+
+" yankstackの設定
+" nmap <leader>p <Plug>yankstack_substitute_older_paste
+" nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 "}}}
 " 表示{{{
