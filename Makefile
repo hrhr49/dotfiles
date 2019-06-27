@@ -26,7 +26,7 @@ init_dotfiles:
 	ln -vs ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vs ${PWD}/config/i3/config ${HOME}/.config/i3/config
 	ln -vs ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
-	ln -vs ${PWD}/config/nvim/init.nvim ${HOME}/.config/nvim/init.vim
+	ln -vs ${PWD}/config/nvim/init.vim ${HOME}/.config/nvim/init.vim
 	ln -vs ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
 	ln -vs ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
 	ln -vs ${PWD}/config/rofi/config.rasi ${HOME}/.config/rofi/config.rasi
@@ -62,17 +62,19 @@ pip_install:
 
 # pyenvのインストール
 pyenv:
-	if [ -e ${HOME}/.pyenv ]; then \
+	if [ ! -e ${HOME}/.pyenv ]; then \
 	git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv; \
 	fi
 	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.bashrc
 	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.bashrc
-	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.bashrc
+	echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.bashrc
 	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.zshrc
 	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.zshrc
-	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.zshrc
+	echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.zshrc
 	exec "$${SHELL}"
 	pyenv install 3.6.8
+	pyenv global 3.6.8
+	exec "$${SHELL}"
 
 # neovimのインストール TODO: aptじゃない環境対応
 neovim:
