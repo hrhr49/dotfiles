@@ -14,22 +14,22 @@ init:
 init_gui:
 	make init_gui_install
 
-# 初回設定ファイルインストール。強制の場合はvsfにオプションを変える
+# 初回設定ファイルインストール。強制上書きが嫌な場合はvsにオプションを変える
 init_dotfiles:
 	mkdir -p ${HOME}/.config/i3
 	mkdir -p ${HOME}/.config/i3status
 	mkdir -p ${HOME}/.config/nvim
 	mkdir -p ${HOME}/.config/ranger
 	mkdir -p ${HOME}/.config/rofi
-	ln -vs ${PWD}/vimrc ${HOME}/.vimrc
-	ln -vs ${PWD}/tmux.conf ${HOME}/.tmux.conf
-	ln -vs ${PWD}/Xresources ${HOME}/.Xresources
-	ln -vs ${PWD}/config/i3/config ${HOME}/.config/i3/config
-	ln -vs ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
-	ln -vs ${PWD}/config/nvim/init.vim ${HOME}/.config/nvim/init.vim
-	ln -vs ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
-	ln -vs ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
-	ln -vs ${PWD}/config/rofi/config.rasi ${HOME}/.config/rofi/config.rasi
+	ln -vsf ${PWD}/vimrc ${HOME}/.vimrc
+	ln -vsf ${PWD}/tmux.conf ${HOME}/.tmux.conf
+	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
+	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
+	ln -vsf ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
+	ln -vsf ${PWD}/config/nvim/init.vim ${HOME}/.config/nvim/init.vim
+	ln -vsf ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
+	ln -vsf ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
+	ln -vsf ${PWD}/config/rofi/config.rasi ${HOME}/.config/rofi/config.rasi
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
