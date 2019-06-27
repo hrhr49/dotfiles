@@ -1,6 +1,7 @@
 # vim:set foldmethod=marker foldlevel=0:
 # dotファイル管理などのMakefile
 # 参考: https://github.com/masasam/dotfiles/blob/master/Makefile
+# 注意：Makefile中で$マークを文字列として使う際は$$を使う
 
 INSTALL=sudo apt install -y
 
@@ -24,7 +25,7 @@ init_dotfiles:
 	ln -vs ${PWD}/tmux.conf ${HOME}/.tmux.conf
 	ln -vs ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vs ${PWD}/config/i3/config ${HOME}/.config/i3/config
-	ln -vs ${PWD}/config/i3status/config ${HOME}/.config/istatus3/config
+	ln -vs ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
 	ln -vs ${PWD}/config/nvim/init.nvim ${HOME}/.config/nvim/init.vim
 	ln -vs ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
 	ln -vs ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
@@ -35,7 +36,7 @@ init_dotfiles:
 	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
 
 init_install:
-	$(INSTALL) build-essential vim tmux git ranger \
+	$(INSTALL) build-essential coreutils vim tmux git ranger \
 	htop unzip
 
 init_gui_install:
@@ -49,10 +50,11 @@ init_option:
 	make neovim
 
 python:
-	$(INSTALL) build-essential libbz2-dev libdb-dev \
-	libreadline-dev libffi-dev libgdbm-dev liblzma-dev \
-	libncursesw5-dev libsqlite3-dev libssl-dev \
-	zlib1g-dev uuid-dev tk-dev python3-dev python3-pip
+	$(INSTALL) python3-dev python3-pip
+	# build-essential libbz2-dev libdb-dev \
+	# libreadline-dev libffi-dev libgdbm-dev liblzma-dev \
+	# libncursesw5-dev libsqlite3-dev libssl-dev \
+	# zlib1g-dev uuid-dev tk-dev python3-dev python3-pip
 
 pip_install:
 	pip install neovim requests flask jedi \
@@ -61,13 +63,13 @@ pip_install:
 # pyenvのインストール
 pyenv:
 	git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-	echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-	echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-	echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-	echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
-	exec "$SHELL"
+	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.bashrc
+	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.bashrc
+	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ~/.bashrc
+	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ~/.zshrc
+	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ~/.zshrc
+	echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ~/.zshrc
+	exec "$${SHELL}"
 	pyenv install 3.6.8
 
 # neovimのインストール TODO: aptじゃない環境対応
