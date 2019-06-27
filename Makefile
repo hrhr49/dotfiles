@@ -4,6 +4,8 @@
 # 注意：Makefile中で$マークを文字列として使う際は$$を使う
 
 INSTALL=sudo apt install -y
+INSTALL_UPDATE=sudo apt update -y
+INSTALL_UPGRADE=sudo apt upgrade -y
 
 # 初回設定
 init:
@@ -36,6 +38,8 @@ init_dotfiles:
 	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
 
 init_install:
+	$(INSTALL_UPDATE)
+	$(INSTALL_UPGRADE)
 	$(INSTALL) build-essential coreutils vim tmux git ranger \
 	htop unzip
 
