@@ -2,6 +2,9 @@
 # dotファイル管理などのMakefile
 # 参考: https://github.com/masasam/dotfiles/blob/master/Makefile
 # 注意：Makefile中で$マークを文字列として使う際は$$を使う
+# TODO:
+# zsh fzf fasd
+# node ruby
 
 INSTALL=sudo apt install -y
 INSTALL_UPDATE=sudo apt update -y
@@ -41,13 +44,16 @@ init_install:
 	$(INSTALL_UPDATE)
 	$(INSTALL_UPGRADE)
 	$(INSTALL) build-essential coreutils vim tmux git ranger \
-	htop unzip
+	htop unzip fasd zsh
 
 init_gui_install:
 	$(INSTALL) rofi sxiv zathura chromium-browser
 
 # 初回設定で欲しいけど必須じゃないもの
 init_option:
+	make zsh
+	make fzf
+	make fasd
 	make python
 	make pyenv
 	make pip_install
@@ -88,6 +94,23 @@ neovim:
 	sudo apt-get install neovim
 	curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+fzf:
+	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
+	${HOME}/.fzf/install
+
+zsh:
+	$(INSTALL) zsh
+	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
+	cp ${HOME}/.oh-my-zsh/templates/zshrc.zsh-template ${HOME}/.zshrc
+	sed -ie 's/ZSH_THEME="robbyrussell"/ZSH_THEMEE="lukerandall"/' ${HOME}/.zshrc
+	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
+	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
+
+fasd:
+	$(INSTALL) fasd
+	echo 'eval "$$(fasd --init auto)"' >> ${HOME}/.bashrc
+	echo 'eval "$$(fasd --init auto)"' >> ${HOME}/.zshrc
 
 # i3wmの設定
 i3wm:
