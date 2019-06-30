@@ -5,6 +5,7 @@
 # TODO:
 # zsh fzf fasd
 # node ruby
+# pyenvのインストールなどはanyenvでやったほうが良さそう
 
 INSTALL=sudo apt install -y
 INSTALL_UPDATE=sudo apt update -y
@@ -40,11 +41,13 @@ init_dotfiles:
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
 	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
 
+# grub参考 https://qiita.com/ucan-lab/items/1608b4140ac0b1797144
 init_install:
 	$(INSTALL_UPDATE)
+	echo grub-pc hold | dpkg --set-selections # grubの更新ウィザードがうざいので除外
 	$(INSTALL_UPGRADE)
 	$(INSTALL) build-essential coreutils vim tmux git ranger \
-	htop unzip fasd zsh
+	htop unzip fasd zsh python3-dev
 
 init_gui_install:
 	$(INSTALL) rofi sxiv zathura chromium-browser
@@ -61,6 +64,9 @@ init_option:
 
 python:
 	$(INSTALL) python3-dev python3-pip
+	$(INSTALL) build-essential libsqlite3-dev libreadline6-dev \
+	libgdbm-dev zlib1g-dev zlibbz2-dev sqlite3 tk-dev zip \
+	libssl-dev gfortran liblapack-dev
 	# build-essential libbz2-dev libdb-dev \
 	# libreadline-dev libffi-dev libgdbm-dev liblzma-dev \
 	# libncursesw5-dev libsqlite3-dev libssl-dev \

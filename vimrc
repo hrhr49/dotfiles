@@ -198,18 +198,18 @@ try
   
   " for markdown
   " Plug 'previm/previm'
-  Plug 'vim-scripts/DrawIt'
+  " Plug 'vim-scripts/DrawIt'
   " Initialize plugin system
   Plug 'mattn/emmet-vim'
   " Plug 'jtratner/vim-flavored-markdown'
   
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
-  Plug 'sjl/gundo.vim'
-  Plug 'francoiscabrol/ranger.vim'
-  Plug 'rbgrouleff/bclose.vim'
+  " Plug 'sjl/gundo.vim'
+  " Plug 'francoiscabrol/ranger.vim'
+  " Plug 'rbgrouleff/bclose.vim'
   Plug 'easymotion/vim-easymotion'
-  Plug 'junegunn/vim-easy-align'
+  " Plug 'junegunn/vim-easy-align'
   Plug 'LeafCage/yankround.vim'
   " Plug 'maxbrunsfeld/vim-yankstack'
   call plug#end()
@@ -367,11 +367,13 @@ map <Leader>L <Plug>(easymotion-bd-jk)
 nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
+" map  <Leader>w <Plug>(easymotion-bd-w)
+map  <Space>w <Plug>(easymotion-bd-w)
+
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 " Easy Alignの設定
-vmap ga <Plug>(EasyAlign)
+" vmap ga <Plug>(EasyAlign)
 
 nmap <Leader>L <Plug>(easymotion-overwin-line)
 " yankroundの設定
@@ -400,7 +402,6 @@ try
 catch
 endtry
 try
-
 set guioptions-=m
 set guioptions-=T
 set guifont=Monospace\ 14
