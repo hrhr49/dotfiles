@@ -53,10 +53,14 @@ bindsym $mod+d exec rofi -show run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# bindsym $mod+j focus left
+# bindsym $mod+k focus down
+# bindsym $mod+l focus up
+# bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -65,10 +69,14 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+# bindsym $mod+Shift+j move left
+# bindsym $mod+Shift+k move down
+# bindsym $mod+Shift+l move up
+# bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -77,10 +85,13 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+# bindsym $mod+h split h
+# ひとまずcで我慢。他にいいものはないか？
+bindsym $mod+h split c
 
 # split in vertical orientation
 bindsym $mod+v split v
+
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -330,6 +341,9 @@ bindsym $mod+Shift+Tab workspace prev
 
 # mod + t でステータスバーの表示/非表示
 bindsym $mod+t exec i3-msg bar mode toggle
+
+# Alt + Tabで切り替え。うまく動かない
+bindsym Alt+Tab workspace back_and_forth
 
 # put the system to sleep
 bindsym $mod+Shift+s exec systemctl suspend

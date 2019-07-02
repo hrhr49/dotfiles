@@ -64,9 +64,11 @@ init_option:
 
 python:
 	$(INSTALL) python3-dev python3-pip
+	$(INSTALL) libbz2-dev libreadline-dev libsqlite3-dev
 	$(INSTALL) build-essential libsqlite3-dev libreadline6-dev \
-	libgdbm-dev zlib1g-dev zlibbz2-dev sqlite3 tk-dev zip \
+	libgdbm-dev zlib1g-dev sqlite3 tk-dev zip \
 	libssl-dev gfortran liblapack-dev
+	# zlibbz2-dev 
 	# build-essential libbz2-dev libdb-dev \
 	# libreadline-dev libffi-dev libgdbm-dev liblzma-dev \
 	# libncursesw5-dev libsqlite3-dev libssl-dev \
