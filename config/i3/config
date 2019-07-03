@@ -87,7 +87,7 @@ bindsym $mod+Shift+Right move right
 # split in horizontal orientation
 # bindsym $mod+h split h
 # ひとまずcで我慢。他にいいものはないか？
-bindsym $mod+h split c
+bindsym $mod+c split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -352,6 +352,14 @@ bindsym $mod+Shift+s exec systemctl suspend
 exec --no-startup-id compton -f --config /etc/xdg/compton.conf
 # 壁紙を設定するためのアプリ起動。fehとvarietyが必要
 exec --no-startup-id variety
+
+# スクリーンショット設定。scrotとxclipが必要
+# Multi-screen screenshots with scrot
+bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # All screens
+
+# OSX-like area selection screenshots
+bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # Area selection
+
 # set $ws1   " 1 <span foreground='#268bd2'></span> "
 # set $ws2   " 2 <span foreground='#2aa198'></span> "
 # set $ws3   " 3 <span foreground='#859900'></span> "

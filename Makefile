@@ -15,7 +15,7 @@ INSTALL_UPGRADE=sudo apt upgrade -y
 init:
 	make init_dotfiles
 	make init_install
-	make init_option
+	# make init_option
 
 init_gui:
 	make init_gui_install
@@ -62,6 +62,7 @@ init_option:
 	make pip_install
 	make neovim
 
+# pyenvで入れるときにないとだめなもの？
 python:
 	$(INSTALL) python3-dev python3-pip
 	$(INSTALL) libbz2-dev libreadline-dev libsqlite3-dev
@@ -74,11 +75,28 @@ python:
 	# libncursesw5-dev libsqlite3-dev libssl-dev \
 	# zlib1g-dev uuid-dev tk-dev python3-dev python3-pip
 
+# anyenv lazyloadを入れるためにbashrc, zshrcには$(anyenv init -)を入れない
+anyenv:
+	git clone https://github.com/anyenv/anyenv ~/.anyenv
+	echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bashrc
+	echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.zshrc
+	~/.anyenv/bin/anyenv init
+	anyenv install --init
+
+# anyenv入れて再ログイン後実行
+anyenv_lazylaod:
+	mkdir -p $(anyenv root)/plugins
+	git clone https://github.com/amashigeseiji/anyenv-lazyload.git $(anyenv root)/plugins/anyenv-lazyload
+	echo 'eval "$$(anyenv lazyload)"' >> ~/.bashrc
+	echo 'eval "$$(anyenv lazyload)"' >> ~/.zshrc
+
+
+# とりあえずほしいパッケージなど
 pip_install:
 	pip install neovim requests flask jedi \
 	python-language-server
 
-# pyenvのインストール
+# pyenvのインストール。anyenvで入れれば良いので削除予定
 pyenv:
 	if [ ! -e ${HOME}/.pyenv ]; then \
 	git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv; \
@@ -130,4 +148,4 @@ i3wm_dotfiles:
 
 i3wm_install:
 	$(INSTALL) i3 fcitx-mozc feh compton variety alsa-utils dunst \
-	pasystray rofi
+	pasystray rofi xclip scrot
