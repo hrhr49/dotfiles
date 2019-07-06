@@ -2,10 +2,6 @@
 # dotファイル管理などのMakefile
 # 参考: https://github.com/masasam/dotfiles/blob/master/Makefile
 # 注意：Makefile中で$マークを文字列として使う際は$$を使う
-# TODO:
-# zsh fzf fasd
-# node ruby
-# pyenvのインストールなどはanyenvでやったほうが良さそう
 
 INSTALL=sudo apt install -y
 INSTALL_UPDATE=sudo apt update -y
@@ -78,15 +74,15 @@ python:
 # anyenv lazyloadを入れるためにbashrc, zshrcには$(anyenv init -)を入れない
 anyenv:
 	git clone https://github.com/anyenv/anyenv ~/.anyenv
-	echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bashrc
-	echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.zshrc
+	echo 'export PATH="$$HOME/.anyenv/bin:$$PATH"' >> ~/.bashrc
+	echo 'export PATH="$$HOME/.anyenv/bin:$$PATH"' >> ~/.zshrc
 	~/.anyenv/bin/anyenv init
 	anyenv install --init
 
 # anyenv入れて再ログイン後実行
 anyenv_lazylaod:
-	mkdir -p $(anyenv root)/plugins
-	git clone https://github.com/amashigeseiji/anyenv-lazyload.git $(anyenv root)/plugins/anyenv-lazyload
+	mkdir -p $$(anyenv root)/plugins
+	git clone https://github.com/amashigeseiji/anyenv-lazyload.git $$(anyenv root)/plugins/anyenv-lazyload
 	echo 'eval "$$(anyenv lazyload)"' >> ~/.bashrc
 	echo 'eval "$$(anyenv lazyload)"' >> ~/.zshrc
 
@@ -95,22 +91,6 @@ anyenv_lazylaod:
 pip_install:
 	pip install neovim requests flask jedi \
 	python-language-server
-
-# pyenvのインストール。anyenvで入れれば良いので削除予定
-pyenv:
-	if [ ! -e ${HOME}/.pyenv ]; then \
-	git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv; \
-	fi
-	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.bashrc
-	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.bashrc
-	echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.bashrc
-	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.zshrc
-	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.zshrc
-	echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.zshrc
-	exec "$${SHELL}"
-	pyenv install 3.6.8
-	pyenv global 3.6.8
-	exec "$${SHELL}"
 
 # neovimのインストール TODO: aptじゃない環境対応
 neovim:
@@ -149,3 +129,21 @@ i3wm_dotfiles:
 i3wm_install:
 	$(INSTALL) i3 fcitx-mozc feh compton variety alsa-utils dunst \
 	pasystray rofi xclip scrot
+
+# 必要なくなったもの
+# pyenvのインストール。anyenvで入れれば良いので削除予定
+# pyenv:
+# 	if [ ! -e ${HOME}/.pyenv ]; then \
+# 	git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv; \
+# 	fi
+# 	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.bashrc
+# 	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.bashrc
+# 	echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.bashrc
+# 	echo 'export PYENV_ROOT="$$HOME/.pyenv"' >> ${HOME}/.zshrc
+# 	echo 'export PATH="$$PYENV_ROOT/bin:$$PATH"' >> ${HOME}/.zshrc
+# 	echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$$(pyenv init -)"\nfi' >> ${HOME}/.zshrc
+# 	exec "$${SHELL}"
+# 	pyenv install 3.6.8
+# 	pyenv global 3.6.8
+# 	exec "$${SHELL}"
+

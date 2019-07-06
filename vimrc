@@ -173,11 +173,11 @@ try
   " Plug 'prabirshrestha/asyncomplete.vim'
   " Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'flazz/vim-colorschemes'
-  Plug 'ayu-theme/ayu-vim' " or other package manager
+  " Plug 'ayu-theme/ayu-vim' " or other package manager
   "...
-  set termguicolors     " enable true colors support
+  " set termguicolors     " enable true colors support
   " let ayucolor="light"  " for light version of theme
-  let ayucolor="mirage" " for mirage version of theme
+  " let ayucolor="mirage" " for mirage version of theme
   " let ayucolor="dark"   " for dark version of theme
   " colorscheme ayu
   
@@ -219,7 +219,8 @@ endtry
 
 "}}}
 " プラグイン設定{{{
-let g:deoplete#enable_at_startup = 1
+" deopeleteの自動スタートアップで1秒ぐらいかかるときがある!
+" let g:deoplete#enable_at_startup = 1
 
 ""let g:jedi#use_tabs_not_buffers = 1 "補完で次の候補に進むときにtabを使えるという設定にしたつもりですができませんでした。
 "let g:jedi#popup_select_first = 0 "1個目の候補が入力されるっていう設定を解除
@@ -356,26 +357,26 @@ endif
 
 " EasyMotionの設定
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+" map  <Leader>f <Plug>(easymotion-bd-f)
+" nmap <Leader>f <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
+nmap <Space>s <Plug>(easymotion-overwin-f2)
 
 " Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+" map <Leader>L <Plug>(easymotion-bd-jk)
+" nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
 " map  <Leader>w <Plug>(easymotion-bd-w)
-map  <Space>w <Plug>(easymotion-bd-w)
+" map  <Space>w <Plug>(easymotion-bd-w)
 
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+" nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 " Easy Alignの設定
 " vmap ga <Plug>(EasyAlign)
 
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+" nmap <Leader>L <Plug>(easymotion-overwin-line)
 " yankroundの設定
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
@@ -396,7 +397,7 @@ let g:yankround_max_history = 50
 "}}}
 " 表示{{{
 try
-" colorscheme molokai
+colorscheme molokai
 " colorscheme ayu
 " colorscheme gruvbox
 catch
