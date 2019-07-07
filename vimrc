@@ -30,7 +30,8 @@ set smartcase
 
 set nobackup
 "set nohlsearch
-nnoremap <Esc> :noh<CR>
+" 以下のマッピングをすると、vim8を起動したときに置換モードになってしまう
+" nnoremap <Esc> :noh<CR>
 set noswapfile
 set noundofile
 set number
@@ -49,7 +50,7 @@ set path+=~/memo/**
 catch
 endtry
 set tags+=tags;
-" set laststatus=2
+set laststatus=2
 
 " }}}
 " キーマッピング(一般){{{
@@ -144,7 +145,7 @@ try
   " - For Neovim: ~/.local/share/nvim/plugged
   " - Avoid using standard Vim directory names like 'plugin'
   call plug#begin('~/.vim/plugged')
-  
+ 
   " Make sure you use single quotes
 
   " 日本語のヘルプ
@@ -161,7 +162,7 @@ try
     Plug 'ctrlpvim/ctrlp.vim'
     " Plug 'ompugao/ctrlp-history'
   endif
-  
+ 
   " Plug 'MattesGroeger/vim-bookmarks'
   Plug 'michaeljsmith/vim-indent-object'
   "Plug 'w0rp/ale'
@@ -180,10 +181,10 @@ try
   " let ayucolor="mirage" " for mirage version of theme
   " let ayucolor="dark"   " for dark version of theme
   " colorscheme ayu
-  
+ 
   " Plug 'rakr/vim-one'
   " set background=dark
-  
+ 
   Plug 'autozimu/LanguageClient-neovim', {
       \ 'branch': 'next',
       \ 'do': 'bash install.sh',
@@ -195,14 +196,14 @@ try
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
-  
+ 
   " for markdown
   " Plug 'previm/previm'
   " Plug 'vim-scripts/DrawIt'
   " Initialize plugin system
   Plug 'mattn/emmet-vim'
   " Plug 'jtratner/vim-flavored-markdown'
-  
+ 
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   " Plug 'sjl/gundo.vim'
@@ -217,7 +218,7 @@ catch
   echo 'vim-plug is not found'
 endtry
 
-"}}}
+""}}}
 " プラグイン設定{{{
 " deopeleteの自動スタートアップで1秒ぐらいかかるときがある!
 " let g:deoplete#enable_at_startup = 1
