@@ -48,9 +48,14 @@ SAVEHIST=100000
 # 拡張フォーマットで保存
 setopt extended_history
 
-# 履歴に同じ行が重複するのを避ける
-setopt HIST_IGNORE_DUPS
+# 履歴に同一のものがあれば削除
+setopt hist_ignore_all_dups
 
+# # 履歴に同じ行が重複するのを避ける。上記設定の下位互換
+# setopt HIST_IGNORE_DUPS
+
+# ヒストリファイル保存時に重複したコマンドラインは古い方を削除
+setopt hist_save_no_dups
 
 # シェル終了時、履歴を追加
 setopt append_history
