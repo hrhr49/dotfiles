@@ -26,6 +26,11 @@ alias apts="apt search"
 alias apti="sudo apt install"
 alias aptu="sudo apt update"
 
+# pacmanのエイリアス
+alias paci="sudo pacman -S"
+alias pacu="sudo pacman -Syy"
+alias pacs="pacman -Ss"
+
 # pipのエイリアス
 alias pipi="pip install"
 
@@ -36,3 +41,9 @@ alias gitc="git commit"
 alias gitl="git log"
 alias gitps="git push"
 alias gitpl="git pull"
+
+# lsのエイリアス
+# 時々遅いので将来削除するかも
+alias ls="ls --color=auto"
+alias ll="ls -l"
+alias la="ls -a"
