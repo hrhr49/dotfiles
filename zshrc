@@ -32,6 +32,9 @@ compinit
 # 矢印キーで自動補完
 zstyle ':completion:*' menu select
 
+# 大文字小文字を区別しない
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
 # エイリアスでも自動補完
 setopt completealiases
 
