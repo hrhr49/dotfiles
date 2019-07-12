@@ -92,6 +92,7 @@ pip_install:
 	pip install neovim requests flask jedi \
 	python-language-server
 
+# pythonの環境構築を先にする必要あり
 # neovimのインストール TODO: aptじゃない環境対応
 neovim:
 	sudo apt-get install software-properties-common
@@ -100,6 +101,7 @@ neovim:
 	sudo apt-get install neovim
 	curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	pip install pynvim
 
 fzf:
 	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
