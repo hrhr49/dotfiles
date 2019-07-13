@@ -61,3 +61,7 @@ alias gitpl="git pull"
 alias ls="ls --color=auto"
 alias ll="ls -l"
 alias la="ls -a"
+
+# チートシートをvimで開く
+alias cheat='vim $(find -L ~/memo -type f| fzf)'
+alias c='vim $(find -L ~/memo -type f| fzf)'
