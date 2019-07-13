@@ -369,7 +369,7 @@ nmap <Space>s <Plug>(easymotion-overwin-f2)
 " nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
-" map  <Leader>w <Plug>(easymotion-bd-w)
+map  <Space>w <Plug>(easymotion-bd-w)
 " map  <Space>w <Plug>(easymotion-bd-w)
 
 " nmap <Leader>w <Plug>(easymotion-overwin-w)
