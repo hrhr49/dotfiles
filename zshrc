@@ -72,6 +72,12 @@ setopt share_history
 # キーバインド{{{
 # emacsモード
 bindkey -e
+
+# <C-x> <C-e>でコマンドラインをエディタで編集
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
 # }}}
 # ディレクトリ移動{{{
 # ディレクトリ名でcdになるのを無効。(コマンドとのバッティングがうざかったため)

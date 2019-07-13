@@ -221,7 +221,7 @@ endtry
 ""}}}
 " プラグイン設定{{{
 " deopeleteの自動スタートアップで1秒ぐらいかかるときがある!
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 ""let g:jedi#use_tabs_not_buffers = 1 "補完で次の候補に進むときにtabを使えるという設定にしたつもりですができませんでした。
 "let g:jedi#popup_select_first = 0 "1個目の候補が入力されるっていう設定を解除
@@ -320,7 +320,7 @@ nnoremap <Space>o :TagbarToggle<CR>
 
 " asynccomplete
 " let g:asyncomplete_smart_completion = 1
-let g:asyncomplete_auto_popup = 1
+" let g:asyncomplete_auto_popup = 1
 
 " language server client
 let g:LanguageClient_serverCommands = {
@@ -343,10 +343,10 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 "nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " gdb使用の設定
-packadd termdebug
+" packadd termdebug
 
 " gdb使用の設定
-let g:termdebug_wide = 163
+" let g:termdebug_wide = 163
 
 " Gundoの設定
 nnoremap <F9> :GundoToggle<CR>
