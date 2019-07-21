@@ -6,17 +6,33 @@
 # Uncomment this to still load settings configured via autoconfig.yml
 # config.load_autoconfig()
 
-# Execute the best-matching command on a partial match.
+# Enable JavaScript.
 # Type: Bool
-c.completion.use_best_match = False
+config.set('content.javascript.enabled', True, 'file://*')
+
+# Enable JavaScript.
+# Type: Bool
+config.set('content.javascript.enabled', True, 'chrome://*/*')
+
+# Enable JavaScript.
+# Type: Bool
+config.set('content.javascript.enabled', True, 'qute://*/*')
 
 # List of user stylesheet filenames to use.
 # Type: List of File, or File
 c.content.user_stylesheets = []
 
-# Show a scrollbar.
+# Execute the best-matching command on a partial match.
 # Type: Bool
-c.scrolling.bar = True
+c.completion.use_best_match = False
+
+# When to show the scrollbar.
+# Type: String
+# Valid values:
+#   - always: Always show the scrollbar.
+#   - never: Never show the scrollbar.
+#   - when-searching: Show the scrollbar when searching for text in the webpage. With the QtWebKit backend, this is equal to `never`.
+c.scrolling.bar = 'always'
 
 # Enable smooth scrolling for web pages. Note smooth scrolling does not
 # work with the `:scroll-px` command.
@@ -33,6 +49,7 @@ c.url.default_page = 'https://google.com/'
 # Type: FlagList
 # Valid values:
 #   - host
+#   - port
 #   - path
 #   - query
 #   - anchor
@@ -55,8 +72,8 @@ c.url.start_pages = 'https://www.google.com/'
 
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets solarized.css ""')
-config.bind('<alt+left>', 'back')
-config.bind('<alt+right>', 'forward')
+config.bind('<Alt+Left>', 'back')
+config.bind('<Alt+Right>', 'forward')
 config.bind('F', 'hint all tab-bg')
 config.bind('X', 'undo')
 config.bind('d', 'scroll-page 0 0.5')

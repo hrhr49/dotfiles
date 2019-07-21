@@ -62,6 +62,11 @@ alias ls="ls --color=auto"
 alias ll="ls -l"
 alias la="ls -a"
 
+# チートシート一覧を標準出力に返す
+cheatsheets() {
+    find -L ~/memo -type f -not -path '*/.git/*'
+}
+
 # チートシートをvimで開く
-alias cheat='vim $(find -L ~/memo -type f| fzf)'
-alias c='vim $(find -L ~/memo -type f| fzf)'
+alias cheat='vim $(cheatsheets | fzf)'
+alias c='vim $(cheatsheets | fzf)'
