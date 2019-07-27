@@ -9,7 +9,7 @@ set shellslash
 filetype plugin indent on
 syntax on
 
-let loaded_matchparen = 1
+" let loaded_matchparen = 1
 let g:netrw_keepdir = 0
 "let g:markdown_folding=1
 "set completeopt+=longest
@@ -35,6 +35,7 @@ set nobackup
 set noswapfile
 set noundofile
 set number
+set relativenumber
 set shiftwidth=4
 set smartindent
 set smarttab
@@ -63,6 +64,7 @@ inoremap jj <ESC>
 inoremap jk <C-n>
 inoremap <C-k> <Esc>gg/aaa<CR>cgn
 inoremap <C-;> <Esc>cgn
+nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
 nnoremap n nzz
@@ -414,6 +416,10 @@ set guioptions-=T
 set guifont=Monospace\ 14
 catch
 endtry
+
+" 対応カッコの色設定を変更(そのままだとわかりづらいときあった)
+" 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " hilight current line number
 set cursorline
