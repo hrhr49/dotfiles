@@ -52,6 +52,9 @@ endtry
 set tags+=tags;
 set laststatus=2
 
+" バッファ保存せずに移動できるようにする
+set hidden
+
 " }}}
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
@@ -328,6 +331,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     \ 'python': ['pyls'],
+    \ 'ruby': ['solargraph', 'stdio'],
     \ 'c': ['clangd-6.0'],
     \}
 " let g:LanguageClient_windowLogMessageLevel = 'Info'
@@ -338,8 +342,9 @@ let g:LanguageClient_useVirtualText = 0
 "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <F2> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
-"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
 "nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " gdb使用の設定
