@@ -141,6 +141,7 @@ autocmd BufRead,BufNewFile *.sh nnoremap <F5> :w \| !%:p<CR>
 autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
 autocmd BufRead,BufNewFile *.tcl nnoremap <F5> :w \| !wish %<CR>
 autocmd BufRead,BufNewFile *.scm nnoremap <F5> :w \| !gosh %<CR>
+autocmd BufRead,BufNewFile *.rs nnoremap <F5> :w \| !rustc % \| !%:r<CR>
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
 augroup END"}}}

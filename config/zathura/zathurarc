@@ -20,3 +20,17 @@ set show-scrollbars true
 map u scroll half-up
 map d scroll half-down
 map D toggle_page_mode
+set adjust-open "width"
+set default-bg "#222222"
+set default-fg "#dddddd"
+# set font "Fixed 10"
+set inputbar-bg "#222222"
+set inputbar-fg "#dddddd"
+set statusbar-bg "#222222"
+set statusbar-fg "#dddddd"
+set completion-bg "#222222"
+set completion-fg "#dddddd"
+# set show-scrollbars false
+set recolor true
+set recolor-darkcolor "#dddddd"
+set recolor-lightcolor "#222222"
