@@ -21,8 +21,18 @@ let g:netrw_keepdir = 0
 set complete-=t
 set autochdir
 set autoindent
+
 set clipboard&
+
+" プラットフォームによってクリップボード設定切り替え
+if has('unix') || has('mac')
 set clipboard^=unnamedplus
+endif
+
+if has('win32') || has('win64')
+set clipboard^=unnamed
+endif
+
 set expandtab
 
 set ignorecase
@@ -142,6 +152,7 @@ autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
 autocmd BufRead,BufNewFile *.tcl nnoremap <F5> :w \| !wish %<CR>
 autocmd BufRead,BufNewFile *.scm nnoremap <F5> :w \| !gosh %<CR>
 autocmd BufRead,BufNewFile *.rs nnoremap <F5> :w \| !rustc % \| !%:r<CR>
+autocmd BufRead,BufNewFile *.nim nnoremap <F5> :w \| !nim c -r %<CR>
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <F5> :w\|so %<CR>
 augroup END"}}}
@@ -191,10 +202,20 @@ try
   " Plug 'rakr/vim-one'
   " set background=dark
  
+" プラットフォームによって走らせるスクリプト変更
+if has('unix') || has('mac')
   Plug 'autozimu/LanguageClient-neovim', {
       \ 'branch': 'next',
       \ 'do': 'bash install.sh',
       \ }
+endif
+if has('win32') || has('win64')
+  Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
+      \ }
+endif
+
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else

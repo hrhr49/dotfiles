@@ -95,7 +95,8 @@ anyenv_lazylaod:
 # 注意: pyflakeも入れないとpython-language-serverのLint機能がつかない
 pip_install:
 	pip install neovim requests flask jedi \
-	python-language-server pyflake
+	python-language-server pyflakes flake8 pynvim
+
 
 # pythonの環境構築を先にする必要あり
 # neovimのインストール TODO: aptじゃない環境対応
