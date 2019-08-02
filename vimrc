@@ -82,25 +82,28 @@ nnoremap N Nzz
 nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
 nnoremap <Space>j <C-f>
 nnoremap <Space>k <C-b>
-nnoremap sH <C-w>H
-nnoremap sJ <C-w>J
-nnoremap sK <C-w>K
-nnoremap sL <C-w>L
-nnoremap sT <C-w>T
-nnoremap s^ <C-^>
-nnoremap sd <C-d>
-nnoremap sh <C-w>h
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
-nnoremap sn gt
-nnoremap so <C-w>o
-nnoremap sp gT
-nnoremap sq <C-w>q
-nnoremap ss <C-w>s
-nnoremap st :tabnew<CR>
-nnoremap su <C-u>
-nnoremap sv <C-w>v
+
+nnoremap [window] <Nop>
+nmap s [window]
+nnoremap [window]H <C-w>H
+nnoremap [window]J <C-w>J
+nnoremap [window]K <C-w>K
+nnoremap [window]L <C-w>L
+nnoremap [window]T <C-w>T
+nnoremap [window]^ <C-^>
+nnoremap [window]d <C-d>
+nnoremap [window]h <C-w>h
+nnoremap [window]j <C-w>j
+nnoremap [window]k <C-w>k
+nnoremap [window]l <C-w>l
+nnoremap [window]n gt
+nnoremap [window]o <C-w>o
+nnoremap [window]p gT
+nnoremap [window]q <C-w>q
+nnoremap [window]s <C-w>s
+nnoremap [window]t :tabnew<CR>
+nnoremap [window]u <C-u>
+nnoremap [window]v <C-w>v
 
 nnoremap <F6> :make<CR>
 nnoremap <C-S-e> :Ex<CR>
