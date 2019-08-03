@@ -17,6 +17,7 @@ init_gui:
 	make init_gui_install
 
 # 初回設定ファイルインストール。強制上書きが嫌な場合はvsにオプションを変える
+# 一部のみ実行したいときなどはvimの範囲選択からbashに食わせるなどする
 init_dotfiles:
 	mkdir -p ${HOME}/.config/i3
 	mkdir -p ${HOME}/.config/i3status
@@ -24,12 +25,9 @@ init_dotfiles:
 	mkdir -p ${HOME}/.config/ranger
 	mkdir -p ${HOME}/.config/rofi
 	mkdir -p ${HOME}/.config/qutebrowser
-	ln -vsf ${PWD}/vimrc ${HOME}/.vimrc
-	ln -vsf ${PWD}/tmux.conf ${HOME}/.tmux.conf
 	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
 	ln -vsf ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
-	ln -vsf ${PWD}/config/nvim/init.vim ${HOME}/.config/nvim/init.vim
 	ln -vsf ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
 	ln -vsf ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
 	ln -vsf ${PWD}/config/rofi/config.rasi ${HOME}/.config/rofi/config.rasi
@@ -40,6 +38,9 @@ init_dotfiles:
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
 	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
+	echo "source-file ${PWD}/tmux.conf" >> $(HOME)/.tmux.conf
+	echo "source ${PWD}/vimrc" >> $(HOME)/.vimrc
+	echo "source ${PWD}/config/nvim/init.vim" >> $(HOME)/.config/nvim/init.vim
 
 # grub参考 https://qiita.com/ucan-lab/items/1608b4140ac0b1797144
 init_install:
