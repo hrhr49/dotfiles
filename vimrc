@@ -243,6 +243,7 @@ endif
   " Plug 'junegunn/vim-easy-align'
   Plug 'LeafCage/yankround.vim'
   " Plug 'maxbrunsfeld/vim-yankstack'
+  " Plug 'liuchengxu/vim-which-key'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -293,6 +294,7 @@ if executable('fzf')
     nnoremap <Space>s :<C-u>History/<CR>
     nnoremap <Space>/ :<C-u>History/<CR>
     nnoremap <Space>m :<C-u>Files ~/memo/<CR>
+    nnoremap <Space>: :<C-u>History:<CR>
 else
     " CtrlP
     " <Nop>という文字列になってしまうことがあった。
@@ -363,6 +365,7 @@ let g:LanguageClient_serverCommands = {
     \}
 " let g:LanguageClient_windowLogMessageLevel = 'Info'
 " let g:LanguageClient_diagnosticsEnable = 0
+" 横に表示される警告文などを出さない
 let g:LanguageClient_useVirtualText = 0
 
 
