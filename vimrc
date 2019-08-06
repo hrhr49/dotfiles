@@ -36,7 +36,16 @@ endif
 set expandtab
 
 set ignorecase
+" 入力の小文字、大文字に合わせて補完
+" set infercase
 set smartcase
+
+" 補完最中だけ大文字小文字区別
+augroup RunProgram
+autocmd!
+au InsertEnter * set noignorecase
+au InsertLeave * set ignorecase
+augroup END
 
 set nobackup
 "set nohlsearch
@@ -70,6 +79,7 @@ set hidden
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
+inoremap <C-u> <C-g>u<C-u>
 inoremap jj <ESC>
 inoremap jk <C-n>
 inoremap <C-k> <Esc>gg/aaa<CR>cgn
@@ -251,6 +261,22 @@ endtry
 
 ""}}}
 " プラグイン設定{{{
+
+" プラグイン存在確認関数
+let s:plug = {
+      \ "plugs": get(g:, 'plugs', {})
+      \ }
+
+function! s:plug.is_installed(name)
+  return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
+endfunction
+
+if s:plug.is_installed("vim-myplugin")
+  " setting
+endif
+
+" let g:deopelete#ignore_case = 0
+" let g:deopelete#smart_case = 0
 " deopeleteの自動スタートアップで1秒ぐらいかかるときがある!
 let g:deoplete#enable_at_startup = 1
 
@@ -286,6 +312,7 @@ if executable('fzf')
     " fzf
     nnoremap <Space>t :<C-u>Tags<CR>
     nnoremap <Space>p :<C-u>Files<CR>
+    nnoremap <Space>g :<C-u>GFiles<CR>
     nnoremap <Space>r :<C-u>History<CR>
     nnoremap <Space>b :<C-u>Buffers<CR>
     nnoremap <Space>l :<C-u>BLines<CR>
@@ -295,6 +322,8 @@ if executable('fzf')
     nnoremap <Space>/ :<C-u>History/<CR>
     nnoremap <Space>m :<C-u>Files ~/memo/<CR>
     nnoremap <Space>: :<C-u>History:<CR>
+    " 行補完
+    imap <c-l> <plug>(fzf-complete-line)
 else
     " CtrlP
     " <Nop>という文字列になってしまうことがあった。
@@ -375,7 +404,8 @@ nnoremap <F2> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-"nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+vnoremap <silent> gq :call LanguageClient#textDocument_formatting_sync()<CR>
+nnoremap <silent> <F3> :call LanguageClient#textDocument_rename()<CR>
 
 " gdb使用の設定
 " packadd termdebug
@@ -414,6 +444,7 @@ map  <Space>w <Plug>(easymotion-bd-w)
 
 " nmap <Leader>L <Plug>(easymotion-overwin-line)
 " yankroundの設定
+if s:plug.is_installed("yankround.vim")
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
@@ -425,6 +456,7 @@ nmap <C-n> <Plug>(yankround-next)
 let g:yankround_max_history = 50
 " 下なんかうまく動かない
 " nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
+endif
 
 " yankstackの設定
 " nmap <leader>p <Plug>yankstack_substitute_older_paste

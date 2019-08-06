@@ -55,6 +55,7 @@ alias gitc="git commit"
 alias gitl="git log"
 alias gitps="git push"
 alias gitpl="git pull"
+alias gitd="git diff"
 
 # lsのエイリアス
 # 時々遅いので将来削除するかも
