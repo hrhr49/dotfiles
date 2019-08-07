@@ -484,7 +484,11 @@ function! s:my_coc_nvim_config()
   nmap <buffer> <silent> gr <Plug>(coc-references)
   " Use K to show documentation in preview window
   nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
+  hi clear CocUnderLine 
 endfunction
+
+autocmd FileType python call s:my_coc_nvim_config()
+autocmd FileType c call s:my_coc_nvim_config()
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -494,9 +498,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-autocmd FileType python call s:my_coc_nvim_config()
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 "}}}
 " 表示{{{
