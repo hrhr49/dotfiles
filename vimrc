@@ -48,6 +48,7 @@ au InsertLeave * set ignorecase
 augroup END
 
 set nobackup
+set nowritebackup
 "set nohlsearch
 " 以下のマッピングをすると、vim8を起動したときに置換モードになってしまう
 " nnoremap <Esc> :noh<CR>
@@ -216,26 +217,29 @@ try
   " set background=dark
  
 " プラットフォームによって走らせるスクリプト変更
-if has('unix') || has('mac')
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
-endif
-if has('win32') || has('win64')
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
-      \ }
-endif
+" if has('unix') || has('mac')
+"   Plug 'autozimu/LanguageClient-neovim', {
+"       \ 'branch': 'next',
+"       \ 'do': 'bash install.sh',
+"       \ }
+" endif
+" if has('win32') || has('win64')
+"   Plug 'autozimu/LanguageClient-neovim', {
+"       \ 'branch': 'next',
+"       \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
+"       \ }
+" endif
 
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
+"   if has('nvim')
+"     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"   else
+"     Plug 'Shougo/deoplete.nvim'
+"     Plug 'roxma/nvim-yarp'
+"     Plug 'roxma/vim-hug-neovim-rpc'
+"   endif
+
+  " Use release branch
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
  
   " for markdown
   " Plug 'previm/previm'
@@ -383,6 +387,7 @@ nnoremap <Space>o :TagbarToggle<CR>
 " let g:asyncomplete_smart_completion = 1
 " let g:asyncomplete_auto_popup = 1
 
+if s:plug.is_installed("LanguageClient-neovim")
 " language server client
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
@@ -406,6 +411,7 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
 vnoremap <silent> gq :call LanguageClient#textDocument_formatting_sync()<CR>
 nnoremap <silent> <F3> :call LanguageClient#textDocument_rename()<CR>
+endif
 
 " gdb使用の設定
 " packadd termdebug
@@ -462,6 +468,36 @@ endif
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
+function! s:my_coc_nvim_config()
+  " coc.nvimの設定
+  setl updatetime=300
+  setl shortmess+=c
+  setl signcolumn=yes
+  " Use `[c` and `]c` to navigate diagnostics
+  nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
+  nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
+
+  " Rem<buffer> ap keys for gotos
+  nmap <buffer> <silent> gd <Plug>(coc-definition)
+  nmap <buffer> <silent> gy <Plug>(coc-type-definition)
+  nmap <buffer> <silent> gi <Plug>(coc-implementation)
+  nmap <buffer> <silent> gr <Plug>(coc-references)
+  " Use K to show documentation in preview window
+  nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
+endfunction
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+autocmd FileType python call s:my_coc_nvim_config()
+" Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
 "}}}
 " 表示{{{
 try
@@ -484,6 +520,8 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 " hilight current line number
 set cursorline
 " hi clear CursorLine
+
+set conceallevel=0
 "}}}
 " スクリプト{{{
 
@@ -518,37 +556,4 @@ function RandomColorScheme()
 endfun
 "}}}
 " 過去の遺産{{{
-" call RandomColorScheme()
-
-" :command NewColor call RandomColorScheme()
-"
-" nnoremap vv <S-v>
-
-" " mapping for left little finger
-" let i=char2nr('!')
-" while 1
-"     let c=nr2char(i)
-"     if c=='|'
-"         let c='\\|'
-"     endif
-"     execute 'noremap <Space>' . c . ' <C-' . c . '>'
-"     execute 'nmap <ESC>' . c . ' <M-' . c . '>'
-"     execute 'noremap <M-' . c . '> <C-' . c . '>'
-"     execute 'cnoremap <M-' . c . '> <C-' . c . '>'
-"     execute 'inoremap <M-' . c . '> <C-' . c . '>'
-"     if c=='~'
-"         break
-"     endif
-"     let i=i+1
-" endwhile
-" hi MatchParen ctermbg=1
-
-" for completion==============================
-"set completeopt=menuone
-"for k in split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_",'\zs')
-"  exec "imap " . k . " " . k . "<C-N><C-P>"
-"endfor
-
-"imap <expr> <TAB> pumvisible() ? "\<Down>" : "\<Tab>"
-"imap <expr> . pumvisible() ? "\<C-Y>.\<C-X>\<C-O>\<C-P>" : ".\<C-X>\<C-O>\<C-P>"
 "}}}
