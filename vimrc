@@ -41,7 +41,7 @@ set ignorecase
 set smartcase
 
 " 補完最中だけ大文字小文字区別
-augroup RunProgram
+augroup ComplNotIgnore
 autocmd!
 au InsertEnter * set noignorecase
 au InsertLeave * set ignorecase
@@ -49,7 +49,7 @@ augroup END
 
 set nobackup
 set nowritebackup
-"set nohlsearch
+set nohlsearch
 " 以下のマッピングをすると、vim8を起動したときに置換モードになってしまう
 " nnoremap <Esc> :noh<CR>
 set noswapfile
@@ -140,35 +140,36 @@ vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/�
 " ファイル別設定{{{
 augroup RunProgram
 autocmd!
-autocmd FileType python nnoremap <F5> :w\|!python %<CR>
-autocmd FileType ruby nnoremap <F5> :w\|!ruby %<CR>
-autocmd FileType perl nnoremap <F5> :w\|!perl %<CR>
+autocmd FileType python nnoremap <buffer> <F5> :w\|!python %<CR>
+autocmd FileType ruby nnoremap <buffer> <F5> :w\|!ruby %<CR>
+autocmd FileType perl nnoremap <buffer> <F5> :w\|!perl %<CR>
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType go nnoremap <F5> :w\|!go run %<CR>
-autocmd FileType javascript nnoremap <F5> :w\|!node %<CR>
+autocmd FileType go nnoremap <buffer> <F5> :w\|!go run %<CR>
+autocmd FileType javascript nnoremap <buffer> <F5> :w\|!node %<CR>
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
-autocmd FileType html nnoremap <F5> :w\|!google-chrome %<CR>
-autocmd FileType markdown nnoremap <F5> :w\|!google-chrome %<CR>
-autocmd FileType markdown nnoremap <F6> :w\|!pandoc -t html5 -s --mathjax 
+autocmd FileType html nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
+autocmd FileType markdown nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
+autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathjax 
             \ -f markdown+hard_line_breaks --highlight-style=pygments
             \ -c ~/memo/pandoc/github.css --filter ~/memo/pandoc/my_pandoc_filter.py -o %:r.html %<CR>
 autocmd FileType vim setlocal ts=2 sts=2 sw=2
 autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 " autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
-autocmd FileType typescript nnoremap <F5> :w \| !tsc % \| node %:r.js<CR>
-autocmd BufRead,BufNewFile *.ts set filetype=typescript
-autocmd BufRead,BufNewFile *.pu nnoremap <F5> :w \| !plantuml %<CR>
-autocmd BufRead,BufNewFile *.dot nnoremap <F5> :w \| !dot % -O -Tpng<CR>
-autocmd BufRead,BufNewFile *.adoc nnoremap <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
-autocmd BufRead,BufNewFile *.sh nnoremap <F5> :w \| !%:p<CR>
-autocmd BufRead,BufNewFile *.c nnoremap <F5> :w \| !gcc % && ./a.out<CR>
-autocmd BufRead,BufNewFile *.tcl nnoremap <F5> :w \| !wish %<CR>
-autocmd BufRead,BufNewFile *.scm nnoremap <F5> :w \| !gosh %<CR>
-autocmd BufRead,BufNewFile *.rs nnoremap <F5> :w \| !rustc % \| !%:r<CR>
-autocmd BufRead,BufNewFile *.nim nnoremap <F5> :w \| !nim c -r %<CR>
+autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<CR>
+autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
+autocmd BufRead,BufNewFile *.pu nnoremap <buffer> <F5> :w \| !plantuml %<CR>
+autocmd BufRead,BufNewFile *.dot nnoremap <buffer> <F5> :w \| !dot % -O -Tpng<CR>
+autocmd BufRead,BufNewFile *.adoc nnoremap <buffer> <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
+autocmd BufRead,BufNewFile *.sh nnoremap <buffer> <F5> :w \| !%:p<CR>
+autocmd BufRead,BufNewFile *.c nnoremap <buffer> <F5> :w \| !gcc % && ./a.out<CR>
+autocmd BufRead,BufNewFile *.tcl nnoremap <buffer> <F5> :w \| !wish %<CR>
+autocmd BufRead,BufNewFile *.scm nnoremap <buffer> <F5> :w \| !gosh %<CR>
+autocmd BufRead,BufNewFile *.rs nnoremap <buffer> <F5> :w \| !rustc % \| !%:r<CR>
+autocmd BufRead,BufNewFile *.nim nnoremap <buffer> <F5> :w \| !nim c -r %<CR>
 " autocmd FileType python call s:configure_lsp()
-autocmd FileType vim nnoremap <F5> :w\|so %<CR>
+autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
 augroup END"}}}
 " プラグイン一覧{{{
 try
@@ -185,6 +186,9 @@ try
 
   " Plug 'scrooloose/nerdtree'
 
+  " fzfのインストールも同時にやりたい場合は以下のようにする
+  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Plug 'junegunn/fzf.vim'
   " ファイルなどのあいまい検索
   if executable('fzf')
     Plug '~/.fzf/'
@@ -314,13 +318,16 @@ autocmd FileType python setlocal completeopt-=preview "ポップアップを表�
 
 if executable('fzf')
     " fzf
-    nnoremap <Space>t :<C-u>Tags<CR>
+    nnoremap <Space>t :<C-u>BTags<CR>
+    nnoremap <Space><S-t> :<C-u>Tags<CR>
     nnoremap <Space>p :<C-u>Files<CR>
     nnoremap <Space>g :<C-u>GFiles<CR>
     nnoremap <Space>r :<C-u>History<CR>
     nnoremap <Space>b :<C-u>Buffers<CR>
     nnoremap <Space>l :<C-u>BLines<CR>
-    nnoremap <Space>c :<C-u>Colors<CR>
+    nnoremap <Space><S-l> :<C-u>Lines<CR>
+    nnoremap <Space>c :<C-u>BCommits<CR>
+    nnoremap <Space><S-c> :<C-u>Commits<CR>
     nnoremap <Space>h :<C-u>History:<CR>
     nnoremap <Space>s :<C-u>History/<CR>
     nnoremap <Space>/ :<C-u>History/<CR>
@@ -489,6 +496,8 @@ endfunction
 
 autocmd FileType python call s:my_coc_nvim_config()
 autocmd FileType c call s:my_coc_nvim_config()
+autocmd FileType cpp call s:my_coc_nvim_config()
+autocmd FileType javascript call s:my_coc_nvim_config()
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -523,6 +532,11 @@ set cursorline
 " hi clear CursorLine
 
 set conceallevel=0
+
+if has('nvim')
+  " ポップアップメニューを半透明にする
+  set pumblend=10
+endif
 "}}}
 " スクリプト{{{
 
@@ -539,22 +553,22 @@ augroup END
 set viewoptions-=options
 
 " rangerの設定
-function RangerExplorer()
-    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
-    if filereadable('/tmp/vim_ranger_current_file')
-        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
-        call system('rm /tmp/vim_ranger_current_file')
-    endif
-    redraw!
-endfun
+" function RangerExplorer()
+"     exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+"     if filereadable('/tmp/vim_ranger_current_file')
+"         exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
+"         call system('rm /tmp/vim_ranger_current_file')
+"     endif
+"     redraw!
+" endfun
 " map <Leader>x :call RangerExplorer()<CR>
-map <Space>x :call RangerExplorer()<CR>
+" map <Space>x :call RangerExplorer()<CR>
 
 
-function RandomColorScheme()
-  let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n") 
-  exe 'so ' . mycolors[localtime() % len(mycolors)]
-endfun
+" function RandomColorScheme()
+"   let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n") 
+"   exe 'so ' . mycolors[localtime() % len(mycolors)]
+" endfun
 "}}}
 " 過去の遺産{{{
 "}}}

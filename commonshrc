@@ -63,6 +63,15 @@ alias ls="ls --color=auto"
 alias ll="ls -l"
 alias la="ls -a"
 
+# cdのエイリアス
+alias ..="cd .."
+alias ...="cd ../.."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+alias ..6="cd ../../../../../.."
+
 # チートシート一覧を標準出力に返す
 cheatsheets() {
     find -L ~/memo -type f -not -path '*/.git/*'
