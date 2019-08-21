@@ -489,6 +489,8 @@ function! s:my_coc_nvim_config()
   nmap <buffer> <silent> gy <Plug>(coc-type-definition)
   nmap <buffer> <silent> gi <Plug>(coc-implementation)
   nmap <buffer> <silent> gr <Plug>(coc-references)
+  xmap <buffer> <silent> gq <Plug>(coc-format-selected)
+  nmap <buffer> <silent> gq <Plug>(coc-format-selected)
   " Use K to show documentation in preview window
   nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
   hi clear CocUnderLine 
@@ -532,6 +534,8 @@ set cursorline
 " hi clear CursorLine
 
 set conceallevel=0
+" 80列目の色を変える
+set colorcolumn=80
 
 if has('nvim')
   " ポップアップメニューを半透明にする
