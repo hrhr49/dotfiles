@@ -32,6 +32,13 @@ compinit
 # 矢印キーで自動補完
 zstyle ':completion:*' menu select
 
+# 補完時にhjklで選択
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
 # 大文字小文字を区別しない
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -40,6 +47,10 @@ setopt completealiases
 
 # ディレクトリ名のみでのcdを無効
 unsetopt auto_cd
+
+# コマンドスペルの訂正を使用
+setopt CORRECT
+
 # }}}
 # 履歴{{{
 # 履歴サイズ
