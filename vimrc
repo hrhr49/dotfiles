@@ -317,43 +317,51 @@ autocmd FileType python setlocal completeopt-=preview "ポップアップを表�
 "map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 
 if executable('fzf')
-    " fzf
-    nnoremap <Space>t :<C-u>BTags<CR>
-    nnoremap <Space><S-t> :<C-u>Tags<CR>
-    nnoremap <Space>p :<C-u>Files<CR>
-    nnoremap <Space>g :<C-u>GFiles<CR>
-    nnoremap <Space>r :<C-u>History<CR>
-    nnoremap <Space>b :<C-u>Buffers<CR>
-    nnoremap <Space>l :<C-u>BLines<CR>
-    nnoremap <Space><S-l> :<C-u>Lines<CR>
-    nnoremap <Space>c :<C-u>BCommits<CR>
-    nnoremap <Space><S-c> :<C-u>Commits<CR>
-    nnoremap <Space>h :<C-u>History:<CR>
-    nnoremap <Space>s :<C-u>History/<CR>
-    nnoremap <Space>/ :<C-u>History/<CR>
-    nnoremap <Space>m :<C-u>Files ~/memo/<CR>
-    nnoremap <Space>: :<C-u>History:<CR>
-    " 行補完
-    imap <c-l> <plug>(fzf-complete-line)
+  " fzf
+  nnoremap <Space>t :<C-u>BTags<CR>
+  nnoremap <Space><S-t> :<C-u>Tags<CR>
+  nnoremap <Space>p :<C-u>Files<CR>
+  nnoremap <Space>g :<C-u>GFiles<CR>
+  " nnoremap <Space>r :<C-u>History<CR>
+  " 履歴はソートせずにプレビューも表示
+  " nnoremap <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
+  nnoremap <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
+  nnoremap <Space>b :<C-u>Buffers<CR>
+  nnoremap <Space>l :<C-u>BLines<CR>
+  nnoremap <Space><S-l> :<C-u>Lines<CR>
+  nnoremap <Space>c :<C-u>BCommits<CR>
+  nnoremap <Space><S-c> :<C-u>Commits<CR>
+  " nnoremap <Space>h :<C-u>History:<CR>
+  " コマンド履歴をソートせずに表示
+  nnoremap <Space>h :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
+  " nnoremap <Space>s :<C-u>History/<CR>
+  nnoremap <Space>s :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
+  " nnoremap <Space>/ :<C-u>History/<CR>
+  nnoremap <Space>/ :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
+  nnoremap <Space>m :<C-u>Files ~/memo/<CR>
+  " nnoremap <Space>: :<C-u>History:<CR>
+  nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
+  " 行補完
+  imap <c-l> <plug>(fzf-complete-line)
 else
-    " CtrlP
-    " <Nop>という文字列になってしまうことがあった。
-    " 空文字ならうまく行く？
-    let g:ctrlp_map = ''
-    " let g:ctrlp_cmd = 'CtrlPMixed'
-    let g:ctrlp_match_window = 'max:20'
-    nnoremap <Space>t :<C-u>CtrlPTag<CR>
-    nnoremap <Space>p :<C-u>CtrlP<CR>
-    " nnoremap <Space>m :<C-u>CtrlPMixed<CR>
-    nnoremap <Space>m :<C-u>CtrlP ~/memo/<CR>
-    nnoremap <Space>r :<C-u>CtrlPMRU<CR>
-    nnoremap <Space>b :<C-u>CtrlPBuffer<CR>
-    nnoremap <Space>l :<C-u>CtrlPLine<CR>
-    nnoremap <Space>c :<C-u>CtrlP ~/memo/<CR>
+  " CtrlP
+  " <Nop>という文字列になってしまうことがあった。
+  " 空文字ならうまく行く？
+  let g:ctrlp_map = ''
+  " let g:ctrlp_cmd = 'CtrlPMixed'
+  let g:ctrlp_match_window = 'max:20'
+  nnoremap <Space>t :<C-u>CtrlPTag<CR>
+  nnoremap <Space>p :<C-u>CtrlP<CR>
+  " nnoremap <Space>m :<C-u>CtrlPMixed<CR>
+  nnoremap <Space>m :<C-u>CtrlP ~/memo/<CR>
+  nnoremap <Space>r :<C-u>CtrlPMRU<CR>
+  nnoremap <Space>b :<C-u>CtrlPBuffer<CR>
+  nnoremap <Space>l :<C-u>CtrlPLine<CR>
+  nnoremap <Space>c :<C-u>CtrlP ~/memo/<CR>
 
-    " CtrlP History
-    nnoremap <Space>h :<C-u>CtrlPCmdHistory<CR>
-    nnoremap <Space>s :<C-u>CtrlPSearchHistory<CR>
+  " CtrlP History
+  nnoremap <Space>h :<C-u>CtrlPCmdHistory<CR>
+  nnoremap <Space>s :<C-u>CtrlPSearchHistory<CR>
 endif
 
 " Tagbar

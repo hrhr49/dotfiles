@@ -84,3 +84,6 @@ alias anyenv-hash='eval "$(anyenv init -)"'
 
 # pipenvのインストールディレクトリをプロジェクト直下にする
 export PIPENV_VENV_IN_PROJECT=1
+
+# xコマンドでアプリで開く
+alias x='xdg-open'

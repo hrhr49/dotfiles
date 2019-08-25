@@ -42,8 +42,9 @@ bindkey -M menuselect 'l' vi-forward-char
 # 大文字小文字を区別しない
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-# エイリアスでも自動補完
-setopt completealiases
+# エイリアスでも自動補完(逆に設定したらだめだった。ややこしい・・・)
+# setopt completealiases
+# setopt complete_aliases
 
 # ディレクトリ名のみでのcdを無効
 unsetopt auto_cd
