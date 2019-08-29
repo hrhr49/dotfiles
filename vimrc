@@ -19,7 +19,9 @@ let g:netrw_keepdir = 0
 
 " remove tag comeletion from default
 set complete-=t
-set autochdir
+
+" NERDTreeなどが動かなくなるので無効化
+" set autochdir
 set autoindent
 
 set clipboard&
@@ -184,7 +186,7 @@ try
   Plug 'vim-jp/vimdoc-ja'
 
 
-  " Plug 'scrooloose/nerdtree'
+  Plug 'scrooloose/nerdtree'
 
   " fzfのインストールも同時にやりたい場合は以下のようにする
   " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -369,9 +371,9 @@ nnoremap <F8> :TagbarToggle<CR>
 nnoremap <Space>o :TagbarToggle<CR>
 
 " NERDTree
-"nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
-"nnoremap <Space>E :<C-u>NERDTree<CR>
-"let NERDTreeQuitOnOpen=1
+nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
+nnoremap <Space>E :<C-u>NERDTree<CR>
+let NERDTreeQuitOnOpen=1
 
 " " vim-lsp
 " if executable('pyls')
@@ -508,6 +510,7 @@ autocmd FileType python call s:my_coc_nvim_config()
 autocmd FileType c call s:my_coc_nvim_config()
 autocmd FileType cpp call s:my_coc_nvim_config()
 autocmd FileType javascript call s:my_coc_nvim_config()
+autocmd FileType go call s:my_coc_nvim_config()
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -546,8 +549,10 @@ set conceallevel=0
 set colorcolumn=80
 
 if has('nvim')
-  " ポップアップメニューを半透明にする
-  set pumblend=10
+  if has('+pumblend')
+    " ポップアップメニューを半透明にする
+    set pumblend=10
+  endif
 endif
 "}}}
 " スクリプト{{{
