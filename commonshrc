@@ -35,6 +35,11 @@ env \
         man "$@"
 }
 
+# gitリポジトリのルートからの相対パスで移動
+gcd () {
+[[ ! -z $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1"
+}
+
 # aptのエイリアス
 alias apts="apt search"
 alias apti="sudo apt install"
@@ -45,6 +50,10 @@ alias paci="sudo pacman -S"
 alias pacu="sudo pacman -Syy"
 alias pacs="pacman -Ss"
 
+# brewのエイリアス
+alias brewi="brew install"
+alias brewu="brew update"
+alias brews="brew search"
 # pipのエイリアス
 alias pipi="pip install"
 

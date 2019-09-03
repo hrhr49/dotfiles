@@ -157,6 +157,7 @@ autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathj
             \ -f markdown+hard_line_breaks --highlight-style=pygments
             \ -c ~/memo/pandoc/github.css --filter ~/memo/pandoc/my_pandoc_filter.py -o %:r.html %<CR>
 autocmd FileType vim setlocal ts=2 sts=2 sw=2
+autocmd FileType qf noremap <buffer> p  <CR>zz<C-w>p
 autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 " autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
 autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<CR>
@@ -324,6 +325,7 @@ if executable('fzf')
   nnoremap <Space><S-t> :<C-u>Tags<CR>
   nnoremap <Space>p :<C-u>Files<CR>
   nnoremap <Space>g :<C-u>GFiles<CR>
+  nnoremap <Space><S-g> :<C-u>Ggrep 
   " nnoremap <Space>r :<C-u>History<CR>
   " 履歴はソートせずにプレビューも表示
   " nnoremap <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
@@ -343,6 +345,11 @@ if executable('fzf')
   nnoremap <Space>m :<C-u>Files ~/memo/<CR>
   " nnoremap <Space>: :<C-u>History:<CR>
   nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
+  if executable('rg')
+    nnoremap <Space>a :<C-u>Rg<CR>
+  else
+    nnoremap <Space>a :<C-u>Ag<CR>
+  endif
   " 行補完
   imap <c-l> <plug>(fzf-complete-line)
 else
