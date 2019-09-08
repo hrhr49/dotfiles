@@ -530,6 +530,17 @@ function! s:show_documentation()
   endif
 endfunction
 
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
 "}}}
 " 表示{{{
@@ -564,6 +575,12 @@ if has('nvim')
     set pumblend=10
   endif
 endif
+
+if has('+termguicolors')
+" GUIカラーを使う
+  set termguicolors
+endif
+
 "}}}
 " スクリプト{{{
 
