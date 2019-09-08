@@ -138,6 +138,9 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " 外部コマンドとの連携
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
+
+" 保存時にsudo権限で無理やり保存
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 "}}}
 " ファイル別設定{{{
 augroup RunProgram
@@ -575,6 +578,23 @@ autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | try | silent lo
 augroup END
 " Don't save options.
 set viewoptions-=options
+
+" CDコマンドでディレクトリ移動
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+" nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 " rangerの設定
 " function RangerExplorer()
