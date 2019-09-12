@@ -268,6 +268,13 @@ try
   Plug 'LeafCage/yankround.vim'
   " Plug 'maxbrunsfeld/vim-yankstack'
   " Plug 'liuchengxu/vim-which-key'
+
+  " スクロールのを入れたが、どうもタイムラグが気になってしまったので保留
+  " Plug 'yuttie/comfortable-motion.vim'
+  " Plug 'terryma/vim-smooth-scroll'
+  Plug 'tpope/vim-surround'
+  Plug 'h1mesuke/vim-alignta'
+  " Plug 'junegunn/vim-easy-align'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -513,6 +520,10 @@ function! s:my_coc_nvim_config()
   nmap <buffer> <silent> gq <Plug>(coc-format-selected)
   " Use K to show documentation in preview window
   nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
+
+  " Use `[g` and `]g` to navigate diagnostics
+  nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
   hi clear CocUnderLine 
 endfunction
 
