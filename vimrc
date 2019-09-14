@@ -261,7 +261,7 @@ try
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   " Plug 'sjl/gundo.vim'
-  " Plug 'francoiscabrol/ranger.vim'
+  Plug 'francoiscabrol/ranger.vim'
   " Plug 'rbgrouleff/bclose.vim'
   Plug 'easymotion/vim-easymotion'
   " Plug 'junegunn/vim-easy-align'
@@ -647,14 +647,14 @@ endfunction
 " nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 " rangerの設定
-" function RangerExplorer()
-"     exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
-"     if filereadable('/tmp/vim_ranger_current_file')
-"         exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
-"         call system('rm /tmp/vim_ranger_current_file')
-"     endif
-"     redraw!
-" endfun
+function RangerExplorer()
+    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+    if filereadable('/tmp/vim_ranger_current_file')
+        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
+        call system('rm /tmp/vim_ranger_current_file')
+    endif
+    redraw!
+endfun
 " map <Leader>x :call RangerExplorer()<CR>
 " map <Space>x :call RangerExplorer()<CR>
 
@@ -666,6 +666,5 @@ endfunction
 
 
 "}}}
-"
 " 過去の遺産{{{
 "}}}

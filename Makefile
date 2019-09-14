@@ -32,7 +32,6 @@ init_dotfiles:
 	ln -vsf ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
 	ln -vsf ${PWD}/config/rofi/config.rasi ${HOME}/.config/rofi/config.rasi
 	ln -vsf ${PWD}/config/qutebrowser/config.py ${HOME}/.config/qutebrowser/config.py
-	ln -vsf ${PWD}/config/qutebrowser/quickmarks ${HOME}/.config/qutebrowser/quickmarks
 	ln -vsf ${PWD}/config/qutebrowser/solarized.css ${HOME}/.config/qutebrowser/solarized.css
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
