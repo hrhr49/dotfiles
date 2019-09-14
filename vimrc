@@ -362,6 +362,28 @@ if executable('fzf')
   endif
   " 行補完
   imap <c-l> <plug>(fzf-complete-line)
+
+  " レジスタ内容貼り付け
+  function! s:get_registers() abort
+    redir => l:regs
+    silent registers
+    redir END
+
+    return split(l:regs, '\n')[1:]
+  endfunction
+
+  function! s:registers(...) abort
+    let l:opts = {
+          \ 'source': s:get_registers(),
+          \ 'sink': {x -> feedkeys(matchstr(x, '\v^\S+\ze.*') . (a:1 ? 'P' : 'p'), 'x')},
+          \ 'options': '--prompt="Reg> "'
+          \ }
+    call fzf#run(fzf#wrap(l:opts))
+  endfunction
+
+  command! -bang Registers call s:registers('<bang>' ==# '!')
+
+  nnoremap <Space>y :<C-u>Registers<CR>
 else
   " CtrlP
   " <Nop>という文字列になってしまうことがあった。
@@ -641,6 +663,9 @@ endfunction
 "   let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n") 
 "   exe 'so ' . mycolors[localtime() % len(mycolors)]
 " endfun
+
+
 "}}}
+"
 " 過去の遺産{{{
 "}}}
