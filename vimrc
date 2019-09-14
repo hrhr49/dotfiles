@@ -261,7 +261,7 @@ try
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   " Plug 'sjl/gundo.vim'
-  " Plug 'francoiscabrol/ranger.vim'
+  Plug 'francoiscabrol/ranger.vim'
   " Plug 'rbgrouleff/bclose.vim'
   Plug 'easymotion/vim-easymotion'
   " Plug 'junegunn/vim-easy-align'
@@ -444,29 +444,29 @@ let NERDTreeQuitOnOpen=1
 " let g:asyncomplete_auto_popup = 1
 
 if s:plug.is_installed("LanguageClient-neovim")
-" language server client
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['pyls'],
-    \ 'ruby': ['solargraph', 'stdio'],
-    \ 'c': ['clangd-6.0'],
-    \}
-" let g:LanguageClient_windowLogMessageLevel = 'Info'
-" let g:LanguageClient_diagnosticsEnable = 0
-" 横に表示される警告文などを出さない
-let g:LanguageClient_useVirtualText = 0
+  " language server client
+  let g:LanguageClient_serverCommands = {
+      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+      \ 'python': ['pyls'],
+      \ 'ruby': ['solargraph', 'stdio'],
+      \ 'c': ['clangd-6.0'],
+      \}
+  " let g:LanguageClient_windowLogMessageLevel = 'Info'
+  " let g:LanguageClient_diagnosticsEnable = 0
+  " 横に表示される警告文などを出さない
+  let g:LanguageClient_useVirtualText = 0
 
 
-"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <F2> :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-vnoremap <silent> gq :call LanguageClient#textDocument_formatting_sync()<CR>
-nnoremap <silent> <F3> :call LanguageClient#textDocument_rename()<CR>
+  "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+  nnoremap <F2> :call LanguageClient_contextMenu()<CR>
+  " Or map each action separately
+  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
+  vnoremap <silent> gq :call LanguageClient#textDocument_formatting_sync()<CR>
+  nnoremap <silent> <F3> :call LanguageClient#textDocument_rename()<CR>
 endif
 
 " gdb使用の設定
@@ -647,14 +647,14 @@ endfunction
 " nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 " rangerの設定
-" function RangerExplorer()
-"     exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
-"     if filereadable('/tmp/vim_ranger_current_file')
-"         exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
-"         call system('rm /tmp/vim_ranger_current_file')
-"     endif
-"     redraw!
-" endfun
+function RangerExplorer()
+    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+    if filereadable('/tmp/vim_ranger_current_file')
+        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
+        call system('rm /tmp/vim_ranger_current_file')
+    endif
+    redraw!
+endfun
 " map <Leader>x :call RangerExplorer()<CR>
 " map <Space>x :call RangerExplorer()<CR>
 
@@ -666,6 +666,5 @@ endfunction
 
 
 "}}}
-"
 " 過去の遺産{{{
 "}}}
