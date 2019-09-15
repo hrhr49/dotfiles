@@ -1,4 +1,22 @@
+# vim:set foldmethod=marker foldlevel=0:
 # bashrc, zshrc共通の設定。source このファイルのパスを実行して読み込む
+# 注意: fasdの設定を行ったあとにz関数定義をしなければ上書きされてしまう
+
+# 外部コマンド設定{{{
+# nvimが存在すればそれをvimとして使用
+if type "nvim" > /dev/null 2>&1; then
+    export EDITOR=nvim
+    export VISUAL=nvim
+    alias vim=nvim
+    alias vi=nvim
+fi
+
+# fasdが存在すれば初期化
+if type "fasd" > /dev/null 2>&1; then
+    eval "$(fasd --init auto)"
+fi
+# }}}
+# シェル関数{{{
 
 # zコマンドでMRUファイルをfzfできる(fasdが必要)
 # 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
@@ -39,7 +57,8 @@ env \
 gcd () {
 [[ ! -z $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1"
 }
-
+# }}}
+# エイリアス{{{
 # aptのエイリアス
 alias apts="apt search"
 alias apti="sudo apt install"
@@ -96,3 +115,4 @@ export PIPENV_VENV_IN_PROJECT=1
 
 # xコマンドでアプリで開く
 alias x='xdg-open'
+# }}}

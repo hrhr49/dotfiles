@@ -105,3 +105,6 @@ setopt nolistbeep
 # ビープ音を出さない
 setopt no_beep
 # }}}
+# 外部コマンド設定 {{{
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# }}}
