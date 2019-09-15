@@ -260,9 +260,9 @@ try
  
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
-  " Plug 'sjl/gundo.vim'
+  Plug 'sjl/gundo.vim'
   Plug 'francoiscabrol/ranger.vim'
-  " Plug 'rbgrouleff/bclose.vim'
+  Plug 'rbgrouleff/bclose.vim'
   Plug 'easymotion/vim-easymotion'
   " Plug 'junegunn/vim-easy-align'
   Plug 'LeafCage/yankround.vim'
@@ -476,7 +476,8 @@ endif
 " let g:termdebug_wide = 163
 
 " Gundoの設定
-nnoremap <F9> :GundoToggle<CR>
+nnoremap <F9> :<C-u>GundoToggle<CR>
+nnoremap <Space>u :<C-u>GundoToggle<CR>
 
 " rangerの設定
 if executable("ranger")
@@ -503,6 +504,12 @@ map  <Space>w <Plug>(easymotion-bd-w)
 
 " Easy Alignの設定
 " vmap ga <Plug>(EasyAlign)
+
+" Aligntaの設定
+if s:plug.is_installed("vim-alignta")
+  vnoremap gs :Alignta \s\+<CR>
+endif
+
 
 " nmap <Leader>L <Plug>(easymotion-overwin-line)
 " yankroundの設定

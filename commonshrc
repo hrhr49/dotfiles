@@ -13,13 +13,13 @@ z() {
 
 # rangerの多重起動を回避
 # 参考: https://wiki.archlinux.org/index.php/Ranger#Preventing_nested_ranger_instances
-ranger() {
-    if [ -z "$RANGER_LEVEL" ]; then
-        /usr/bin/ranger "$@"
-    else
-        exit
-    fi
-}
+# ranger() {
+#     if [ -z "$RANGER_LEVEL" ]; then
+#         /usr/bin/ranger "$@"
+#     else
+#         exit
+#     fi
+# }
 
 # manコマンドでカラー表示
 # http://momota.github.io/blog/2013/08/31/shell-man-color/
