@@ -1,0 +1,14 @@
+{
+  "languageserver": {
+    "clangd-6.0": {
+      "command": "clangd-6.0",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    }
+  },
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "coc.preferences.colorSupport": false,
+  "coc.preferences.enableFloatHighlight": false,
+  "highlight.colors.enable": false
+}

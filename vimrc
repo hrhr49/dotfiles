@@ -78,6 +78,12 @@ set laststatus=2
 " バッファ保存せずに移動できるようにする
 set hidden
 
+" homebrewで入れたpython3の認識をさせる。
+" なぜかpython3だけ明示的に指定しなければ認識してくれなかった。
+if executable('/home/linuxbrew/.linuxbrew/bin/python3')
+  let g:python3_host_prog='/home/linuxbrew/.linuxbrew/bin/python3'
+endif
+
 " }}}
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
@@ -145,7 +151,7 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 " ファイル別設定{{{
 augroup RunProgram
 autocmd!
-autocmd FileType python nnoremap <buffer> <F5> :w\|!python %<CR>
+autocmd FileType python nnoremap <buffer> <F5> :w\|!python3 %<CR>
 autocmd FileType ruby nnoremap <buffer> <F5> :w\|!ruby %<CR>
 autocmd FileType perl nnoremap <buffer> <F5> :w\|!perl %<CR>
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
