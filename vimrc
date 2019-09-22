@@ -13,6 +13,7 @@ syntax on
 let g:netrw_keepdir = 0
 "let g:markdown_folding=1
 "set completeopt+=longest
+set foldmethod=marker
 
 " show foldings
 "set foldcolumn=1
@@ -281,6 +282,10 @@ try
   Plug 'tpope/vim-surround'
   Plug 'h1mesuke/vim-alignta'
   " Plug 'junegunn/vim-easy-align'
+
+  " vim-markdownにはtabularが必要っぽい
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -390,6 +395,7 @@ if executable('fzf')
   command! -bang Registers call s:registers('<bang>' ==# '!')
 
   nnoremap <Space>y :<C-u>Registers<CR>
+  nnoremap <Space>" :<C-u>Registers<CR>
 else
   " CtrlP
   " <Nop>という文字列になってしまうことがあった。
@@ -588,6 +594,10 @@ let g:lightline = {
       \ },
       \ }
 
+if s:plug.is_installed("plasticboy/vim-markdown")
+  let g:vim_markdown_conceal_code_blocks = 0
+  let g:vim_markdown_folding_disabled = 1
+endif
 "}}}
 " 表示{{{
 try
