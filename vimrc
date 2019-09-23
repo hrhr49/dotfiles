@@ -545,6 +545,17 @@ endif
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
+" coc.nvimの設定
+" 以下にインストールするパッケージ一覧を設定
+let g:coc_global_extensions = [
+      \ "coc-python",
+      \ "coc-tsserver",
+      \ "coc-json",
+      \ "coc-html",
+      \ "coc-css",
+      \ "coc-vimlsp",
+      \]
+
 function! s:my_coc_nvim_config()
   " coc.nvimの設定
   setl updatetime=300
@@ -751,6 +762,10 @@ endfun
 "   exe 'so ' . mycolors[localtime() % len(mycolors)]
 " endfun
 
+" ~/.local/.vimrcが存在すればそれを読み込む
+if filereadable(expand($HOME.'/.local/.vimrc'))
+  source $HOME/.local/.vimrc
+endif
 
 "}}}
 " 過去の遺産{{{
