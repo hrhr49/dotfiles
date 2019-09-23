@@ -10,5 +10,6 @@
   "python.linting.flake8Enabled": true,
   "coc.preferences.colorSupport": false,
   "coc.preferences.enableFloatHighlight": false,
-  "highlight.colors.enable": false
+  "highlight.colors.enable": false,
+  "python.pythonPath": "/home/hirakawa/anaconda3/bin/python"
 }

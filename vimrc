@@ -286,6 +286,8 @@ try
   " vim-markdownにはtabularが必要っぽい
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
+  " Plug 'luochen1990/rainbow'
+  Plug 'kien/rainbow_parentheses.vim'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -549,8 +551,8 @@ function! s:my_coc_nvim_config()
   setl shortmess+=c
   setl signcolumn=yes
   " Use `[c` and `]c` to navigate diagnostics
-  nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
-  nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
+  " nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
+  " nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
 
   " Rem<buffer> ap keys for gotos
   nmap <buffer> <silent> gd <Plug>(coc-definition)
@@ -598,10 +600,72 @@ if s:plug.is_installed("plasticboy/vim-markdown")
   let g:vim_markdown_conceal_code_blocks = 0
   let g:vim_markdown_folding_disabled = 1
 endif
+
+" luochen1990/rainbow
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\	'guis': [''],
+\	'cterms': [''],
+\	'operators': '_,_',
+\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\	'separately': {
+\		'*': {},
+\		'markdown': {
+\			'parentheses_options': 'containedin=markdownCode contained', 
+\		},
+\		'lisp': {
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
+\		},
+\		'haskell': {
+\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
+\		},
+\		'vim': {
+\			'parentheses_options': 'containedin=vimFuncBody', 
+\		},
+\		'perl': {
+\			'syn_name_prefix': 'perlBlockFoldRainbow', 
+\		},
+\		'stylus': {
+\			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'], 
+\		},
+\		'css': 0, 
+\	}
+\}
+
+if s:plug.is_installed('rainbow_parentheses.vim')
+  let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['gray',        'RoyalBlue3'],
+        \ ['black',       'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+  let g:rbpt_max = 16
+  let g:rbpt_loadcmd_toggle = 0
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
+endif
+
 "}}}
 " 表示{{{
 try
-colorscheme molokai
+" colorscheme molokai
+colorscheme Monokai
 " colorscheme ayu
 " colorscheme gruvbox
 catch
@@ -615,7 +679,7 @@ endtry
 
 " 対応カッコの色設定を変更(そのままだとわかりづらいときあった)
 " 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+" hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " hilight current line number
 set cursorline
