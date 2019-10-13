@@ -152,7 +152,7 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 " ファイル別設定{{{
 augroup RunProgram
 autocmd!
-autocmd FileType python nnoremap <buffer> <F5> :w\|!python3 %<CR>
+autocmd FileType python nnoremap <buffer> <F5> :w\|!python %<CR>
 autocmd FileType ruby nnoremap <buffer> <F5> :w\|!ruby %<CR>
 autocmd FileType perl nnoremap <buffer> <F5> :w\|!perl %<CR>
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
@@ -284,8 +284,8 @@ try
   " Plug 'junegunn/vim-easy-align'
 
   " vim-markdownにはtabularが必要っぽい
-  Plug 'godlygeek/tabular'
-  Plug 'plasticboy/vim-markdown'
+  " Plug 'godlygeek/tabular'
+  " Plug 'plasticboy/vim-markdown'
   " Plug 'luochen1990/rainbow'
   Plug 'kien/rainbow_parentheses.vim'
   call plug#end()
@@ -596,14 +596,19 @@ function! s:show_documentation()
 endfunction
 
 " lightline
+function! GetCWD30()
+  return getcwd()[-30:]
+endfunction
+
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace'] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'fugitive#head',
+      \   'workspace': 'GetCWD30'
       \ },
       \ }
 
