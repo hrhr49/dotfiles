@@ -40,7 +40,8 @@ init_dotfiles:
 	echo "source-file ${PWD}/tmux.conf" >> $(HOME)/.tmux.conf
 	echo "source ${PWD}/vimrc" >> $(HOME)/.vimrc
 	echo "source ${PWD}/config/nvim/init.vim" >> $(HOME)/.config/nvim/init.vim
-	echo "source ${PWD}/config/nvim/coc-settings.json" >> $(HOME)/.config/nvim/coc-settings.json
+	echo "source ${PWD}/profile" >> $(HOME)/.profile
+	#echo "source ${PWD}/config/nvim/coc-settings.json" >> $(HOME)/.config/nvim/coc-settings.json
 
 # grub参考 https://qiita.com/ucan-lab/items/1608b4140ac0b1797144
 init_install:

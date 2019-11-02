@@ -204,8 +204,9 @@ try
   " Plug 'junegunn/fzf.vim'
   " ファイルなどのあいまい検索
   if executable('fzf')
-    Plug '~/.fzf/'
+    " Plug '~/.fzf/'
     Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf'
   else
     Plug 'ctrlpvim/ctrlp.vim'
     " Plug 'ompugao/ctrlp-history'
@@ -704,6 +705,9 @@ set cursorline
 set conceallevel=0
 " 80列目の色を変える
 set colorcolumn=80
+
+" 200桁以上の行はシンタックスハイライトしない
+set synmaxcol=250
 
 if has('nvim')
   if has('+pumblend')

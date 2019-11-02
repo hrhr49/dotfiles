@@ -2,19 +2,19 @@
 
 # パッケージマネージャでインストールできないもののみにしておく
 formulas=(
-    "--without-etcdir zsh"
-    git
-    tree
-    htop
-    ctagsk
+    # "--without-etcdir zsh"
+#    git
+#    tree
+#    htop
+#    ctagsk
     node
-    python3
+#    python3
     neovim
     ripgrep
-    ag
-    fzf
+#    ag
+#    fzf
     fasd
-    ranger
+#    ranger
 )
 
 for formula in "${formulas[@]}"; do

@@ -121,4 +121,9 @@ export PIPENV_VENV_IN_PROJECT=1
 
 # xコマンドでアプリで開く
 alias x='xdg-open'
+
+# tmuxのIDEライクな画面分割(参考:https://egapool.hatenablog.com/entry/2019/07/26/122608)
+alias ide='tmux split-window -v -p 30;
+tmux split-window -h -p 66;
+tmux split-window -h -p 50;'
 # }}}

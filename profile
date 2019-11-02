@@ -3,6 +3,16 @@
 # .profileが読み込まれないみたい
 
 # homebrew経由のpython3をデフォルトで使用するように、PATHの先頭にpython3のパスを追加
-if [ -d "/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin" ] ; then
-  export PATH="/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin:$PATH"
+# if [ -d "/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin" ] ; then
+#   export PATH="/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin:$PATH"
+# fi
+
+# gnomeがいるときにはxinitrcが無視される可能性があるため,明示的に.profileから呼び出す
+if [ -e "$HOME/.xinitrc" ] ; then
+    source "$HOME/.xinitrc"
+fi
+
+
+if type "xfce4-terminal" > /dev/null 2>&1; then
+    export TERMINAL="xfce4-terminal"
 fi
