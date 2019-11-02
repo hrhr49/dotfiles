@@ -20,6 +20,11 @@ if [ -d "/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin" ] ; then
   export PATH="/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin:$PATH"
 fi
 
+# xselを使ってbpcopyにエイリアス
+if type "xsel" > /dev/null 2>&1; then
+# 参考: https://qiita.com/Kzno/items/6f2fa98256bdffb0fd43
+    alias pbcopy='xsel --clipboard --input'
+fi
 
 # }}}
 # シェル関数{{{
@@ -126,4 +131,6 @@ alias x='xdg-open'
 alias ide='tmux split-window -v -p 30;
 tmux split-window -h -p 66;
 tmux split-window -h -p 50;'
+
+
 # }}}

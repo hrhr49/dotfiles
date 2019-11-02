@@ -52,7 +52,7 @@ init_install:
 	htop unzip fasd zsh python3-dev
 
 init_gui_install:
-	$(INSTALL) rofi sxiv zathura chromium-browser
+	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel
 
 # 初回設定で欲しいけど必須じゃないもの
 init_option:
