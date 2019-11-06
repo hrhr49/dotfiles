@@ -1,4 +1,22 @@
 # vim:set foldmethod=marker foldlevel=0:
+# プラグイン{{{
+# # 起動が遅くなるので使用しない
+# if [ -f ~/.zplug/init.zsh ];
+# then
+#     source ~/.zplug/init.zsh
+#     zplug "zsh-users/zsh-autosuggestions"
+
+#     # Install plugins if there are plugins that have not been installed
+#     if ! zplug check --verbose; then
+#       printf "Install? [y/N]: "
+#       if read -q; then
+#         echo; zplug install
+#       fi
+#     fi
+#     # Then, source plugins and add commands to $PATH
+#     zplug load
+# fi
+#}}}
 # プロンプト設定{{{
 # http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
 # この行は現在のパスを表示する設定です。ブランチを表示して色をつける設定とは関係ありません

@@ -283,7 +283,7 @@ exec xrandr --output LVDS-1 --off --output DP-1 --off --output HDMI-1 --mode 192
 bindsym ctrl+space exec rofi -show window
 
 # チートシート閲覧用
-bindsym $mod+z exec chromium-browser `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu`
+bindsym $mod+z exec google-chrome `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu`
 
 # unbindsym $mod+d
 # bindsym $mod+d exec rofi -show run

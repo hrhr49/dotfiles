@@ -289,6 +289,7 @@ try
   " Plug 'plasticboy/vim-markdown'
   " Plug 'luochen1990/rainbow'
   Plug 'kien/rainbow_parentheses.vim'
+  Plug 'ap/vim-css-color'
   call plug#end()
 catch
   echo 'vim-plug is not found'
