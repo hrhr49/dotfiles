@@ -679,6 +679,28 @@ if s:plug.is_installed('rainbow_parentheses.vim')
   au Syntax * RainbowParenthesesLoadBraces
 endif
 
+" emmet
+" HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
+let g:user_emmet_settings = {
+\  'variables' : {
+\    'lang' : "ja"
+\  },
+\  'html' : {
+\    'indentation' : '  ',
+\    'snippets' : {
+\      'html:5': "<!DOCTYPE html>\n"
+\        ."<html lang=\"${lang}\">\n"
+\        ."<head>\n"
+\        ."\t<meta charset=\"${charset}\">\n"
+\        ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"
+\        ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+\        ."\t<title></title>\n"
+\        ."</head>\n"
+\        ."<body>\n\t${child}|\n</body>\n"
+\        ."</html>",
+\    }
+\  }
+\}
 "}}}
 " 表示{{{
 try
