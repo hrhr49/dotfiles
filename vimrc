@@ -400,6 +400,11 @@ if executable('fzf')
 
   nnoremap <Space>y :<C-u>Registers<CR>
   nnoremap <Space>" :<C-u>Registers<CR>
+
+  imap <c-x><c-k> <plug>(fzf-complete-word)
+  imap <c-x><c-f> <plug>(fzf-complete-path)
+  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+  imap <c-x><c-l> <plug>(fzf-complete-line)
 else
   " CtrlP
   " <Nop>という文字列になってしまうことがあった。
