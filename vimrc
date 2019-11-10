@@ -287,6 +287,11 @@ try
   " vim-markdownにはtabularが必要っぽい
   " Plug 'godlygeek/tabular'
   " Plug 'plasticboy/vim-markdown'
+
+  " markdown-previewのほうがkatexやplantuml対応でいい感じ(要node + yarn)
+  " If you have nodejs and yarn
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+
   " Plug 'luochen1990/rainbow'
   Plug 'kien/rainbow_parentheses.vim'
   Plug 'ap/vim-css-color'
@@ -561,6 +566,7 @@ let g:coc_global_extensions = [
       \ "coc-html",
       \ "coc-css",
       \ "coc-vimlsp",
+      \ "coc-marketplace",
       \]
 
 function! s:my_coc_nvim_config()
