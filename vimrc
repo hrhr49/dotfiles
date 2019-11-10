@@ -84,7 +84,7 @@ set hidden
 
 " homebrewで入れたpython3の認識をさせる。
 " なぜかpython3だけ明示的に指定しなければ認識してくれなかった。
-if executable('/home/linuxbrew/.linuxbrew/bin/python3')
+if executable('/home/linuxbrew/.linuxbrew/bin/python3') > 0
   let g:python3_host_prog='/home/linuxbrew/.linuxbrew/bin/python3'
 endif
 
@@ -206,7 +206,7 @@ try
   " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Plug 'junegunn/fzf.vim'
   " ファイルなどのあいまい検索
-  if executable('fzf')
+  if executable('fzf') > 0
     " Plug '~/.fzf/'
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf'
@@ -291,9 +291,13 @@ try
   " Plug 'godlygeek/tabular'
   " Plug 'plasticboy/vim-markdown'
 
-  " markdown-previewのほうがkatexやplantuml対応でいい感じ(要node + yarn)
-  " If you have nodejs and yarn
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+  " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
+  if executable('node') > 0 && executable('yarn') > 0
+    " If you have nodejs and yarn
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+  else
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+  endif
 
   " Plug 'luochen1990/rainbow'
   Plug 'kien/rainbow_parentheses.vim'
@@ -352,7 +356,7 @@ autocmd FileType python setlocal completeopt-=preview "ポップアップを表�
 "map [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 "map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 
-if executable('fzf')
+if executable('fzf') > 0
   " fzf
   nnoremap <Space>t :<C-u>BTags<CR>
   nnoremap <Space><S-t> :<C-u>Tags<CR>
@@ -378,7 +382,7 @@ if executable('fzf')
   nnoremap <Space>m :<C-u>Files ~/memo/<CR>
   " nnoremap <Space>: :<C-u>History:<CR>
   nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
-  if executable('rg')
+  if executable('rg') > 0
     nnoremap <Space>a :<C-u>Rg<CR>
   else
     nnoremap <Space>a :<C-u>Ag<CR>
@@ -509,7 +513,7 @@ nnoremap <F9> :<C-u>GundoToggle<CR>
 nnoremap <Space>u :<C-u>GundoToggle<CR>
 
 " rangerの設定
-if executable("ranger")
+if executable("ranger") > 0
     nnoremap <Space>f :Ranger<CR>
 endif
 
