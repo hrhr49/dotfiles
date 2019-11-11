@@ -12,5 +12,5 @@
   "coc.preferences.colorSupport": false,
   "coc.preferences.enableFloatHighlight": false,
   "highlight.colors.enable": false,
-  "python.pythonPath": "/home/hirakawa/anaconda3/bin/python"
+  "python.pythonPath": "~/anaconda3/bin/python"
 }

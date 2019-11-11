@@ -84,8 +84,11 @@ set hidden
 
 " homebrewで入れたpython3の認識をさせる。
 " なぜかpython3だけ明示的に指定しなければ認識してくれなかった。
-if executable('/home/linuxbrew/.linuxbrew/bin/python3') > 0
-  let g:python3_host_prog='/home/linuxbrew/.linuxbrew/bin/python3'
+" if executable('/home/linuxbrew/.linuxbrew/bin/python3') > 0
+"   let g:python3_host_prog='/home/linuxbrew/.linuxbrew/bin/python3'
+" endif
+if executable($HOME . '/anaconda3/bin/python') > 0
+  let g:python3_host_prog=$HOME . '/anaconda3/bin/python'
 endif
 
 " }}}
@@ -100,8 +103,8 @@ inoremap <C-;> <Esc>cgn
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
-nnoremap n nzz
-nnoremap N Nzz
+nnoremap n nzzzv
+nnoremap N Nzzzv
 nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
 nnoremap <Space>j <C-f>
 nnoremap <Space>k <C-b>
@@ -198,7 +201,6 @@ try
 
   " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
-
 
   Plug 'scrooloose/nerdtree'
 
@@ -302,15 +304,25 @@ try
   " Plug 'luochen1990/rainbow'
   Plug 'kien/rainbow_parentheses.vim'
   Plug 'ap/vim-css-color'
+
+  " snippets
+  " Track the engine.
+  " Plug 'SirVer/ultisnips'
+
+  " Snippets are separated from the engine. Add this if you want them:
+  " Plug 'honza/vim-snippets'
+
   call plug#end()
 catch
   echo 'vim-plug is not found'
+  echo v:exception
+  echo v:throwpoint
 endtry
 
-""}}}
+"}}}
 " プラグイン設定{{{
 
-" プラグイン存在確認関数
+" プラグイン存在確認関数{{{
 let s:plug = {
       \ "plugs": get(g:, 'plugs', {})
       \ }
@@ -322,12 +334,14 @@ endfunction
 if s:plug.is_installed("vim-myplugin")
   " setting
 endif
-
+"}}}
+" deopelete{{{
 " let g:deopelete#ignore_case = 0
 " let g:deopelete#smart_case = 0
 " deopeleteの自動スタートアップで1秒ぐらいかかるときがある!
 let g:deoplete#enable_at_startup = 1
-
+"}}}
+" jedi{{{
 ""let g:jedi#use_tabs_not_buffers = 1 "補完で次の候補に進むときにtabを使えるという設定にしたつもりですができませんでした。
 "let g:jedi#popup_select_first = 0 "1個目の候補が入力されるっていう設定を解除
 "let g:jedi#popup_on_dot = 0 " .を入力すると補完が始まるという設定を解除
@@ -340,10 +354,11 @@ let g:deoplete#enable_at_startup = 1
 ""let g:jedi#rename_command = "<leader>R" "quick-runと競合しないように大文字Rに変更. READMEだと<leader>r
 "let g:jedi#smart_auto_mappings = 0 "勝手にimportを入力されるのがうざかったので
 "let g:jedi#show_call_signatures = 0 "関数の引数を表示しない(numpyやpandasだとうざかったので)
+"}}}
+
 autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
 
 " let g:ale_echo_cursor = 0
-
 
 "map [- <Plug>(IndentWisePreviousLesserIndent)
 "map [= <Plug>(IndentWisePreviousEqualIndent)
@@ -356,6 +371,7 @@ autocmd FileType python setlocal completeopt-=preview "ポップアップを表�
 "map [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 "map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 
+" fzf{{{
 if executable('fzf') > 0
   " fzf
   nnoremap <Space>t :<C-u>BTags<CR>
@@ -414,11 +430,13 @@ if executable('fzf') > 0
   nnoremap <Space>" :<C-u>Registers<CR>
 
   imap <c-x><c-k> <plug>(fzf-complete-word)
-  imap <c-x><c-f> <plug>(fzf-complete-path)
+  " imap <c-x><c-f> <plug>(fzf-complete-path)
+  imap <c-f> <plug>(fzf-complete-path)
   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
   imap <c-x><c-l> <plug>(fzf-complete-line)
+  "}}}
 else
-  " CtrlP
+  " CtrlP{{{
   " <Nop>という文字列になってしまうことがあった。
   " 空文字ならうまく行く？
   let g:ctrlp_map = ''
@@ -437,17 +455,17 @@ else
   nnoremap <Space>h :<C-u>CtrlPCmdHistory<CR>
   nnoremap <Space>s :<C-u>CtrlPSearchHistory<CR>
 endif
-
-" Tagbar
+"}}}
+" Tagbar{{{
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <Space>o :TagbarToggle<CR>
-
-" NERDTree
+"}}}
+" NERDTree{{{
 nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
 nnoremap <Space>E :<C-u>NERDTree<CR>
 let NERDTreeQuitOnOpen=1
-
-" " vim-lsp
+"}}}
+" vim-lsp{{{
 " if executable('pyls')
 " " pip install python-language-server
 " au User lsp_setup call lsp#register_server({
@@ -475,7 +493,8 @@ let NERDTreeQuitOnOpen=1
 " asynccomplete
 " let g:asyncomplete_smart_completion = 1
 " let g:asyncomplete_auto_popup = 1
-
+"}}}
+" LanguageClient{{{
 if s:plug.is_installed("LanguageClient-neovim")
   " language server client
   let g:LanguageClient_serverCommands = {
@@ -501,23 +520,23 @@ if s:plug.is_installed("LanguageClient-neovim")
   vnoremap <silent> gq :call LanguageClient#textDocument_formatting_sync()<CR>
   nnoremap <silent> <F3> :call LanguageClient#textDocument_rename()<CR>
 endif
+"}}}
 
 " gdb使用の設定
 " packadd termdebug
 
 " gdb使用の設定
 " let g:termdebug_wide = 163
-
-" Gundoの設定
+" Gundo{{{
 nnoremap <F9> :<C-u>GundoToggle<CR>
 nnoremap <Space>u :<C-u>GundoToggle<CR>
-
-" rangerの設定
+"}}}
+" ranger{{{
 if executable("ranger") > 0
     nnoremap <Space>f :Ranger<CR>
 endif
-
-" EasyMotionの設定
+"}}}
+" EasyMotion{{{
 " <Leader>f{char} to move to {char}
 " map  <Leader>f <Plug>(easymotion-bd-f)
 " nmap <Leader>f <Plug>(easymotion-overwin-f)
@@ -534,18 +553,17 @@ map  <Space>w <Plug>(easymotion-bd-w)
 " map  <Space>w <Plug>(easymotion-bd-w)
 
 " nmap <Leader>w <Plug>(easymotion-overwin-w)
-
-" Easy Alignの設定
+" nmap <Leader>L <Plug>(easymotion-overwin-line)
+"}}}
+" Easy Alignの設定{{{
 " vmap ga <Plug>(EasyAlign)
-
-" Aligntaの設定
+"}}}
+" Aligntaの設定{{{
 if s:plug.is_installed("vim-alignta")
   vnoremap gs :Alignta \s\+<CR>
 endif
-
-
-" nmap <Leader>L <Plug>(easymotion-overwin-line)
-" yankroundの設定
+"}}}
+" yankroundの設定{{{
 if s:plug.is_installed("yankround.vim")
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
@@ -559,12 +577,12 @@ let g:yankround_max_history = 50
 " 下なんかうまく動かない
 " nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 endif
-
-" yankstackの設定
+"}}}
+" yankstackの設定{{{
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
-
-" coc.nvimの設定
+"}}}
+" coc.nvimの設定{{{
 " 以下にインストールするパッケージ一覧を設定
 let g:coc_global_extensions = [
       \ "coc-python",
@@ -574,7 +592,9 @@ let g:coc_global_extensions = [
       \ "coc-css",
       \ "coc-vimlsp",
       \ "coc-marketplace",
+      \ "coc-highlight",
       \]
+
 
 function! s:my_coc_nvim_config()
   " coc.nvimの設定
@@ -615,7 +635,22 @@ function! s:show_documentation()
   endif
 endfunction
 
-" lightline
+" coc-snippets
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+
+" let g:coc_snippet_next = '<tab>'
+
+"}}}
+" lightline{{{
 function! GetCWD30()
   return getcwd()[-30:]
 endfunction
@@ -631,14 +666,16 @@ let g:lightline = {
       \   'workspace': 'GetCWD30'
       \ },
       \ }
-
+"}}}
+" vim-markdown{{{
 if s:plug.is_installed("plasticboy/vim-markdown")
   let g:vim_markdown_conceal_code_blocks = 0
   let g:vim_markdown_folding_disabled = 1
 endif
-
-" luochen1990/rainbow
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+"}}}
+" luochen1990/rainbow{{{
+"set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 1
 let g:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
@@ -696,8 +733,8 @@ if s:plug.is_installed('rainbow_parentheses.vim')
   au Syntax * RainbowParenthesesLoadSquare
   au Syntax * RainbowParenthesesLoadBraces
 endif
-
-" emmet
+"}}}
+" emmet{{{
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
 let g:user_emmet_settings = {
 \  'variables' : {
@@ -719,6 +756,21 @@ let g:user_emmet_settings = {
 \    }
 \  }
 \}
+"}}}
+" indentline{{{
+let g:indentLine_setConceal = 0
+"}}}
+" ultisnips{{{
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
+
+" let g:UltiSnipsSnippetsDir = "~/memo/dotfiles/vim/UltiSnips"
+"}}}
 "}}}
 " 表示{{{
 try
