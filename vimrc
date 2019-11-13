@@ -434,7 +434,7 @@ if executable('fzf') > 0
 
   imap <c-x><c-k> <plug>(fzf-complete-word)
   " imap <c-x><c-f> <plug>(fzf-complete-path)
-  imap <c-f> <plug>(fzf-complete-path)
+  " imap <c-f> <plug>(fzf-complete-path)
   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
   imap <c-x><c-l> <plug>(fzf-complete-line)
   "}}}
@@ -638,19 +638,20 @@ function! s:show_documentation()
   endif
 endfunction
 
-" coc-snippets
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? coc#_select_confirm() :
-"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
+" Use <C-l> for trigger snippet expand.
+imap <C-e> <Plug>(coc-snippets-expand)
 
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-f> <Plug>(coc-snippets-select)
 
-" let g:coc_snippet_next = '<tab>'
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-f>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-b>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-f> <Plug>(coc-snippets-expand-jump)
 
 "}}}
 " lightline{{{
@@ -773,6 +774,10 @@ let g:indentLine_setConceal = 0
 " let g:UltiSnipsEditSplit="vertical"
 
 " let g:UltiSnipsSnippetsDir = "~/memo/dotfiles/vim/UltiSnips"
+"}}}
+" markdown-preview{{{
+" バッファ移動時に勝手に閉じないようにする
+let g:mkdp_auto_close = 0
 "}}}
 "}}}
 " 表示{{{
