@@ -280,7 +280,9 @@ exec xrandr --output LVDS-1 --off --output DP-1 --off --output HDMI-1 --mode 192
 
 
 # キーマップ。なぜかspaceのsを大文字にするとうまく行かない
-bindsym ctrl+space exec rofi -show window
+# アプリでのキーバインドとのバッティングのため変更
+# bindsym ctrl+space exec rofi -show window
+bindsym $mod+i exec rofi -show window
 
 # チートシート閲覧用
 bindsym $mod+z exec google-chrome `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu`

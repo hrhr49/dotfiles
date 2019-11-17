@@ -97,7 +97,7 @@ inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 inoremap <C-u> <C-g>u<C-u>
 inoremap jj <ESC>
-inoremap jk <C-n>
+inoremap jk <ESC>
 inoremap <C-k> <Esc>gg/aaa<CR>cgn
 inoremap <C-;> <Esc>cgn
 nnoremap <C-l> :noh<CR><C-l>
@@ -108,6 +108,10 @@ nnoremap N Nzzzv
 nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
 nnoremap <Space>j <C-f>
 nnoremap <Space>k <C-b>
+
+" Emacsライクなマッピング
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 
 nnoremap [window] <Nop>
 nmap s [window]
@@ -130,6 +134,31 @@ nnoremap [window]s <C-w>s
 nnoremap [window]t :tabnew<CR>
 nnoremap [window]u <C-u>
 nnoremap [window]v <C-w>v
+nnoremap [window]1 1gt
+nnoremap [window]2 2gt
+nnoremap [window]3 3gt
+nnoremap [window]4 4gt
+nnoremap [window]5 5gt
+nnoremap [window]6 6gt
+nnoremap [window]7 7gt
+nnoremap [window]8 8gt
+nnoremap [window]9 9gt
+
+nnoremap [tab] <Nop>
+nmap t [tab]
+nnoremap [tab]1 0gt
+nnoremap [tab]2 1gt
+nnoremap [tab]3 2gt
+nnoremap [tab]4 3gt
+nnoremap [tab]5 4gt
+nnoremap [tab]6 5gt
+nnoremap [tab]7 6gt
+nnoremap [tab]8 7gt
+nnoremap [tab]9 8gt
+nnoremap [tab]n :tabm+<CR>
+nnoremap [tab]p :tabm-<CR>
+nnoremap [tab]o :tabonly<CR>
+nnoremap [tab]q :tabclose<CR>
 
 nnoremap <F6> :make<CR>
 nnoremap <C-S-e> :Ex<CR>
@@ -359,7 +388,7 @@ let g:deoplete#enable_at_startup = 1
 "let g:jedi#show_call_signatures = 0 "関数の引数を表示しない(numpyやpandasだとうざかったので)
 "}}}
 
-autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
+"autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
 
 " let g:ale_echo_cursor = 0
 
@@ -596,6 +625,9 @@ let g:coc_global_extensions = [
       \ "coc-vimlsp",
       \ "coc-marketplace",
       \ "coc-highlight",
+      \ "coc-snippets",
+      \ "coc-go",
+      \ "coc-rls",
       \]
 
 
@@ -604,6 +636,10 @@ function! s:my_coc_nvim_config()
   setl updatetime=300
   setl shortmess+=c
   setl signcolumn=yes
+
+  " Use <c-space> to trigger completion.
+  inoremap <silent><expr> <c-space> coc#refresh()
+
   " Use `[c` and `]c` to navigate diagnostics
   " nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
   " nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
@@ -622,6 +658,8 @@ function! s:my_coc_nvim_config()
   nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
   nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
   hi clear CocUnderLine 
+  " Use auocmd to force lightline update.
+  autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 endfunction
 
 autocmd FileType python call s:my_coc_nvim_config()
@@ -638,20 +676,18 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Use <C-l> for trigger snippet expand.
-imap <C-e> <Plug>(coc-snippets-expand)
+inoremap <silent><expr> <c-f>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<c-f>" :
+      \ coc#refresh()
 
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-f> <Plug>(coc-snippets-select)
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-f>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-b>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-f> <Plug>(coc-snippets-expand-jump)
 
 "}}}
 " lightline{{{
@@ -663,11 +699,12 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace'] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace', 'cocstatus'] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
-      \   'workspace': 'GetCWD30'
+      \   'workspace': 'GetCWD30',
+      \   'cocstatus': 'coc#status'
       \ },
       \ }
 "}}}
