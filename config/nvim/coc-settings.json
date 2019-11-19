@@ -9,6 +9,7 @@
   "python.linting.pylintEnabled": false,
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": true,
   "coc.preferences.colorSupport": false,
   "coc.preferences.enableFloatHighlight": false,
   "highlight.colors.enable": false,
