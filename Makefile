@@ -49,7 +49,7 @@ init_install:
 	echo grub-pc hold | dpkg --set-selections # grubの更新ウィザードがうざいので除外
 	$(INSTALL_UPGRADE)
 	$(INSTALL) build-essential coreutils vim tmux git ranger \
-	htop unzip fasd zsh python3-dev
+	htop unzip fasd zsh python3-dev ffmpegthumbnailer
 
 init_gui_install:
 	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel

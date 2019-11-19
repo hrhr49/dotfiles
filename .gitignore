@@ -1,1 +1,3 @@
 config/nvim/coc-settings.json
+.mypy_cache/
+__pycache__/

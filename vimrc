@@ -344,6 +344,10 @@ try
   " ターミナルデバッガ
   Plug 'epheien/termdbg'
 
+  if executable('go') > 0
+    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+  endif
+
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -462,6 +466,7 @@ if executable('fzf') > 0
   nnoremap <Space>" :<C-u>Registers<CR>
 
   imap <c-x><c-k> <plug>(fzf-complete-word)
+  imap <c-x><c-p> <plug>(fzf-complete-path)
   " imap <c-x><c-f> <plug>(fzf-complete-path)
   " imap <c-f> <plug>(fzf-complete-path)
   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
@@ -626,9 +631,9 @@ let g:coc_global_extensions = [
       \ "coc-marketplace",
       \ "coc-highlight",
       \ "coc-snippets",
-      \ "coc-go",
       \ "coc-rls",
       \]
+      "\ "coc-go",
 
 
 function! s:my_coc_nvim_config()
@@ -657,16 +662,26 @@ function! s:my_coc_nvim_config()
   " Use `[g` and `]g` to navigate diagnostics
   nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
   nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
+  nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
   hi clear CocUnderLine 
-  " Use auocmd to force lightline update.
-  autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 endfunction
 
-autocmd FileType python call s:my_coc_nvim_config()
-autocmd FileType c call s:my_coc_nvim_config()
-autocmd FileType cpp call s:my_coc_nvim_config()
-autocmd FileType javascript call s:my_coc_nvim_config()
-autocmd FileType go call s:my_coc_nvim_config()
+augroup coc_group
+  autocmd!
+  autocmd FileType python call s:my_coc_nvim_config()
+  autocmd FileType c call s:my_coc_nvim_config()
+  autocmd FileType cpp call s:my_coc_nvim_config()
+  autocmd FileType javascript call s:my_coc_nvim_config()
+  autocmd FileType go call s:my_coc_nvim_config()
+
+  " 折りたたみが勝手に発動してしまうため、一時無効化
+  " Use auocmd to force lightline update.
+  " autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
+  " ハイライトは別にいらないので削除
+  " Highlight symbol under cursor on CursorHold
+  " autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup end
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -699,14 +714,14 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace', 'cocstatus'] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace'] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
-      \   'workspace': 'GetCWD30',
-      \   'cocstatus': 'coc#status'
+      \   'workspace': 'GetCWD30'
       \ },
       \ }
+      " \   'cocstatus': 'coc#status'
 "}}}
 " vim-markdown{{{
 if s:plug.is_installed("plasticboy/vim-markdown")
@@ -820,9 +835,9 @@ let g:mkdp_auto_close = 0
 " 表示{{{
 try
 " colorscheme molokai
-colorscheme Monokai
+" colorscheme Monokai
 " colorscheme ayu
-" colorscheme gruvbox
+colorscheme gruvbox
 catch
 endtry
 try
