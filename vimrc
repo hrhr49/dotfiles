@@ -98,8 +98,12 @@ inoremap <C-l> <C-x><C-l>
 inoremap <C-u> <C-g>u<C-u>
 inoremap jj <ESC>
 inoremap jk <ESC>
-inoremap <C-k> <Esc>gg/aaa<CR>cgn
-inoremap <C-;> <Esc>cgn
+" inoremap <C-k> <Esc>gg/aaa<CR>cgn
+" inoremap <C-;> <Esc>cgn
+" 以下のマッピングはうまく動かない
+" inoremap <C-CR> <End><CR>
+" inoremap <C-S-CR> <Up><End><CR>
+
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
@@ -196,6 +200,7 @@ autocmd FileType javascript nnoremap <buffer> <F5> :w\|!node %<CR>
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
+autocmd FileType nim setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
 autocmd FileType markdown nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
 autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathjax 
@@ -344,9 +349,13 @@ try
   " ターミナルデバッガ
   Plug 'epheien/termdbg'
 
-  if executable('go') > 0
-    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-  endif
+  " if executable('go') > 0
+  "   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+  " endif
+
+  " 様々な言語のパック。
+  " Markdownのときに勝手に箇条書きの点などついて面倒なので一時保留
+  " Plug 'sheerun/vim-polyglot'
 
   call plug#end()
 catch
@@ -410,6 +419,8 @@ let g:deoplete#enable_at_startup = 1
 " fzf{{{
 if executable('fzf') > 0
   " fzf
+  " <C-i>で全選択するように修正
+  let $FZF_DEFAULT_OPTS = '--bind ctrl-i:select-all,ctrl-d:deselect-all'
   nnoremap <Space>t :<C-u>BTags<CR>
   nnoremap <Space><S-t> :<C-u>Tags<CR>
   nnoremap <Space>p :<C-u>Files<CR>
@@ -438,6 +449,8 @@ if executable('fzf') > 0
     nnoremap <Space>a :<C-u>Rg<CR>
   else
     nnoremap <Space>a :<C-u>Ag<CR>
+    " <C-i>で全選択するように修正
+    " nnoremap <Space>a :<C-u>call fzf#vim#ag(<q-args>, '', { 'options': '--bind ctrl-i:select-all,ctrl-d:deselect-all' }, <bang>0)
   endif
   " 行補完
   imap <c-l> <plug>(fzf-complete-line)
@@ -574,6 +587,7 @@ if executable("ranger") > 0
 endif
 "}}}
 " EasyMotion{{{
+let g:EasyMotion_smartcase = 1
 " <Leader>f{char} to move to {char}
 " map  <Leader>f <Plug>(easymotion-bd-f)
 " nmap <Leader>f <Plug>(easymotion-overwin-f)
@@ -630,10 +644,10 @@ let g:coc_global_extensions = [
       \ "coc-vimlsp",
       \ "coc-marketplace",
       \ "coc-highlight",
-      \ "coc-snippets",
       \ "coc-rls",
+      \ "coc-go",
       \]
-      "\ "coc-go",
+      " \ "coc-snippets",
 
 
 function! s:my_coc_nvim_config()
@@ -673,6 +687,10 @@ augroup coc_group
   autocmd FileType cpp call s:my_coc_nvim_config()
   autocmd FileType javascript call s:my_coc_nvim_config()
   autocmd FileType go call s:my_coc_nvim_config()
+  autocmd FileType html call s:my_coc_nvim_config()
+  autocmd FileType css call s:my_coc_nvim_config()
+  autocmd FileType vim call s:my_coc_nvim_config()
+  autocmd FileType typescript call s:my_coc_nvim_config()
 
   " 折りたたみが勝手に発動してしまうため、一時無効化
   " Use auocmd to force lightline update.
@@ -691,18 +709,18 @@ function! s:show_documentation()
   endif
 endfunction
 
-inoremap <silent><expr> <c-f>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<c-f>" :
-      \ coc#refresh()
+" inoremap <silent><expr> <c-f>
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"       \ <SID>check_back_space() ? "\<c-f>" :
+"       \ coc#refresh()
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-let g:coc_snippet_next = '<c-f>'
+" let g:coc_snippet_next = '<c-f>'
 
 "}}}
 " lightline{{{
@@ -714,14 +732,14 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace'] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace', 'cocstatus'] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
-      \   'workspace': 'GetCWD30'
+      \   'workspace': 'GetCWD30',
+      \   'cocstatus': 'coc#status'
       \ },
       \ }
-      " \   'cocstatus': 'coc#status'
 "}}}
 " vim-markdown{{{
 if s:plug.is_installed("plasticboy/vim-markdown")
@@ -812,6 +830,7 @@ let g:user_emmet_settings = {
 \    }
 \  }
 \}
+" \    'block_all_childless' : 1,
 "}}}
 " indentline{{{
 let g:indentLine_setConceal = 0
@@ -833,11 +852,14 @@ let g:mkdp_auto_close = 0
 "}}}
 "}}}
 " 表示{{{
+
 try
 " colorscheme molokai
 " colorscheme Monokai
 " colorscheme ayu
 colorscheme gruvbox
+" colorscheme vim-material
+" colorscheme tender
 catch
 endtry
 try
@@ -873,6 +895,7 @@ if has('+termguicolors')
 " GUIカラーを使う
   set termguicolors
 endif
+
 
 "}}}
 " スクリプト{{{

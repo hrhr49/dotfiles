@@ -26,9 +26,9 @@ if type "xsel" > /dev/null 2>&1; then
     alias pbcopy='xsel --clipboard --input'
 fi
 
-# if type "go" > /dev/null 2>&1; then
-#     export GOPATH=$HOME/go
-# fi
+if type "go" > /dev/null 2>&1; then
+    export GOPATH=$HOME/go
+fi
 
 # }}}
 # シェル関数{{{
@@ -90,6 +90,7 @@ alias brewu="brew update"
 alias brews="brew search"
 # pipのエイリアス
 alias pipi="pip install"
+alias pips="pip search"
 
 # gitのエイリアス
 alias gits="git status"
@@ -123,6 +124,7 @@ cheatsheets() {
 # チートシートをvimで開く
 alias cheat='vim $(cheatsheets | fzf)'
 alias c='vim $(cheatsheets | fzf)'
+alias m='vim $(cheatsheets | fzf)'
 alias anyenv-hash='eval "$(anyenv init -)"'
 
 # pipenvのインストールディレクトリをプロジェクト直下にする
@@ -136,5 +138,16 @@ alias ide='tmux split-window -v -p 30;
 tmux split-window -h -p 66;
 tmux split-window -h -p 50;'
 
+# ghq(gitリポジトリ管理)
+alias ghqg='ghq get'
+alias ghql='ghq list'
+
+# ダウンロードしたリポジトリの格納場所へ移動
+# 参考:https://gist.github.com/d-kuro/f4453b93ab5e9ff60be351d7d49b1476
+alias repo='cd $(ghq list -p | fzf)'
+# 指定したリポジトリをgithubで開く(hubコマンドが必要)
+# 参考:https://qiita.com/itkrt2y/items/0671d1f48e66f21241e2
+alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
+alias github=gh
 
 # }}}
