@@ -15,6 +15,9 @@ formulas=(
 #    fzf
     fasd
 #    ranger
+    bat
+    ghq
+    hub
 )
 
 for formula in "${formulas[@]}"; do
