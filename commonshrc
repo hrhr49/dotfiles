@@ -72,6 +72,16 @@ env \
 gcd () {
 [[ ! -z $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1"
 }
+
+# cdnのURI取得
+cdn () {
+  if [ $# -eq 1 ]; then
+    curl -s "https://api.cdnjs.com/libraries/$1"|jq '.assets[0].files[]' |fzf
+  else
+    echo 'cdn {library-name}'
+  fi
+}
+
 # }}}
 # エイリアス{{{
 # aptのエイリアス

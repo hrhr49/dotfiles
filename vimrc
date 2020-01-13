@@ -475,6 +475,7 @@ if executable('fzf') > 0
 
   command! -bang Registers call s:registers('<bang>' ==# '!')
 
+
   nnoremap <Space>y :<C-u>Registers<CR>
   nnoremap <Space>" :<C-u>Registers<CR>
 
@@ -952,6 +953,45 @@ if filereadable(expand($HOME.'/.local/.vimrc'))
   source $HOME/.local/.vimrc
 endif
 
+" cdn貼り付け用コマンド
+function! s:cdn_tag(name, version, filename)
+  " htmlのタグを作成する
+  let l:uri = "https://cdnjs.cloudflare.com/ajax/libs/" . a:name . "/" . a:version . "/" . a:filename
+  if match(a:filename, 'js$') != -1
+    return '<script src="' . l:uri  . '" crossorigin="anonymous"></script>'
+  elseif match(a:filename, 'css$') != -1
+    return '<link rel="stylesheet" href="' . l:uri . '" crossorigin="anonymous" />'
+  else
+    return l:pathname
+  fi
+endfunction
+
+function! s:cdn_get_version(name)
+  let l:opts = {
+    \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[].version'' ',
+    \ 'sink': {x -> s:cdn_get_path(a:name, x)}
+    \ }
+  call fzf#run(fzf#wrap(l:opts))
+endfunction
+
+function! s:cdn_get_path(name, version)
+  let l:opts = {
+    \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[]|select(.version == "' . a:version . '")|.files[]'' ',
+    \ 'sink': {x -> append('.', s:cdn_tag(a:name, a:version, x))}
+    \ }
+  call fzf#run(fzf#wrap(l:opts))
+endfunction
+
+function! s:cdn(libname)
+  " ライブラリ名を取得
+  let l:opts = {
+    \ 'source': 'curl -s "https://api.cdnjs.com/libraries?search=' . a:libname . '"|jq --raw-output ''.results[].name'' ',
+    \ 'sink': {x -> s:cdn_get_version(x)}
+    \ }
+  call fzf#run(fzf#wrap(l:opts))
+endfunction
+
+command! -nargs=1 Cdn call s:cdn(<f-args>)
 "}}}
 " 過去の遺産{{{
 "}}}
