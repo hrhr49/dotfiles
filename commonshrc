@@ -154,7 +154,10 @@ alias ghql='ghq list'
 
 # ダウンロードしたリポジトリの格納場所へ移動
 # 参考:https://gist.github.com/d-kuro/f4453b93ab5e9ff60be351d7d49b1476
-alias repo='cd $(ghq list -p | fzf)'
+# alias repo='cd $(ghq list -p | fzf)'
+# 参考:https://qiita.com/tomoyamachi/items/e51d2906a5bb24cf1684
+# 上記のを少し修正。READMEを見ながら、選んだリポジトリの場所へ移動
+alias repo='cd $(ghq list -p| fzf --preview "bat --color=always --style=header,grid --line-range :80 {}/README.*")'
 # 指定したリポジトリをgithubで開く(hubコマンドが必要)
 # 参考:https://qiita.com/itkrt2y/items/0671d1f48e66f21241e2
 alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'

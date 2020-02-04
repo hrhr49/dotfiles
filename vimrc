@@ -195,9 +195,12 @@ autocmd FileType python nnoremap <buffer> <F5> :w\|!python %<CR>
 autocmd FileType ruby nnoremap <buffer> <F5> :w\|!ruby %<CR>
 autocmd FileType perl nnoremap <buffer> <F5> :w\|!perl %<CR>
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType go nnoremap <buffer> <F5> :w\|!go run %<CR>
 autocmd FileType javascript nnoremap <buffer> <F5> :w\|!node %<CR>
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2 expandtab
+"autocmd FileType typescript.tsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
 autocmd FileType nim setlocal ts=2 sts=2 sw=2 expandtab
@@ -212,6 +215,8 @@ autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 " autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
 autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<CR>
 autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
+"autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+"autocmd BufNewFile,BufRead *.tsx,*.jsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd BufRead,BufNewFile *.pu nnoremap <buffer> <F5> :w \| !plantuml %<CR>
 autocmd BufRead,BufNewFile *.dot nnoremap <buffer> <F5> :w \| !dot % -O -Tpng<CR>
 autocmd BufRead,BufNewFile *.adoc nnoremap <buffer> <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
@@ -357,6 +362,9 @@ try
   " Markdownのときに勝手に箇条書きの点などついて面倒なので一時保留
   " Plug 'sheerun/vim-polyglot'
 
+  " typescript, jsxなど
+  Plug 'leafgarland/typescript-vim'
+  Plug 'peitalin/vim-jsx-typescript'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -508,7 +516,9 @@ else
 endif
 "}}}
 " Tagbar{{{
+let g:tagbar_autofocus = 1
 nnoremap <F8> :TagbarToggle<CR>
+nnoremap <Space>i :TagbarToggle<CR>
 nnoremap <Space>o :TagbarToggle<CR>
 "}}}
 " NERDTree{{{
