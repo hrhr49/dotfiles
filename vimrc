@@ -164,8 +164,11 @@ nnoremap [tab]p :tabm-<CR>
 nnoremap [tab]o :tabonly<CR>
 nnoremap [tab]q :tabclose<CR>
 
+" nnoremap ]t vat<Esc>
+" nnoremap [t vato<Esc>
+
 nnoremap <F6> :make<CR>
-nnoremap <C-S-e> :Ex<CR>
+" nnoremap <C-S-e> :Ex<CR>
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
@@ -187,6 +190,10 @@ vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/�
 
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
+
+" ターミナルモード
+tnoremap <silent> jj <C-\><C-n>
+
 "}}}
 " ファイル別設定{{{
 augroup RunProgram
@@ -215,6 +222,7 @@ autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 " autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
 autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<CR>
 autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
+" autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
 "autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 "autocmd BufNewFile,BufRead *.tsx,*.jsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd BufRead,BufNewFile *.pu nnoremap <buffer> <F5> :w \| !plantuml %<CR>
@@ -226,6 +234,7 @@ autocmd BufRead,BufNewFile *.tcl nnoremap <buffer> <F5> :w \| !wish %<CR>
 autocmd BufRead,BufNewFile *.scm nnoremap <buffer> <F5> :w \| !gosh %<CR>
 autocmd BufRead,BufNewFile *.rs nnoremap <buffer> <F5> :w \| !rustc % \| !%:r<CR>
 autocmd BufRead,BufNewFile *.nim nnoremap <buffer> <F5> :w \| !nim c -r %<CR>
+autocmd BufRead,BufNewFile *.tsx setlocal ts=2 sts=2 sw=2 expandtab
 " autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
 augroup END"}}}
@@ -365,6 +374,13 @@ try
   " typescript, jsxなど
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
+
+  " terminal
+  " Plug 'kassio/neoterm'
+  Plug 'machakann/vim-highlightedyank'
+
+  " Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-repeat'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -428,7 +444,7 @@ let g:deoplete#enable_at_startup = 1
 if executable('fzf') > 0
   " fzf
   " <C-i>で全選択するように修正
-  let $FZF_DEFAULT_OPTS = '--bind ctrl-i:select-all,ctrl-d:deselect-all'
+  let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
   nnoremap <Space>t :<C-u>BTags<CR>
   nnoremap <Space><S-t> :<C-u>Tags<CR>
   nnoremap <Space>p :<C-u>Files<CR>
@@ -442,7 +458,9 @@ if executable('fzf') > 0
   nnoremap <Space>l :<C-u>BLines<CR>
   nnoremap <Space><S-l> :<C-u>Lines<CR>
   nnoremap <Space>c :<C-u>BCommits<CR>
+  nnoremap <Space>? :<C-u>Helptags<CR>
   nnoremap <Space><S-c> :<C-u>Commits<CR>
+  nnoremap <Space>' :<C-u>Marks<CR>
   " nnoremap <Space>h :<C-u>History:<CR>
   " コマンド履歴をソートせずに表示
   nnoremap <Space>h :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
@@ -486,6 +504,25 @@ if executable('fzf') > 0
 
   nnoremap <Space>y :<C-u>Registers<CR>
   nnoremap <Space>" :<C-u>Registers<CR>
+
+  " バッファ削除用(参考 https://github.com/junegunn/fzf.vim/pull/733)
+  function! Bufs()
+    redir => list
+    silent ls
+    redir END
+    return split(list, "\n")
+  endfunction
+
+  command! BD call fzf#run(fzf#wrap({
+    \ 'source': Bufs(),
+    \ 'sink*': { lines -> execute('bwipeout '.join(map(lines, {_, line -> split(line)[0]}))) },
+    \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+  \ }))
+
+  command! Inv call fzf#run(fzf#wrap({
+        \ 'source': 'inv --list',
+        \ 'sink': {x -> system('invoke ' . x)},
+        \ }))
 
   imap <c-x><c-k> <plug>(fzf-complete-word)
   imap <c-x><c-p> <plug>(fzf-complete-path)
@@ -697,11 +734,14 @@ augroup coc_group
   autocmd FileType c call s:my_coc_nvim_config()
   autocmd FileType cpp call s:my_coc_nvim_config()
   autocmd FileType javascript call s:my_coc_nvim_config()
+  autocmd FileType json call s:my_coc_nvim_config()
   autocmd FileType go call s:my_coc_nvim_config()
   autocmd FileType html call s:my_coc_nvim_config()
   autocmd FileType css call s:my_coc_nvim_config()
   autocmd FileType vim call s:my_coc_nvim_config()
   autocmd FileType typescript call s:my_coc_nvim_config()
+  autocmd FileType typescript.tsx call s:my_coc_nvim_config()
+  autocmd FileType javascript.jsx call s:my_coc_nvim_config()
 
   " 折りたたみが勝手に発動してしまうため、一時無効化
   " Use auocmd to force lightline update.
@@ -861,6 +901,8 @@ let g:indentLine_setConceal = 0
 " バッファ移動時に勝手に閉じないようにする
 let g:mkdp_auto_close = 0
 "}}}
+" highlightedyank
+let g:highlightedyank_highlight_duration = 150
 "}}}
 " 表示{{{
 
