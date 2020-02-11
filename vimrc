@@ -194,6 +194,26 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 " ターミナルモード
 tnoremap <silent> jj <C-\><C-n>
 
+" tmuxがないときはvimのターミナルで代用する
+if !executable('tmux')
+  nnoremap [tmux] <Nop>
+  nmap <C-s> [tmux]
+  nmap <C-b> [tmux]
+
+  tnoremap [tmux]h <C-\><C-n><C-w>h
+  tnoremap [tmux]j <C-\><C-n><C-w>j
+  tnoremap [tmux]k <C-\><C-n><C-w>k
+  tnoremap [tmux]l <C-\><C-n><C-w>l
+
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+endif
+
 "}}}
 " ファイル別設定{{{
 augroup RunProgram
@@ -251,6 +271,9 @@ try
   Plug 'vim-jp/vimdoc-ja'
 
   Plug 'scrooloose/nerdtree'
+  " NERDTreeでdeviconsを表示
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
   " fzfのインストールも同時にやりたい場合は以下のようにする
   " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -424,7 +447,7 @@ let g:deoplete#enable_at_startup = 1
 "let g:jedi#smart_auto_mappings = 0 "勝手にimportを入力されるのがうざかったので
 "let g:jedi#show_call_signatures = 0 "関数の引数を表示しない(numpyやpandasだとうざかったので)
 "}}}
-
+" indent wise{{{
 "autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
 
 " let g:ale_echo_cursor = 0
@@ -439,12 +462,29 @@ let g:deoplete#enable_at_startup = 1
 "map ]_ <Plug>(IndentWiseNextAbsoluteIndent)
 "map [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
 "map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
-
+"}}}
 " fzf{{{
 if executable('fzf') > 0
   " fzf
   " <C-i>で全選択するように修正
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
+
+  " プレビューをする
+  " Filesコマンドにもプレビューを出す(参考 https://qiita.com/kompiro/items/a09c0b44e7c741724c80)
+  if executable('bat')
+    command! -bang -nargs=? -complete=dir Files
+      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+    command! -bang -nargs=? -complete=dir GFiles
+      \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+    " ripgrepで検索中、?を押すとプレビュー:
+    command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
+  endif
+
   nnoremap <Space>t :<C-u>BTags<CR>
   nnoremap <Space><S-t> :<C-u>Tags<CR>
   nnoremap <Space>p :<C-u>Files<CR>
@@ -452,8 +492,11 @@ if executable('fzf') > 0
   nnoremap <Space><S-g> :<C-u>Ggrep 
   " nnoremap <Space>r :<C-u>History<CR>
   " 履歴はソートせずにプレビューも表示
-  " nnoremap <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
-  nnoremap <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
+  if executable('bat')
+    nnoremap <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
+  else
+    nnoremap <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
+  endif
   nnoremap <Space>b :<C-u>Buffers<CR>
   nnoremap <Space>l :<C-u>BLines<CR>
   nnoremap <Space><S-l> :<C-u>Lines<CR>
@@ -465,12 +508,13 @@ if executable('fzf') > 0
   " コマンド履歴をソートせずに表示
   nnoremap <Space>h :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
   " nnoremap <Space>s :<C-u>History/<CR>
-  nnoremap <Space>s :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
+  " nnoremap <Space>s :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
   " nnoremap <Space>/ :<C-u>History/<CR>
   nnoremap <Space>/ :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
   nnoremap <Space>m :<C-u>Files ~/memo/<CR>
   " nnoremap <Space>: :<C-u>History:<CR>
   nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
+  nnoremap <Space>w :<C-u>Windows<CR>
   if executable('rg') > 0
     nnoremap <Space>a :<C-u>Rg<CR>
   else
@@ -631,7 +675,7 @@ nnoremap <Space>u :<C-u>GundoToggle<CR>
 "}}}
 " ranger{{{
 if executable("ranger") > 0
-    nnoremap <Space>f :Ranger<CR>
+    " nnoremap <Space>f :Ranger<CR>
 endif
 "}}}
 " EasyMotion{{{
@@ -648,7 +692,8 @@ nmap <Space>s <Plug>(easymotion-overwin-f2)
 " nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Space>w <Plug>(easymotion-bd-w)
+" map  <Space>w <Plug>(easymotion-bd-w)
+map  <Space>f <Plug>(easymotion-bd-w)
 " map  <Space>w <Plug>(easymotion-bd-w)
 
 " nmap <Leader>w <Plug>(easymotion-overwin-w)

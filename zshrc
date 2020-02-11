@@ -108,6 +108,10 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
+
+# <C-s>による停止などを無効化
+setopt no_flow_control
+
 # }}}
 # ディレクトリ移動{{{
 # ディレクトリ名でcdになるのを無効。(コマンドとのバッティングがうざかったため)

@@ -207,7 +207,9 @@ bar {
 
 # Set inner/outer gaps
 # ウィンドウに枠線をつける
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*" tiling] border pixel 3
+for_window [class="^.*" floating] border normal
+
 # gaps inner 12
 # gaps outer 1
 # 
@@ -377,6 +379,14 @@ bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~
 
 # OSX-like area selection screenshots
 bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # Area selection
+
+# マウス設定 (参考: https://i3wm.org/docs/userguide.html#mousebindings)
+
+# タイトルバーで中ボタンを押したらウィンドウ削除
+bindsym --release button2 kill
+
+# 右クリックでフローティングかどうかをトグル
+bindsym --border button3 exec "i3-msg floating toggle && i3-msg border normal"
 
 # set $ws1   " 1 <span foreground='#268bd2'></span> "
 # set $ws2   " 2 <span foreground='#2aa198'></span> "
