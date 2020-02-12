@@ -45,7 +45,7 @@ precmd () { vcs_info }
 # Power Lineっぽい感じ(参考 https://qiita.com/peony/items/031a55b61dff6053b883)
 PROMPT=""
 PROMPT=$PROMPT"%{${bg[magenta]%}%}%{${fg[black]}%} %n %{${bg[blue]}%}%{${fg[magenta]}%} "
-PROMPT=$PROMPT"%{${bg[blue]}%}%{${fg[black]}%} %~ %{${bg[white]}%}%{${fg[blue]}%} "
+PROMPT=$PROMPT"%{${bg[blue]}%}%{${fg[black]}%}%~ %{${bg[white]}%}%{${fg[blue]}%} "
 PROMPT=$PROMPT"%{${bg[white]}%}%{${fg[black]}%}"'${vcs_info_msg_0_}'"%{${reset_color}%}%{${fg[white]}%} "
 PROMPT=$PROMPT"%{${reset_color}%}"
 # }}}

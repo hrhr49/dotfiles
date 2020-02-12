@@ -196,22 +196,17 @@ tnoremap <silent> jj <C-\><C-n>
 
 " tmuxがないときはvimのターミナルで代用する
 if !executable('tmux')
-  nnoremap [tmux] <Nop>
-  nmap <C-s> [tmux]
-  nmap <C-b> [tmux]
+  " nnoremap [tmux] <Nop>
+  " nmap <C-s> [tmux]
+  " nmap <C-b> [tmux]
+  " nmap t [tmux]
 
-  tnoremap [tmux]h <C-\><C-n><C-w>h
-  tnoremap [tmux]j <C-\><C-n><C-w>j
-  tnoremap [tmux]k <C-\><C-n><C-w>k
-  tnoremap [tmux]l <C-\><C-n><C-w>l
-
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
+  " tnoremap [tmux]h <C-\><C-n><C-w>h
+  " tnoremap [tmux]j <C-\><C-n><C-w>j
+  " tnoremap [tmux]k <C-\><C-n><C-w>k
+  " tnoremap [tmux]l <C-\><C-n><C-w>l
+  " nnoremap [tmux]s <C-u>:split\|:terminal<CR>
+  " nnoremap [tmux]v <C-u>:vsplit\|:terminal<CR>
 endif
 
 "}}}
