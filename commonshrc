@@ -3,6 +3,13 @@
 # 注意: fasdの設定を行ったあとにz関数定義をしなければ上書きされてしまう
 
 # 外部コマンド設定{{{
+# PATHに$HOME/binを追加
+
+if [ -d "$HOME/bin" ];
+then
+export PATH=$PATH:~/bin
+fi
+
 # nvimが存在すればそれをvimとして使用
 if type "nvim" > /dev/null 2>&1; then
     export EDITOR=nvim
