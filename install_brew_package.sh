@@ -18,6 +18,7 @@ formulas=(
     bat
     ghq
     hub
+    zsh-completions
 )
 
 for formula in "${formulas[@]}"; do

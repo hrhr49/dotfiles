@@ -340,8 +340,12 @@ try
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   Plug 'sjl/gundo.vim'
-  Plug 'francoiscabrol/ranger.vim'
-  Plug 'rbgrouleff/bclose.vim'
+
+  if executable('ranger')
+    Plug 'francoiscabrol/ranger.vim'
+    Plug 'rbgrouleff/bclose.vim'
+  endif
+
   Plug 'easymotion/vim-easymotion'
   " Plug 'junegunn/vim-easy-align'
   Plug 'LeafCage/yankround.vim'
@@ -947,18 +951,23 @@ let g:highlightedyank_highlight_duration = 150
 " 表示{{{
 
 try
-" colorscheme molokai
-" colorscheme Monokai
-" colorscheme ayu
-colorscheme gruvbox
-" colorscheme vim-material
-" colorscheme tender
+  " gvimの場合はgvimrcなどの方でカラースキームを設定する
+  if !has("gui_running")
+    " colorscheme molokai
+    " colorscheme Monokai
+    " colorscheme ayu
+    colorscheme gruvbox
+    " colorscheme vim-material
+    " colorscheme tender
+  endif
 catch
 endtry
 try
-set guioptions-=m
-set guioptions-=T
-set guifont=Monospace\ 14
+  if has("gui_running")
+    set guioptions-=m
+    set guioptions-=T
+    set guifont=Monospace\ 14
+  endif
 catch
 endtry
 

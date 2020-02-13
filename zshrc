@@ -50,6 +50,12 @@ PROMPT=$PROMPT"%{${bg[white]}%}%{${fg[black]}%}"'${vcs_info_msg_0_}'"%{${reset_c
 PROMPT=$PROMPT"%{${reset_color}%}"
 # }}}
 # コマンド補完{{{
+
+# brewでzsh-completionsをインストールしている場合はそれを使用する(参考 https://gist.github.com/juno/5546198)
+if [ -e ${HOMEBREW_PREFIX}/share/zsh-completions ]; then
+  fpath=(${HOMEBREW_PREFIX}/share/zsh-completions $fpath)
+fi
+
 autoload -U compinit
 compinit
 
