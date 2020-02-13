@@ -7,7 +7,11 @@
 
 if [ -d "$HOME/bin" ];
 then
-export PATH=$PATH:~/bin
+    export PATH=$PATH:~/bin
+fi
+
+if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
+    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 fi
 
 # nvimが存在すればそれをvimとして使用
