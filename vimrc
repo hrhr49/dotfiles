@@ -960,7 +960,8 @@ try
     " colorscheme molokai
     " colorscheme Monokai
     " colorscheme ayu
-    colorscheme gruvbox
+    " colorscheme gruvbox
+    colorscheme nord
     " colorscheme vim-material
     " colorscheme tender
   endif

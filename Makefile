@@ -53,7 +53,7 @@ init_dotfiles:
 # 	htop unzip fasd zsh python3-dev ffmpegthumbnailer
 
 init_gui_install:
-	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel
+	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel xfce4-terminal
 
 # pythonはanaconda, cliツールはbrewで入れるため削除
 
