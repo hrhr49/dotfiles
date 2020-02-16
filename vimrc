@@ -371,8 +371,8 @@ try
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
   endif
 
-  " Plug 'luochen1990/rainbow'
-  Plug 'kien/rainbow_parentheses.vim'
+  Plug 'luochen1990/rainbow'
+  " Plug 'kien/rainbow_parentheses.vim'
   Plug 'ap/vim-css-color'
 
   " snippets
@@ -873,9 +873,12 @@ let g:rainbow_conf = {
 \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'], 
 \		},
 \		'css': 0, 
+\   'nerdtree': 0,
 \	}
 \}
 
+" }}}
+" kien/rainbow_parentheses.vim {{{
 if s:plug.is_installed('rainbow_parentheses.vim')
   let g:rbpt_colorpairs = [
         \ ['brown',       'RoyalBlue3'],
@@ -902,6 +905,7 @@ if s:plug.is_installed('rainbow_parentheses.vim')
   au Syntax * RainbowParenthesesLoadSquare
   au Syntax * RainbowParenthesesLoadBraces
 endif
+
 "}}}
 " emmet{{{
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)

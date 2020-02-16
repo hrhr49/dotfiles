@@ -1,24 +1,25 @@
 #!/bin/bash
 
-# パッケージマネージャでインストールできないもののみにしておく
+# brewでインストールするものリスト
 formulas=(
-    # "--without-etcdir zsh"
+    "--without-etcdir zsh"
 #    git
-#    tree
-#    htop
-#    ctagsk
+    tree
+    htop
+    ctagsk
     node
 #    python3
     neovim
     ripgrep
 #    ag
-#    fzf
+    fzf
     fasd
-#    ranger
+    ranger
     bat
     ghq
     hub
     zsh-completions
+    tmux
 )
 
 for formula in "${formulas[@]}"; do

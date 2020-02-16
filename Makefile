@@ -45,33 +45,35 @@ init_dotfiles:
 	echo "source ${PWD}/config/nvim/coc-settings.json" >> $(HOME)/.config/nvim/coc-settings.json
 
 # grub参考 https://qiita.com/ucan-lab/items/1608b4140ac0b1797144
-init_install:
-	$(INSTALL_UPDATE)
-	echo grub-pc hold | dpkg --set-selections # grubの更新ウィザードがうざいので除外
-	$(INSTALL_UPGRADE)
-	$(INSTALL) build-essential coreutils vim tmux git ranger \
-	htop unzip fasd zsh python3-dev ffmpegthumbnailer
+# init_install:
+# 	$(INSTALL_UPDATE)
+# 	echo grub-pc hold | dpkg --set-selections # grubの更新ウィザードがうざいので除外
+# 	$(INSTALL_UPGRADE)
+# 	$(INSTALL) build-essential coreutils vim tmux git ranger \
+# 	htop unzip fasd zsh python3-dev ffmpegthumbnailer
 
 init_gui_install:
 	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel
 
+# pythonはanaconda, cliツールはbrewで入れるため削除
+
 # 初回設定で欲しいけど必須じゃないもの
-init_option:
-	make zsh
-	make fzf
-	make fasd
-	make python
-	make pyenv
-	make pip_install
-	make neovim
+# init_option:
+# 	make zsh
+# 	make fzf
+# 	make fasd
+# 	make python
+# 	make pyenv
+# 	make pip_install
+# 	make neovim
 
 # pyenvで入れるときにないとだめなもの？
-python:
-	$(INSTALL) python3-dev python3-pip
-	$(INSTALL) libbz2-dev libreadline-dev libsqlite3-dev
-	$(INSTALL) build-essential libsqlite3-dev libreadline6-dev \
-	libgdbm-dev zlib1g-dev sqlite3 tk-dev zip \
-	libssl-dev gfortran liblapack-dev
+# python:
+# 	$(INSTALL) python3-dev python3-pip
+# 	$(INSTALL) libbz2-dev libreadline-dev libsqlite3-dev
+# 	$(INSTALL) build-essential libsqlite3-dev libreadline6-dev \
+# 	libgdbm-dev zlib1g-dev sqlite3 tk-dev zip \
+# 	libssl-dev gfortran liblapack-dev
 	# zlibbz2-dev 
 	# build-essential libbz2-dev libdb-dev \
 	# libreadline-dev libffi-dev libgdbm-dev liblzma-dev \
@@ -79,19 +81,19 @@ python:
 	# zlib1g-dev uuid-dev tk-dev python3-dev python3-pip
 
 # anyenv lazyloadを入れるためにbashrc, zshrcには$(anyenv init -)を入れない
-anyenv:
-	git clone https://github.com/anyenv/anyenv ~/.anyenv
-	echo 'export PATH="$$HOME/.anyenv/bin:$$PATH"' >> ~/.bashrc
-	echo 'export PATH="$$HOME/.anyenv/bin:$$PATH"' >> ~/.zshrc
-	~/.anyenv/bin/anyenv init
-	anyenv install --init
+# anyenv:
+# 	git clone https://github.com/anyenv/anyenv ~/.anyenv
+# 	echo 'export PATH="$$HOME/.anyenv/bin:$$PATH"' >> ~/.bashrc
+# 	echo 'export PATH="$$HOME/.anyenv/bin:$$PATH"' >> ~/.zshrc
+# 	~/.anyenv/bin/anyenv init
+# 	anyenv install --init
 
 # anyenv入れて再ログイン後実行
-anyenv_lazylaod:
-	mkdir -p $$(anyenv root)/plugins
-	git clone https://github.com/amashigeseiji/anyenv-lazyload.git $$(anyenv root)/plugins/anyenv-lazyload
-	echo 'eval "$$(anyenv lazyload)"' >> ~/.bashrc
-	echo 'eval "$$(anyenv lazyload)"' >> ~/.zshrc
+# anyenv_lazylaod:
+# 	mkdir -p $$(anyenv root)/plugins
+# 	git clone https://github.com/amashigeseiji/anyenv-lazyload.git $$(anyenv root)/plugins/anyenv-lazyload
+# 	echo 'eval "$$(anyenv lazyload)"' >> ~/.bashrc
+# 	echo 'eval "$$(anyenv lazyload)"' >> ~/.zshrc
 
 
 # とりあえずほしいパッケージなど
@@ -103,31 +105,31 @@ pip_install:
 
 # pythonの環境構築を先にする必要あり
 # neovimのインストール TODO: aptじゃない環境対応
-neovim:
-	sudo apt-get install software-properties-common
-	sudo add-apt-repository ppa:neovim-ppa/stable
-	sudo apt-get update
-	sudo apt-get install neovim
-	curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	pip install pynvim
+# neovim:
+# 	sudo apt-get install software-properties-common
+# 	sudo add-apt-repository ppa:neovim-ppa/stable
+# 	sudo apt-get update
+# 	sudo apt-get install neovim
+# 	curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# 	pip install pynvim
 
-fzf:
-	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
-	${HOME}/.fzf/install
+# fzf:
+# 	git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf
+# 	${HOME}/.fzf/install
 
-zsh:
-	$(INSTALL) zsh
-	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
-	cp ${HOME}/.oh-my-zsh/templates/zshrc.zsh-template ${HOME}/.zshrc
-	sed -ie 's/ZSH_THEME="robbyrussell"/ZSH_THEMEE="lukerandall"/' ${HOME}/.zshrc
-	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
-	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
+# zsh:
+# 	$(INSTALL) zsh
+# 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
+# 	cp ${HOME}/.oh-my-zsh/templates/zshrc.zsh-template ${HOME}/.zshrc
+# 	sed -ie 's/ZSH_THEME="robbyrussell"/ZSH_THEMEE="lukerandall"/' ${HOME}/.zshrc
+# 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
+# 	echo "source ${PWD}/zshrc" >> $(HOME)/.zshrc
 
-fasd:
-	$(INSTALL) fasd
-	echo 'eval "$$(fasd --init auto)"' >> ${HOME}/.bashrc
-	echo 'eval "$$(fasd --init auto)"' >> ${HOME}/.zshrc
+# fasd:
+# 	$(INSTALL) fasd
+# 	echo 'eval "$$(fasd --init auto)"' >> ${HOME}/.bashrc
+# 	echo 'eval "$$(fasd --init auto)"' >> ${HOME}/.zshrc
 
 # i3wmの設定
 i3wm:
