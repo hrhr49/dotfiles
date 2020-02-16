@@ -25,6 +25,7 @@ init_dotfiles:
 	mkdir -p ${HOME}/.config/ranger
 	mkdir -p ${HOME}/.config/rofi
 	mkdir -p ${HOME}/.config/qutebrowser
+	mkdir -p ${HOME}/.config/zathura
 	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
 	ln -vsf ${PWD}/config/i3status/config ${HOME}/.config/i3status/config

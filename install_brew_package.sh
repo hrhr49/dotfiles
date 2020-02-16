@@ -2,7 +2,8 @@
 
 # brewでインストールするものリスト
 formulas=(
-    "--without-etcdir zsh"
+    # "--without-etcdir zsh"
+    zsh
 #    git
     tree
     htop
@@ -20,6 +21,9 @@ formulas=(
     hub
     zsh-completions
     tmux
+    ruby
+    go
+    rust
 )
 
 for formula in "${formulas[@]}"; do
