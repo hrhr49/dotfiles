@@ -41,6 +41,17 @@ if type "go" > /dev/null 2>&1; then
     export GOPATH=$HOME/go
 fi
 
+if [ -e ${HOME}/anaconda3/etc/profile.d/conda.sh ]; then
+    source ~/anaconda3/etc/profile.d/conda.sh
+fi
+
+if [ -d ${HOME}/anaconda3/bin ]; then
+    export PATH=~/anaconda3/bin:$PATH
+fi
+if [ -d /usr/lib/go/bin ]; then
+    export PATH=/usr/lib/go/bin:$PATH
+fi
+
 # }}}
 # シェル関数{{{
 
