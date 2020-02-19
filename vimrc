@@ -97,7 +97,7 @@ inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 inoremap <C-u> <C-g>u<C-u>
 inoremap jj <ESC>
-inoremap jk <ESC>
+" inoremap jk <ESC>
 " inoremap <C-k> <Esc>gg/aaa<CR>cgn
 " inoremap <C-;> <Esc>cgn
 " 以下のマッピングはうまく動かない
@@ -957,11 +957,12 @@ let g:highlightedyank_highlight_duration = 150
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running")
-    " colorscheme molokai
+    colorscheme molokai
     " colorscheme Monokai
     " colorscheme ayu
     " colorscheme gruvbox
-    colorscheme nord
+    " colorscheme nord
+    " colorscheme nordisk
     " colorscheme vim-material
     " colorscheme tender
   endif
@@ -978,7 +979,7 @@ endtry
 
 " 対応カッコの色設定を変更(そのままだとわかりづらいときあった)
 " 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
-" hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " hilight current line number
 set cursorline

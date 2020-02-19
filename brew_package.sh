@@ -24,6 +24,15 @@ formulas=(
     ruby
     go
     rust
+    httpie # curlのようなやつ
+    mdp # CLIでのプレゼンツール
+    trash-cli # ゴミ箱操作
+    figlet # 文字をアスキーアートで出すやつ
+    neofetch # アスキーアートでOSのアイコン出す
+    jq
+    fx # jqみたいだけどインタラクティブにできたりする
+    navi # チートシート
+    exa # lsのいい感じバージョン
 )
 
 for formula in "${formulas[@]}"; do
