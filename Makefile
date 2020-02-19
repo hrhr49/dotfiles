@@ -31,6 +31,7 @@ init_dotfiles:
 	ln -vsf ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
 	ln -vsf ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
 	ln -vsf ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
+	ln -vsf ${PWD}/config/ranger/scope.sh ${HOME}/.config/ranger/scope.sh
 	ln -vsf ${PWD}/config/rofi/config.rasi ${HOME}/.config/rofi/config.rasi
 	ln -vsf ${PWD}/config/qutebrowser/config.py ${HOME}/.config/qutebrowser/config.py
 	ln -vsf ${PWD}/config/qutebrowser/solarized.css ${HOME}/.config/qutebrowser/solarized.css
@@ -53,7 +54,7 @@ init_dotfiles:
 # 	htop unzip fasd zsh python3-dev ffmpegthumbnailer
 
 init_gui_install:
-	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel xfce4-terminal
+	$(INSTALL) rofi sxiv zathura chromium-browser mpv xsel xfce4-terminal ffmpegthumbnailer w3m
 
 # pythonはanaconda, cliツールはbrewで入れるため削除
 
@@ -141,8 +142,7 @@ i3wm_dotfiles:
 
 i3wm_install:
 	$(INSTALL) i3 fcitx-mozc feh compton variety alsa-utils dunst \
-	pasystray rofi xclip scrot
-
+	pasystray rofi xclip scrot 
 # 必要なくなったもの
 # pyenvのインストール。anyenvで入れれば良いので削除予定
 # pyenv:
