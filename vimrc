@@ -250,7 +250,6 @@ autocmd BufRead,BufNewFile *.scm nnoremap <buffer> <F5> :w \| !gosh %<CR>
 autocmd BufRead,BufNewFile *.rs nnoremap <buffer> <F5> :w \| !rustc % \| !%:r<CR>
 autocmd BufRead,BufNewFile *.nim nnoremap <buffer> <F5> :w \| !nim c -r %<CR>
 autocmd BufRead,BufNewFile *.tsx setlocal ts=2 sts=2 sw=2 expandtab
-" autocmd FileType python call s:configure_lsp()
 autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
 augroup END"}}}
 " プラグイン一覧{{{
@@ -270,12 +269,15 @@ try
   Plug 'ryanoasis/vim-devicons'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
+  if executable('git') > 0
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+  endif
+
   " fzfのインストールも同時にやりたい場合は以下のようにする
   " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Plug 'junegunn/fzf.vim'
   " ファイルなどのあいまい検索
   if executable('fzf') > 0
-    " Plug '~/.fzf/'
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf'
   else
@@ -283,59 +285,26 @@ try
     " Plug 'ompugao/ctrlp-history'
   endif
  
-  " Plug 'MattesGroeger/vim-bookmarks'
+  " text object関連
+  Plug 'kana/vim-textobj-user'
+  Plug 'glts/vim-textobj-comment'
   Plug 'michaeljsmith/vim-indent-object'
-  "Plug 'w0rp/ale'
-  Plug 'majutsushi/tagbar'
-  Plug 'itchyny/lightline.vim'
-  Plug 'tpope/vim-commentary'
-  " Plug 'prabirshrestha/async.vim'
-  " Plug 'prabirshrestha/vim-lsp'
-  " Plug 'prabirshrestha/asyncomplete.vim'
-  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
-  Plug 'flazz/vim-colorschemes'
-  " Plug 'ayu-theme/ayu-vim' " or other package manager
-  "...
-  " set termguicolors     " enable true colors support
-  " let ayucolor="light"  " for light version of theme
-  " let ayucolor="mirage" " for mirage version of theme
-  " let ayucolor="dark"   " for dark version of theme
-  " colorscheme ayu
- 
-  " Plug 'rakr/vim-one'
-  " set background=dark
- 
-" プラットフォームによって走らせるスクリプト変更
-" if has('unix') || has('mac')
-"   Plug 'autozimu/LanguageClient-neovim', {
-"       \ 'branch': 'next',
-"       \ 'do': 'bash install.sh',
-"       \ }
-" endif
-" if has('win32') || has('win64')
-"   Plug 'autozimu/LanguageClient-neovim', {
-"       \ 'branch': 'next',
-"       \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
-"       \ }
-" endif
+  Plug 'mattn/vim-textobj-url'
+  " Plug 'kana/vim-textobj-jabraces'
 
-"   if has('nvim')
-"     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"   else
-"     Plug 'Shougo/deoplete.nvim'
-"     Plug 'roxma/nvim-yarp'
-"     Plug 'roxma/vim-hug-neovim-rpc'
-"   endif
+  Plug 'majutsushi/tagbar'
+
+  " Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+
+  Plug 'tpope/vim-commentary'
+  Plug 'flazz/vim-colorschemes'
 
   " Use release branch
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
  
-  " for markdown
-  " Plug 'previm/previm'
-  " Plug 'vim-scripts/DrawIt'
-  " Initialize plugin system
   Plug 'mattn/emmet-vim'
-  " Plug 'jtratner/vim-flavored-markdown'
  
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
@@ -347,21 +316,10 @@ try
   endif
 
   Plug 'easymotion/vim-easymotion'
-  " Plug 'junegunn/vim-easy-align'
   Plug 'LeafCage/yankround.vim'
-  " Plug 'maxbrunsfeld/vim-yankstack'
-  " Plug 'liuchengxu/vim-which-key'
 
-  " スクロールのを入れたが、どうもタイムラグが気になってしまったので保留
-  " Plug 'yuttie/comfortable-motion.vim'
-  " Plug 'terryma/vim-smooth-scroll'
   Plug 'tpope/vim-surround'
   Plug 'h1mesuke/vim-alignta'
-  " Plug 'junegunn/vim-easy-align'
-
-  " vim-markdownにはtabularが必要っぽい
-  " Plug 'godlygeek/tabular'
-  " Plug 'plasticboy/vim-markdown'
 
   " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
   if executable('node') > 0 && executable('yarn') > 0
@@ -372,7 +330,6 @@ try
   endif
 
   Plug 'luochen1990/rainbow'
-  " Plug 'kien/rainbow_parentheses.vim'
   Plug 'ap/vim-css-color'
 
   " snippets
@@ -383,11 +340,7 @@ try
   " Plug 'honza/vim-snippets'
 
   " ターミナルデバッガ
-  Plug 'epheien/termdbg'
-
-  " if executable('go') > 0
-  "   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-  " endif
+  " Plug 'epheien/termdbg'
 
   " 様々な言語のパック。
   " Markdownのときに勝手に箇条書きの点などついて面倒なので一時保留
@@ -397,12 +350,12 @@ try
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
 
-  " terminal
-  " Plug 'kassio/neoterm'
+  " ヤンクした場所をわかりやすくする。
   Plug 'machakann/vim-highlightedyank'
 
   " Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-repeat'
+
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -425,42 +378,6 @@ endfunction
 if s:plug.is_installed("vim-myplugin")
   " setting
 endif
-"}}}
-" deopelete{{{
-" let g:deopelete#ignore_case = 0
-" let g:deopelete#smart_case = 0
-" deopeleteの自動スタートアップで1秒ぐらいかかるときがある!
-let g:deoplete#enable_at_startup = 1
-"}}}
-" jedi{{{
-""let g:jedi#use_tabs_not_buffers = 1 "補完で次の候補に進むときにtabを使えるという設定にしたつもりですができませんでした。
-"let g:jedi#popup_select_first = 0 "1個目の候補が入力されるっていう設定を解除
-"let g:jedi#popup_on_dot = 0 " .を入力すると補完が始まるという設定を解除
-"
-""let g:jedi#goto_command = "<leader>d"
-""let g:jedi#goto_assignments_command = "<leader>g"
-""let g:jedi#goto_definitions_command = ""
-""let g:jedi#documentation_command = "K"
-""let g:jedi#usages_command = "<leader>n"
-""let g:jedi#rename_command = "<leader>R" "quick-runと競合しないように大文字Rに変更. READMEだと<leader>r
-"let g:jedi#smart_auto_mappings = 0 "勝手にimportを入力されるのがうざかったので
-"let g:jedi#show_call_signatures = 0 "関数の引数を表示しない(numpyやpandasだとうざかったので)
-"}}}
-" indent wise{{{
-"autocmd FileType python setlocal completeopt-=preview "ポップアップを表示しない
-
-" let g:ale_echo_cursor = 0
-
-"map [- <Plug>(IndentWisePreviousLesserIndent)
-"map [= <Plug>(IndentWisePreviousEqualIndent)
-"map [+ <Plug>(IndentWisePreviousGreaterIndent)
-"map ]- <Plug>(IndentWiseNextLesserIndent)
-"map ]= <Plug>(IndentWiseNextEqualIndent)
-"map ]+ <Plug>(IndentWiseNextGreaterIndent)
-"map [_ <Plug>(IndentWisePreviousAbsoluteIndent)
-"map ]_ <Plug>(IndentWiseNextAbsoluteIndent)
-"map [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
-"map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
 "}}}
 " fzf{{{
 if executable('fzf') > 0
@@ -606,68 +523,13 @@ nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
 nnoremap <Space>E :<C-u>NERDTree<CR>
 let NERDTreeQuitOnOpen=1
 "}}}
-" vim-lsp{{{
-" if executable('pyls')
-" " pip install python-language-server
-" au User lsp_setup call lsp#register_server({
-"     \ 'name': 'pyls',
-"     \ 'cmd': {server_info->['pyls']},
-"     \ 'whitelist': ['python'],
-"     \ })
-" endif
-
-" function! s:configure_lsp() abort
-"   setlocal omnifunc=lsp#complete   " オムニ補完を有効化
-"   " LSP用にマッピング
-"   nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
-"   nnoremap <buffer> gd :<C-u>LspDefinition<CR>
-"   nnoremap <buffer> gD :<C-u>LspReferences<CR>
-"   nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
-"   nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
-"   nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
-"   vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
-"   nnoremap <buffer> K :<C-u>LspHover<CR>
-"   nnoremap <buffer> <F1> :<C-u>LspImplementation<CR>
-"   nnoremap <buffer> <F2> :<C-u>LspRename<CR>
-" endfunction
-
-" asynccomplete
-" let g:asyncomplete_smart_completion = 1
-" let g:asyncomplete_auto_popup = 1
-"}}}
-" LanguageClient{{{
-if s:plug.is_installed("LanguageClient-neovim")
-  " language server client
-  let g:LanguageClient_serverCommands = {
-      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-      \ 'python': ['pyls'],
-      \ 'ruby': ['solargraph', 'stdio'],
-      \ 'c': ['clangd-6.0'],
-      \}
-  " let g:LanguageClient_windowLogMessageLevel = 'Info'
-  " let g:LanguageClient_diagnosticsEnable = 0
-  " 横に表示される警告文などを出さない
-  let g:LanguageClient_useVirtualText = 0
-
-
-  "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-  nnoremap <F2> :call LanguageClient_contextMenu()<CR>
-  " Or map each action separately
-  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-  vnoremap <silent> gq :call LanguageClient#textDocument_formatting_sync()<CR>
-  nnoremap <silent> <F3> :call LanguageClient#textDocument_rename()<CR>
-endif
-"}}}
-
+" gdb {{{
 " gdb使用の設定
 " packadd termdebug
 
 " gdb使用の設定
 " let g:termdebug_wide = 163
+" }}}
 " Gundo{{{
 nnoremap <F9> :<C-u>GundoToggle<CR>
 nnoremap <Space>u :<C-u>GundoToggle<CR>
@@ -698,12 +560,10 @@ map  <Space>f <Plug>(easymotion-bd-w)
 " nmap <Leader>w <Plug>(easymotion-overwin-w)
 " nmap <Leader>L <Plug>(easymotion-overwin-line)
 "}}}
-" Easy Alignの設定{{{
-" vmap ga <Plug>(EasyAlign)
-"}}}
 " Aligntaの設定{{{
 if s:plug.is_installed("vim-alignta")
   vnoremap gs :Alignta \s\+<CR>
+  vnoremap sc :Alignta \s\+<CR>
 endif
 "}}}
 " yankroundの設定{{{
@@ -720,10 +580,6 @@ let g:yankround_max_history = 50
 " 下なんかうまく動かない
 " nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 endif
-"}}}
-" yankstackの設定{{{
-" nmap <leader>p <Plug>yankstack_substitute_older_paste
-" nmap <leader>P <Plug>yankstack_substitute_newer_paste
 "}}}
 " coc.nvimの設定{{{
 " 以下にインストールするパッケージ一覧を設定
@@ -816,6 +672,29 @@ endfunction
 " endfunction
 
 " let g:coc_snippet_next = '<c-f>'
+ 
+"}}}
+" airline{{{
+
+" 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
+
+let g:airline_theme='papercolor'                                                                                                             
+let g:airline_powerline_fonts = 1                                                                                                         
+let g:airline_section_b = '%{getcwd()}' " in section B of the status line display the CWD                                                 
+                                                                                                                                          
+"TABLINE:                                                                                                                                 
+                                                                                                                                          
+let g:airline#extensions#tabline#enabled = 1           " enable airline tabline                                                           
+let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline                                            
+let g:airline#extensions#tabline#tabs_label = ''       " can put text here like BUFFERS to denote buffers (I clear it so nothing is shown)
+let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)      
+let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab                                                    
+let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right                                                           
+let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline                                                 
+let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline                                  
+let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline               
+let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers                                                              
+let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
 
 "}}}
 " lightline{{{
@@ -835,12 +714,6 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ }
-"}}}
-" vim-markdown{{{
-if s:plug.is_installed("plasticboy/vim-markdown")
-  let g:vim_markdown_conceal_code_blocks = 0
-  let g:vim_markdown_folding_disabled = 1
-endif
 "}}}
 " luochen1990/rainbow{{{
 "set to 0 if you want to enable it later via :RainbowToggle
@@ -878,35 +751,6 @@ let g:rainbow_conf = {
 \}
 
 " }}}
-" kien/rainbow_parentheses.vim {{{
-if s:plug.is_installed('rainbow_parentheses.vim')
-  let g:rbpt_colorpairs = [
-        \ ['brown',       'RoyalBlue3'],
-        \ ['Darkblue',    'SeaGreen3'],
-        \ ['darkgray',    'DarkOrchid3'],
-        \ ['darkgreen',   'firebrick3'],
-        \ ['darkcyan',    'RoyalBlue3'],
-        \ ['darkred',     'SeaGreen3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['brown',       'firebrick3'],
-        \ ['gray',        'RoyalBlue3'],
-        \ ['black',       'SeaGreen3'],
-        \ ['darkmagenta', 'DarkOrchid3'],
-        \ ['Darkblue',    'firebrick3'],
-        \ ['darkgreen',   'RoyalBlue3'],
-        \ ['darkcyan',    'SeaGreen3'],
-        \ ['darkred',     'DarkOrchid3'],
-        \ ['red',         'firebrick3'],
-        \ ]
-  let g:rbpt_max = 16
-  let g:rbpt_loadcmd_toggle = 0
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
-endif
-
-"}}}
 " emmet{{{
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
 let g:user_emmet_settings = {
@@ -931,20 +775,6 @@ let g:user_emmet_settings = {
 \}
 " \    'block_all_childless' : 1,
 "}}}
-" indentline{{{
-let g:indentLine_setConceal = 0
-"}}}
-" ultisnips{{{
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsEditSplit="vertical"
-
-" let g:UltiSnipsSnippetsDir = "~/memo/dotfiles/vim/UltiSnips"
-"}}}
 " markdown-preview{{{
 " バッファ移動時に勝手に閉じないようにする
 let g:mkdp_auto_close = 0
@@ -957,14 +787,14 @@ let g:highlightedyank_highlight_duration = 150
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running")
-    colorscheme molokai
+    " colorscheme molokai
     " colorscheme Monokai
     " colorscheme ayu
     " colorscheme gruvbox
     " colorscheme nord
     " colorscheme nordisk
     " colorscheme vim-material
-    " colorscheme tender
+    colorscheme tender
   endif
 catch
 endtry

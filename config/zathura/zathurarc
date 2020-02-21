@@ -35,6 +35,6 @@ set statusbar-fg "#dddddd"
 set completion-bg "#222222"
 set completion-fg "#dddddd"
 # set show-scrollbars false
-set recolor true
+# set recolor true
 set recolor-darkcolor "#dddddd"
 set recolor-lightcolor "#222222"
