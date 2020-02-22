@@ -7,7 +7,7 @@ formulas=(
 #    git
     tree
     htop
-    ctagsk
+    ctags
     node
 #    python3
     neovim
@@ -33,6 +33,10 @@ formulas=(
     fx # jqみたいだけどインタラクティブにできたりする
     navi # チートシート
     exa # lsのいい感じバージョン
+    ditaa
+    graphviz
+    plantuml
+    pandoc
 )
 
 for formula in "${formulas[@]}"; do
