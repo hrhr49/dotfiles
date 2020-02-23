@@ -626,6 +626,9 @@ function! s:my_coc_nvim_config()
   nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
   nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
   nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
+
+  " Symbol renaming.
+  nmap <buffer> <F2> <Plug>(coc-rename)
   hi clear CocUnderLine 
 endfunction
 
