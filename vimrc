@@ -355,6 +355,7 @@ try
 
   " Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-repeat'
+  Plug 'mattn/disableitalic-vim'
 
   call plug#end()
 catch
