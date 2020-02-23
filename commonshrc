@@ -39,6 +39,7 @@ fi
 
 if type "go" > /dev/null 2>&1; then
     export GOPATH=$HOME/go
+    export PATH=$PATH:$GOPATH/bin
 fi
 
 if [ -e ${HOME}/anaconda3/etc/profile.d/conda.sh ]; then
@@ -102,6 +103,26 @@ cdn () {
   else
     echo 'cdn {library-name}'
   fi
+}
+
+# zathuraをtabbedで管理
+# https://github.com/mtikekar/zathura-tabbed/blob/master/zathura-tabbed
+
+zathura-tabbed ()  {
+  xidfile="/run/user/"$(id -u)"/zathura-tabbed.xid"
+  wmclass="zathura-tabbed"
+  
+  # check if a tabbed window is open
+  set -o pipefail
+  if [ -r "$xidfile" ] && xid=$(cat "$xidfile") && xprop -id "$xid" WM_CLASS 2> /dev/null | grep -q "$wmclass";
+  then
+    wmctrl -i -R "$xid"
+  else
+    read xid < <(tabbed -cdn "$wmclass" -p -1 2> /dev/null)
+    wmctrl -i -r "$xid" -b add,maximized_vert,maximized_horz
+    echo "$xid" > "$xidfile"
+  fi
+  zathura -e "$xid" "$@" &> /dev/null &
 }
 
 # }}}
