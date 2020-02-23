@@ -3,7 +3,7 @@
 # brewでインストールするものリスト
 formulas=(
     # "--without-etcdir zsh"
-    zsh
+    # zsh
 #    git
     tree
     htop
