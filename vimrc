@@ -116,6 +116,8 @@ nnoremap <Space>k <C-b>
 " Emacsライクなマッピング
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
 
 nnoremap [window] <Nop>
 nmap s [window]

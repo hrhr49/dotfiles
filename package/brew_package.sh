@@ -2,41 +2,63 @@
 
 # brewでインストールするものリスト
 formulas=(
+    # シェル
     # "--without-etcdir zsh"
     # zsh
+    zsh-completions
+
+    # バージョン管理
 #    git
+    ghq
+    hub
+
+    # 表示
     tree
     htop
+    bat
+    exa # lsのいい感じバージョン
+
+    # 開発 効率化
+    direnv
     ctags
-    node
-#    python3
     neovim
+
+    # TUI
+    ranger
+    tmux
+
+    # 検索
     ripgrep
 #    ag
     fzf
     fasd
-    ranger
-    bat
-    ghq
-    hub
-    zsh-completions
-    tmux
+
+    # 各種言語
     ruby
+    node
     go
     rust
+    perl
+#    python3
+
+    # ユーティリティ
+
     httpie # curlのようなやつ
     mdp # CLIでのプレゼンツール
     trash-cli # ゴミ箱操作
-    figlet # 文字をアスキーアートで出すやつ
-    neofetch # アスキーアートでOSのアイコン出す
     jq
     fx # jqみたいだけどインタラクティブにできたりする
     navi # チートシート
-    exa # lsのいい感じバージョン
-    ditaa
+
+    # 文書・図形作成
     graphviz
     plantuml
     pandoc
+    ditaa
+
+    # 見た目
+    figlet # 文字をアスキーアートで出すやつ
+    neofetch # アスキーアートでOSのアイコン出す
 )
 
 for formula in "${formulas[@]}"; do

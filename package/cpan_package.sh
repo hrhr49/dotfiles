@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# npmでインストールするものリスト
+# cpanでインストールするものリスト
 packages=(
-    doctoc # Markdown目次自動生成
+    Graph::Easy
 )
 
 for package in "${packages[@]}"; do
-    npm install $package
+    cpan install $package
 done
 
 echo "all packages are successfully installed!"

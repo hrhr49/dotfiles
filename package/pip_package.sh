@@ -5,6 +5,12 @@ packages=(
     csvkit
     pipenv
     # watchdog
+    neovim
+    autopep8
+    mypy
+    pylint
+    pyyaml
+    python-language-server
 )
 
 for package in "${packages[@]}"; do
