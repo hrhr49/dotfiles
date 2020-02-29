@@ -27,6 +27,11 @@ if type "fasd" > /dev/null 2>&1; then
     eval "$(fasd --init auto)"
 fi
 
+# trash-cli(npmパッケージ)が存在すればrmを上書き
+if type trash > /dev/null 2>&1; then
+    alias rm=trash
+fi
+
 # if [ -d "/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin" ] ; then
 #   export PATH="/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin:$PATH"
 # fi

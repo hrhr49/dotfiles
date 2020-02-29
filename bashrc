@@ -8,3 +8,7 @@ else
   export VISUAL=vim
 fi
 alias open='xdg-open'
+
+if type "direnv" > /dev/null 2>&1; then
+  eval "$(direnv hook bash)"
+fi
