@@ -91,6 +91,9 @@ if executable($HOME . '/anaconda3/bin/python') > 0
   let g:python3_host_prog=$HOME . '/anaconda3/bin/python'
 endif
 
+" 矩形選択のときに文字がない箇所も選択できるようにする
+set virtualedit=block
+
 " }}}
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
@@ -109,9 +112,9 @@ nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
-nnoremap <Space>j <C-f>
-nnoremap <Space>k <C-b>
+" nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
+" nnoremap <Space>j <C-f>
+" nnoremap <Space>k <C-b>
 
 " Emacsライクなマッピング
 inoremap <C-a> <Home>
@@ -152,15 +155,15 @@ nnoremap [window]9 9gt
 
 nnoremap [tab] <Nop>
 nmap t [tab]
-nnoremap [tab]1 0gt
-nnoremap [tab]2 1gt
-nnoremap [tab]3 2gt
-nnoremap [tab]4 3gt
-nnoremap [tab]5 4gt
-nnoremap [tab]6 5gt
-nnoremap [tab]7 6gt
-nnoremap [tab]8 7gt
-nnoremap [tab]9 8gt
+nnoremap [tab]1 1gt
+nnoremap [tab]2 2gt
+nnoremap [tab]3 3gt
+nnoremap [tab]4 4gt
+nnoremap [tab]5 5gt
+nnoremap [tab]6 6gt
+nnoremap [tab]7 7gt
+nnoremap [tab]8 8gt
+nnoremap [tab]9 9gt
 nnoremap [tab]n :tabm+<CR>
 nnoremap [tab]p :tabm-<CR>
 nnoremap [tab]o :tabonly<CR>
@@ -227,6 +230,8 @@ autocmd FileType typescript setlocal ts=2 sts=2 sw=2 expandtab
 "autocmd FileType typescript.tsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
+autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
+autocmd FileType scss setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
 autocmd FileType nim setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
 autocmd FileType markdown nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
@@ -296,10 +301,6 @@ try
 
   Plug 'majutsushi/tagbar'
 
-  " Plug 'itchyny/lightline.vim'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-
   Plug 'tpope/vim-commentary'
   Plug 'flazz/vim-colorschemes'
 
@@ -358,6 +359,25 @@ try
   " Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-repeat'
   Plug 'mattn/disableitalic-vim'
+
+  " pugとstylusについては一時見送り
+  " Plug 'digitaltoad/vim-pug'
+  " Plug 'dNitro/vim-pug-complete', {'for': ['jade', 'pug']}
+
+  " Plug 'iloginow/vim-stylus'
+  " Plug 'lifepillar/vim-mucomplete'
+
+
+  " vim-markdownの依存
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'
+
+  " rainbow_csv
+  Plug 'mechatroner/rainbow_csv'
+
+  " Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
   call plug#end()
 catch
@@ -644,7 +664,11 @@ augroup coc_group
   autocmd FileType go call s:my_coc_nvim_config()
   autocmd FileType html call s:my_coc_nvim_config()
   autocmd FileType css call s:my_coc_nvim_config()
+  autocmd FileType scss call s:my_coc_nvim_config()
+  autocmd FileType less call s:my_coc_nvim_config()
   autocmd FileType vim call s:my_coc_nvim_config()
+  autocmd FileType pug call s:my_coc_nvim_config()
+  autocmd FileType stylus call s:my_coc_nvim_config()
   autocmd FileType typescript call s:my_coc_nvim_config()
   autocmd FileType typescript.tsx call s:my_coc_nvim_config()
   autocmd FileType javascript.jsx call s:my_coc_nvim_config()
@@ -682,11 +706,16 @@ endfunction
 "}}}
 " airline{{{
 
-" 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
 
-let g:airline_theme='papercolor'                                                                                                             
+" Theme参考 https://github.com/vim-airline/vim-airline/wiki/Screenshots
+
+" letg:airline_theme='papercolor' 色が変わらないのでわかりづらいので保留
+" let g:airline_theme='light' 色が変わりすぎて煩わしいので保留
+let g:airline_theme='bubblegum'
+
+" 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
 let g:airline_powerline_fonts = 1                                                                                                         
-let g:airline_section_b = '%{getcwd()}' " in section B of the status line display the CWD                                                 
+let g:airline_section_c = '%{getcwd()}' " in section C of the status line display the CWD                                                 
                                                                                                                                           
 "TABLINE:                                                                                                                                 
                                                                                                                                           
@@ -701,6 +730,8 @@ let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs neede
 let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline               
 let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers                                                              
 let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
+
+let g:airline#extensions#branch#enabled = 1
 
 "}}}
 " lightline{{{
@@ -785,8 +816,28 @@ let g:user_emmet_settings = {
 " バッファ移動時に勝手に閉じないようにする
 let g:mkdp_auto_close = 0
 "}}}
-" highlightedyank
+" highlightedyank{{{
 let g:highlightedyank_highlight_duration = 150
+"}}}
+" mucomplete{{{
+if s:plug.is_installed("lifepillar/vim-mucomplete")
+  let g:mucomplete#enable_auto_at_startup = 1
+  set completeopt+=menuone
+  set completeopt+=noselect
+  set completeopt+=noinsert
+  set shortmess+=c
+  set belloff+=ctrlg
+endif
+"}}}
+" vim-markdown{{{
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_conceal = 0
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_no_default_key_mappings = 1
+"}}}
 "}}}
 " 表示{{{
 
@@ -823,7 +874,7 @@ set cursorline
 
 set conceallevel=0
 " 80列目の色を変える
-set colorcolumn=80
+" set colorcolumn=80
 
 " 200桁以上の行はシンタックスハイライトしない
 set synmaxcol=250
@@ -936,5 +987,13 @@ endfunction
 
 command! -nargs=1 Cdn call s:cdn(<f-args>)
 "}}}
-" 過去の遺産{{{
+" GUI {{{
+if has('gui_running')
+  if has('win32') || has('win64')
+    if has('+renderoptions')
+      set renderoptions=type:directx
+    endif
+  endif
+  set antialias
+endif
 "}}}

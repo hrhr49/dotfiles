@@ -176,4 +176,9 @@ _complete_invoke() {
 # * -f: when function generates no results, use filenames.
 # * positional args: program names to complete for.
 compctl -K _complete_invoke + -f invoke inv
+
+# direnvの設定
+if type "direnv" > /dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
 # }}}

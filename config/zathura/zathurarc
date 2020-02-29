@@ -22,7 +22,7 @@ map u scroll half-up
 map d scroll half-down
 map D toggle_page_mode
 
-map <C-n> focus_inputbar  ":exec zathura $FILE"
+# map <C-n> focus_inputbar  ":exec zathura $FILE"
 
 # set adjust-open "width"
 set default-bg "#222222"

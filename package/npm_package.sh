@@ -9,6 +9,8 @@ packages=(
     reveal-md # Markdownでプレゼン作成用
     live-server
     neovim
+    undollar # コマンドライン先頭に「$」がついていたらそれを削除する
+    trash-cli
 )
 
 for package in "${packages[@]}"; do
