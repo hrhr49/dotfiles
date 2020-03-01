@@ -617,6 +617,7 @@ let g:coc_global_extensions = [
       \ "coc-highlight",
       \ "coc-rls",
       \ "coc-go",
+      \ "coc-emoji",
       \]
       " \ "coc-snippets",
 

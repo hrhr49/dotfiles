@@ -59,6 +59,7 @@ formulas=(
     # 見た目
     figlet # 文字をアスキーアートで出すやつ
     neofetch # アスキーアートでOSのアイコン出す
+    emojify # 絵文字を入力するため
 )
 
 for formula in "${formulas[@]}"; do
