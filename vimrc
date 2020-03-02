@@ -167,6 +167,21 @@ nmap [resize]- <C-w>-[resize]
 nmap [resize]< <C-w><[resize]
 nmap [resize]> <C-w>>[resize]
 
+nnoremap [scroll] <Nop>
+nmap [window]d <C-d>[scroll]
+nmap [window]u <C-u>[scroll]
+nmap [window]f <C-f>[scroll]
+nmap [window]b <C-b>[scroll]
+nmap [window]e <C-e>[scroll]
+nmap [window]y <C-y>[scroll]
+
+nmap [scroll]d <C-d>[scroll]
+nmap [scroll]u <C-u>[scroll]
+nmap [scroll]f <C-f>[scroll]
+nmap [scroll]b <C-b>[scroll]
+nmap [scroll]e <C-e>[scroll]
+nmap [scroll]y <C-y>[scroll]
+
 nnoremap [tab] <Nop>
 nmap t [tab]
 nnoremap [tab]0 :<C-u>tabfirst<CR>
@@ -188,6 +203,7 @@ nmap [tab]> :<C-u>tabm+<CR>[tab]
 nmap [tab]< :<C-u>tabm-<CR>[tab]
 nmap [tab]n :<C-u>tabnext<CR>[tab]
 nmap [tab]p :<C-u>tabprevious<CR>[tab]
+
 
 " nnoremap ]t vat<Esc>
 " nnoremap [t vato<Esc>
@@ -560,8 +576,8 @@ let NERDTreeQuitOnOpen=1
 " let g:termdebug_wide = 163
 " }}}
 " Gundo{{{
-nnoremap <F9> :<C-u>GundoToggle<CR>
-nnoremap <Space>u :<C-u>GundoToggle<CR>
+" nnoremap <F9> :<C-u>GundoToggle<CR>
+" nnoremap <Space>u :<C-u>GundoToggle<CR>
 "}}}
 " ranger{{{
 if executable("ranger") > 0
