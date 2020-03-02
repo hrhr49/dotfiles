@@ -94,6 +94,9 @@ endif
 " 矩形選択のときに文字がない箇所も選択できるようにする
 set virtualedit=block
 
+" 入力した内容を表示
+set showcmd
+
 " }}}
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
@@ -153,8 +156,21 @@ nnoremap [window]7 7gt
 nnoremap [window]8 8gt
 nnoremap [window]9 9gt
 
+" +, -, <, >でウィンドウリサイズ。連続入力可能
+nnoremap [resize] <Nop>
+nmap [window]+ <C-w>+[resize]
+nmap [window]- <C-w>-[resize]
+nmap [window]< <C-w><[resize]
+nmap [window]> <C-w>>[resize]
+nmap [resize]+ <C-w>+[resize]
+nmap [resize]- <C-w>-[resize]
+nmap [resize]< <C-w><[resize]
+nmap [resize]> <C-w>>[resize]
+
 nnoremap [tab] <Nop>
 nmap t [tab]
+nnoremap [tab]0 :<C-u>tabfirst<CR>
+nnoremap [tab]$ :<C-u>tablast<CR>
 nnoremap [tab]1 1gt
 nnoremap [tab]2 2gt
 nnoremap [tab]3 3gt
@@ -164,10 +180,14 @@ nnoremap [tab]6 6gt
 nnoremap [tab]7 7gt
 nnoremap [tab]8 8gt
 nnoremap [tab]9 9gt
-nnoremap [tab]n :tabm+<CR>
-nnoremap [tab]p :tabm-<CR>
-nnoremap [tab]o :tabonly<CR>
-nnoremap [tab]q :tabclose<CR>
+nnoremap [tab]o :<C-u>tabonly<CR>
+nnoremap [tab]q :<C-u>tabclose<CR>
+
+" n, p, <, >でタブ移動、もしくはタブ自体を移動。連続入力可能
+nmap [tab]> :<C-u>tabm+<CR>[tab]
+nmap [tab]< :<C-u>tabm-<CR>[tab]
+nmap [tab]n :<C-u>tabnext<CR>[tab]
+nmap [tab]p :<C-u>tabprevious<CR>[tab]
 
 " nnoremap ]t vat<Esc>
 " nnoremap [t vato<Esc>
@@ -199,20 +219,6 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 " ターミナルモード
 tnoremap <silent> jj <C-\><C-n>
 
-" tmuxがないときはvimのターミナルで代用する
-if !executable('tmux')
-  " nnoremap [tmux] <Nop>
-  " nmap <C-s> [tmux]
-  " nmap <C-b> [tmux]
-  " nmap t [tmux]
-
-  " tnoremap [tmux]h <C-\><C-n><C-w>h
-  " tnoremap [tmux]j <C-\><C-n><C-w>j
-  " tnoremap [tmux]k <C-\><C-n><C-w>k
-  " tnoremap [tmux]l <C-\><C-n><C-w>l
-  " nnoremap [tmux]s <C-u>:split\|:terminal<CR>
-  " nnoremap [tmux]v <C-u>:vsplit\|:terminal<CR>
-endif
 
 "}}}
 " ファイル別設定{{{
@@ -996,5 +1002,40 @@ if has('gui_running')
     endif
   endif
   set antialias
+
+  " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
+  nnoremap + :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')<CR>
+  nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
+
+  " tmuxっぽいことをする
+  nnoremap [tmux] <Nop>
+  nmap <C-s> [tmux]
+  nmap <C-b> [tmux]
+  tmap <C-s> <C-\><C-n>[tmux]
+  tmap <C-b> <C-\><C-n>[tmux]
+  imap <C-s> <Esc>[tmux]
+  imap <C-b> <Esc>[tmux]
+
+  if has('nvim')
+    nnoremap [tmux]s <C-u>:split\|:terminal<CR>
+    nnoremap [tmux]v <C-u>:vsplit\|:terminal<CR>
+  else
+    nnoremap [tmux]c :<C-u>tab terminal ++close<CR>
+    nnoremap [tmux]v :<C-u>vert terminal ++close<CR>
+    nnoremap [tmux]s :<C-u>terminal ++close<CR>
+  endif
+
+  nnoremap [tmux]h <C-w>h
+  nnoremap [tmux]j <C-w>j
+  nnoremap [tmux]k <C-w>k
+  nnoremap [tmux]l <C-w>l
+  nnoremap [tmux]p :<C-u>tabprevious<CR>
+  nnoremap [tmux]n :<C-u>tabnext<CR>
+  nnoremap [tmux]! <C-w>T
+  nnoremap [tmux]T <C-w>T
+  nnoremap [tmux]H <C-w>H
+  nnoremap [tmux]J <C-w>J
+  nnoremap [tmux]K <C-w>K
+  nnoremap [tmux]L <C-w>L
 endif
 "}}}
