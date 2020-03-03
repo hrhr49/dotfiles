@@ -97,6 +97,9 @@ set virtualedit=block
 " 入力した内容を表示
 set showcmd
 
+" キーマッピングなどのタイムアウト時間
+set timeoutlen=99999
+
 " }}}
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
@@ -138,9 +141,7 @@ nnoremap [window]h <C-w>h
 nnoremap [window]j <C-w>j
 nnoremap [window]k <C-w>k
 nnoremap [window]l <C-w>l
-nnoremap [window]n gt
 nnoremap [window]o <C-w>o
-nnoremap [window]p gT
 nnoremap [window]q <C-w>q
 nnoremap [window]s <C-w>s
 nnoremap [window]t :tabnew<CR>
@@ -156,29 +157,32 @@ nnoremap [window]7 7gt
 nnoremap [window]8 8gt
 nnoremap [window]9 9gt
 
+nmap [window]p :<C-u>tabprevious<CR>[tab]
+nmap [window]n :<C-u>tabnext<CR>[tab]
+
 " +, -, <, >でウィンドウリサイズ。連続入力可能
 nnoremap [resize] <Nop>
-nmap [window]+ <C-w>+[resize]
-nmap [window]- <C-w>-[resize]
-nmap [window]< <C-w><[resize]
-nmap [window]> <C-w>>[resize]
-nmap [resize]+ <C-w>+[resize]
-nmap [resize]- <C-w>-[resize]
-nmap [resize]< <C-w><[resize]
-nmap [resize]> <C-w>>[resize]
+nmap [window]+ :<C-u>wincmd +<CR>[resize]
+nmap [window]- :<C-u>wincmd -<CR>[resize]
+nmap [window]< :<C-u>wincmd <<CR>[resize]
+nmap [window]> :<C-u>wincmd ><CR>[resize]
+nmap [resize]+ :<C-u>wincmd +<CR>[resize]
+nmap [resize]- :<C-u>wincmd -<CR>[resize]
+nmap [resize]< :<C-u>wincmd <<CR>[resize]
+nmap [resize]> :<C-u>wincmd ><CR>[resize]
 
 nnoremap [scroll] <Nop>
 nmap [window]d <C-d>[scroll]
 nmap [window]u <C-u>[scroll]
-nmap [window]f <C-f>[scroll]
-nmap [window]b <C-b>[scroll]
+nmap [window]f <PageDown>[scroll]
+nmap [window]b <PageUp>[scroll]
 nmap [window]e <C-e>[scroll]
 nmap [window]y <C-y>[scroll]
 
 nmap [scroll]d <C-d>[scroll]
 nmap [scroll]u <C-u>[scroll]
-nmap [scroll]f <C-f>[scroll]
-nmap [scroll]b <C-b>[scroll]
+nmap [scroll]f <PageDown>[scroll]
+nmap [scroll]b <Pageup>[scroll]
 nmap [scroll]e <C-e>[scroll]
 nmap [scroll]y <C-y>[scroll]
 
@@ -234,7 +238,6 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 " ターミナルモード
 tnoremap <silent> jj <C-\><C-n>
-
 
 "}}}
 " ファイル別設定{{{
@@ -729,7 +732,6 @@ endfunction
 "}}}
 " airline{{{
 
-
 " Theme参考 https://github.com/vim-airline/vim-airline/wiki/Screenshots
 
 " letg:airline_theme='papercolor' 色が変わらないのでわかりづらいので保留
@@ -738,7 +740,7 @@ let g:airline_theme='bubblegum'
 
 " 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
 let g:airline_powerline_fonts = 1                                                                                                         
-let g:airline_section_c = '%{getcwd()}' " in section C of the status line display the CWD                                                 
+let g:airline_section_c = '%-0.30{getcwd()}' " in section C of the status line display the CWD                                                 
                                                                                                                                           
 "TABLINE:                                                                                                                                 
                                                                                                                                           
