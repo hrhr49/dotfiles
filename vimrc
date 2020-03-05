@@ -171,18 +171,27 @@ nmap [resize]- :<C-u>wincmd -<CR>[resize]
 nmap [resize]< :<C-u>wincmd <<CR>[resize]
 nmap [resize]> :<C-u>wincmd ><CR>[resize]
 
+function! ScrollFunc(distance)
+  let num = abs(a:distance)
+  let key = a:distance > 0 ? "\<C-e>" : "\<C-y>"
+  exec "normal ". num . key
+endfunction
+
 nnoremap [scroll] <Nop>
-nmap [window]d <C-d>[scroll]
-nmap [window]u <C-u>[scroll]
-nmap [window]f <PageDown>[scroll]
-nmap [window]b <PageUp>[scroll]
+" 直接<C-d>や<C-f>などでスクロールしようとすると
+" スクロールできなかったときに[scroll]の部分が実行されない？
+" そのためスクロール用の関数を呼ぶ
+nmap [window]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
+nmap [window]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
+nmap [window]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
+nmap [window]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap [window]e <C-e>[scroll]
 nmap [window]y <C-y>[scroll]
 
-nmap [scroll]d <C-d>[scroll]
-nmap [scroll]u <C-u>[scroll]
-nmap [scroll]f <PageDown>[scroll]
-nmap [scroll]b <Pageup>[scroll]
+nmap [scroll]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
+nmap [scroll]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
+nmap [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
+nmap [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap [scroll]e <C-e>[scroll]
 nmap [scroll]y <C-y>[scroll]
 
@@ -224,7 +233,8 @@ map <4-MiddleMouse> <Nop>
 imap <4-MiddleMouse> <Nop>
 
 " 選択中のテキストを*で検索
-vnoremap * "zy:let @/ = @z<CR>n
+" vnoremap * "zy:let @/ = @z<CR>n
+vnoremap * "zy:let @/ = '\V' . @z<CR>n
 
 " ペーストしたテキストをビジュアルモードで選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -238,6 +248,18 @@ cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 " ターミナルモード
 tnoremap <silent> jj <C-\><C-n>
+
+" cmd.exeの設定
+if has('win32') || has('win64')
+  tnoremap <C-p> <Up>
+  tnoremap <C-n> <Down>
+  tnoremap <C-m> <CR>
+  tnoremap <C-a> <Home>
+  tnoremap <C-e> <End>
+  tnoremap <C-h> <BS>
+  tnoremap <C-u> <BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS>
+  tnoremap <C-l> cls<CR>
+endif
 
 "}}}
 " ファイル別設定{{{
@@ -982,7 +1004,7 @@ function! s:cdn_tag(name, version, filename)
     return '<link rel="stylesheet" href="' . l:uri . '" crossorigin="anonymous" />'
   else
     return l:pathname
-  fi
+  endif
 endfunction
 
 function! s:cdn_get_version(name)
@@ -1029,8 +1051,10 @@ if has('gui_running')
   nnoremap [tmux] <Nop>
   nmap <C-s> [tmux]
   nmap <C-b> [tmux]
-  tmap <C-s> <C-\><C-n>[tmux]
-  tmap <C-b> <C-\><C-n>[tmux]
+  " 一旦tnoremapしておく
+  tnoremap [term-esc] <C-\><C-n>
+  tmap <C-s> [term-esc][tmux]
+  tmap <C-b> [term-esc][tmux]
   imap <C-s> <Esc>[tmux]
   imap <C-b> <Esc>[tmux]
 
