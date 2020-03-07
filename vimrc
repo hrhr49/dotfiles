@@ -82,11 +82,6 @@ set laststatus=2
 " バッファ保存せずに移動できるようにする
 set hidden
 
-" homebrewで入れたpython3の認識をさせる。
-" なぜかpython3だけ明示的に指定しなければ認識してくれなかった。
-" if executable('/home/linuxbrew/.linuxbrew/bin/python3') > 0
-"   let g:python3_host_prog='/home/linuxbrew/.linuxbrew/bin/python3'
-" endif
 if executable($HOME . '/anaconda3/bin/python') > 0
   let g:python3_host_prog=$HOME . '/anaconda3/bin/python'
 endif
@@ -305,7 +300,8 @@ autocmd BufRead,BufNewFile *.rs nnoremap <buffer> <F5> :w \| !rustc % \| !%:r<CR
 autocmd BufRead,BufNewFile *.nim nnoremap <buffer> <F5> :w \| !nim c -r %<CR>
 autocmd BufRead,BufNewFile *.tsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
-augroup END"}}}
+augroup END
+"}}}
 " プラグイン一覧{{{
 try
   " Specify a directory for plugins
@@ -426,6 +422,8 @@ try
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 
+  " Plug 'vim-vdebug/vdebug'
+  Plug 'junegunn/goyo.vim'
   call plug#end()
 catch
   echo 'vim-plug is not found'
@@ -760,6 +758,7 @@ endfunction
 " let g:airline_theme='light' 色が変わりすぎて煩わしいので保留
 let g:airline_theme='bubblegum'
 
+let g:airline#extensions#whitespace#enabled = 0
 " 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
 let g:airline_powerline_fonts = 1                                                                                                         
 let g:airline_section_c = '%-0.30{getcwd()}' " in section C of the status line display the CWD                                                 

@@ -54,6 +54,16 @@ fi
 if [ -d ${HOME}/anaconda3/bin ]; then
     export PATH=~/anaconda3/bin:$PATH
 fi
+
+python37_site_packages=${HOME}/anaconda3/lib/python3.7/site-packages
+python38_site_packages=${HOME}/anaconda3/lib/python3.8/site-packages
+if [ -d ${python37_site_packages} ]; then
+    export PYTHONPATH=$PYTHONPATH:${python37_site_packages}
+fi
+if [ -d ${python38_site_packages} ]; then
+    export PYTHONPATH=$PYTHONPATH:${python38_site_packages}
+fi
+
 if [ -d /usr/lib/go/bin ]; then
     export PATH=/usr/lib/go/bin:$PATH
 fi

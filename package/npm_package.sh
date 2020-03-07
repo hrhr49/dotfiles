@@ -11,6 +11,7 @@ packages=(
     neovim
     undollar # コマンドライン先頭に「$」がついていたらそれを削除する
     trash-cli
+    fkill-cli # インタラクティブにプロセスを選んでkill
 )
 
 for package in "${packages[@]}"; do
