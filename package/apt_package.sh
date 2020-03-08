@@ -28,28 +28,30 @@ packages=(
     w3m
 
     # GUI
-    rofi
-    sxiv
-    zathura
-    chromium-browser
-    mpv
-    xsel
-    xfce4-terminal
-    ffmpegthumbnailer
-    wmctrl
+    rofi              # ウィンドウスイッチャー
+    sxiv              # 画像表示
+    zathura           # PDF表示
+    chromium-browser  # Webブラウザ
+    mpv               # 動画・音声再生
+    xsel              # クリップボード
+    xfce4-terminal    # ターミナル
+    ffmpegthumbnailer # rangerでのサムネイル
+    wmctrl            # ウィンドウマネージャの操作
+    zenity            # コマンドラインからのGUIダイアログなどの表示
 
     # i3wmで使用するもの
     i3
     fcitx-mozc
-    feh
-    compton
-    variety
-    alsa-utils
-    dunst
-    pasystray
-    rofi
-    xclip
-    scrot
+    feh        # 壁紙を表示
+    compton    # コンポジットマネージャ。ウィンドウを透明にしたいときなどに必要
+    variety    # 壁紙の設定
+    alsa-utils # サウンド
+    dunst      # 通知表示
+    pasystray  # ボリュームアイコン
+    rofi       # ウィンドウスイッチャー
+    xclip      # クリップボード
+    scrot      # スクリーンショット
+    arandr     # マルチディスプレイ設定用
 )
 
 for package in "${packages[@]}"; do
