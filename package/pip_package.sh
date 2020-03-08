@@ -1,11 +1,16 @@
 #!/bin/bash
 
+
 # pipでインストールするものリスト
 packages=(
     csvkit
     pipenv
     # watchdog
     neovim
+    flask
+    pyflakes
+    pynvim
+    jedi
     autopep8
     mypy
     pylint
