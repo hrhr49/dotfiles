@@ -24,6 +24,9 @@ packages=(
     zlib1g-dev
     zlibbz2-dev
 
+    git
+    zsh
+
     # CUI
     w3m
 
@@ -36,8 +39,9 @@ packages=(
     xsel              # クリップボード
     xfce4-terminal    # ターミナル
     ffmpegthumbnailer # rangerでのサムネイル
-    wmctrl            # ウィンドウマネージャの操作
     zenity            # コマンドラインからのGUIダイアログなどの表示
+    wmctrl            # ウィンドウマネージャの操作
+    xdotool           # ウィンドウ情報
 
     # i3wmで使用するもの
     i3

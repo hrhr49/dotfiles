@@ -2,6 +2,7 @@
 
 # すべてのパッケージをインストール
 
+./apt_package.sh
 ./brew_package.sh
 ./cpan_package.sh
 ./gem_package.sh
