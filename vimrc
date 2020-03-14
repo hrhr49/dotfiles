@@ -818,7 +818,6 @@ let g:rainbow_conf = {
 \   'nerdtree': 0,
 \	}
 \}
-
 " }}}
 " emmet{{{
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
@@ -1064,37 +1063,52 @@ if has('gui_running')
   nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
 
   " tmuxっぽいことをする
-  nnoremap [tmux] <Nop>
-  nmap <C-s> [tmux]
-  nmap <C-b> [tmux]
+  nnoremap [term] <Nop>
+  tnoremap [term] <Nop>
+  nmap <C-s> [term]
+  nmap <C-b> [term]
   " 一旦tnoremapしておく
   tnoremap [term-esc] <C-\><C-n>
-  tmap <C-s> [term-esc][tmux]
-  tmap <C-b> [term-esc][tmux]
-  imap <C-s> <Esc>[tmux]
-  imap <C-b> <Esc>[tmux]
+  tmap <C-s> [term]
+  tmap <C-b> [term]
+
+  imap <C-s> <Esc>[term]
+  imap <C-b> <Esc>[term]
 
   if has('nvim')
-    nnoremap [tmux]s <C-u>:split\|:terminal<CR>
-    nnoremap [tmux]v <C-u>:vsplit\|:terminal<CR>
+    nnoremap [term]s <C-u>:split\|:terminal<CR>
+    nnoremap [term]v <C-u>:vsplit\|:terminal<CR>
   else
-    nnoremap [tmux]c :<C-u>tab terminal ++close<CR>
-    nnoremap [tmux]v :<C-u>vert terminal ++close<CR>
-    nnoremap [tmux]s :<C-u>terminal ++close<CR>
+    nnoremap [term]c :<C-u>tab terminal ++close<CR>
+    nnoremap [term]v :<C-u>vert terminal ++close<CR>
+    nnoremap [term]s :<C-u>terminal ++close<CR>
   endif
 
-  nnoremap [tmux]h <C-w>h
-  nnoremap [tmux]j <C-w>j
-  nnoremap [tmux]k <C-w>k
-  nnoremap [tmux]l <C-w>l
-  nnoremap [tmux]p :<C-u>tabprevious<CR>
-  nnoremap [tmux]n :<C-u>tabnext<CR>
-  nnoremap [tmux]! <C-w>T
-  nnoremap [tmux]T <C-w>T
-  nnoremap [tmux]H <C-w>H
-  nnoremap [tmux]J <C-w>J
-  nnoremap [tmux]K <C-w>K
-  nnoremap [tmux]L <C-w>L
+  nnoremap [term]h <C-w>h
+  nnoremap [term]j <C-w>j
+  nnoremap [term]k <C-w>k
+  nnoremap [term]l <C-w>l
+  nnoremap [term]p :<C-u>tabprevious<CR>
+  nnoremap [term]n :<C-u>tabnext<CR>
+  nnoremap [term]! <C-w>T
+  nnoremap [term]T <C-w>T
+  nnoremap [term]H <C-w>H
+  nnoremap [term]J <C-w>J
+  nnoremap [term]K <C-w>K
+  nnoremap [term]L <C-w>L
+
+  tnoremap [term]h <C-w>h
+  tnoremap [term]j <C-w>j
+  tnoremap [term]k <C-w>k
+  tnoremap [tmux]l <C-w>l
+  tnoremap [tmux]p [term-esc][tmux]p
+  tnoremap [tmux]n [term-esc][tmux]n
+  tnoremap [tmux]! [term-esc][tmux]T
+  tnoremap [tmux]T [term-esc][tmux]T
+  tnoremap [tmux]H <C-w>H
+  tnoremap [tmux]J <C-w>J
+  tnoremap [tmux]K <C-w>K
+  tnoremap [tmux]L <C-w>L
 endif
 
 " メニューバーなどの設定
