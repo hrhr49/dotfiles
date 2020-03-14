@@ -84,12 +84,13 @@ set timeoutlen=9999999
 "}}}
 " }}}
 " キーマッピング(一般){{{
+inoremap jj <ESC>
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
+" <C-u>のタイミングでUndoのセーブポイント
 inoremap <C-u> <C-g>u<C-u>
-inoremap jj <ESC>
 " vimrcをリロード
-nnoremap <S-C-r> :<C-u>source ~/.vimrc<CR>
+" nnoremap <S-C-r> :<C-u>source ~/.vimrc<CR>
 " inoremap jk <ESC>
 " inoremap <C-k> <Esc>gg/aaa<CR>cgn
 " inoremap <C-;> <Esc>cgn
@@ -101,18 +102,31 @@ nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
+" 選択中のテキストを*で検索
+" vnoremap * "zy:let @/ = @z<CR>n
+vnoremap * "zy:let @/ = '\V' . @z<CR>n
 nnoremap n nzzzv
 nnoremap N Nzzzv
+" ペーストしたテキストをビジュアルモードで選択
+" nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
 " nnoremap <Space>j <C-f>
 " nnoremap <Space>k <C-b>
-
-" Emacsライクなマッピング
+nnoremap <Space>z za
+nnoremap <F6> :make<CR>
+" nnoremap <C-S-e> :Ex<CR>
+" 外部コマンドとの連携{{{
+vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
+vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
+" 保存時にsudo権限で無理やり保存
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
+" Emacsライクなマッピング{{{
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
-
+"}}}
+" ウィンドウなど{{{
 nnoremap [window] <Nop>
 nmap s [window]
 nnoremap [window]H <C-w>H
@@ -201,13 +215,8 @@ nmap [tab]> :<C-u>tabm+<CR>[tab]
 nmap [tab]< :<C-u>tabm-<CR>[tab]
 nmap [tab]n :<C-u>tabnext<CR>[tab]
 nmap [tab]p :<C-u>tabprevious<CR>[tab]
-
-
-" nnoremap ]t vat<Esc>
-" nnoremap [t vato<Esc>
-
-nnoremap <F6> :make<CR>
-" nnoremap <C-S-e> :Ex<CR>
+"}}}
+" マウス{{{
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
@@ -216,25 +225,11 @@ map <3-MiddleMouse> <Nop>
 imap <3-MiddleMouse> <Nop>
 map <4-MiddleMouse> <Nop>
 imap <4-MiddleMouse> <Nop>
-
-" 選択中のテキストを*で検索
-" vnoremap * "zy:let @/ = @z<CR>n
-vnoremap * "zy:let @/ = '\V' . @z<CR>n
-
-" ペーストしたテキストをビジュアルモードで選択
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-" 外部コマンドとの連携
-vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
-vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
-
-" 保存時にsudo権限で無理やり保存
-cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
-
-" ターミナルモード
+"}}}
+"}}}
+" ターミナルモード{{{
 tnoremap <silent> jj <C-\><C-n>
-
-" cmd.exeの設定
+" cmd.exeの設定{{{
 if has('win32') || has('win64')
   tnoremap <C-p> <Up>
   tnoremap <C-n> <Down>
@@ -245,7 +240,8 @@ if has('win32') || has('win64')
   tnoremap <C-u> <BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS><BS>
   tnoremap <C-l> cls<CR>
 endif
-
+"}}}
+"}}}
 "}}}
 " ファイル別設定{{{
 augroup RunProgram
@@ -1055,6 +1051,7 @@ endfunction
 command! -nargs=1 Cdn call s:cdn(<f-args>)
 "}}}
 " GUI {{{
+" アンチエイリアス{{{
 if has('gui_running')
   if has('win32') || has('win64')
     if has('+renderoptions')
@@ -1062,12 +1059,13 @@ if has('gui_running')
     endif
   endif
   set antialias
-
+"}}}
+  " フォントサイズ{{{
   " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
   nnoremap + :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')<CR>
   nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
-
-  " tmuxっぽいことをする
+"}}}
+  " term設定{{{
   nnoremap [term] <Nop>
   tnoremap [term] <Nop>
   nmap <C-s> [term]
@@ -1115,8 +1113,8 @@ if has('gui_running')
   tnoremap [tmux]K <C-w>K
   tnoremap [tmux]L <C-w>L
 endif
-
-" メニューバーなどの設定
+"}}}
+" メニューバーなどの設定{{{
 try
   if has("gui_running")
     set guioptions-=m
@@ -1125,4 +1123,5 @@ try
   endif
 catch
 endtry
+"}}}
 "}}}
