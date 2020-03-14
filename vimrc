@@ -6,93 +6,82 @@ set shellslash
 " 一般{{{
 filetype plugin indent on
 syntax on
-
+" 文字{{{
 " バックスペースで字下げや行末を消去できるようにする。
 set backspace=2
-
-" let loaded_matchparen = 1
-let g:netrw_keepdir = 0
-"let g:markdown_folding=1
-"set completeopt+=longest
+set shiftwidth=4
+set smartindent
+set smarttab
+set tabstop=4
+set autoindent
+set expandtab
+" 矩形選択のときに文字がない箇所も選択できるようにする
+set virtualedit=block
+"}}}
+" 折りたたみ{{{
 set foldmethod=marker
-
 " show foldings
 "set foldcolumn=1
-
+"}}}
+" 入力補完{{{
 " remove tag comeletion from default
 set complete-=t
-
-" NERDTreeなどが動かなくなるので無効化
-" set autochdir
-set autoindent
-
+"set completeopt+=longest
+"}}}
+" クリップボード{{{
 set clipboard&
-
 " プラットフォームによってクリップボード設定切り替え
 if has('unix') || has('mac')
 set clipboard^=unnamedplus
-endif
-
-if has('win32') || has('win64')
+elseif has('win32') || has('win64')
 set clipboard^=unnamed
 endif
-
-set expandtab
-
+"}}}
+" 検索{{{
+set nohlsearch
 set ignorecase
 " 入力の小文字、大文字に合わせて補完
 " set infercase
 set smartcase
-
+set incsearch
+set wrapscan
 " 補完最中だけ大文字小文字区別
 augroup ComplNotIgnore
 autocmd!
 au InsertEnter * set noignorecase
 au InsertLeave * set ignorecase
 augroup END
-
+" }}}
+" バックアップ{{{
 set nobackup
 set nowritebackup
-set nohlsearch
-" 以下のマッピングをすると、vim8を起動したときに置換モードになってしまう
-" nnoremap <Esc> :noh<CR>
 set noswapfile
 set noundofile
+"}}}
+" 行番号{{{
 set number
 set relativenumber
-set shiftwidth=4
-set smartindent
-set smarttab
-set tabstop=4
+"}}}
+" ワイルドメニュー{{{
 set wildignorecase
 set wildmenu
-set wrapscan
-set incsearch
-"set cursorline
-set mouse=a
-try
-set path+=~/memo/**
-catch
-endtry
-set tags+=tags;
-set laststatus=2
-
+"}}}
+" バッファ{{{
 " バッファ保存せずに移動できるようにする
 set hidden
-
+"}}}
+" 環境{{{
 if executable($HOME . '/anaconda3/bin/python') > 0
   let g:python3_host_prog=$HOME . '/anaconda3/bin/python'
 endif
-
-" 矩形選択のときに文字がない箇所も選択できるようにする
-set virtualedit=block
-
-" 入力した内容を表示
-set showcmd
-
+set path+=~/memo/**
+set tags+=tags;
+"}}}
+" マウス・キー入力{{{
+set mouse=a
 " キーマッピングなどのタイムアウト時間
 set timeoutlen=9999999
-
+"}}}
 " }}}
 " キーマッピング(一般){{{
 inoremap <C-r> <C-r><C-p>
@@ -308,12 +297,13 @@ try
   " - For Neovim: ~/.local/share/nvim/plugged
   " - Avoid using standard Vim directory names like 'plugin'
   call plug#begin('~/.vim/plugged')
- 
   " Make sure you use single quotes
-
+  " ヘルプ{{{
   " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
-
+  "}}}
+  " ブラウジング{{{
+  " NERDTree{{{
   Plug 'scrooloose/nerdtree'
   " NERDTreeでdeviconsを表示
   Plug 'ryanoasis/vim-devicons'
@@ -322,7 +312,16 @@ try
   if executable('git') > 0
     Plug 'Xuyuanp/nerdtree-git-plugin'
   endif
-
+  "}}}
+  " Ranger{{{
+  if executable('ranger')
+    Plug 'francoiscabrol/ranger.vim'
+    Plug 'rbgrouleff/bclose.vim'
+  endif
+  "}}}
+  Plug 'majutsushi/tagbar'
+  "}}}
+  " あいまい検索{{{
   " fzfのインストールも同時にやりたい場合は以下のようにする
   " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Plug 'junegunn/fzf.vim'
@@ -334,39 +333,56 @@ try
     Plug 'ctrlpvim/ctrlp.vim'
     " Plug 'ompugao/ctrlp-history'
   endif
- 
-  " text object関連
+ "}}}
+  " テキスト操作{{{
   Plug 'kana/vim-textobj-user'
   Plug 'glts/vim-textobj-comment'
   Plug 'michaeljsmith/vim-indent-object'
   Plug 'mattn/vim-textobj-url'
   " Plug 'kana/vim-textobj-jabraces'
-
-  Plug 'majutsushi/tagbar'
-
+  Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
+  Plug 'h1mesuke/vim-alignta'
+  " Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-repeat'
+  "}}}
+  " 表示{{{
   Plug 'flazz/vim-colorschemes'
+  Plug 'luochen1990/rainbow'
+  Plug 'ap/vim-css-color'
+  Plug 'mechatroner/rainbow_csv'
+  " ヤンクした場所をわかりやすくする。
+  Plug 'machakann/vim-highlightedyank'
+  " イタリックフォントを無効化
+  Plug 'mattn/disableitalic-vim'
 
+  " Plug 'itchyny/lightline.vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'junegunn/goyo.vim'
+  "}}}
+  " 入力補完・補助{{{
   " Use release branch
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
- 
   Plug 'mattn/emmet-vim'
- 
+  Plug 'LeafCage/yankround.vim'
+  " snippets
+  " Track the engine.
+  " Plug 'SirVer/ultisnips'
+
+  " Snippets are separated from the engine. Add this if you want them:
+  " Plug 'honza/vim-snippets'
+  " Plug 'lifepillar/vim-mucomplete'
+  "}}}
+  " バージョン管理・変更履歴{{{
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   Plug 'sjl/gundo.vim'
-
-  if executable('ranger')
-    Plug 'francoiscabrol/ranger.vim'
-    Plug 'rbgrouleff/bclose.vim'
-  endif
-
+  " }}}
+  " 移動{{{
   Plug 'easymotion/vim-easymotion'
-  Plug 'LeafCage/yankround.vim'
-
-  Plug 'tpope/vim-surround'
-  Plug 'h1mesuke/vim-alignta'
-
+  "}}}
+  " 言語{{{
   " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
   if executable('node') > 0 && executable('yarn') > 0
     " If you have nodejs and yarn
@@ -374,19 +390,6 @@ try
   else
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
   endif
-
-  Plug 'luochen1990/rainbow'
-  Plug 'ap/vim-css-color'
-
-  " snippets
-  " Track the engine.
-  " Plug 'SirVer/ultisnips'
-
-  " Snippets are separated from the engine. Add this if you want them:
-  " Plug 'honza/vim-snippets'
-
-  " ターミナルデバッガ
-  " Plug 'epheien/termdbg'
 
   " 様々な言語のパック。
   " Markdownのときに勝手に箇条書きの点などついて面倒なので一時保留
@@ -396,44 +399,27 @@ try
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
 
-  " ヤンクした場所をわかりやすくする。
-  Plug 'machakann/vim-highlightedyank'
-
-  " Plug 'tpope/vim-unimpaired'
-  Plug 'tpope/vim-repeat'
-  Plug 'mattn/disableitalic-vim'
-
   " pugとstylusについては一時見送り
   " Plug 'digitaltoad/vim-pug'
   " Plug 'dNitro/vim-pug-complete', {'for': ['jade', 'pug']}
-
   " Plug 'iloginow/vim-stylus'
-  " Plug 'lifepillar/vim-mucomplete'
-
-
   " vim-markdownの依存
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
-
-  " rainbow_csv
-  Plug 'mechatroner/rainbow_csv'
-
-  " Plug 'itchyny/lightline.vim'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-
+  "}}}
+  " デバッグ{{{
+  " ターミナルデバッガ
+  " Plug 'epheien/termdbg'
   " Plug 'vim-vdebug/vdebug'
-  Plug 'junegunn/goyo.vim'
+  "}}}
   call plug#end()
 catch
   echo 'vim-plug is not found'
   echo v:exception
   echo v:throwpoint
 endtry
-
 "}}}
 " プラグイン設定{{{
-
 " プラグイン存在確認関数{{{
 let s:plug = {
       \ "plugs": get(g:, 'plugs', {})
@@ -885,10 +871,14 @@ let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_no_default_key_mappings = 1
 "}}}
+" 組み込み{{{
+" let loaded_matchparen = 1
+let g:netrw_keepdir = 0
+"let g:markdown_folding=1
+"}}}
 "}}}
 " 表示{{{
-
-" カラースキーム
+" カラースキーム{{{
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running")
@@ -903,7 +893,8 @@ try
   endif
 catch
 endtry
-
+"}}}
+" オプション{{{
 " 対応カッコの色設定を変更(そのままだとわかりづらいときあった)
 " 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
@@ -918,7 +909,10 @@ set conceallevel=0
 
 " 200桁以上の行はシンタックスハイライトしない
 set synmaxcol=250
-
+"set cursorline
+set laststatus=2
+" 入力した内容を表示
+set showcmd
 if has('nvim')
   if has('+pumblend')
     " ポップアップメニューを半透明にする
@@ -930,23 +924,37 @@ if has('+termguicolors')
 " GUIカラーを使う
   set termguicolors
 endif
-
-" 折りたたみ表示{{{
+"}}}
+" 折りたたみ表示 {{{
 set foldtext=MyFoldText()
 " 折りたたみの空きスペースは半角スペース「 」で埋める
 set fillchars=fold:\ 
 function! MyFoldText()
   let line = substitute(getline(v:foldstart), '^\s*', '', '')
-  let comment_pat = substitute(escape(&commentstring, '*-.\^$[~'), '%s', '\\(.*\\)', 'g')
+  let comment_pat = '\V' . substitute(&commentstring, '%s', '\\(\\.\\*\\)', 'g')
   let line = substitute(line, comment_pat, '\1', 'g')
   let marker = get(split(&foldmarker, ','), 0, '')
+
   " remove fold marker
   let line = substitute(line, marker, '', 'g')
   let line = substitute(line, '^', repeat('  ', v:foldlevel - 1) . '▸ ', 'g')
-  let line = substitute(line, '$', ' [' . (v:foldend - v:foldstart) . ']', 'g')
+  " 折りたたみ行数
+  let tail = '[' . (v:foldend - v:foldstart + 1) . ']'
+
+  " ウィンドウ幅 
+  " 参考 https://github.com/Konfekt/FoldText/blob/master/plugin/FoldText.vim
+  let w = winwidth(0) - &foldcolumn - (&number ? &numberwidth : 0) - (&l:signcolumn is# 'yes' ? 2 : 0)
+  echo w
+
+  " 折りたたみ行数を右揃えにするためのパディング
+  let pad_width = w - (strwidth(line) + strwidth(tail)) - 2
+
+  if pad_width > 0
+      let line = line . repeat(' ', pad_width) . tail
+  endif
   return line
 endfunction
-"}}}
+" }}}
 " }}}
 " スクリプト{{{
 
