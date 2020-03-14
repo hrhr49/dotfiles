@@ -4,8 +4,6 @@ scriptencoding utf-8
 set shellslash
 
 " 一般{{{
-"以下のを入れると、プラグイン関連での補完関連でエラーが出ちゃう
-"autocmd CompleteDone * pclose
 filetype plugin indent on
 syntax on
 
@@ -93,7 +91,7 @@ set virtualedit=block
 set showcmd
 
 " キーマッピングなどのタイムアウト時間
-set timeoutlen=99999
+set timeoutlen=9999999
 
 " }}}
 " キーマッピング(一般){{{
@@ -101,6 +99,8 @@ inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 inoremap <C-u> <C-g>u<C-u>
 inoremap jj <ESC>
+" vimrcをリロード
+nnoremap <S-C-r> :<C-u>source ~/.vimrc<CR>
 " inoremap jk <ESC>
 " inoremap <C-k> <Esc>gg/aaa<CR>cgn
 " inoremap <C-;> <Esc>cgn
@@ -888,6 +888,7 @@ let g:vim_markdown_no_default_key_mappings = 1
 "}}}
 " 表示{{{
 
+" カラースキーム
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running")
@@ -899,14 +900,6 @@ try
     " colorscheme nordisk
     " colorscheme vim-material
     colorscheme tender
-  endif
-catch
-endtry
-try
-  if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set guifont=Monospace\ 14
   endif
 catch
 endtry
@@ -938,8 +931,23 @@ if has('+termguicolors')
   set termguicolors
 endif
 
-
+" 折りたたみ表示{{{
+set foldtext=MyFoldText()
+" 折りたたみの空きスペースは半角スペース「 」で埋める
+set fillchars=fold:\ 
+function! MyFoldText()
+  let line = substitute(getline(v:foldstart), '^\s*', '', '')
+  let comment_pat = substitute(escape(&commentstring, '*-.\^$[~'), '%s', '\\(.*\\)', 'g')
+  let line = substitute(line, comment_pat, '\1', 'g')
+  let marker = get(split(&foldmarker, ','), 0, '')
+  " remove fold marker
+  let line = substitute(line, marker, '', 'g')
+  let line = substitute(line, '^', repeat('  ', v:foldlevel - 1) . '▸ ', 'g')
+  let line = substitute(line, '$', ' [' . (v:foldend - v:foldstart) . ']', 'g')
+  return line
+endfunction
 "}}}
+" }}}
 " スクリプト{{{
 
 " 折りたたみ情報を保持する 参考: http://nametake-1009.hatenablog.com/entry/2016/10/02/212629
@@ -1080,4 +1088,14 @@ if has('gui_running')
   nnoremap [tmux]K <C-w>K
   nnoremap [tmux]L <C-w>L
 endif
+
+" メニューバーなどの設定
+try
+  if has("gui_running")
+    set guioptions-=m
+    set guioptions-=T
+    set guifont=Monospace\ 14
+  endif
+catch
+endtry
 "}}}
