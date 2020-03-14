@@ -21,6 +21,7 @@ init_dotfiles:
 	mkdir -p ${HOME}/.config/rofi
 	mkdir -p ${HOME}/.config/qutebrowser
 	mkdir -p ${HOME}/.config/zathura
+	mkdir -p ${HOME}/.config/xfce4/terminal
 	ln -vsf ${PWD}/xinitrc ${HOME}/.xinitrc
 	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
@@ -32,6 +33,7 @@ init_dotfiles:
 	ln -vsf ${PWD}/config/qutebrowser/config.py ${HOME}/.config/qutebrowser/config.py
 	ln -vsf ${PWD}/config/qutebrowser/solarized.css ${HOME}/.config/qutebrowser/solarized.css
 	ln -vsf ${PWD}/config/zathura/zathurarc ${HOME}/.config/zathura/zathurarc
+	ln -vsf ${PWD}/config/xfce4/terminal/accels.scm ${HOME}/.config/xfce4/terminal/accels.scm
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc

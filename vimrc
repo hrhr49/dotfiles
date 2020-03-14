@@ -97,6 +97,7 @@ nnoremap <S-C-r> :<C-u>source ~/.vimrc<CR>
 " inoremap <C-CR> <End><CR>
 " inoremap <C-S-CR> <Up><End><CR>
 
+nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
@@ -433,6 +434,10 @@ if s:plug.is_installed("vim-myplugin")
   " setting
 endif
 "}}}
+  " fugitive{{{
+  nnoremap gcd :<C-u>Gcd<CR>
+  "}}}
+  " あいまい検索{{{
 " fzf{{{
 if executable('fzf') > 0
   " fzf
@@ -565,6 +570,7 @@ else
   nnoremap <Space>h :<C-u>CtrlPCmdHistory<CR>
   nnoremap <Space>s :<C-u>CtrlPSearchHistory<CR>
 endif
+"}}}
 "}}}
 " Tagbar{{{
 let g:tagbar_autofocus = 1
@@ -943,7 +949,6 @@ function! MyFoldText()
   " ウィンドウ幅 
   " 参考 https://github.com/Konfekt/FoldText/blob/master/plugin/FoldText.vim
   let w = winwidth(0) - &foldcolumn - (&number ? &numberwidth : 0) - (&l:signcolumn is# 'yes' ? 2 : 0)
-  echo w
 
   " 折りたたみ行数を右揃えにするためのパディング
   let pad_width = w - (strwidth(line) + strwidth(tail)) - 2
