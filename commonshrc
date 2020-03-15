@@ -152,10 +152,15 @@ alias paci="sudo pacman -S"
 alias pacu="sudo pacman -Syy"
 alias pacs="pacman -Ss"
 
+# snapのエイリアス
+alias snapi="sudo snap install"
+alias snaps="snap search"
+
 # brewのエイリアス
 alias brewi="brew install"
 alias brewu="brew update"
 alias brews="brew search"
+
 # pipのエイリアス
 alias pipi="pip install"
 alias pips="pip search"
