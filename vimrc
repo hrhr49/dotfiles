@@ -1051,19 +1051,25 @@ endfunction
 command! -nargs=1 Cdn call s:cdn(<f-args>)
 "}}}
 " GUI {{{
-" アンチエイリアス{{{
 if has('gui_running')
+  " アンチエイリアス{{{
   if has('win32') || has('win64')
     if has('+renderoptions')
       set renderoptions=type:directx
     endif
   endif
   set antialias
-"}}}
-  " フォントサイズ{{{
+  "}}}
+  " フォント{{{
   " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
   nnoremap + :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')<CR>
   nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
+
+  " イタリックフォントを無効化
+  augroup DisableItalicGroup
+  autocmd!
+  autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
+  augroup END
 "}}}
   " term設定{{{
   nnoremap [term] <Nop>
@@ -1112,16 +1118,16 @@ if has('gui_running')
   tnoremap [tmux]J <C-w>J
   tnoremap [tmux]K <C-w>K
   tnoremap [tmux]L <C-w>L
+  "}}}
+  " メニューバーなどの設定{{{
+  try
+    if has("gui_running")
+      set guioptions-=m
+      set guioptions-=T
+      set guifont=Monospace\ 14
+    endif
+  catch
+  endtry
+  "}}}
 endif
-"}}}
-" メニューバーなどの設定{{{
-try
-  if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set guifont=Monospace\ 14
-  endif
-catch
-endtry
-"}}}
 "}}}
