@@ -289,6 +289,12 @@ autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
 augroup END
 "}}}
 " プラグイン一覧{{{
+" vim-plugがない場合はインストール(参考 https://github.com/junegunn/vim-plug/wiki/tips)
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 try
   " Specify a directory for plugins
   " - For Neovim: ~/.local/share/nvim/plugged
@@ -296,6 +302,9 @@ try
   call plug#begin('~/.vim/plugged')
   " Make sure you use single quotes
   " ヘルプ{{{
+  " vim-plugのヘルプ
+  Plug 'junegunn/vim-plug'
+  
   " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
   "}}}
@@ -380,6 +389,9 @@ try
   Plug 'easymotion/vim-easymotion'
   "}}}
   " 言語{{{
+  " 様々な言語のパック。
+  " Plug 'sheerun/vim-polyglot'
+  " Markdown{{{
   " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
   if executable('node') > 0 && executable('yarn') > 0
     " If you have nodejs and yarn
@@ -387,22 +399,21 @@ try
   else
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
   endif
-
-  " 様々な言語のパック。
-  " Markdownのときに勝手に箇条書きの点などついて面倒なので一時保留
-  " Plug 'sheerun/vim-polyglot'
-
-  " typescript, jsxなど
+  " vim-markdownの依存
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'
+  Plug 'ferrine/md-img-paste.vim'
+  "}}}
+  " typescript, jsxなど{{{
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
-
+  "}}}
+  " pug, stylus{{{
   " pugとstylusについては一時見送り
   " Plug 'digitaltoad/vim-pug'
   " Plug 'dNitro/vim-pug-complete', {'for': ['jade', 'pug']}
   " Plug 'iloginow/vim-stylus'
-  " vim-markdownの依存
-  Plug 'godlygeek/tabular'
-  Plug 'plasticboy/vim-markdown'
+  "}}}
   "}}}
   " デバッグ{{{
   " ターミナルデバッガ
@@ -411,7 +422,7 @@ try
   "}}}
   call plug#end()
 catch
-  echo 'vim-plug is not found'
+  echo 'vim-plug 実行中にエラー発生'
   echo v:exception
   echo v:throwpoint
 endtry
@@ -573,6 +584,14 @@ let g:tagbar_autofocus = 1
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <Space>i :TagbarToggle<CR>
 nnoremap <Space>o :TagbarToggle<CR>
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }
 "}}}
 " NERDTree{{{
 nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
@@ -872,6 +891,13 @@ let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_no_default_key_mappings = 1
 "}}}
+" md-img-paste{{{
+augroup MdImgPasteGroup
+  autocmd!
+  autocmd FileType markdown nmap <silent> <M-v> :call mdip#MarkdownClipboardImage()<CR>
+  autocmd FileType markdown nmap <silent> <F1> :call mdip#MarkdownClipboardImage()<CR>
+augroup END
+"}}}
 " 組み込み{{{
 " let loaded_matchparen = 1
 let g:netrw_keepdir = 0
@@ -1103,15 +1129,15 @@ if has('gui_running')
   tnoremap [term]h <C-w>h
   tnoremap [term]j <C-w>j
   tnoremap [term]k <C-w>k
-  tnoremap [tmux]l <C-w>l
-  tnoremap [tmux]p [term-esc][tmux]p
-  tnoremap [tmux]n [term-esc][tmux]n
-  tnoremap [tmux]! [term-esc][tmux]T
-  tnoremap [tmux]T [term-esc][tmux]T
-  tnoremap [tmux]H <C-w>H
-  tnoremap [tmux]J <C-w>J
-  tnoremap [tmux]K <C-w>K
-  tnoremap [tmux]L <C-w>L
+  tnoremap [term]l <C-w>l
+  tnoremap [term]H <C-w>H
+  tnoremap [term]J <C-w>J
+  tnoremap [term]K <C-w>K
+  tnoremap [term]L <C-w>L
+  tmap [term]p [term-esc][term]p
+  tmap [term]n [term-esc][term]n
+  tmap [term]! [term-esc][term]T
+  tmap [term]T [term-esc][term]T
 endif
 "}}}
 " メニューバーなどの設定{{{
