@@ -90,7 +90,7 @@ inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
 inoremap <C-u> <C-g>u<C-u>
 " vimrcをリロード
-" nnoremap <S-C-r> :<C-u>source ~/.vimrc<CR>
+nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
 " inoremap jk <ESC>
 " inoremap <C-k> <Esc>gg/aaa<CR>cgn
 " inoremap <C-;> <Esc>cgn
@@ -120,6 +120,7 @@ vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
+"}}}
 " Emacsライクなマッピング{{{
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
@@ -207,6 +208,8 @@ nnoremap [tab]6 6gt
 nnoremap [tab]7 7gt
 nnoremap [tab]8 8gt
 nnoremap [tab]9 9gt
+nnoremap [tab]r :<C-u>+1,$tabdo tabclose<CR>
+nnoremap [tab]l :<C-u>1,-1tabdo tabclose<CR>
 nnoremap [tab]o :<C-u>tabonly<CR>
 nnoremap [tab]q :<C-u>tabclose<CR>
 
@@ -225,7 +228,6 @@ map <3-MiddleMouse> <Nop>
 imap <3-MiddleMouse> <Nop>
 map <4-MiddleMouse> <Nop>
 imap <4-MiddleMouse> <Nop>
-"}}}
 "}}}
 " ターミナルモード{{{
 tnoremap <silent> jj <C-\><C-n>
@@ -443,6 +445,7 @@ endif
 "}}}
   " fugitive{{{
   nnoremap gcd :<C-u>Gcd<CR>
+  nnoremap gs :<C-u>Gstatus<CR>
   "}}}
   " あいまい検索{{{
 " fzf{{{
@@ -637,7 +640,7 @@ map  <Space>f <Plug>(easymotion-bd-w)
 "}}}
 " Aligntaの設定{{{
 if s:plug.is_installed("vim-alignta")
-  vnoremap gs :Alignta \s\+<CR>
+  " vnoremap gs :Alignta \s\+<CR>
   vnoremap sc :Alignta \s\+<CR>
 endif
 "}}}
@@ -1077,19 +1080,25 @@ endfunction
 command! -nargs=1 Cdn call s:cdn(<f-args>)
 "}}}
 " GUI {{{
-" アンチエイリアス{{{
 if has('gui_running')
+  " アンチエイリアス{{{
   if has('win32') || has('win64')
     if has('+renderoptions')
       set renderoptions=type:directx
     endif
   endif
   set antialias
-"}}}
-  " フォントサイズ{{{
+  "}}}
+  " フォント{{{
   " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
   nnoremap + :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')<CR>
   nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
+
+  " イタリックフォントを無効化
+  augroup DisableItalicGroup
+  autocmd!
+  autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
+  augroup END
 "}}}
   " term設定{{{
   nnoremap [term] <Nop>
@@ -1138,16 +1147,16 @@ if has('gui_running')
   tmap [term]n [term-esc][term]n
   tmap [term]! [term-esc][term]T
   tmap [term]T [term-esc][term]T
+  "}}}
+  " メニューバーなどの設定{{{
+  try
+    if has("gui_running")
+      set guioptions-=m
+      set guioptions-=T
+      set guifont=Monospace\ 14
+    endif
+  catch
+  endtry
+  "}}}
 endif
-"}}}
-" メニューバーなどの設定{{{
-try
-  if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set guifont=Monospace\ 14
-  endif
-catch
-endtry
-"}}}
 "}}}
