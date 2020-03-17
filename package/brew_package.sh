@@ -49,6 +49,7 @@ formulas=(
     jq
     fx # jqみたいだけどインタラクティブにできたりする
     navi # チートシート
+    bitwise # ビット表示
 
     # 文書・図形作成
     graphviz

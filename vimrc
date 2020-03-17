@@ -117,6 +117,7 @@ nnoremap <F6> :make<CR>
 " nnoremap <C-S-e> :Ex<CR>
 " 外部コマンドとの連携{{{
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
+vnoremap gE :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy --boxart<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
@@ -194,6 +195,8 @@ nmap [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
 nmap [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap [scroll]e <C-e>[scroll]
 nmap [scroll]y <C-y>[scroll]
+nmap [scroll]j <C-e>[scroll]
+nmap [scroll]k <C-y>[scroll]
 
 nnoremap [tab] <Nop>
 nmap t [tab]
@@ -1099,6 +1102,11 @@ if has('gui_running')
   autocmd!
   autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
   augroup END
+
+  try
+    set guifont=Monospace\ 14
+  catch
+  endtry
 "}}}
   " term設定{{{
   nnoremap [term] <Nop>
@@ -1153,7 +1161,6 @@ if has('gui_running')
     if has("gui_running")
       set guioptions-=m
       set guioptions-=T
-      set guifont=Monospace\ 14
     endif
   catch
   endtry

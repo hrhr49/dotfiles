@@ -1,21 +1,23 @@
 # vim:set foldmethod=marker foldlevel=0:
 # プラグイン{{{
-# # 起動が遅くなるので使用しない
-# if [ -f ~/.zplug/init.zsh ];
-# then
-#     source ~/.zplug/init.zsh
-#     zplug "zsh-users/zsh-autosuggestions"
+# # 起動が遅くなる？様子見
+if [ -f ~/.zplug/init.zsh ];
+then
+    source ~/.zplug/init.zsh
+    zplug "zsh-users/zsh-autosuggestions"
+    zplug "zsh-users/zsh-completions"
+    zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-#     # Install plugins if there are plugins that have not been installed
-#     if ! zplug check --verbose; then
-#       printf "Install? [y/N]: "
-#       if read -q; then
-#         echo; zplug install
-#       fi
-#     fi
-#     # Then, source plugins and add commands to $PATH
-#     zplug load
-# fi
+    # Install plugins if there are plugins that have not been installed
+    # if ! zplug check --verbose; then
+    #   printf "Install? [y/N]: "
+    #   if read -q; then
+    #     echo; zplug install
+    #   fi
+    # fi
+    # Then, source plugins and add commands to $PATH
+    zplug load
+fi
 #}}}
 # プロンプト設定{{{
 # http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
@@ -57,8 +59,9 @@ if [ -e ${HOMEBREW_PREFIX}/share/zsh-completions ]; then
   fpath=(${HOMEBREW_PREFIX}/share/zsh-completions $fpath)
 fi
 
-autoload -U compinit
-compinit
+# zplugで呼ぶため不要
+# autoload -U compinit
+# compinit
 
 # 矢印キーで自動補完
 zstyle ':completion:*' menu select

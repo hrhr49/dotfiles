@@ -10,6 +10,11 @@ then
     export PATH=$PATH:~/bin
 fi
 
+if [ -d "$HOME/bin/scripts" ];
+then
+    export PATH=$PATH:~/bin/scripts
+fi
+
 if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 fi
