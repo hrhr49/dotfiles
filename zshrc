@@ -7,6 +7,7 @@ then
     zplug "zsh-users/zsh-autosuggestions"
     zplug "zsh-users/zsh-completions"
     zplug "zsh-users/zsh-syntax-highlighting", defer:2
+    zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 
     # Install plugins if there are plugins that have not been installed
     # if ! zplug check --verbose; then
@@ -20,20 +21,21 @@ then
 fi
 #}}}
 # プロンプト設定{{{
-# http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
+# 参考 http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
 # この行は現在のパスを表示する設定です。ブランチを表示して色をつける設定とは関係ありません
-autoload -Uz colors
-colors
+# autoload -Uz colors
+# colors
 # RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
 
-autoload -Uz vcs_info
-setopt prompt_subst
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
-zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
-precmd () { vcs_info }
+# autoload -Uz vcs_info
+# setopt prompt_subst
+# zstyle ':vcs_info:git:*' check-for-changes true
+# zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+# zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+# zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
+# zstyle ':vcs_info:*' actionformats '[%b|%a]'
+# precmd () { vcs_info }
+
 # プロンプト行右側に表示される内容
 # RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
 # 右側に表示するのを変更して左側へ変更
@@ -45,11 +47,12 @@ precmd () { vcs_info }
 
 # PROMPT='%B%F{green}%n@%m%f:%F{blue}%~%f${vcs_info_msg_0_}$%b'
 # Power Lineっぽい感じ(参考 https://qiita.com/peony/items/031a55b61dff6053b883)
-PROMPT=""
-PROMPT=$PROMPT"%{${bg[white]%}%}%{${fg[black]}%} %n %{${bg[blue]}%}%{${fg[white]}%} "
-PROMPT=$PROMPT"%{${bg[blue]}%}%{${fg[black]}%}%~ %{${bg[black]}%}%{${fg[blue]}%} "
-PROMPT=$PROMPT"%{${bg[black]}%}%{${fg[white]}%}"'${vcs_info_msg_0_}'"%{${reset_color}%}%{${fg[black]}%} "
-PROMPT=$PROMPT"%{${reset_color}%}"
+#
+# PROMPT=""
+# PROMPT=$PROMPT"%{${bg[white]%}%}%{${fg[black]}%} %n %{${bg[blue]}%}%{${fg[white]}%} "
+# PROMPT=$PROMPT"%{${bg[blue]}%}%{${fg[black]}%}%~ %{${bg[black]}%}%{${fg[blue]}%} "
+# PROMPT=$PROMPT"%{${bg[black]}%}%{${fg[white]}%}"'${vcs_info_msg_0_}'"%{${reset_color}%}%{${fg[black]}%} "
+# PROMPT=$PROMPT"%{${reset_color}%}"
 
 # }}}
 # コマンド補完{{{
