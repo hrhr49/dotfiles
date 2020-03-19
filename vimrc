@@ -6,6 +6,12 @@ set shellslash
 " 一般{{{
 filetype plugin indent on
 syntax on
+
+if has('win32') || has('win64')
+   set viminfo='999,<50,s10,h,rA:,rB:
+else
+  set viminfo=!,'999,<50,s10,h
+endif
 " 文字{{{
 " バックスペースで字下げや行末を消去できるようにする。
 set backspace=2

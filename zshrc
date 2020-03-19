@@ -22,7 +22,7 @@ fi
 # プラグイン設定{{{
 # bhilburn/powerlevel9k{{{
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
 #}}}
 # }}}
 # プロンプト設定{{{
