@@ -211,8 +211,9 @@ nnoremap [tab]6 6gt
 nnoremap [tab]7 7gt
 nnoremap [tab]8 8gt
 nnoremap [tab]9 9gt
-nnoremap [tab]r :<C-u>+1,$tabdo tabclose<CR>
-nnoremap [tab]l :<C-u>1,-1tabdo tabclose<CR>
+" 誤爆するので一旦無効化
+" nnoremap [tab]r :<C-u>+1,$tabdo tabclose<CR>
+" nnoremap [tab]l :<C-u>1,-1tabdo tabclose<CR>
 nnoremap [tab]o :<C-u>tabonly<CR>
 nnoremap [tab]q :<C-u>tabclose<CR>
 
@@ -295,11 +296,16 @@ augroup END
 "}}}
 " プラグイン一覧{{{
 " vim-plugがない場合はインストール(参考 https://github.com/junegunn/vim-plug/wiki/tips)
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+" if has('unix')
+"   if has('nvim')
+"     " silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+"     "   \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   elseif empty(glob('~/.vim/autoload/plug.vim'))
+"       silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   endif
+"   " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
 try
   " Specify a directory for plugins
   " - For Neovim: ~/.local/share/nvim/plugged
