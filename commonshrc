@@ -145,6 +145,19 @@ zathura-tabbed ()  {
   zathura -e "$xid" "$@" &> /dev/null &
 }
 
+# fzf関連(参考 https://github.com/junegunn/fzf/wiki/examples)
+# fuzzy grep open via ag with line number
+vg() {
+  local file
+  local line
+
+  read -r file line <<<"$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
+
+  if [[ -n $file ]]
+  then
+     vim $file +$line
+  fi
+}
 # }}}
 # エイリアス{{{
 # aptのエイリアス

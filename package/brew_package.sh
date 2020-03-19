@@ -29,7 +29,7 @@ formulas=(
 
     # 検索
     ripgrep
-#    ag
+    the_silver_searcher
     fzf
     fasd
 
