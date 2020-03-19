@@ -1,6 +1,5 @@
 # vim:set foldmethod=marker foldlevel=0:
 # プラグイン{{{
-# # 起動が遅くなる？様子見
 if [ -f ~/.zplug/init.zsh ];
 then
     source ~/.zplug/init.zsh
@@ -20,6 +19,12 @@ then
     zplug load
 fi
 #}}}
+# プラグイン設定{{{
+# bhilburn/powerlevel9k{{{
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
+#}}}
+# }}}
 # プロンプト設定{{{
 # 参考 http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
 # この行は現在のパスを表示する設定です。ブランチを表示して色をつける設定とは関係ありません
