@@ -56,6 +56,9 @@ packages=(
     xclip      # クリップボード
     scrot      # スクリーンショット
     arandr     # マルチディスプレイ設定用
+
+    # ユーティリティ
+    urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
 )
 
 for package in "${packages[@]}"; do
