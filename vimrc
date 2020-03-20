@@ -469,6 +469,16 @@ if executable('fzf') > 0
   " <C-i>で全選択するように修正
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
 
+  " floating windowが使えるときには使う
+  if has('nvim')
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'highlight': 'Todo', 'border': 'rounded' } }
+  else
+    " 参考 https://github.com/vim/vim/commit/219c7d063823498be22aae46dd024d77b5fb2a58
+    if v:versionlong >= 8020191
+      let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'highlight': 'Todo', 'border': 'rounded' } }
+    endif
+  endif
+
   " プレビューをする
   " Filesコマンドにもプレビューを出す(参考 https://qiita.com/kompiro/items/a09c0b44e7c741724c80)
   if executable('bat')
@@ -1110,13 +1120,19 @@ if has('gui_running')
   nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
 
   " イタリックフォントを無効化
-  augroup DisableItalicGroup
-  autocmd!
-  autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
-  augroup END
+  if s:plug.is_installed('mattn/disableitalic-vim')
+    augroup DisableItalicGroup
+    autocmd!
+    autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
+    augroup END
+  endif
 
   try
-    set guifont=Monospace\ 14
+    if has('unix')
+      set guifont=Monospace\ 14
+    elseif has('win32') || has('win64')
+      set guifont=Cica:h16:cSHIFTJIS:qDRAFT
+    endif
   catch
   endtry
 "}}}
