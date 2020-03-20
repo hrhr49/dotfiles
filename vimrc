@@ -188,21 +188,21 @@ nnoremap [scroll] <Nop>
 " 直接<C-d>や<C-f>などでスクロールしようとすると
 " スクロールできなかったときに[scroll]の部分が実行されない？
 " そのためスクロール用の関数を呼ぶ
-nmap [window]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
-nmap [window]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
-nmap [window]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
-nmap [window]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
-nmap [window]e <C-e>[scroll]
-nmap [window]y <C-y>[scroll]
+nmap <silent> [window]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
+nmap <silent> [window]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
+nmap <silent> [window]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
+nmap <silent> [window]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
+nmap <silent> [window]e <C-e>[scroll]
+nmap <silent> [window]y <C-y>[scroll]
 
-nmap [scroll]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
-nmap [scroll]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
-nmap [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
-nmap [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
-nmap [scroll]e <C-e>[scroll]
-nmap [scroll]y <C-y>[scroll]
-nmap [scroll]j <C-e>[scroll]
-nmap [scroll]k <C-y>[scroll]
+nmap <silent> [scroll]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
+nmap <silent> [scroll]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
+nmap <silent> [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
+nmap <silent> [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
+nmap <silent> [scroll]e <C-e>[scroll]
+nmap <silent> [scroll]y <C-y>[scroll]
+nmap <silent> [scroll]j <C-e>[scroll]
+nmap <silent> [scroll]k <C-y>[scroll]
 
 nnoremap [tab] <Nop>
 nmap t [tab]
@@ -383,6 +383,9 @@ try
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'junegunn/goyo.vim'
+
+  " スクロールをスムーズに
+  " Plug 'yuttie/comfortable-motion.vim'
   "}}}
   " 入力補完・補助{{{
   " Use release branch
@@ -469,19 +472,24 @@ if executable('fzf') > 0
   " <C-i>で全選択するように修正
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
 
-  " floating windowが使えるときには使う
-  if has('nvim')
-    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'highlight': 'Todo', 'border': 'rounded' } }
-  else
-    " 参考 https://github.com/vim/vim/commit/219c7d063823498be22aae46dd024d77b5fb2a58
-    if v:versionlong >= 8020191
-      let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'highlight': 'Todo', 'border': 'rounded' } }
+  " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
+  if &ambiwidth == 'single'
+    if has('nvim')
+        let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+    else
+      try
+        " 参考 https://github.com/vim/vim/commit/219c7d063823498be22aae46dd024d77b5fb2a58
+        if v:versionlong >= 8020191
+          let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+        endif
+      catch
+      endtry
     endif
   endif
 
   " プレビューをする
   " Filesコマンドにもプレビューを出す(参考 https://qiita.com/kompiro/items/a09c0b44e7c741724c80)
-  if executable('bat')
+  if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
     command! -bang -nargs=? -complete=dir Files
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
     command! -bang -nargs=? -complete=dir GFiles
@@ -502,7 +510,7 @@ if executable('fzf') > 0
   nnoremap <Space><S-g> :<C-u>Ggrep 
   " nnoremap <Space>r :<C-u>History<CR>
   " 履歴はソートせずにプレビューも表示
-  if executable('bat')
+  if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
     nnoremap <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
   else
     nnoremap <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
@@ -525,12 +533,10 @@ if executable('fzf') > 0
   " nnoremap <Space>: :<C-u>History:<CR>
   nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
   nnoremap <Space>w :<C-u>Windows<CR>
-  if executable('rg') > 0
+  if executable('rg') > 0 && !(has('win32') || has('win64'))
     nnoremap <Space>a :<C-u>Rg<CR>
   else
     nnoremap <Space>a :<C-u>Ag<CR>
-    " <C-i>で全選択するように修正
-    " nnoremap <Space>a :<C-u>call fzf#vim#ag(<q-args>, '', { 'options': '--bind ctrl-i:select-all,ctrl-d:deselect-all' }, <bang>0)
   endif
   " 行補完
   imap <c-l> <plug>(fzf-complete-line)
@@ -926,6 +932,10 @@ augroup MdImgPasteGroup
   autocmd FileType markdown nmap <silent> <F1> :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 "}}}
+" comfortable-motion.vim {{{
+  " デフォルトのキーバインドを上書きしない
+  " let g:comfortable_motion_no_default_key_mappings = 1
+"}}}
 " 組み込み{{{
 " let loaded_matchparen = 1
 let g:netrw_keepdir = 0
@@ -944,7 +954,8 @@ try
     " colorscheme nord
     " colorscheme nordisk
     " colorscheme vim-material
-    colorscheme tender
+    " colorscheme tender
+    colorscheme wombat256i
   endif
 catch
 endtry
@@ -969,16 +980,21 @@ set laststatus=2
 " 入力した内容を表示
 set showcmd
 if has('nvim')
-  if has('+pumblend')
-    " ポップアップメニューを半透明にする
-    set pumblend=10
-  endif
+  " 見づらかったので保留
+  " ポップアップメニューを半透明にする
+  " silent! set pumblend=5
+  " ウィンドウを半透明にする
+  " silent! set winblend=5
 endif
 
 if has('+termguicolors')
 " GUIカラーを使う
   set termguicolors
 endif
+
+" フォントが欠けるのを回避
+" fzfでfloating windowを使用するときにレイアウトが崩れるので様子見
+" set ambiwidth=double
 "}}}
 " 折りたたみ表示 {{{
 set foldtext=MyFoldText()
