@@ -90,6 +90,7 @@ set timeoutlen=9999999
 "}}}
 " }}}
 " キーマッピング(一般){{{
+" 全般{{{
 inoremap jj <ESC>
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
@@ -97,12 +98,6 @@ inoremap <C-l> <C-x><C-l>
 inoremap <C-u> <C-g>u<C-u>
 " vimrcをリロード
 nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
-" inoremap jk <ESC>
-" inoremap <C-k> <Esc>gg/aaa<CR>cgn
-" inoremap <C-;> <Esc>cgn
-" 以下のマッピングはうまく動かない
-" inoremap <C-CR> <End><CR>
-" inoremap <C-S-CR> <Up><End><CR>
 
 nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
@@ -121,6 +116,7 @@ nnoremap N Nzzzv
 nnoremap <Space>z za
 nnoremap <F6> :make<CR>
 " nnoremap <C-S-e> :Ex<CR>
+"}}}
 " 外部コマンドとの連携{{{
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gE :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy --boxart<CR> \| :'[,']s/薔//ge<CR>
