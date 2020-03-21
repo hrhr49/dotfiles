@@ -130,56 +130,60 @@ inoremap <C-e> <End>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 "}}}
-" ウィンドウなど{{{
+" ウィンドウ・タブなど{{{
+" ウィンドウ{{{
 nnoremap [window] <Nop>
 nmap s [window]
-nnoremap [window]H <C-w>H
-nnoremap [window]J <C-w>J
-nnoremap [window]K <C-w>K
-nnoremap [window]L <C-w>L
-nnoremap [window]T <C-w>T
-nnoremap [window]^ <C-^>
-nnoremap [window]d <C-d>
-nnoremap [window]h <C-w>h
-nnoremap [window]j <C-w>j
-nnoremap [window]k <C-w>k
-nnoremap [window]l <C-w>l
-nnoremap [window]o <C-w>o
-nnoremap [window]q <C-w>q
-nnoremap [window]s <C-w>s
-nnoremap [window]t :tabnew<CR>
-nnoremap [window]u <C-u>
-nnoremap [window]v <C-w>v
-nnoremap [window]1 1gt
-nnoremap [window]2 2gt
-nnoremap [window]3 3gt
-nnoremap [window]4 4gt
-nnoremap [window]5 5gt
-nnoremap [window]6 6gt
-nnoremap [window]7 7gt
-nnoremap [window]8 8gt
-nnoremap [window]9 9gt
+nnoremap <silent> [window]H :<C-u>wincmd H<CR>
+nnoremap <silent> [window]J :<C-u>wincmd J<CR>
+nnoremap <silent> [window]K :<C-u>wincmd K<CR>
+nnoremap <silent> [window]L :<C-u>wincmd L<CR>
+nnoremap <silent> [window]T :<C-u>wincmd T<CR>
+nnoremap <silent> [window]^ <C-^>
+nnoremap <silent> [window]h :<C-u>wincmd h<CR>
+nnoremap <silent> [window]j :<C-u>wincmd j<CR>
+nnoremap <silent> [window]k :<C-u>wincmd k<CR>
+nnoremap <silent> [window]l :<C-u>wincmd l<CR>
+nnoremap <silent> [window]o :<C-u>wincmd o<CR>
+nnoremap <silent> [window]q :<C-u>wincmd q<CR>
+nnoremap <silent> [window]s :<C-u>split<CR>
+nnoremap <silent> [window]S :<C-u>new<CR>
+nnoremap <silent> [window]t :<C-u>tabnew<CR>
+nnoremap <silent> [window]v :<C-u>vsplit<CR>
+nnoremap <silent> [window]V :<C-u>vnew<CR>
+" nnoremap [window]1 1gt
+" nnoremap [window]2 2gt
+" nnoremap [window]3 3gt
+" nnoremap [window]4 4gt
+" nnoremap [window]5 5gt
+" nnoremap [window]6 6gt
+" nnoremap [window]7 7gt
+" nnoremap [window]8 8gt
+" nnoremap [window]9 9gt
 
-nmap [window]p :<C-u>tabprevious<CR>[tab]
-nmap [window]n :<C-u>tabnext<CR>[tab]
-
+nmap <silent> [window]p :<C-u>tabprevious<CR>[tab]
+nmap <silent> [window]P :<C-u>tabfirst<CR>[tab]
+nmap <silent> [window]n :<C-u>tabnext<CR>[tab]
+nmap <silent> [window]N :<C-u>tablast<CR>[tab]
+"}}}
+" リサイズ{{{
 " +, -, <, >でウィンドウリサイズ。連続入力可能
 nnoremap [resize] <Nop>
-nmap [window]+ :<C-u>wincmd +<CR>[resize]
-nmap [window]- :<C-u>wincmd -<CR>[resize]
-nmap [window]< :<C-u>wincmd <<CR>[resize]
-nmap [window]> :<C-u>wincmd ><CR>[resize]
-nmap [resize]+ :<C-u>wincmd +<CR>[resize]
-nmap [resize]- :<C-u>wincmd -<CR>[resize]
-nmap [resize]< :<C-u>wincmd <<CR>[resize]
-nmap [resize]> :<C-u>wincmd ><CR>[resize]
-
+nmap <silent> [window]+ :<C-u>wincmd +<CR>[resize]
+nmap <silent> [window]- :<C-u>wincmd -<CR>[resize]
+nmap <silent> [window]< :<C-u>wincmd <<CR>[resize]
+nmap <silent> [window]> :<C-u>wincmd ><CR>[resize]
+nmap <silent> [resize]+ :<C-u>wincmd +<CR>[resize]
+nmap <silent> [resize]- :<C-u>wincmd -<CR>[resize]
+nmap <silent> [resize]< :<C-u>wincmd <<CR>[resize]
+nmap <silent> [resize]> :<C-u>wincmd ><CR>[resize]
+"}}}
+" スクロール{{{
 function! ScrollFunc(distance)
   let num = abs(a:distance)
   let key = a:distance > 0 ? "\<C-e>" : "\<C-y>"
   exec "normal ". num . key
 endfunction
-
 nnoremap [scroll] <Nop>
 " 直接<C-d>や<C-f>などでスクロールしようとすると
 " スクロールできなかったときに[scroll]の部分が実行されない？
@@ -191,39 +195,44 @@ nmap <silent> [window]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap <silent> [window]e <C-e>[scroll]
 nmap <silent> [window]y <C-y>[scroll]
 
+nmap sr [scroll]
 nmap <silent> [scroll]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
 nmap <silent> [scroll]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
 nmap <silent> [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
 nmap <silent> [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap <silent> [scroll]e <C-e>[scroll]
 nmap <silent> [scroll]y <C-y>[scroll]
-nmap <silent> [scroll]j <C-e>[scroll]
-nmap <silent> [scroll]k <C-y>[scroll]
-
+nmap <silent> [scroll]j 4<C-e>[scroll]
+nmap <silent> [scroll]k 4<C-y>[scroll]
+"}}}
+" タブ{{{
 nnoremap [tab] <Nop>
 nmap t [tab]
-nnoremap [tab]0 :<C-u>tabfirst<CR>
-nnoremap [tab]$ :<C-u>tablast<CR>
-nnoremap [tab]1 1gt
-nnoremap [tab]2 2gt
-nnoremap [tab]3 3gt
-nnoremap [tab]4 4gt
-nnoremap [tab]5 5gt
-nnoremap [tab]6 6gt
-nnoremap [tab]7 7gt
-nnoremap [tab]8 8gt
-nnoremap [tab]9 9gt
+nnoremap <silent> [tab]0 :<C-u>tabfirst<CR>
+nnoremap <silent> [tab]$ :<C-u>tablast<CR>
+nnoremap <silent> [tab]1 :<C-u>tabnext 1<CR>
+nnoremap <silent> [tab]2 :<C-u>tabnext 2<CR>
+nnoremap <silent> [tab]3 :<C-u>tabnext 3<CR>
+nnoremap <silent> [tab]4 :<C-u>tabnext 4<CR>
+nnoremap <silent> [tab]5 :<C-u>tabnext 5<CR>
+nnoremap <silent> [tab]6 :<C-u>tabnext 6<CR>
+nnoremap <silent> [tab]7 :<C-u>tabnext 7<CR>
+nnoremap <silent> [tab]8 :<C-u>tabnext 8<CR>
+nnoremap <silent> [tab]9 :<C-u>tabnext 9<CR>
 " 誤爆するので一旦無効化
 " nnoremap [tab]r :<C-u>+1,$tabdo tabclose<CR>
 " nnoremap [tab]l :<C-u>1,-1tabdo tabclose<CR>
-nnoremap [tab]o :<C-u>tabonly<CR>
-nnoremap [tab]q :<C-u>tabclose<CR>
+nnoremap <silent> [tab]o :<C-u>tabonly<CR>
+nnoremap <silent> [tab]q :<C-u>tabclose<CR>
 
 " n, p, <, >でタブ移動、もしくはタブ自体を移動。連続入力可能
-nmap [tab]> :<C-u>tabm+<CR>[tab]
-nmap [tab]< :<C-u>tabm-<CR>[tab]
-nmap [tab]n :<C-u>tabnext<CR>[tab]
-nmap [tab]p :<C-u>tabprevious<CR>[tab]
+nmap <silent> [tab]> :<C-u>tabm+<CR>[tab]
+nmap <silent> [tab]< :<C-u>tabm-<CR>[tab]
+nmap <silent> [tab]p :<C-u>tabprevious<CR>[tab]
+nmap <silent> [tab]P :<C-u>tabfirst<CR>[tab]
+nmap <silent> [tab]n :<C-u>tabnext<CR>[tab]
+nmap <silent> [tab]N :<C-u>tablast<CR>[tab]
+"}}}
 "}}}
 " マウス{{{
 map <MiddleMouse> <Nop>
