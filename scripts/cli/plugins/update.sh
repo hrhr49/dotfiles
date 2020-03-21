@@ -3,7 +3,7 @@
 # 各種プラグインのインストール
 
 # zplug
-source $HOME/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 zplug install
 
 # tpm
