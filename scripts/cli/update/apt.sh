@@ -61,7 +61,4 @@ packages=(
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
 )
 
-for package in "${packages[@]}"; do
-    sudo apt install -y $package
-done
-echo "all packages are successfully installed!"
+sudo apt install -y $packages

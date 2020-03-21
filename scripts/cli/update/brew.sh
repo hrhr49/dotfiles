@@ -63,8 +63,4 @@ formulas=(
     emojify # 絵文字を入力するため
 )
 
-for formula in "${formulas[@]}"; do
-    brew install $formula
-done
-
-echo "all packages are successfully installed!"
+brew install $formulas

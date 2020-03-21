@@ -14,8 +14,4 @@ packages=(
     fkill-cli # インタラクティブにプロセスを選んでkill
 )
 
-for package in "${packages[@]}"; do
-    npm install -g $package
-done
-
-echo "all packages are successfully installed!"
+npm install -g $packages
