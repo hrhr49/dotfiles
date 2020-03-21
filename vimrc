@@ -626,7 +626,8 @@ let g:tagbar_type_markdown = {
 " NERDTree{{{
 nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
 nnoremap <Space>E :<C-u>NERDTree<CR>
-let NERDTreeQuitOnOpen=1
+let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeLimitedSyntax = 1
 "}}}
 " gdb {{{
 " gdb使用の設定

@@ -20,6 +20,10 @@ then
 fi
 #}}}
 # プラグイン設定{{{
+# zsh-users/zsh-syntax-highlighting{{{
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+#}}}
 # bhilburn/powerlevel9k{{{
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs)
 
