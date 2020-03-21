@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # pipでインストールするものリスト
+
 packages=(
     # ユーティリティ
     csvkit
