@@ -22,3 +22,5 @@ packages=(
     pylint
     python-language-server
 )
+
+pip install $packages
