@@ -1,11 +1,16 @@
 #!/bin/bash
 
-
 # pipでインストールするものリスト
 packages=(
+    # ユーティリティ
     csvkit
+    watchdog
+    pyyaml
+
+    # 環境管理
     pipenv
-    # watchdog
+
+    # 開発環境
     neovim
     flask
     pyflakes
@@ -14,12 +19,5 @@ packages=(
     autopep8
     mypy
     pylint
-    pyyaml
     python-language-server
 )
-
-for package in "${packages[@]}"; do
-    pip install $package
-done
-
-echo "all packages are successfully installed!"
