@@ -22,7 +22,9 @@ fi
 # プラグイン設定{{{
 # bhilburn/powerlevel9k{{{
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+
+# コピペするときに右の方までコピーされると面倒なので変更
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 #}}}
 # }}}
 # プロンプト設定{{{
