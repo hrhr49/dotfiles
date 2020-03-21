@@ -23,4 +23,4 @@ packages=(
     python-language-server
 )
 
-pip install $packages
+pip install ${packages[@]}

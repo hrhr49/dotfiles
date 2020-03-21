@@ -2,16 +2,27 @@
 
 # npmでインストールするものリスト
 packages=(
-    yarn # パッケージマネージャ
+    # パッケージ管理
+    yarn
+
+    # Markdown
     doctoc # Markdown目次自動生成
-    # localtunnel # localhostをグローバルに公開
-    # wifi-password-cli # wifi-passwordコマンドでwifiのパスワードを表示
     reveal-md # Markdownでプレゼン作成用
+
+    # Web
+    # localtunnel # localhostをグローバルに公開
     live-server
+
+    # ユーティリティ
+    # wifi-password-cli # wifi-passwordコマンドでwifiのパスワードを表示
+
+    # 開発
     neovim
+
+    # CLI
     undollar # コマンドライン先頭に「$」がついていたらそれを削除する
     trash-cli
-    fkill-cli # インタラクティブにプロセスを選んでkill
+    # fkill-cli # インタラクティブにプロセスを選んでkill
 )
 
-npm install -g $packages
+gem install -g ${packages[@]}

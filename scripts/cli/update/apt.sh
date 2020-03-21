@@ -61,4 +61,4 @@ packages=(
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
 )
 
-sudo apt install -y $packages
+sudo apt install -y ${packages[@]}

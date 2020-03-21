@@ -63,4 +63,4 @@ formulas=(
     emojify # 絵文字を入力するため
 )
 
-brew install $formulas
+brew install ${formulas[@]}
