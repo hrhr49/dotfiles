@@ -12,7 +12,7 @@ packages=(
     liblzma-dev
     libncursesw5-dev
     libreadline-dev
-    libreadline6-dev
+    # libreadline6-dev
     libsqlite3-dev
     libssl-dev
     python3-dev
@@ -22,7 +22,7 @@ packages=(
     uuid-dev
     zip
     zlib1g-dev
-    zlibbz2-dev
+    # zlibbz2-dev
 
     git
     zsh
@@ -56,9 +56,11 @@ packages=(
     xclip      # クリップボード
     scrot      # スクリーンショット
     arandr     # マルチディスプレイ設定用
+    parcellite # クリップボードマネージャ
 
     # ユーティリティ
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
+    unar # 圧縮ファイルの解凍
 )
 
 sudo apt install -y ${packages[@]}

@@ -6,8 +6,9 @@ packages=(
     yarn
 
     # Markdown
-    doctoc # Markdown目次自動生成
+    doctoc    # Markdown目次自動生成
     reveal-md # Markdownでプレゼン作成用
+    textlint  # 文章校正
 
     # Web
     # localtunnel # localhostをグローバルに公開
@@ -25,4 +26,4 @@ packages=(
     # fkill-cli # インタラクティブにプロセスを選んでkill
 )
 
-gem install -g ${packages[@]}
+npm install -g ${packages[@]}

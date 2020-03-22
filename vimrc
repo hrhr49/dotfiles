@@ -330,6 +330,10 @@ try
   " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
   "}}}
+  " 日本語{{{
+  " Plug 'koron/cmigemo'
+  " Plug 'haya14busa/vim-migemo'
+  "}}}
   " ブラウジング{{{
   " NERDTree{{{
   Plug 'scrooloose/nerdtree'
