@@ -26,6 +26,8 @@ formulas=(
     # TUI
     ranger
     tmux
+    sc-im # スプレッドシート
+    mdp # CLIでのプレゼンツール
 
     # 検索
     ripgrep
@@ -39,12 +41,11 @@ formulas=(
     go
     rust
     perl
-#    python3
+    # python3
 
     # ユーティリティ
 
     httpie # curlのようなやつ
-    mdp # CLIでのプレゼンツール
     trash-cli # ゴミ箱操作
     jq
     fx # jqみたいだけどインタラクティブにできたりする

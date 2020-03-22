@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if type "brew" > /dev/null 2>&1; then
+    echo 'brew already exists'
+    exit
+fi
+
 # brewインストールに必要パッケージのインストール
 if type "apt" > /dev/null 2>&1; then
     sudo apt install build-essential curl file git

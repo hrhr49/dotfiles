@@ -361,6 +361,14 @@ try
     Plug 'ctrlpvim/ctrlp.vim'
     " Plug 'ompugao/ctrlp-history'
   endif
+  " Denite
+  " if has('nvim')
+  "   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+  " else
+  "   Plug 'Shougo/denite.nvim'
+  "   Plug 'roxma/nvim-yarp'
+  "   Plug 'roxma/vim-hug-neovim-rpc'
+  " endif
  "}}}
   " テキスト操作{{{
   Plug 'kana/vim-textobj-user'
