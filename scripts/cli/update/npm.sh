@@ -9,6 +9,7 @@ packages=(
     doctoc    # Markdown目次自動生成
     reveal-md # Markdownでプレゼン作成用
     textlint  # 文章校正
+    # mdr       # CLIでいい感じに表示 # pipのmdvの方を使う
 
     # Web
     # localtunnel # localhostをグローバルに公開

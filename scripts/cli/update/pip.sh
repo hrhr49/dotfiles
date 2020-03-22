@@ -7,9 +7,13 @@ packages=(
     csvkit
     watchdog
     pyyaml
+    yq # jqのyaml用ラッパー
 
     # 環境管理
     pipenv
+
+    # CLI
+    mdv # Markdown表示
 
     # 開発環境
     neovim

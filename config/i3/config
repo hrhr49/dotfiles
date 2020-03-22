@@ -226,7 +226,7 @@ exec --no-startup-id parcellite
 # 注意：ミュートのトグルは対象で中ボタンクリックしなければいけない
 exec --no-startup-id pasystray
 # アプリで透明色を使えるようにする。comptonが必要
-exec --no-startup-id compton -f --config /etc/xdg/compton.conf
+exec --no-startup-id compton -b
 # 壁紙を設定するためのアプリ起動。fehとvarietyが必要
 exec --no-startup-id variety
 # }}}

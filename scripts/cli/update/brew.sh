@@ -30,6 +30,8 @@ formulas=(
     ranger
     tmux
     sc-im # スプレッドシート
+
+    # Markdown
     mdp # CLIでのプレゼンツール
 
     # 検索

@@ -118,9 +118,17 @@ nnoremap <F6> :make<CR>
 " nnoremap <C-S-e> :Ex<CR>
 "}}}
 " 外部コマンドとの連携{{{
+"
+" Graph::Easy
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gE :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy --boxart<CR> \| :'[,']s/薔//ge<CR>
+
+" Plantuml
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
+
+" yq(pipパッケージ) yamlからjsonへの変換
+vnoremap gy :!yq .<CR>
+
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 "}}}

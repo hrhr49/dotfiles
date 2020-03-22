@@ -73,9 +73,10 @@ if [ -d /usr/lib/go/bin ]; then
     export PATH=/usr/lib/go/bin:$PATH
 fi
 
+# pipenvのインストールディレクトリをプロジェクト直下にする
+export PIPENV_VENV_IN_PROJECT=1
 # }}}
 # シェル関数{{{
-
 # zコマンドでMRUファイルをfzfできる(fasdが必要)
 # 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
 unalias z
@@ -160,30 +161,30 @@ vg() {
 }
 # }}}
 # エイリアス{{{
-# aptのエイリアス
+# aptのエイリアス{{{
 alias apts="apt search"
 alias apti="sudo apt install"
 alias aptu="sudo apt update"
-
-# pacmanのエイリアス
+# }}}
+# pacmanのエイリアス{{{
 alias paci="sudo pacman -S"
 alias pacu="sudo pacman -Syy"
 alias pacs="pacman -Ss"
-
-# snapのエイリアス
+# }}}
+# snapのエイリアス{{{
 alias snapi="sudo snap install"
 alias snaps="snap search"
-
-# brewのエイリアス
+# }}}
+# brewのエイリアス{{{
 alias brewi="brew install"
 alias brewu="brew update"
 alias brews="brew search"
-
-# pipのエイリアス
+# }}}
+# pipのエイリアス{{{
 alias pipi="pip install"
 alias pips="pip search"
-
-# gitのエイリアス
+# }}}
+# gitのエイリアス{{{
 alias gits="git status"
 alias gita="git add"
 alias gitc="git commit"
@@ -191,14 +192,14 @@ alias gitl="git log"
 alias gitps="git push"
 alias gitpl="git pull"
 alias gitd="git diff"
-
-# lsのエイリアス
+# }}}
+# lsのエイリアス{{{
 # 時々遅いので将来削除するかも
 alias ls="ls --color=auto"
 alias ll="ls -l"
 alias la="ls -a"
-
-# cdのエイリアス
+# }}}
+# cdのエイリアス{{{
 alias ..="cd .."
 alias ...="cd ../.."
 alias ..2="cd ../.."
@@ -206,27 +207,23 @@ alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 alias ..6="cd ../../../../../.."
-
+# }}}
+# 自作スクリプトを実行{{{
 myscripts() {
     find -L ~/memo/dotfiles/scripts/cli/ -type f -not -path '*/.git/*'
 }
-# 自作スクリプトを実行
 alias s='eval $(myscripts | fzf)'
-
+# }}}
+# チートシートをvimで開く{{{
 # チートシート一覧を標準出力に返す
 cheatsheets() {
     find -L ~/memo -type f -not -path '*/.git/*'
 }
-
-# チートシートをvimで開く
 alias cheat='vim $(cheatsheets | fzf)'
 alias c='vim $(cheatsheets | fzf)'
 alias m='vim $(cheatsheets | fzf)'
 alias anyenv-hash='eval "$(anyenv init -)"'
-
-# pipenvのインストールディレクトリをプロジェクト直下にする
-export PIPENV_VENV_IN_PROJECT=1
-
+# }}}
 # xコマンドでアプリで開く
 alias x='xdg-open'
 
@@ -249,5 +246,4 @@ alias repo='cd $(ghq list -p| fzf --preview "bat --color=always --style=header,g
 # 参考:https://qiita.com/itkrt2y/items/0671d1f48e66f21241e2
 alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 alias github=gh
-
 # }}}
