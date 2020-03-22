@@ -46,17 +46,22 @@ packages=(
     # i3wmで使用するもの
     i3
     fcitx-mozc
-    feh        # 壁紙を表示
-    compton    # コンポジットマネージャ。ウィンドウを透明にしたいときなどに必要
-    variety    # 壁紙の設定
-    alsa-utils # サウンド
-    dunst      # 通知表示
-    pasystray  # ボリュームアイコン
-    rofi       # ウィンドウスイッチャー
-    xclip      # クリップボード
-    scrot      # スクリーンショット
-    arandr     # マルチディスプレイ設定用
-    parcellite # クリップボードマネージャ
+    feh         # 壁紙を表示
+    compton     # コンポジットマネージャ。ウィンドウを透明にしたいときなどに必要
+    variety     # 壁紙の設定
+    pulseaudio  # サウンド
+    pavucontrol # サウンド調整GUI
+    alsa-utils  # サウンド
+    dunst       # 通知表示
+    pasystray   # ボリュームアイコン
+    rofi        # ウィンドウスイッチャー
+    xclip       # クリップボード
+    scrot       # スクリーンショット
+    arandr      # マルチディスプレイ設定用
+    parcellite  # クリップボードマネージャ
+    conky       # 常に表示されるシステムモニタ
+    conky-all   # 上に同じ
+    gcal        # conkyでのカレンダー表示用
 
     # ユーティリティ
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。

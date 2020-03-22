@@ -23,6 +23,7 @@ init_dotfiles:
 	mkdir -p ${HOME}/.config/zathura
 	mkdir -p ${HOME}/.config/xfce4/terminal
 	mkdir -p ${HOME}/.config/compton
+	mkdir -p ${HOME}/.config/conky
 	ln -vsf ${PWD}/xinitrc ${HOME}/.xinitrc
 	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
@@ -37,6 +38,7 @@ init_dotfiles:
 	ln -vsf ${PWD}/config/xfce4/terminal/accels.scm ${HOME}/.config/xfce4/terminal/accels.scm
 	ln -vsf ${PWD}/ctags ${HOME}/.ctags
 	ln -vsf ${PWD}/config/compton/compton.conf ${HOME}/.config/compton/compton.conf
+	ln -vsf ${PWD}/config/conky/conky.conf ${HOME}/.config/conky/conky.conf
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc
