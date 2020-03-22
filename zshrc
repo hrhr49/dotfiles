@@ -1,4 +1,5 @@
 # vim:set foldmethod=marker foldlevel=0:
+export TERM="xterm-256color"
 # プラグイン{{{
 if [ -f ~/.zplug/init.zsh ];
 then

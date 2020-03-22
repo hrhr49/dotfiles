@@ -477,15 +477,17 @@ if executable('fzf') > 0
   " <C-i>で全選択するように修正
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
 
+  " 別タブであいまい検索を行う
+  let g:fzf_layout = { 'window': '-tabnew' }
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
   if &ambiwidth == 'single'
     if has('nvim')
-        let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+      let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
     else
       try
         " 参考 https://github.com/vim/vim/commit/219c7d063823498be22aae46dd024d77b5fb2a58
         if v:versionlong >= 8020191
-          let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+          let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
         endif
       catch
       endtry
@@ -1176,6 +1178,7 @@ if has('gui_running')
     nnoremap [term]v <C-u>:vsplit\|:terminal<CR>
   else
     nnoremap [term]c :<C-u>tab terminal ++close<CR>
+    nnoremap [term]t :<C-u>tab terminal ++close<CR>
     nnoremap [term]v :<C-u>vert terminal ++close<CR>
     nnoremap [term]s :<C-u>terminal ++close<CR>
   endif
