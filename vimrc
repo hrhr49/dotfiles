@@ -116,6 +116,15 @@ nnoremap N Nzzzv
 nnoremap <Space>z za
 nnoremap <F6> :make<CR>
 " nnoremap <C-S-e> :Ex<CR>
+
+function! ToggleLastStatus()
+  if &laststatus == 2
+    let &laststatus = 0
+  else
+    let &laststatus = 2
+  endif
+endfunction
+nnoremap <expr> <Space><F2> ToggleLastStatus()
 "}}}
 " 外部コマンドとの連携{{{
 "
