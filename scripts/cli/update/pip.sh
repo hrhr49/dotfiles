@@ -14,6 +14,7 @@ packages=(
 
     # CLI
     mdv # Markdown表示
+    percol # インタラクティブな絞り込み
 
     # 開発環境
     neovim
@@ -25,6 +26,9 @@ packages=(
     mypy
     pylint
     python-language-server
+
+    # Linux
+    pywal # 壁紙に合わせたカラースキームを使用
 )
 
 pip install ${packages[@]}

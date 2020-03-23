@@ -11,6 +11,11 @@ if [ -e $HOME/.config/i3/config.base ]; then
     fi
 fi
 
+# pywalの前回設定を引き継ぐ
+if type "wal" > /dev/null 2>&1; then
+    wal -R
+fi
+
 #.xinitrc
 export DefaultImModule=fcitx
 export GTK_IM_MODULE=fcitx

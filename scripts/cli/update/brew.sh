@@ -48,6 +48,7 @@ formulas=(
     perl
     # python3
     lua
+    nim
 
     # ユーティリティ
     fasd

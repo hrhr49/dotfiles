@@ -75,6 +75,22 @@ fi
 
 # pipenvのインストールディレクトリをプロジェクト直下にする
 export PIPENV_VENV_IN_PROJECT=1
+
+# pywalの設定
+if type "wal" > /dev/null 2>&1; then
+    # Import colorscheme from 'wal' asynchronously
+    # &   # Run the process in the background.
+    # ( ) # Hide shell job control messages.
+    (cat ~/.cache/wal/sequences &)
+    # なんか起動時に文字が表示されちゃうので一旦clear
+    clear
+
+    # Alternative (blocks terminal for 0-3ms)
+    # cat ~/.cache/wal/sequences
+
+    # To add support for TTYs this line can be optionally added.
+    source ~/.cache/wal/colors-tty.sh
+fi
 # }}}
 # シェル関数{{{
 # zコマンドでMRUファイルをfzfできる(fasdが必要)

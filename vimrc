@@ -6,12 +6,6 @@ set shellslash
 " 一般{{{
 filetype plugin indent on
 syntax on
-
-if has('win32') || has('win64')
-   set viminfo='999,<50,s10,h,rA:,rB:
-else
-  set viminfo=!,'999,<50,s10,h
-endif
 " 文字{{{
 " バックスペースで字下げや行末を消去できるようにする。
 set backspace=2
@@ -63,10 +57,16 @@ set nobackup
 set nowritebackup
 set noswapfile
 set noundofile
+if has('win32') || has('win64')
+   set viminfo='999,<50,s10,h,rA:,rB:
+else
+  set viminfo=!,'999,<50,s10,h
+endif
 "}}}
 " 行番号{{{
 set number
 set relativenumber
+set scrolloff=0
 "}}}
 " ワイルドメニュー{{{
 set wildignorecase
@@ -203,7 +203,7 @@ nmap <silent> [window]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap <silent> [window]e <C-e>[scroll]
 nmap <silent> [window]y <C-y>[scroll]
 
-nmap sr [scroll]
+nmap [window]r [scroll]
 nmap <silent> [scroll]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
 nmap <silent> [scroll]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
 nmap <silent> [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
@@ -254,6 +254,7 @@ imap <4-MiddleMouse> <Nop>
 "}}}
 " ターミナルモード{{{
 tnoremap <silent> jj <C-\><C-n>
+tnoremap <silent> <C-S-v> <C-w>""
 " cmd.exeの設定{{{
 if has('win32') || has('win64')
   tnoremap <C-p> <Up>
@@ -396,6 +397,10 @@ try
   "}}}
   " 表示{{{
   Plug 'flazz/vim-colorschemes'
+  " pywalのカラースキーム
+  if has('unix') && executable('wal')
+    Plug 'dylanaraps/wal.vim'
+  endif
   Plug 'luochen1990/rainbow'
   Plug 'ap/vim-css-color'
   Plug 'mechatroner/rainbow_csv'
@@ -498,7 +503,10 @@ if executable('fzf') > 0
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
 
   " 別タブであいまい検索を行う
-  let g:fzf_layout = { 'window': '-tabnew' }
+  " let g:fzf_layout = { 'window': '-tabnew' }
+  " ひとまずデフォルトの設定を使う
+  let g:fzf_layout = { 'down': '~40%' }
+
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
   if &ambiwidth == 'single'
     if has('nvim')
@@ -825,7 +833,11 @@ endfunction
 
 " letg:airline_theme='papercolor' 色が変わらないのでわかりづらいので保留
 " let g:airline_theme='light' 色が変わりすぎて煩わしいので保留
-let g:airline_theme='bubblegum'
+if has('unix') && executable('wal')
+  let g:airline_theme='wal'
+else
+  let g:airline_theme='bubblegum'
+endif
 
 let g:airline#extensions#whitespace#enabled = 0
 " 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
@@ -975,15 +987,20 @@ let g:netrw_keepdir = 0
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running")
-    " colorscheme molokai
-    " colorscheme Monokai
-    " colorscheme ayu
-    " colorscheme gruvbox
-    " colorscheme nord
-    " colorscheme nordisk
-    " colorscheme vim-material
-    " colorscheme tender
-    colorscheme wombat256i
+    " pywalのカラースキーム
+    if has('unix') && executable('wal')
+      colorscheme wal
+    else
+      " colorscheme molokai
+      " colorscheme Monokai
+      " colorscheme ayu
+      " colorscheme gruvbox
+      " colorscheme nord
+      " colorscheme nordisk
+      " colorscheme vim-material
+      " colorscheme tender
+      colorscheme wombat256i
+    endif
   endif
 catch
 endtry
@@ -994,7 +1011,7 @@ endtry
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " hilight current line number
-set cursorline
+" set cursorline
 " hi clear CursorLine
 
 set conceallevel=0
@@ -1190,8 +1207,8 @@ if has('gui_running')
   tmap <C-s> [term]
   tmap <C-b> [term]
 
-  imap <C-s> <Esc>[term]
-  imap <C-b> <Esc>[term]
+  tmap <C-s> [term-esc][term]
+  tmap <C-b> [term-esc][term]
 
   if has('nvim')
     nnoremap [term]s <C-u>:split\|:terminal<CR>
@@ -1224,6 +1241,8 @@ if has('gui_running')
   tnoremap [term]J <C-w>J
   tnoremap [term]K <C-w>K
   tnoremap [term]L <C-w>L
+  " tnoremap [term]v <C-w>v
+  " tnoremap [term]s <C-w>s
   tmap [term]p [term-esc][term]p
   tmap [term]n [term-esc][term]n
   tmap [term]! [term-esc][term]T
