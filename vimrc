@@ -516,6 +516,11 @@ if executable('fzf') > 0
   " ひとまずデフォルトの設定を使う
   let g:fzf_layout = { 'down': '~40%' }
 
+  " Windowsの場合はプレビューウィンドウを出さない
+  if has('win32') || has('win64')
+    let g:fzf_preview_window = ''
+  endif
+
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
   if &ambiwidth == 'single'
     if has('nvim')
@@ -1178,16 +1183,20 @@ command! -nargs=1 Cdn call s:cdn(<f-args>)
 if has('gui_running')
   " アンチエイリアス{{{
   if has('win32') || has('win64')
-    if has('+renderoptions')
-      set renderoptions=type:directx
-    endif
+    silent! set renderoptions=type:directx
   endif
-  set antialias
+  silent! set antialias
   "}}}
   " フォント{{{
   " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
   nnoremap + :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')<CR>
-  nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')<CR>
+  nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=max([submatch(0)-1, 1])', '')<CR>
+
+  " 透明度を変更
+  if exists('&transparency')
+    nnoremap <S-Up> :let &transparency = min([&transparency + 5, 255])<CR>
+    nnoremap <S-Down> :let &transparency = max([&transparency - 5, 0])<CR>
+  endif
 
   " イタリックフォントを無効化
   if s:plug.is_installed('mattn/disableitalic-vim')
