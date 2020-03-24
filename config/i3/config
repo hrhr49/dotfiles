@@ -41,10 +41,21 @@ bindsym Ctrl+Down exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym $mod+Shift+s exec systemctl suspend
 # スクリーンショット設定。scrotとxclipが必要
 # Multi-screen screenshots with scrot
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # All screens
+bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' \
+  -e 'mkdir -p ~/Pictures/screenshots && \
+    mv $f ~/Pictures/screenshots && \
+    xclip -selection clipboard -t image/png \
+      -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1` \
+    | notify-send "Saved $f" -t 1500' # All screens
 
 # OSX-like area selection screenshots
-bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`' # Area selection
+bindsym --release Shift+Print exec notify-send 'Plese select window or rectangle area' -t 1000 && \
+  scrot -s 'screenshot_%Y%m%d_%H%M%S.png' \
+    -e 'mkdir -p ~/Pictures/screenshots && \
+      mv $f ~/Pictures/screenshots && \
+      xclip -selection clipboard -t image/png \
+        -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1` \
+      | notify-send "Saved $f" -t 1500' # Area selection
 
 # }}}
 # ウィンドウ・コンテナ{{{
@@ -137,10 +148,10 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 # cycle between workspace
 bindsym $mod+Tab workspace next
 bindsym $mod+n workspace next
-bindsym $mode+Shift+n move container to workspace next
+bindsym $mod+Shift+n move container to workspace next; workspace next
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+p workspace prev
-bindsym $mode+Shift+p move container to workspace prev
+bindsym $mod+Shift+p move container to workspace prev; workspace prev
 
 # Alt + Tabで切り替え。うまく動かない
 bindsym Alt+Tab workspace back_and_forth
