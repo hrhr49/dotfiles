@@ -66,7 +66,8 @@ endif
 " 行番号{{{
 set number
 set relativenumber
-set scrolloff=0
+" set scrolloff=0
+set scrolloff=5
 "}}}
 " ワイルドメニュー{{{
 set wildignorecase
@@ -200,7 +201,15 @@ function! ScrollFunc(distance)
   let num = abs(a:distance)
   let key = a:distance > 0 ? "\<C-e>" : "\<C-y>"
   exec "normal ". num . key
+  " for i in range(num)
+  "   if i > 0
+  "     sleep 10m
+  "   endif
+  "   exec "normal " . key
+  "   redraw
+  " endfor
 endfunction
+
 nnoremap [scroll] <Nop>
 " 直接<C-d>や<C-f>などでスクロールしようとすると
 " スクロールできなかったときに[scroll]の部分が実行されない？
@@ -219,8 +228,8 @@ nmap <silent> [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
 nmap <silent> [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
 nmap <silent> [scroll]e <C-e>[scroll]
 nmap <silent> [scroll]y <C-y>[scroll]
-nmap <silent> [scroll]j 4<C-e>[scroll]
-nmap <silent> [scroll]k 4<C-y>[scroll]
+nmap <silent> [scroll]j :<C-u>call ScrollFunc(4)<CR>[scroll]
+nmap <silent> [scroll]k :<C-u>call ScrollFunc(-4)<CR>[scroll]
 "}}}
 " タブ{{{
 nnoremap [tab] <Nop>
@@ -582,10 +591,22 @@ if executable('fzf') > 0
   " nnoremap <Space>: :<C-u>History:<CR>
   nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
   nnoremap <Space>w :<C-u>Windows<CR>
-  if executable('rg') > 0 && !(has('win32') || has('win64'))
-    nnoremap <Space>a :<C-u>Rg<CR>
+  if executable('rg')
+    " 参考(https://arimasou16.com/blog/2018/11/02/00268/)
+    if has('win32') || has('win64')
+      command! -bang -nargs=* FzfRg
+        \ call fzf#vim#grep(
+        \   'rg --column --line-number --no-heading --color=always --smart-case "'.<q-args>.'"', 1,
+        \   <bang>0)
+      nnoremap <Space>a :<C-u>FzfRg<CR>
+      nnoremap <C-k> :<C-u>FzfRg <C-r><C-w><CR>
+    else
+      nnoremap <Space>a :<C-u>Rg<CR>
+      nnoremap <C-k> :<C-u>Rg <C-r><C-w><CR>
+    endif
   else
     nnoremap <Space>a :<C-u>Ag<CR>
+    nnoremap <C-k> :<C-u>Ag <C-r><C-w><CR>
   endif
   " 行補完
   imap <c-l> <plug>(fzf-complete-line)
