@@ -24,6 +24,9 @@ init_dotfiles:
 	mkdir -p ${HOME}/.config/xfce4/terminal
 	mkdir -p ${HOME}/.config/compton
 	mkdir -p ${HOME}/.config/conky
+	mkdir -p ${HOME}/.config/dunst
+	mkdir -p ${HOME}/.config/wal
+	mkdir -p ${HOME}/.config/wal/templates
 	ln -vsf ${PWD}/xinitrc ${HOME}/.xinitrc
 	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
@@ -39,6 +42,8 @@ init_dotfiles:
 	ln -vsf ${PWD}/ctags ${HOME}/.ctags
 	ln -vsf ${PWD}/config/compton/compton.conf ${HOME}/.config/compton/compton.conf
 	ln -vsf ${PWD}/config/conky/conky.conf ${HOME}/.config/conky/conky.conf
+	ln -vsf ${PWD}/config/wal/after.sh ${HOME}/.config/wal/after.sh
+	ln -vsf ${PWD}/config/wal/templates/dunstrc ${HOME}/.config/wal/templates/dunstrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/bashrc" >> $(HOME)/.bashrc
 	echo "source ${PWD}/commonshrc" >> $(HOME)/.zshrc

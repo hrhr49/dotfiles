@@ -1,0 +1,56 @@
+# vim:set filetype=cfg foldmethod=marker foldlevel=0:
+# dunstの設定
+[global]
+    # 表示位置・サイズ設定
+    monitor = 0
+    geometry = "300x5-30+20"
+    
+    # 表示形式
+    # HTML形式を有効
+    markup = full
+    format = "<b>%s</b>\n%b"
+    font = Monospace 10
+    word_wrap = yes
+    show_indicators = yes
+    
+    # フレームのスタイル
+    alignment = center
+    vertical_alignment = center
+    padding = 8
+    horizontal_padding = 8
+    frame_color = "{color4}"
+    separator_color = frame
+    frame_width = 3
+    corner_radius = 8
+    
+    # マウス
+    mouse_left_click = close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_all
+    
+[shortcuts]
+    # ショートカット 
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+grave
+    context = ctrl+shift+period
+    
+[urgency_low]
+    # 優先度・低
+    background = "{background}"
+    foreground = "{foreground}"
+    timeout = 6
+    
+[urgency_normal]
+    # 優先度・中
+    background = "{background}"
+    foreground = "{foreground}"
+    timeout = 6
+    
+[urgency_critical]
+    # 優先度・高
+    background = "{background}"
+    foreground = "{foreground}"
+    timeout = 0
+    
+
