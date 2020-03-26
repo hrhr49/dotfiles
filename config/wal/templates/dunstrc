@@ -1,4 +1,4 @@
-# vim:set filetype=cfg foldmethod=marker foldlevel=0:
+# vim:set filetype=cfg:
 # dunstの設定
 [global]
     # 表示位置・サイズ設定
