@@ -83,6 +83,8 @@ if executable($HOME . '/anaconda3/bin/python') > 0
 endif
 set path+=~/memo/**
 set tags+=tags;
+" 自分用タグファイルを追加
+set tags+=mytags
 "}}}
 " マウス・キー入力{{{
 set mouse=a
@@ -1186,6 +1188,51 @@ function! s:cdn(libname)
 endfunction
 
 command! -nargs=1 Cdn call s:cdn(<f-args>)
+
+" 自分用タグにつけるプレフィクス
+
+let g:mytag_prefix = "@@@"
+
+" 自分用のタグ作成
+function! AddMyTag(tagname, tagfile, tagaddress)
+  if a:tagname == "" || a:tagfile == "" || a:tagaddress == ""
+    return
+  endif
+  " 自分用タグファイルの存在確認
+  if findfile('mytags', getcwd()) == ""
+    " 自分用タグファイルを作成(パフォーマンスは落ちるが、簡単のためソートしない)
+    call writefile(["!_TAG_FILE_SORTED\t0"], "mytags", "a")
+  endif
+  " タグを追加
+  call writefile([printf("%s%s\t%s\t%s", g:mytag_prefix, a:tagname, a:tagfile, a:tagaddress)], "mytags", "a")
+endfunction
+
+" 入力から自分用タグ作成
+function! AddMyTagByInput()
+  let tagname = input("tagname? ")
+  let tagfile = expand("%:p")
+  let tagaddress = printf("/^%s/;\"\td", getline("."))
+  call AddMyTag(l:tagname, l:tagfile, l:tagaddress)
+endfunction
+
+" 自分用タグファイルを削除
+" function! DeleteMyTagFile()
+"   let mytagfile = findfile('mytags', getcwd())
+"   if mytagfile != ""
+"     " 0番目。つまりYesが選ばれたらタグファイルを削除
+"     if confirm(printf("delete %s? ", mytagfile), "&Yes\n&No\n&Cancel") == 0
+"       call delete(mytagfile)
+"     endif
+"   endif
+" endfunction
+
+command! AddMyTagByInput call AddMyTagByInput()
+command! DeleteMyTagFile call DeleteMyTagFile()
+
+nnoremap mb :AddMyTagByInput<CR>
+nnoremap mt :execute(printf(":Tags %s", g:mytag_prefix))<CR>
+" nnoremap mB :DeleteMyTagFile<CR>
+
 "}}}
 " GUI {{{
 if has('gui_running')
