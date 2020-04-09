@@ -306,10 +306,11 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
 autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
 autocmd FileType scss setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
+autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
 autocmd FileType nim setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType html nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
 autocmd FileType markdown nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
-autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathjax 
+autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathjax
             \ -f markdown+hard_line_breaks --highlight-style=pygments
             \ -c ~/memo/pandoc/github.css --filter ~/memo/pandoc/my_pandoc_filter.py -o %:r.html %<CR>
 autocmd FileType vim setlocal ts=2 sts=2 sw=2
@@ -320,7 +321,7 @@ autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<C
 autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
 " autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
 "autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-"autocmd BufNewFile,BufRead *.tsx,*.jsx setlocal ts=2 sts=2 sw=2 expandtab
+autocmd BufNewFile,BufRead *.tsx,*.jsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd BufRead,BufNewFile *.pu nnoremap <buffer> <F5> :w \| !plantuml %<CR>
 autocmd BufRead,BufNewFile *.dot nnoremap <buffer> <F5> :w \| !dot % -O -Tpng<CR>
 autocmd BufRead,BufNewFile *.adoc nnoremap <buffer> <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
@@ -355,7 +356,7 @@ try
   " ヘルプ{{{
   " vim-plugのヘルプ
   Plug 'junegunn/vim-plug'
-  
+
   " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
   "}}}
@@ -567,7 +568,7 @@ if executable('fzf') > 0
   nnoremap <Space><S-t> :<C-u>Tags<CR>
   nnoremap <Space>p :<C-u>Files<CR>
   nnoremap <Space>g :<C-u>GFiles<CR>
-  nnoremap <Space><S-g> :<C-u>Ggrep 
+  nnoremap <Space><S-g> :<C-u>Ggrep
   " nnoremap <Space>r :<C-u>History<CR>
   " 履歴はソートせずにプレビューも表示
   if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
@@ -811,7 +812,7 @@ function! s:my_coc_nvim_config()
 
   " Symbol renaming.
   nmap <buffer> <F2> <Plug>(coc-rename)
-  hi clear CocUnderLine 
+  hi clear CocUnderLine
 endfunction
 
 augroup coc_group
@@ -849,7 +850,7 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
- 
+
 "}}}
 " airline{{{
 
@@ -865,21 +866,22 @@ endif
 
 let g:airline#extensions#whitespace#enabled = 0
 " 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
-let g:airline_powerline_fonts = 1                                                                                                         
-let g:airline_section_c = '%-0.30{getcwd()}' " in section C of the status line display the CWD                                                 
-                                                                                                                                          
-"TABLINE:                                                                                                                                 
-                                                                                                                                          
-let g:airline#extensions#tabline#enabled = 1           " enable airline tabline                                                           
-let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline                                            
+" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
+let g:airline_section_c = '%-0.30{getcwd()}' " in section C of the status line display the CWD
+
+"TABLINE:
+
+let g:airline#extensions#tabline#enabled = 1           " enable airline tabline
+let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline
 let g:airline#extensions#tabline#tabs_label = ''       " can put text here like BUFFERS to denote buffers (I clear it so nothing is shown)
-let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)      
-let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab                                                    
-let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right                                                           
-let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline                                                 
-let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline                                  
-let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline               
-let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers                                                              
+let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)
+let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab
+let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right
+let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline
+let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline
+let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline
+let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers
 let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
 
 let g:airline#extensions#branch#enabled = 1
@@ -916,24 +918,24 @@ let g:rainbow_conf = {
 \	'separately': {
 \		'*': {},
 \		'markdown': {
-\			'parentheses_options': 'containedin=markdownCode contained', 
+\			'parentheses_options': 'containedin=markdownCode contained',
 \		},
 \		'lisp': {
-\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
 \		},
 \		'haskell': {
-\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
+\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
 \		},
 \		'vim': {
-\			'parentheses_options': 'containedin=vimFuncBody', 
+\			'parentheses_options': 'containedin=vimFuncBody',
 \		},
 \		'perl': {
-\			'syn_name_prefix': 'perlBlockFoldRainbow', 
+\			'syn_name_prefix': 'perlBlockFoldRainbow',
 \		},
 \		'stylus': {
-\			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'], 
+\			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
 \		},
-\		'css': 0, 
+\		'css': 0,
 \   'nerdtree': 0,
 \	}
 \}
@@ -1068,7 +1070,7 @@ endif
 " 折りたたみ表示 {{{
 set foldtext=MyFoldText()
 " 折りたたみの空きスペースは半角スペース「 」で埋める
-set fillchars=fold:\ 
+set fillchars=fold:\
 function! MyFoldText()
   let line = substitute(getline(v:foldstart), '^\s*', '', '')
   let comment_pat = '\V' . substitute(&commentstring, '%s', '\\(\\.\\*\\)', 'g')
@@ -1081,7 +1083,7 @@ function! MyFoldText()
   " 折りたたみ行数
   let tail = '[' . (v:foldend - v:foldstart + 1) . ']'
 
-  " ウィンドウ幅 
+  " ウィンドウ幅
   " 参考 https://github.com/Konfekt/FoldText/blob/master/plugin/FoldText.vim
   let w = winwidth(0) - &foldcolumn - (&number ? &numberwidth : 0) - (&l:signcolumn is# 'yes' ? 2 : 0)
 
@@ -1140,7 +1142,7 @@ endfun
 
 
 " function RandomColorScheme()
-"   let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n") 
+"   let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")
 "   exe 'so ' . mycolors[localtime() % len(mycolors)]
 " endfun
 
