@@ -236,8 +236,8 @@ nmap <silent> [scroll]k :<C-u>call ScrollFunc(-4)<CR>[scroll]
 " タブ{{{
 nnoremap [tab] <Nop>
 nmap t [tab]
-nnoremap <silent> [tab]0 :<C-u>tabfirst<CR>
-nnoremap <silent> [tab]$ :<C-u>tablast<CR>
+" nnoremap <silent> [tab]0 :<C-u>tabfirst<CR>
+" nnoremap <silent> [tab]$ :<C-u>tablast<CR>
 nnoremap <silent> [tab]1 :<C-u>tabnext 1<CR>
 nnoremap <silent> [tab]2 :<C-u>tabnext 2<CR>
 nnoremap <silent> [tab]3 :<C-u>tabnext 3<CR>
@@ -1014,9 +1014,9 @@ try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running")
     " pywalのカラースキーム
-    if has('unix') && executable('wal')
-      colorscheme wal
-    else
+    " if has('unix') && executable('wal')
+    "   colorscheme wal
+    " else
       " colorscheme molokai
       " colorscheme Monokai
       " colorscheme ayu
@@ -1025,8 +1025,9 @@ try
       " colorscheme nordisk
       " colorscheme vim-material
       " colorscheme tender
-      colorscheme wombat256i
-    endif
+      " colorscheme wombat256i
+      colorscheme iceberg
+    " endif
   endif
 catch
 endtry
