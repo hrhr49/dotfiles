@@ -128,6 +128,15 @@ function! ToggleLastStatus()
   endif
 endfunction
 nnoremap <expr> <Space><F2> ToggleLastStatus()
+
+" quick fix next/previous
+nnoremap q] :<C-u>cnext<CR>
+nnoremap q[ :<C-u>cprevious<CR>
+
+" location list next/previous
+nnoremap l] :<C-u>lnext<CR>
+nnoremap l[ :<C-u>lprevious<CR>
+
 "}}}
 " 外部コマンドとの連携{{{
 "
