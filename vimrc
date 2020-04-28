@@ -1241,8 +1241,8 @@ endfunction
 command! AddMyTagByInput call AddMyTagByInput()
 command! DeleteMyTagFile call DeleteMyTagFile()
 
-nnoremap mb :AddMyTagByInput<CR>
-nnoremap mt :execute(printf(":Tags %s", g:mytag_prefix))<CR>
+" nnoremap mb :AddMyTagByInput<CR>
+" nnoremap mt :execute(printf(":Tags %s", g:mytag_prefix))<CR>
 " nnoremap mB :DeleteMyTagFile<CR>
 
 "}}}
