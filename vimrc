@@ -130,12 +130,12 @@ endfunction
 nnoremap <expr> <Space><F2> ToggleLastStatus()
 
 " quick fix next/previous
-nnoremap q] :<C-u>cnext<CR>
-nnoremap q[ :<C-u>cprevious<CR>
+nnoremap ]q :<C-u>cnext<CR>
+nnoremap [q :<C-u>cprevious<CR>
 
 " location list next/previous
-nnoremap l] :<C-u>lnext<CR>
-nnoremap l[ :<C-u>lprevious<CR>
+nnoremap ]l :<C-u>lnext<CR>
+nnoremap [l :<C-u>lprevious<CR>
 
 "}}}
 " 外部コマンドとの連携{{{
@@ -431,6 +431,8 @@ try
   if has('unix') && executable('wal')
     Plug 'dylanaraps/wal.vim'
   endif
+  " カラースキームを次々に変更
+  Plug 'vim-scripts/ScrollColors'
   Plug 'luochen1990/rainbow'
   Plug 'ap/vim-css-color'
   Plug 'mechatroner/rainbow_csv'
