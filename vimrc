@@ -137,6 +137,9 @@ nnoremap [q :<C-u>cprevious<CR>
 nnoremap ]l :<C-u>lnext<CR>
 nnoremap [l :<C-u>lprevious<CR>
 
+" nnoremap <M-Right> <C-o>
+" nnoremap <M-Left> <C-]>
+
 "}}}
 " 外部コマンドとの連携{{{
 "
@@ -1070,10 +1073,8 @@ if has('nvim')
   " silent! set winblend=5
 endif
 
-if has('+termguicolors')
 " GUIカラーを使う
-  set termguicolors
-endif
+silent set termguicolors
 
 " フォントが欠けるのを回避
 " fzfでfloating windowを使用するときにレイアウトが崩れるので様子見

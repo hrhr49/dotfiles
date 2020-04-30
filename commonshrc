@@ -263,3 +263,6 @@ alias repo='cd $(ghq list -p| fzf --preview "bat --color=always --style=header,g
 alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 alias github=gh
 # }}}
+# 環境変数{{{
+TERM=xterm-256color
+# }}}
