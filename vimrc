@@ -434,8 +434,10 @@ try
   if has('unix') && executable('wal')
     Plug 'dylanaraps/wal.vim'
   endif
+  
   " カラースキームを次々に変更
   Plug 'vim-scripts/ScrollColors'
+
   Plug 'luochen1990/rainbow'
   Plug 'ap/vim-css-color'
   Plug 'mechatroner/rainbow_csv'
@@ -1040,7 +1042,8 @@ try
       " colorscheme vim-material
       " colorscheme tender
       " colorscheme wombat256i
-      colorscheme iceberg
+      " colorscheme iceberg
+      colorscheme itg_flat
     " endif
   endif
 catch
