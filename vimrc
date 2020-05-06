@@ -734,6 +734,7 @@ let g:NERDTreeLimitedSyntax = 1
 " let g:termdebug_wide = 163
 " }}}
 " Gundo{{{
+let g:gundo_prefer_python3 = 1
 " nnoremap <F9> :<C-u>GundoToggle<CR>
 " nnoremap <Space>u :<C-u>GundoToggle<CR>
 "}}}
@@ -879,11 +880,11 @@ endfunction
 
 " letg:airline_theme='papercolor' 色が変わらないのでわかりづらいので保留
 " let g:airline_theme='light' 色が変わりすぎて煩わしいので保留
-if has('unix') && executable('wal')
-  let g:airline_theme='wal'
-else
+" if has('unix') && executable('wal')
+"   let g:airline_theme='wal'
+" else
   let g:airline_theme='bubblegum'
-endif
+" endif
 
 let g:airline#extensions#whitespace#enabled = 0
 " 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
@@ -1047,8 +1048,8 @@ try
       " colorscheme vim-material
       " colorscheme tender
       " colorscheme wombat256i
-      " colorscheme iceberg
-      colorscheme itg_flat
+      colorscheme iceberg
+      " colorscheme itg_flat
     " endif
   endif
 catch
@@ -1145,27 +1146,6 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-
-" Change current directory.
-" nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-" rangerの設定
-function RangerExplorer()
-    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
-    if filereadable('/tmp/vim_ranger_current_file')
-        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
-        call system('rm /tmp/vim_ranger_current_file')
-    endif
-    redraw!
-endfun
-" map <Leader>x :call RangerExplorer()<CR>
-" map <Space>x :call RangerExplorer()<CR>
-
-
-" function RandomColorScheme()
-"   let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")
-"   exe 'so ' . mycolors[localtime() % len(mycolors)]
-" endfun
 
 " ~/.local/.vimrcが存在すればそれを読み込む
 if filereadable(expand($HOME.'/.local/.vimrc'))

@@ -5,16 +5,16 @@ setxkbmap -option ctrl:nocaps
 xset r rate 200 30
 
 # 必要ならi3の設定ファイルを動的に作成
-if [ -e $HOME/.config/i3/config.base ]; then
-    if [ -e $HOME/.config/i3/config.local ]; then
-        cat $HOME/.config/i3/config.base $HOME/.config/i3/config.local > $HOME/.config/i3/config
-    fi
-fi
+# if [ -e $HOME/.config/i3/config.base ]; then
+#     if [ -e $HOME/.config/i3/config.local ]; then
+#         cat $HOME/.config/i3/config.base $HOME/.config/i3/config.local > $HOME/.config/i3/config
+#     fi
+# fi
 
 # pywalの前回設定を引き継ぐ
-if type "wal" > /dev/null 2>&1; then
-    wal -R
-fi
+# if type "wal" > /dev/null 2>&1; then
+#     wal -R
+# fi
 
 #.xinitrc
 export DefaultImModule=fcitx

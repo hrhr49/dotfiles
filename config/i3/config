@@ -57,6 +57,9 @@ bindsym --release Shift+Print exec notify-send 'Plese select window or rectangle
         -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1` \
       | notify-send "Saved $f" -t 1500' # Area selection
 
+# vim-anywhere (https://github.com/cknadler/vim-anywhere)
+bindsym Ctrl+Alt+v exec ~/.vim-anywhere/bin/run
+bindsym $mod+Shift+v exec ~/.vim-anywhere/bin/run
 # }}}
 # ウィンドウ・コンテナ{{{
 # ウィンドウの削除

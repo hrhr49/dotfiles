@@ -235,7 +235,7 @@ alias s='eval $(myscripts | fzf)'
 cheatsheets() {
     find -L ~/memo -type f -not -path '*/.git/*'
 }
-alias cheat='vim $(cheatsheets | fzf)'
+# alias cheat='vim $(cheatsheets | fzf)'
 alias c='vim $(cheatsheets | fzf)'
 alias m='vim $(cheatsheets | fzf)'
 alias anyenv-hash='eval "$(anyenv init -)"'
