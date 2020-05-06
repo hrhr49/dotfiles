@@ -11,6 +11,7 @@ formulas=(
 #    git
     ghq
     hub
+    tig
 
     # 文字コード
     nkf

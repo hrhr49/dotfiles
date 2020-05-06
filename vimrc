@@ -57,6 +57,8 @@ set nobackup
 set nowritebackup
 set noswapfile
 set noundofile
+" コマンド履歴の数
+set history=10000
 if has('win32') || has('win64')
    set viminfo='999,<50,s10,h,rA:,rB:
 else
@@ -67,7 +69,10 @@ endif
 set number
 set relativenumber
 " set scrolloff=0
+" カーソルの上または下に表示される最小行数
 set scrolloff=5
+" カーソルの位置を表示
+set ruler
 "}}}
 " ワイルドメニュー{{{
 set wildignorecase
@@ -76,6 +81,12 @@ set wildmenu
 " バッファ{{{
 " バッファ保存せずに移動できるようにする
 set hidden
+" ファイルの変更を監視する
+set autoread
+"}}}
+" タブ{{{
+" 使用可能なタブページの個数
+set tabpagemax=50
 "}}}
 " 環境{{{
 if executable($HOME . '/anaconda3/bin/python') > 0
@@ -463,6 +474,10 @@ try
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'mattn/emmet-vim'
   Plug 'LeafCage/yankround.vim'
+  " カッコの自動入力
+  " Plug 'jiangmiao/auto-pairs'
+  " Tabで補完
+  Plug 'ervandew/supertab'
   " snippets
   " Track the engine.
   " Plug 'SirVer/ultisnips'
@@ -1063,6 +1078,8 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 " hilight current line number
 " set cursorline
 " hi clear CursorLine
+"
+set background=dark
 
 set conceallevel=0
 " 80列目の色を変える
