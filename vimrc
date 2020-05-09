@@ -727,6 +727,9 @@ else
 endif
 "}}}
 "}}}
+" supertab{{{
+let g:SuperTabDefaultCompletionType = "<c-n>"
+"}}}
 " Tagbar{{{
 let g:tagbar_autofocus = 1
 nnoremap <F8> :TagbarToggle<CR>
