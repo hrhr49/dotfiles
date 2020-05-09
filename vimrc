@@ -17,6 +17,8 @@ set autoindent
 set expandtab
 " 矩形選択のときに文字がない箇所も選択できるようにする
 set virtualedit=block
+" コメントで自動整形されるのを回避
+set formatoptions-=cro
 "}}}
 " 折りたたみ{{{
 set foldmethod=marker
@@ -110,6 +112,8 @@ set belloff=all
 " キーマッピング(一般){{{
 " 全般{{{
 inoremap jj <ESC>
+inoremap jk <ESC>
+inoremap kj <ESC>
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
@@ -442,6 +446,8 @@ try
   Plug 'h1mesuke/vim-alignta'
   " Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-repeat'
+  " キャメルケースやスネークケースの変換
+  Plug 'tpope/vim-abolish'
   "}}}
   " 表示{{{
   Plug 'flazz/vim-colorschemes'
