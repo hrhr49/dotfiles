@@ -1,3 +1,3 @@
 # dotfiles
 
-各種設定ファイルをおいておくための場所
+dotfiles
