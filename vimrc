@@ -495,6 +495,10 @@ try
   " バージョン管理・変更履歴{{{
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
+  " コミットブラウザ
+  Plug 'junegunn/gv.vim'
+  " Gbrowseをgithubで開くようにする
+  Plug 'tpope/vim-rhubarb'
   Plug 'sjl/gundo.vim'
   " }}}
   " 移動{{{
