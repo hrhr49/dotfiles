@@ -112,8 +112,8 @@ set belloff=all
 " キーマッピング(一般){{{
 " 全般{{{
 inoremap jj <ESC>
-inoremap jk <ESC>
-inoremap kj <ESC>
+" inoremap jk <ESC>
+" inoremap kj <ESC>
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
