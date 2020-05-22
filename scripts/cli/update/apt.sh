@@ -30,6 +30,9 @@ packages=(
     # CUI
     w3m
 
+    # 画像
+    imagemagick
+
     # GUI
     rofi              # ウィンドウスイッチャー
     sxiv              # 画像表示
