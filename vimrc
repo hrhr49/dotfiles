@@ -499,7 +499,10 @@ try
   Plug 'junegunn/gv.vim'
   " Gbrowseをgithubで開くようにする
   Plug 'tpope/vim-rhubarb'
+  " Undoツリー管理
   Plug 'sjl/gundo.vim'
+  " Undoツリー管理 こっちだとpython依存がない
+  Plug 'mbbill/undotree'
   " }}}
   " 移動{{{
   Plug 'easymotion/vim-easymotion'
