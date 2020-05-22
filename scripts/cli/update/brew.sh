@@ -40,6 +40,7 @@ formulas=(
     the_silver_searcher
     fzf
     peco
+    fd
 
     # 各種言語
     ruby

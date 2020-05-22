@@ -46,6 +46,8 @@ packages=(
 
     # i3wmで使用するもの
     i3
+    i3status
+    i3blocks
     fcitx-mozc
     feh         # 壁紙を表示
     compton     # コンポジットマネージャ。ウィンドウを透明にしたいときなどに必要

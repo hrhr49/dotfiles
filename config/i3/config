@@ -220,20 +220,34 @@ font pango:monospace 8
 # ワークスペース0はフローティング用。GUIアプリ作成などに使用
 for_window [workspace="0"] floating enable
 
+set $color_background #333333
+set $color_focus #4169e1
+set $color_text #d8dee8
+set $color_workspace #555555
+set $color_urgent #ebcb8b
 # i3statusの設定
 bar {
+    # position top
         colors {
-        background #2f343f
+        # background #2f343f
+        # statusline #2f343f
+        # separator #4b5262
+        background $color_background
         statusline #2f343f
         separator #4b5262
 
         # colour of border, background, and text
-        focused_workspace       #2f343f #bf616a #d8dee8
-        active_workspace        #2f343f #2f343f #d8dee8
-        inactive_workspace      #2f343f #2f343f #d8dee8
-        urgent_workspacei       #2f343f #ebcb8b #2f343f
+        # focused_workspace       #2f343f #bf616a #d8dee8
+        # active_workspace        #2f343f #2f343f #d8dee8
+        # inactive_workspace      #2f343f #2f343f #d8dee8
+        # urgent_workspacei       #2f343f #ebcb8b #2f343f
+
+        focused_workspace  $color_background $color_focus     $color_text
+        active_workspace   $color_background $color_workspace $color_text
+        inactive_workspace $color_background $color_workspace $color_text
+        urgent_workspacei  $color_background $color_urgent    $color_workspace
     }
-        status_command i3status
+    status_command i3blocks
 }
 
 # Set inner/outer gaps

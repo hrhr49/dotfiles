@@ -16,6 +16,7 @@ init:
 init_dotfiles:
 	mkdir -p ${HOME}/.config/i3
 	mkdir -p ${HOME}/.config/i3status
+	mkdir -p ${HOME}/.config/i3blocks
 	mkdir -p ${HOME}/.config/nvim
 	mkdir -p ${HOME}/.config/ranger
 	mkdir -p ${HOME}/.config/rofi
@@ -31,6 +32,7 @@ init_dotfiles:
 	ln -vsf ${PWD}/Xresources ${HOME}/.Xresources
 	ln -vsf ${PWD}/config/i3/config ${HOME}/.config/i3/config
 	ln -vsf ${PWD}/config/i3status/config ${HOME}/.config/i3status/config
+	ln -vsf ${PWD}/config/i3blocks/config ${HOME}/.config/i3blocks/config
 	ln -vsf ${PWD}/config/ranger/commands.py ${HOME}/.config/ranger/commands.py
 	ln -vsf ${PWD}/config/ranger/rc.conf ${HOME}/.config/ranger/rc.conf
 	ln -vsf ${PWD}/config/ranger/scope.sh ${HOME}/.config/ranger/scope.sh

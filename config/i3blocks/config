@@ -1,0 +1,42 @@
+# vim:set foldmethod=marker foldlevel=0:
+
+command=/usr/lib/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+# [test]
+# full_text=😄
+
+[ip]
+command=hostname -i | awk '{ print "IP:" $1 }'
+interval=once
+color=#99FFCC
+
+[volume]
+label=
+#instance=Master
+instance=PCM
+interval=once
+signal=10
+
+[wifi]
+label=
+# color=#CCCCFF
+instance=wlp2s0
+interval=1
+separator=true
+
+
+[battery]
+color=#99FFCC
+# label= 🔋
+instance=0
+interval=30
+
+[time]
+color=#99FFCC
+#background=#99FFCC
+command=date '+%Y-%m-%d %H:%M:%S'
+#command=date '+%H:%M '
+interval=5
+

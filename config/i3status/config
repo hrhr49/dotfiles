@@ -19,34 +19,47 @@ order += "volume master"
 order += "battery all"
 order += "tztime local"
 
-load {
-        format = "<span background='#f59335'>  %5min Load </span>"
-}
+# load {
+#         format = "<span background='#f59335'>  %5min Load </span>"
+# }
+# 
+# cpu_temperature 0 {
+#         format = "<span background='#bf616a'>  %degrees °C </span>"
+#         path = "/sys/class/thermal/thermal_zone0/temp"
+# }
+# 
+# disk "/" {
+#         format = "<span background='#fec7cd'>  %free Free </span>"
+# }
+# 
+# disk "/home" {
+#         format = "<span background='#a1d569'>  %free Free </span>"
+# }
+# 
+# # _first_に変えないとうまく行かなかった。デフォの設定を参照
+# ethernet _first_ {
+#         format_up = "<span background='#88c0d0'>  %ip </span>"
+#         format_down = "<span background='#88c0d0'>  Disconnected </span>"
+# }
+# 
+# # _first_に変えないとうまく行かなかった。デフォの設定を参照
+# wireless _first_ {
+#         format_up = "<span background='#b48ead'>  %essid </span>"
+#         format_down = "<span background='#b48ead'>  Disconnected </span>"
+# }
 
-cpu_temperature 0 {
-        format = "<span background='#bf616a'>  %degrees °C </span>"
-        path = "/sys/class/thermal/thermal_zone0/temp"
-}
 
-disk "/" {
-        format = "<span background='#fec7cd'>  %free Free </span>"
-}
-
-disk "/home" {
-        format = "<span background='#a1d569'>  %free Free </span>"
-}
-
-# _first_に変えないとうまく行かなかった。デフォの設定を参照
-ethernet _first_ {
-        format_up = "<span background='#88c0d0'>  %ip </span>"
-        format_down = "<span background='#88c0d0'>  Disconnected </span>"
-}
-
-# _first_に変えないとうまく行かなかった。デフォの設定を参照
-wireless _first_ {
-        format_up = "<span background='#b48ead'>  %essid </span>"
-        format_down = "<span background='#b48ead'>  Disconnected </span>"
-}
+# battery all {
+# 	last_full_capacity = true
+#         format = "<span background='#a3be8c'>  %status %percentage </span>"
+#         format_down = "No Battery"
+#         status_chr = "Charging"
+#         status_bat = "Battery"
+#         status_unk = "Unknown"
+#         status_full = "Charged"
+#         path = "/sys/class/power_supply/BAT%d/uevent"
+#         low_threshold = 10
+# }
 
 volume master {
         format = "<span background='#ebcb8b'>  %volume </span>"
@@ -54,18 +67,6 @@ volume master {
         device = "default"
         mixer = "Master"
         mixer_idx = 0
-}
-
-battery all {
-	last_full_capacity = true
-        format = "<span background='#a3be8c'>  %status %percentage </span>"
-        format_down = "No Battery"
-        status_chr = "Charging"
-        status_bat = "Battery"
-        status_unk = "Unknown"
-        status_full = "Charged"
-        path = "/sys/class/power_supply/BAT%d/uevent"
-        low_threshold = 10
 }
 
 tztime local {
