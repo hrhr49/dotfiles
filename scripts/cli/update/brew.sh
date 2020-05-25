@@ -25,10 +25,14 @@ formulas=(
     # 開発 効率化
     direnv
     ctags
+
+    # テキストエディタ
     neovim
+    kakoune # vim インスパイアなエディタ
+    micro # ベーシックな感じのキーバインドのエディタ。nanoの代わりに使えそう？
 
     # TUI
-    ranger
+    # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
     tmux
     sc-im # スプレッドシート
 

@@ -436,10 +436,25 @@ try
   " endif
  "}}}
   " テキスト操作{{{
+  " テキストオブジェクト
+  " 一覧 https://github.com/kana/vim-textobj-user/wiki
   Plug 'kana/vim-textobj-user'
-  Plug 'glts/vim-textobj-comment'
+  " ac, icなどでコメント内(word-columnの方とバッティングする)
+  " Plug 'glts/vim-textobj-comment'
+  " ai, ii, aI, iI でインデント
   Plug 'michaeljsmith/vim-indent-object'
+  " au, iu でURL
   Plug 'mattn/vim-textobj-url'
+  " al, il で現在の行
+  Plug 'kana/vim-textobj-line'
+  " gbで直近で貼り付けた範囲
+  Plug 'saaguero/vim-textobj-pastedtext'
+  " _ アンダースコア
+  Plug 'lucapette/vim-textobj-underscore'
+  " ic, ac, iC, aC, で同一列の文字列
+  Plug 'idbrii/textobj-word-column.vim/'
+  " af{char}, if{char}で任意の文字
+  Plug 'thinca/vim-textobj-between'
   " Plug 'kana/vim-textobj-jabraces'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
