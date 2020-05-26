@@ -27,6 +27,7 @@ set foldmethod=marker
 "}}}
 " 入力補完{{{
 " remove tag comeletion from default
+set complete-=i
 set complete-=t
 "set completeopt+=longest
 "}}}
@@ -111,6 +112,7 @@ set belloff=all
 " }}}
 " キーマッピング(一般){{{
 " 全般{{{
+" インサートモード{{{
 inoremap jj <ESC>
 " inoremap jk <ESC>
 " inoremap kj <ESC>
@@ -118,6 +120,20 @@ inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
 inoremap <C-u> <C-g>u<C-u>
+"}}}
+" コマンドモード {{{
+" <down>, <up>の場合、途中まで入力文字列にマッチした履歴だけを辿れる
+cnoremap <C-n> <down>
+cnoremap <C-p> <up>
+" }}}
+" ビジュアルモード{{{
+" 選択中のテキストを*で検索
+" vnoremap * "zy:let @/ = @z<CR>n
+vnoremap * "zy:let @/ = '\V' . @z<CR>n
+" 選択範囲に直前の操作を適用
+vnoremap . :normal .<CR>
+"}}}
+"
 " vimrcをリロード
 nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
 
@@ -125,9 +141,6 @@ nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
-" 選択中のテキストを*で検索
-" vnoremap * "zy:let @/ = @z<CR>n
-vnoremap * "zy:let @/ = '\V' . @z<CR>n
 nnoremap n nzzzv
 nnoremap N Nzzzv
 " ペーストしたテキストをビジュアルモードで選択
@@ -156,8 +169,12 @@ nnoremap [q :<C-u>cprevious<CR>
 nnoremap ]l :<C-u>lnext<CR>
 nnoremap [l :<C-u>lprevious<CR>
 
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
 " nnoremap <M-Right> <C-o>
 " nnoremap <M-Left> <C-]>
+
 
 "}}}
 " 外部コマンドとの連携{{{
@@ -365,6 +382,14 @@ autocmd BufRead,BufNewFile *.nim nnoremap <buffer> <F5> :w \| !nim c -r %<CR>
 autocmd BufRead,BufNewFile *.tsx setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
 augroup END
+
+augroup MarkFile
+autocmd!
+autocmd BufLeave *.{c,cpp} mark C
+autocmd BufLeave *.h       mark H
+autocmd BufLeave vimrc     mark V
+augroup END
+
 "}}}
 " プラグイン一覧{{{
 " vim-plugがない場合はインストール(参考 https://github.com/junegunn/vim-plug/wiki/tips)
@@ -553,6 +578,9 @@ try
   " ターミナルデバッガ
   " Plug 'epheien/termdbg'
   " Plug 'vim-vdebug/vdebug'
+  "}}}
+  " その他{{{
+  " Plug 'mtth/scratch.vim'
   "}}}
   call plug#end()
 catch
