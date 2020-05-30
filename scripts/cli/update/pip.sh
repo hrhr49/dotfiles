@@ -15,7 +15,7 @@ packages=(
     # CLI
     mdv # Markdown表示
     percol # インタラクティブな絞り込み
-    rager-fm # ファイルマネージャ
+    ranger-fm # ファイルマネージャ
 
     # 開発環境
     neovim
