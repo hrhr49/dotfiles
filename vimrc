@@ -114,6 +114,9 @@ set belloff=all
 " 全般{{{
 " インサートモード{{{
 inoremap jj <ESC>
+inoremap ff <ESC>
+inoremap jf <ESC>
+inoremap fj <ESC>
 " inoremap jk <ESC>
 " inoremap kj <ESC>
 inoremap <C-r> <C-r><C-p>
