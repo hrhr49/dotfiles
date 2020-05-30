@@ -139,6 +139,7 @@ vnoremap . :normal .<CR>
 "
 " vimrcをリロード
 nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
+nnoremap <M-w> :w<CR>
 
 nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
