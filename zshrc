@@ -140,6 +140,14 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
+function exit_zsh() {
+    echo exit_zshhhhhhhhhh
+    exit
+}
+zle -N  exit_zsh
+# Alt + dでexit
+bindkey '^[d' exit_zsh
+
 # <C-s>による停止などを無効化
 setopt no_flow_control
 
