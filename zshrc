@@ -141,7 +141,6 @@ bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
 function exit_zsh() {
-    echo exit_zshhhhhhhhhh
     exit
 }
 zle -N  exit_zsh
