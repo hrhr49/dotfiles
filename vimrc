@@ -114,7 +114,8 @@ set belloff=all
 " 全般{{{
 " インサートモード{{{
 inoremap jj <ESC>
-inoremap ff <ESC>
+" offを入力できないので無効化
+" inoremap ff <ESC>
 inoremap jf <ESC>
 inoremap fj <ESC>
 " inoremap jk <ESC>
@@ -145,6 +146,8 @@ nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
+nnoremap <M-Left> <C-t>
+nnoremap <M-Right> <C-]>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 " ペーストしたテキストをビジュアルモードで選択
@@ -663,7 +666,8 @@ if executable('fzf') > 0
   nnoremap <Space><S-t> :<C-u>Tags<CR>
   nnoremap <Space>p :<C-u>Files<CR>
   nnoremap <Space>g :<C-u>GFiles<CR>
-  nnoremap <Space><S-g> :<C-u>Ggrep
+  nnoremap <Space>G :<C-u>GFiles?<CR>
+  " nnoremap <Space>G :<C-u>Ggrep
   " nnoremap <Space>r :<C-u>History<CR>
   " 履歴はソートせずにプレビューも表示
   if executable('bat') && executable('bash') && !(has('win32') || has('win64'))

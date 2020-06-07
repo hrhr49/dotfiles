@@ -200,6 +200,12 @@ alias brews="brew search"
 alias pipi="pip install"
 alias pips="pip search"
 # }}}
+# yarnのエイリアス{{{
+alias y=yarn
+alias ya=yarn add
+alias yi=yarn add
+alias yd=yarn add -D
+# }}}
 # gitのエイリアス{{{
 alias gits="git status"
 alias gita="git add"
@@ -259,10 +265,14 @@ alias ghql='ghq list'
 # 参考:https://qiita.com/tomoyamachi/items/e51d2906a5bb24cf1684
 # 上記のを少し修正。READMEを見ながら、選んだリポジトリの場所へ移動
 alias repo='cd $(ghq list -p| fzf --preview "bat --color=always --style=header,grid --line-range :80 {}/README.*")'
+alias r=repo
 # 指定したリポジトリをgithubで開く(hubコマンドが必要)
 # 参考:https://qiita.com/itkrt2y/items/0671d1f48e66f21241e2
 alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 alias github=gh
+
+# 動画のダウンロード
+alias you='youtube-dl $(xsel)'
 # }}}
 # 環境変数{{{
 TERM=xterm-256color
