@@ -146,7 +146,7 @@ nnoremap cd :<C-u>CD<CR>
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
-nnoremap <M-Left> <C-t>
+nnoremap <M-Left> <C-o>
 nnoremap <M-Right> <C-]>
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -182,7 +182,11 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " nnoremap <M-Right> <C-o>
 " nnoremap <M-Left> <C-]>
 
-
+" ,からはじまるマッピング{{{
+nnoremap ,q :cw<CR>
+nnoremap ,l :lw<CR>
+nnoremap ,u :UndotreeShow<CR>
+"}}}
 "}}}
 " 外部コマンドとの連携{{{
 "
