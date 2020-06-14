@@ -50,7 +50,8 @@ formulas=(
     ruby
     node
     go
-    rust
+    # rust # rustよりrustupのほうがいい？ 
+    rustup # rustup-initを実行する必要あり
     perl
     # python3
     lua

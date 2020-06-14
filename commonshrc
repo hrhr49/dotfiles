@@ -52,6 +52,12 @@ if type "go" > /dev/null 2>&1; then
     export PATH=$PATH:$GOPATH/bin
 fi
 
+# rustupで入れたcargoの設定
+if [ -d "$HOME/.cargo/bin" ];
+then
+    export PATH=$PATH:$HOME/.cargo/bin
+fi
+
 if [ -e ${HOME}/anaconda3/etc/profile.d/conda.sh ]; then
     source ~/anaconda3/etc/profile.d/conda.sh
 fi

@@ -6,11 +6,12 @@
       "filetypes": ["c", "cpp", "objc", "objcpp"]
     }
   },
-  "python.linting.pylintEnabled": false,
+  "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": true,
   "coc.preferences.colorSupport": false,
-  "coc.preferences.enableFloatHighlight": false,
+  "coc.preferences.enableFloatHighlight": true,
   "python.pythonPath": "~/anaconda3/bin/python",
+  "python.jediEnabled": true
 }

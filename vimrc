@@ -139,7 +139,8 @@ vnoremap . :normal .<CR>
 "}}}
 "
 " vimrcをリロード
-nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
+" nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
+nnoremap <M-r> :<C-u>source $MYVIMRC<CR>
 nnoremap <M-w> :w<CR>
 
 nnoremap cd :<C-u>CD<CR>
@@ -874,8 +875,10 @@ endif
 "}}}
 " coc.nvimの設定{{{
 " 以下にインストールするパッケージ一覧を設定
+" https://github.com/neoclide/coc-python/issues/188
+" が解決するまでcoc-pythonのバージョンをアップしない
 let g:coc_global_extensions = [
-      \ "coc-python",
+      \ "coc-python@1.2.9",
       \ "coc-tsserver",
       \ "coc-json",
       \ "coc-html",
