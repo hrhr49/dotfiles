@@ -878,7 +878,8 @@ endif
 " https://github.com/neoclide/coc-python/issues/188
 " が解決するまでcoc-pythonのバージョンをアップしない
 let g:coc_global_extensions = [
-      \ "coc-python@1.2.9",
+      \ "coc-pyright",
+      \ "coc-python",
       \ "coc-tsserver",
       \ "coc-json",
       \ "coc-html",
@@ -889,8 +890,11 @@ let g:coc_global_extensions = [
       \ "coc-rls",
       \ "coc-go",
       \ "coc-emoji",
+      \ "coc-snippets",
+      \ "https://github.com/xabikos/vscode-react",
+      \ "https://github.com/infeng/vscode-react-typescript"
       \]
-      " \ "coc-snippets",
+      " \ "coc-python@1.2.9",
 
 
 function! s:my_coc_nvim_config()
