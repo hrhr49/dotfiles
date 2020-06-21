@@ -15,6 +15,11 @@ then
     export PATH=$PATH:~/bin/scripts
 fi
 
+if [ -d "$HOME/bin/scripts/cli/util" ];
+then
+    export PATH=$PATH:~/bin/scripts/cli/util
+fi
+
 if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 fi
@@ -282,4 +287,12 @@ alias you='youtube-dl $(xsel)'
 # }}}
 # 環境変数{{{
 TERM=xterm-256color
+
+# 独自
+# いろいろなファイルを放り込んでおくディレクトリ
+# MYFILES=$HOME/.config/myfiles/
+# 自作の実行ファイルを置くディレクトリ
+# MYBIN=$HOME/bin/
+# dotfilesをおいておくディレクトリ
+# MYDOTFILES=$HOME/dotfiles/
 # }}}

@@ -948,6 +948,7 @@ augroup coc_group
   autocmd FileType typescript call s:my_coc_nvim_config()
   autocmd FileType typescript.tsx call s:my_coc_nvim_config()
   autocmd FileType javascript.jsx call s:my_coc_nvim_config()
+  autocmd FileType rust call s:my_coc_nvim_config()
 
   " 折りたたみが勝手に発動してしまうため、一時無効化
   " Use auocmd to force lightline update.

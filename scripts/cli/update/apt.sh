@@ -74,6 +74,11 @@ packages=(
     unar # 圧縮ファイルの解凍
     preload # アプリ起動速度を改善
 
+    # 日本語音声読み上げソフト
+    open-jtalk
+    open-jtalk-mecab-naist-jdic
+    hts-voice-nitech-jp-atr503-m001
+
     # ノートPCの省電力用
     # powertop
     # tlp tlp-rdw

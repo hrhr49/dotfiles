@@ -1,0 +1,13 @@
+#!/bin/bash
+HTS_VOICE_DIR=$HOME/.config/myfiles/hts-voice/
+# 注意、入力をそのまま標準出力に出すようにする。(vimで範囲選択して!command_nameをしたときにテキストを消費したくないため)
+# 例： echo 'おはよう' | say
+
+input="$(cat)"
+echo "$input" \
+    | open_jtalk -x /var/lib/mecab/dic/open-jtalk/naist-jdic \
+    -m $HTS_VOICE_DIR/mei/mei_normal.htsvoice \
+    -r 1.0 \
+    -ow /tmp/jtalk_tmp.wav >/dev/null 2>&1 \
+    && mpv /tmp/jtalk_tmp.wav >/dev/null 2>&1 \
+    && echo "$input"
