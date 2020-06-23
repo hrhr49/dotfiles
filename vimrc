@@ -444,10 +444,10 @@ try
   endif
   "}}}
   " Ranger{{{
-  if executable('ranger')
-    Plug 'francoiscabrol/ranger.vim'
-    Plug 'rbgrouleff/bclose.vim'
-  endif
+  " if executable('ranger')
+  "   Plug 'francoiscabrol/ranger.vim'
+  "   Plug 'rbgrouleff/bclose.vim'
+  " endif
   "}}}
   Plug 'majutsushi/tagbar'
   "}}}
@@ -504,12 +504,12 @@ try
   " 表示{{{
   Plug 'flazz/vim-colorschemes'
   " pywalのカラースキーム
-  if has('unix') && executable('wal')
-    Plug 'dylanaraps/wal.vim'
-  endif
+  " if has('unix') && executable('wal')
+  "   Plug 'dylanaraps/wal.vim'
+  " endif
   
   " カラースキームを次々に変更
-  Plug 'vim-scripts/ScrollColors'
+  " Plug 'vim-scripts/ScrollColors'
 
   Plug 'luochen1990/rainbow'
   Plug 'ap/vim-css-color'
@@ -522,7 +522,7 @@ try
   " Plug 'itchyny/lightline.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'junegunn/goyo.vim'
+  " Plug 'junegunn/goyo.vim'
 
   " スクロールをスムーズに
   " Plug 'yuttie/comfortable-motion.vim'
@@ -552,7 +552,7 @@ try
   " Gbrowseをgithubで開くようにする
   Plug 'tpope/vim-rhubarb'
   " Undoツリー管理
-  Plug 'sjl/gundo.vim'
+  " Plug 'sjl/gundo.vim'
   " Undoツリー管理 こっちだとpython依存がない
   Plug 'mbbill/undotree'
   " }}}
@@ -571,8 +571,8 @@ try
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
   endif
   " vim-markdownの依存
-  Plug 'godlygeek/tabular'
-  Plug 'plasticboy/vim-markdown'
+  " Plug 'godlygeek/tabular'
+  " Plug 'plasticboy/vim-markdown'
   Plug 'ferrine/md-img-paste.vim'
   "}}}
   " typescript, jsxなど{{{

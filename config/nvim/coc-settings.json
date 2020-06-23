@@ -4,7 +4,11 @@
       "command": "clangd",
       "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "filetypes": ["c", "cpp", "objc", "objcpp"]
-    }
+    },
+    "nim": {
+    "command": "nimlsp",
+    "filetypes": ["nim"]
+  }
   },
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
