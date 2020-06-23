@@ -3,6 +3,11 @@ set encoding=utf-8
 scriptencoding utf-8
 set shellslash
 
+if exists("g:loaded_THIS_VIMRC")
+  finish
+endif
+let g:loaded_THIS_VIMRC = 1
+
 " 一般{{{
 filetype plugin indent on
 syntax on
@@ -140,7 +145,7 @@ vnoremap . :normal .<CR>
 "
 " vimrcをリロード
 " nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
-nnoremap <M-r> :<C-u>source $MYVIMRC<CR>
+" nnoremap <M-r> <C-u>source $MYVIMRC<CR>
 nnoremap <M-w> :w<CR>
 
 nnoremap cd :<C-u>CD<CR>
@@ -434,14 +439,14 @@ try
   "}}}
   " ブラウジング{{{
   " NERDTree{{{
-  Plug 'scrooloose/nerdtree'
+  Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTree']}
   " NERDTreeでdeviconsを表示
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  " Plug 'ryanoasis/vim-devicons'
+  " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-  if executable('git') > 0
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-  endif
+  " if executable('git') > 0
+  "   Plug 'Xuyuanp/nerdtree-git-plugin'
+  " endif
   "}}}
   " Ranger{{{
   " if executable('ranger')
@@ -449,7 +454,7 @@ try
   "   Plug 'rbgrouleff/bclose.vim'
   " endif
   "}}}
-  Plug 'majutsushi/tagbar'
+  Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
   "}}}
   " あいまい検索{{{
   " fzfのインストールも同時にやりたい場合は以下のようにする
@@ -481,15 +486,15 @@ try
   " ai, ii, aI, iI でインデント
   Plug 'michaeljsmith/vim-indent-object'
   " au, iu でURL
-  Plug 'mattn/vim-textobj-url'
+  " Plug 'mattn/vim-textobj-url'
   " al, il で現在の行
-  Plug 'kana/vim-textobj-line'
+  " Plug 'kana/vim-textobj-line'
   " gbで直近で貼り付けた範囲
   Plug 'saaguero/vim-textobj-pastedtext'
   " _ アンダースコア
-  Plug 'lucapette/vim-textobj-underscore'
+  " Plug 'lucapette/vim-textobj-underscore'
   " ic, ac, iC, aC, で同一列の文字列
-  Plug 'idbrii/textobj-word-column.vim/'
+  " Plug 'idbrii/textobj-word-column.vim/'
   " af{char}, if{char}で任意の文字
   Plug 'thinca/vim-textobj-between'
   " Plug 'kana/vim-textobj-jabraces'
@@ -511,17 +516,21 @@ try
   " カラースキームを次々に変更
   " Plug 'vim-scripts/ScrollColors'
 
+  " カッコを色分け
   Plug 'luochen1990/rainbow'
-  Plug 'ap/vim-css-color'
-  Plug 'mechatroner/rainbow_csv'
+  " CSSの色を表示
+  Plug 'ap/vim-css-color', {'for': 'css'}
+  " CSVデータを列ごとに色分け
+  Plug 'mechatroner/rainbow_csv', {'for': 'csv'}
   " ヤンクした場所をわかりやすくする。
   Plug 'machakann/vim-highlightedyank'
   " イタリックフォントを無効化
   Plug 'mattn/disableitalic-vim'
 
-  " Plug 'itchyny/lightline.vim'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
+  " 最小限にするため、airlineじゃなくlightlineを使用
+  Plug 'itchyny/lightline.vim'
+  " Plug 'vim-airline/vim-airline'
+  " Plug 'vim-airline/vim-airline-themes'
   " Plug 'junegunn/goyo.vim'
 
   " スクロールをスムーズに
@@ -548,9 +557,9 @@ try
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
   " コミットブラウザ
-  Plug 'junegunn/gv.vim'
+  Plug 'junegunn/gv.vim', {'on': 'GV'}
   " Gbrowseをgithubで開くようにする
-  Plug 'tpope/vim-rhubarb'
+  Plug 'tpope/vim-rhubarb', {'on': 'Gbrowse'}
   " Undoツリー管理
   " Plug 'sjl/gundo.vim'
   " Undoツリー管理 こっちだとpython依存がない
@@ -566,9 +575,9 @@ try
   " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
   if executable('node') > 0 && executable('yarn') > 0
     " If you have nodejs and yarn
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
   else
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
   endif
   " vim-markdownの依存
   " Plug 'godlygeek/tabular'
@@ -576,8 +585,8 @@ try
   Plug 'ferrine/md-img-paste.vim'
   "}}}
   " typescript, jsxなど{{{
-  Plug 'leafgarland/typescript-vim'
-  Plug 'peitalin/vim-jsx-typescript'
+  Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
+  Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
   "}}}
   " pug, stylus{{{
   " pugとstylusについては一時見送り
@@ -593,6 +602,8 @@ try
   "}}}
   " その他{{{
   " Plug 'mtth/scratch.vim'
+  " vimrcのベンチマーク
+  " Plug 'mattn/benchvimrc-vim'
   "}}}
   call plug#end()
 catch
@@ -1008,6 +1019,10 @@ function! GetCWD30()
   return getcwd()[-30:]
 endfunction
 
+let s:palette = g:lightline#colorscheme#wombat#palette
+let s:palette.tabline.tabsel = [ [ '#d0d0d0', '#5f8787', 252, 66, 'bold' ] ]
+unlet s:palette
+
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -1126,6 +1141,23 @@ augroup END
 " let loaded_matchparen = 1
 let g:netrw_keepdir = 0
 "let g:markdown_folding=1
+"
+" デフォルトプラグインの無効化
+let g:loaded_gzip              = 1
+let g:loaded_tar               = 1
+let g:loaded_tarPlugin         = 1
+let g:loaded_zip               = 1
+let g:loaded_zipPlugin         = 1
+let g:loaded_rrhelper          = 1
+let g:loaded_2html_plugin      = 1
+let g:loaded_vimball           = 1
+let g:loaded_vimballPlugin     = 1
+let g:loaded_getscript         = 1
+let g:loaded_getscriptPlugin   = 1
+" let g:loaded_netrw             = 1
+" let g:loaded_netrwPlugin       = 1
+" let g:loaded_netrwSettings     = 1
+" let g:loaded_netrwFileHandlers = 1
 "}}}
 "}}}
 " 表示{{{
