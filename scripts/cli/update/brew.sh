@@ -21,6 +21,8 @@ formulas=(
     htop
     bat
     exa # lsのいい感じバージョン
+    ncdu # ディスク使用量
+    tldr # コマンドの使用例
 
     # 開発 効率化
     direnv
@@ -41,6 +43,7 @@ formulas=(
 
     # 検索
     ripgrep
+    ripgrep_all # テキスト以外のファイルもrgaコマンドで一気に検索
     the_silver_searcher
     fzf
     peco

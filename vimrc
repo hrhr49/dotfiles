@@ -3,10 +3,10 @@ set encoding=utf-8
 scriptencoding utf-8
 set shellslash
 
-if exists("g:loaded_THIS_VIMRC")
+if exists("g:loaded_my_vimrc")
   finish
 endif
-let g:loaded_THIS_VIMRC = 1
+let g:loaded_my_vimrc = 1
 
 " 一般{{{
 filetype plugin indent on
@@ -144,8 +144,8 @@ vnoremap . :normal .<CR>
 "}}}
 "
 " vimrcをリロード
-" nnoremap <M-r> :<C-u>source ~/.vimrc<CR>
-" nnoremap <M-r> <C-u>source $MYVIMRC<CR>
+command! ReloadVimrc :unlet g:loaded_my_vimrc | :source $MYVIMRC
+nnoremap <M-r> :<C-u>ReloadVimrc<CR>
 nnoremap <M-w> :w<CR>
 
 nnoremap cd :<C-u>CD<CR>

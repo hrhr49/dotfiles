@@ -1,0 +1,9 @@
+#!/bin/bash
+# Vimの起動時間を計測
+
+TEMPFILE=/tmp/tempfile
+if [ -e $TEMPFILE ]; then
+    rm $TEMPFILE
+fi
+vim --startuptime $TEMPFILE -c q
+vim $TEMPFILE
