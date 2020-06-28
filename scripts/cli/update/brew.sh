@@ -23,6 +23,7 @@ formulas=(
     exa # lsのいい感じバージョン
     ncdu # ディスク使用量
     tldr # コマンドの使用例
+    tokei # ファイル種別ごとの行数などを表示
 
     # 開発 効率化
     direnv

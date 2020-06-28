@@ -1164,7 +1164,8 @@ let g:loaded_getscriptPlugin   = 1
 " カラースキーム{{{
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
-  if !has("gui_running")
+  if !has("gui_running") 
+    "&& !exists("$HYPER_RUNNING")
     " pywalのカラースキーム
     " if has('unix') && executable('wal')
     "   colorscheme wal

@@ -42,6 +42,7 @@ packages=(
     xsel              # クリップボード
     xfce4-terminal    # ターミナル
     mlterm            # ターミナル
+    stterm            # ターミナル
     ffmpegthumbnailer # rangerでのサムネイル
     zenity            # コマンドラインからのGUIダイアログなどの表示
     wmctrl            # ウィンドウマネージャの操作
@@ -73,6 +74,7 @@ packages=(
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
     unar # 圧縮ファイルの解凍
     preload # アプリ起動速度を改善
+    flameshot # スクリーンショット
 
     # 日本語音声読み上げソフト
     open-jtalk

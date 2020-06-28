@@ -1,0 +1,8 @@
+#!/bin/bash
+# zshの起動時間を計測
+
+TEMPFILE=/tmp/tempfile
+if [ -e $TEMPFILE ]; then
+    rm $TEMPFILE
+fi
+BENCH_ZSH=1 exec zsh -i -c exit

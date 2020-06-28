@@ -1,4 +1,12 @@
 # vim:set foldmethod=marker foldlevel=0:
+
+# プロファイリング用(参考 https://qiita.com/vintersnow/items/7343b9bf60ea468a4180)
+if [ "$BENCH_ZSH" = "1" ]; then
+    if (which zprof > /dev/null 2>&1) ;then
+      zprof
+    fi
+fi
+
 export TERM="xterm-256color"
 # プラグイン{{{
 if [ -f ~/.zplug/init.zsh ];
