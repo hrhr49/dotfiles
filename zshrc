@@ -9,36 +9,23 @@ fi
 
 export TERM="xterm-256color"
 # プラグイン{{{
-if [ -f ~/.zplug/init.zsh ];
-then
-    source ~/.zplug/init.zsh
-    zplug "zsh-users/zsh-autosuggestions"
-    zplug "zsh-users/zsh-completions"
-    zplug "zsh-users/zsh-syntax-highlighting", defer:2
-    zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+# zinit
+source "${HOME}/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+zinit light zsh-users/zsh-syntax-highlighting # 実行可能なコマンドに色付け
+zinit light zsh-users/zsh-completions # 補完
+zinit light zsh-users/zsh-autosuggestions
 
-    # Install plugins if there are plugins that have not been installed
-    # if ! zplug check --verbose; then
-    #   printf "Install? [y/N]: "
-    #   if read -q; then
-    #     echo; zplug install
-    #   fi
-    # fi
-    # Then, source plugins and add commands to $PATH
-    zplug load
-fi
+# プロンプト(npmが必要？)
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
 #}}}
 # プラグイン設定{{{
 # zsh-users/zsh-syntax-highlighting{{{
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
-#}}}
-# bhilburn/powerlevel9k{{{
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs)
-
-# コピペするときに右の方までコピーされると面倒なので変更
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-#}}}
+# }}}
 # }}}
 # プロンプト設定{{{
 # 参考 http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
