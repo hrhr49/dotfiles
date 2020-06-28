@@ -284,6 +284,9 @@ alias github=gh
 
 # 動画のダウンロード
 alias you='youtube-dl $(xsel)'
+
+# zshの起動時間を計測
+alias ztime='for i in $(seq 1 10); do time zsh -i -c exit; done'
 # }}}
 # 環境変数{{{
 TERM=xterm-256color
