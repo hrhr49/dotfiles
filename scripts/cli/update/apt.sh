@@ -23,6 +23,8 @@ packages=(
     zip
     zlib1g-dev
     # zlibbz2-dev
+    bison
+    flex
 
     git
     zsh
