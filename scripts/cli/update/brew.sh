@@ -44,7 +44,7 @@ formulas=(
 
     # 検索
     ripgrep
-    ripgrep_all # テキスト以外のファイルもrgaコマンドで一気に検索
+    ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索
     the_silver_searcher
     fzf
     peco
