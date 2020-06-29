@@ -53,7 +53,7 @@ precmd () { vcs_info }
 # %n: ユーザ名
 
 # PROMPT='%B%F{green}%n@%m%f:%F{blue}%~%f${vcs_info_msg_0_}$%b'
-PROMPT='%F{blue}%~%f ${vcs_info_msg_0_}%b'
+PROMPT='%B%F{blue}%~%f ${vcs_info_msg_0_}%b'
 # Power Lineっぽい感じ(参考 https://qiita.com/peony/items/031a55b61dff6053b883)
 #
 # PROMPT=""
