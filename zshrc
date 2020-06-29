@@ -18,8 +18,8 @@ zinit light zsh-users/zsh-completions # 補完
 zinit light zsh-users/zsh-autosuggestions
 
 # プロンプト(npmが必要？)
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
+# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+# zinit light sindresorhus/pure
 #}}}
 # プラグイン設定{{{
 # zsh-users/zsh-syntax-highlighting{{{
@@ -34,14 +34,14 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 # colors
 # RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
 
-# autoload -Uz vcs_info
-# setopt prompt_subst
-# zstyle ':vcs_info:git:*' check-for-changes true
-# zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
-# zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-# zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
-# zstyle ':vcs_info:*' actionformats '[%b|%a]'
-# precmd () { vcs_info }
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%F{green}%c%u%b%f "
+zstyle ':vcs_info:*' actionformats '%b|%a '
+precmd () { vcs_info }
 
 # プロンプト行右側に表示される内容
 # RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
@@ -53,6 +53,7 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 # %n: ユーザ名
 
 # PROMPT='%B%F{green}%n@%m%f:%F{blue}%~%f${vcs_info_msg_0_}$%b'
+PROMPT='%F{blue}%~%f ${vcs_info_msg_0_}%b'
 # Power Lineっぽい感じ(参考 https://qiita.com/peony/items/031a55b61dff6053b883)
 #
 # PROMPT=""
