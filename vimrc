@@ -24,6 +24,9 @@ set expandtab
 set virtualedit=block
 " コメントで自動整形されるのを回避
 set formatoptions-=cro
+
+" 全角カッコでも%で対応するものに移動できるようにする
+set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》
 "}}}
 " 折りたたみ{{{
 set foldmethod=marker
