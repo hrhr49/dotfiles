@@ -177,6 +177,8 @@ function! ToggleLastStatus()
 endfunction
 nnoremap <expr> <Space><F2> ToggleLastStatus()
 
+" 角括弧によるマッピング{{{
+
 " quick fix next/previous
 nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
@@ -191,6 +193,8 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " タグジャンプ
 nnoremap ]t  <C-]>
 nnoremap [t  <C-t>
+nnoremap [o <C-i>
+" }}}
 
 " nnoremap <M-Right> <C-o>
 " nnoremap <M-Left> <C-]>
@@ -909,10 +913,13 @@ let g:coc_global_extensions = [
       \ "coc-go",
       \ "coc-emoji",
       \ "coc-snippets",
+      \ "coc-cmake",
+      \ "coc-docker",
       \ "https://github.com/xabikos/vscode-react",
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
       " \ "coc-python@1.2.9",
+      " \ "coc-explorer",
 
 
 function! s:my_coc_nvim_config()

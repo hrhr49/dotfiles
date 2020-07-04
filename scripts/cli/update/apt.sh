@@ -26,6 +26,12 @@ packages=(
     bison
     flex
 
+    # QT
+    qtbase5-dev
+    qttools5-dev-tools
+    qt5-default
+    qtcreator
+
     git
     zsh
 

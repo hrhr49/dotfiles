@@ -95,6 +95,7 @@ def add_line_if_not_contained(line, filename, verbose=False):
                 should_add_line = True
     else:
         should_add_line = True
+        mkdir(os.path.dirname(filename))
 
     if should_add_line:
         with open(filename, 'w', encoding='utf-8') as f:
