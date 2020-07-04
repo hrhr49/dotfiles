@@ -228,51 +228,51 @@ inoremap <C-b> <Left>
 "}}}
 " ウィンドウ・タブなど{{{
 " ウィンドウ{{{
-nnoremap +window+ <Nop>
-nmap s +window+
-nnoremap <silent> +window+H :<C-u>wincmd H<CR>
-nnoremap <silent> +window+J :<C-u>wincmd J<CR>
-nnoremap <silent> +window+K :<C-u>wincmd K<CR>
-nnoremap <silent> +window+L :<C-u>wincmd L<CR>
-nnoremap <silent> +window+T :<C-u>wincmd T<CR>
-nnoremap <silent> +window+^ <C-^>
-nnoremap <silent> +window+h :<C-u>wincmd h<CR>
-nnoremap <silent> +window+j :<C-u>wincmd j<CR>
-nnoremap <silent> +window+k :<C-u>wincmd k<CR>
-nnoremap <silent> +window+l :<C-u>wincmd l<CR>
-nnoremap <silent> +window+o :<C-u>wincmd o<CR>
-nnoremap <silent> +window+q :<C-u>wincmd q<CR>
-nnoremap <silent> +window+s :<C-u>split<CR>
-nnoremap <silent> +window+S :<C-u>new<CR>
-nnoremap <silent> +window+t :<C-u>tabnew<CR>
-nnoremap <silent> +window+v :<C-u>vsplit<CR>
-nnoremap <silent> +window+V :<C-u>vnew<CR>
-" nnoremap +window+1 1gt
-" nnoremap +window+2 2gt
-" nnoremap +window+3 3gt
-" nnoremap +window+4 4gt
-" nnoremap +window+5 5gt
-" nnoremap +window+6 6gt
-" nnoremap +window+7 7gt
-" nnoremap +window+8 8gt
-" nnoremap +window+9 9gt
+nnoremap !+window+! <Nop>
+nmap s !+window+!
+nnoremap <silent> !+window+!H :<C-u>wincmd H<CR>
+nnoremap <silent> !+window+!J :<C-u>wincmd J<CR>
+nnoremap <silent> !+window+!K :<C-u>wincmd K<CR>
+nnoremap <silent> !+window+!L :<C-u>wincmd L<CR>
+nnoremap <silent> !+window+!T :<C-u>wincmd T<CR>
+nnoremap <silent> !+window+!^ <C-^>
+nnoremap <silent> !+window+!h :<C-u>wincmd h<CR>
+nnoremap <silent> !+window+!j :<C-u>wincmd j<CR>
+nnoremap <silent> !+window+!k :<C-u>wincmd k<CR>
+nnoremap <silent> !+window+!l :<C-u>wincmd l<CR>
+nnoremap <silent> !+window+!o :<C-u>wincmd o<CR>
+nnoremap <silent> !+window+!q :<C-u>wincmd q<CR>
+nnoremap <silent> !+window+!s :<C-u>split<CR>
+nnoremap <silent> !+window+!S :<C-u>new<CR>
+nnoremap <silent> !+window+!t :<C-u>tabnew<CR>
+nnoremap <silent> !+window+!v :<C-u>vsplit<CR>
+nnoremap <silent> !+window+!V :<C-u>vnew<CR>
+" nnoremap !+window+!1 1gt
+" nnoremap !+window+!2 2gt
+" nnoremap !+window+!3 3gt
+" nnoremap !+window+!4 4gt
+" nnoremap !+window+!5 5gt
+" nnoremap !+window+!6 6gt
+" nnoremap !+window+!7 7gt
+" nnoremap !+window+!8 8gt
+" nnoremap !+window+!9 9gt
 
-nmap <silent> +window+p :<C-u>tabprevious<CR>+tab+
-nmap <silent> +window+P :<C-u>tabfirst<CR>+tab+
-nmap <silent> +window+n :<C-u>tabnext<CR>+tab+
-nmap <silent> +window+N :<C-u>tablast<CR>+tab+
+nmap <silent> !+window+!p :<C-u>tabprevious<CR>!+tab+!
+nmap <silent> !+window+!P :<C-u>tabfirst<CR>!+tab+!
+nmap <silent> !+window+!n :<C-u>tabnext<CR>!+tab+!
+nmap <silent> !+window+!N :<C-u>tablast<CR>!+tab+!
 "}}}
 " リサイズ{{{
 " +, -, <, >でウィンドウリサイズ。連続入力可能
-nnoremap [resize] <Nop>
-nmap <silent> +window++ :<C-u>wincmd +<CR>[resize]
-nmap <silent> +window+- :<C-u>wincmd -<CR>[resize]
-nmap <silent> +window+< :<C-u>wincmd <<CR>[resize]
-nmap <silent> +window+> :<C-u>wincmd ><CR>[resize]
-nmap <silent> [resize]+ :<C-u>wincmd +<CR>[resize]
-nmap <silent> [resize]- :<C-u>wincmd -<CR>[resize]
-nmap <silent> [resize]< :<C-u>wincmd <<CR>[resize]
-nmap <silent> [resize]> :<C-u>wincmd ><CR>[resize]
+nnoremap !+resize+! <Nop>
+nmap <silent> !+window+!+ :<C-u>wincmd +<CR>!+resize+!
+nmap <silent> !+window+!- :<C-u>wincmd -<CR>!+resize+!
+nmap <silent> !+window+!< :<C-u>wincmd <<CR>!+resize+!
+nmap <silent> !+window+!> :<C-u>wincmd ><CR>!+resize+!
+nmap <silent> !+resize+!+ :<C-u>wincmd +<CR>!+resize+!
+nmap <silent> !+resize+!- :<C-u>wincmd -<CR>!+resize+!
+nmap <silent> !+resize+!< :<C-u>wincmd <<CR>!+resize+!
+nmap <silent> !+resize+!> :<C-u>wincmd ><CR>!+resize+!
 "}}}
 " スクロール{{{
 function! ScrollFunc(distance)
@@ -288,54 +288,54 @@ function! ScrollFunc(distance)
   " endfor
 endfunction
 
-nnoremap [scroll] <Nop>
+nnoremap !+scroll+! <Nop>
 " 直接<C-d>や<C-f>などでスクロールしようとすると
-" スクロールできなかったときに[scroll]の部分が実行されない？
+" スクロールできなかったときに!+scroll+!の部分が実行されない？
 " そのためスクロール用の関数を呼ぶ
-nmap <silent> +window+d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
-nmap <silent> +window+u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
-nmap <silent> +window+f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
-nmap <silent> +window+b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
-nmap <silent> +window+e <C-e>[scroll]
-nmap <silent> +window+y <C-y>[scroll]
+nmap <silent> !+window+!d :<C-u>call ScrollFunc(&scroll)<CR>!+scroll+!
+nmap <silent> !+window+!u :<C-u>call ScrollFunc(-&scroll)<CR>!+scroll+!
+nmap <silent> !+window+!f :<C-u>call ScrollFunc(winheight(0))<CR>!+scroll+!
+nmap <silent> !+window+!b :<C-u>call ScrollFunc(-winheight(0))<CR>!+scroll+!
+nmap <silent> !+window+!e <C-e>!+scroll+!
+nmap <silent> !+window+!y <C-y>!+scroll+!
 
-nmap +window+r [scroll]
-nmap <silent> [scroll]d :<C-u>call ScrollFunc(&scroll)<CR>[scroll]
-nmap <silent> [scroll]u :<C-u>call ScrollFunc(-&scroll)<CR>[scroll]
-nmap <silent> [scroll]f :<C-u>call ScrollFunc(winheight(0))<CR>[scroll]
-nmap <silent> [scroll]b :<C-u>call ScrollFunc(-winheight(0))<CR>[scroll]
-nmap <silent> [scroll]e <C-e>[scroll]
-nmap <silent> [scroll]y <C-y>[scroll]
-nmap <silent> [scroll]j :<C-u>call ScrollFunc(4)<CR>[scroll]
-nmap <silent> [scroll]k :<C-u>call ScrollFunc(-4)<CR>[scroll]
+nmap !+window+!r !+scroll+!
+nmap <silent> !+scroll+!d :<C-u>call ScrollFunc(&scroll)<CR>!+scroll+!
+nmap <silent> !+scroll+!u :<C-u>call ScrollFunc(-&scroll)<CR>!+scroll+!
+nmap <silent> !+scroll+!f :<C-u>call ScrollFunc(winheight(0))<CR>!+scroll+!
+nmap <silent> !+scroll+!b :<C-u>call ScrollFunc(-winheight(0))<CR>!+scroll+!
+nmap <silent> !+scroll+!e <C-e>!+scroll+!
+nmap <silent> !+scroll+!y <C-y>!+scroll+!
+nmap <silent> !+scroll+!j :<C-u>call ScrollFunc(4)<CR>!+scroll+!
+nmap <silent> !+scroll+!k :<C-u>call ScrollFunc(-4)<CR>!+scroll+!
 "}}}
 " タブ{{{
-nnoremap +tab+ <Nop>
-nmap t +tab+
-" nnoremap <silent> +tab+0 :<C-u>tabfirst<CR>
-" nnoremap <silent> +tab+$ :<C-u>tablast<CR>
-nnoremap <silent> +tab+1 :<C-u>tabnext 1<CR>
-nnoremap <silent> +tab+2 :<C-u>tabnext 2<CR>
-nnoremap <silent> +tab+3 :<C-u>tabnext 3<CR>
-nnoremap <silent> +tab+4 :<C-u>tabnext 4<CR>
-nnoremap <silent> +tab+5 :<C-u>tabnext 5<CR>
-nnoremap <silent> +tab+6 :<C-u>tabnext 6<CR>
-nnoremap <silent> +tab+7 :<C-u>tabnext 7<CR>
-nnoremap <silent> +tab+8 :<C-u>tabnext 8<CR>
-nnoremap <silent> +tab+9 :<C-u>tabnext 9<CR>
+nnoremap !+tab+! <Nop>
+nmap t !+tab+!
+" nnoremap <silent> !+tab+!0 :<C-u>tabfirst<CR>
+" nnoremap <silent> !+tab+!$ :<C-u>tablast<CR>
+nnoremap <silent> !+tab+!1 :<C-u>tabnext 1<CR>
+nnoremap <silent> !+tab+!2 :<C-u>tabnext 2<CR>
+nnoremap <silent> !+tab+!3 :<C-u>tabnext 3<CR>
+nnoremap <silent> !+tab+!4 :<C-u>tabnext 4<CR>
+nnoremap <silent> !+tab+!5 :<C-u>tabnext 5<CR>
+nnoremap <silent> !+tab+!6 :<C-u>tabnext 6<CR>
+nnoremap <silent> !+tab+!7 :<C-u>tabnext 7<CR>
+nnoremap <silent> !+tab+!8 :<C-u>tabnext 8<CR>
+nnoremap <silent> !+tab+!9 :<C-u>tabnext 9<CR>
 " 誤爆するので一旦無効化
-" nnoremap +tab+r :<C-u>+1,$tabdo tabclose<CR>
-" nnoremap +tab+l :<C-u>1,-1tabdo tabclose<CR>
-nnoremap <silent> +tab+o :<C-u>tabonly<CR>
-nnoremap <silent> +tab+q :<C-u>tabclose<CR>
+" nnoremap !+tab+!r :<C-u>+1,$tabdo tabclose<CR>
+" nnoremap !+tab+!l :<C-u>1,-1tabdo tabclose<CR>
+nnoremap <silent> !+tab+!o :<C-u>tabonly<CR>
+nnoremap <silent> !+tab+!q :<C-u>tabclose<CR>
 
 " n, p, <, >でタブ移動、もしくはタブ自体を移動。連続入力可能
-nmap <silent> +tab+> :<C-u>tabm+<CR>[tab]
-nmap <silent> +tab+< :<C-u>tabm-<CR>[tab]
-nmap <silent> +tab+p :<C-u>tabprevious<CR>[tab]
-nmap <silent> +tab+P :<C-u>tabfirst<CR>[tab]
-nmap <silent> +tab+n :<C-u>tabnext<CR>[tab]
-nmap <silent> +tab+N :<C-u>tablast<CR>[tab]
+nmap <silent> !+tab+!> :<C-u>tabm+<CR>[tab]
+nmap <silent> !+tab+!< :<C-u>tabm-<CR>[tab]
+nmap <silent> !+tab+!p :<C-u>tabprevious<CR>[tab]
+nmap <silent> !+tab+!P :<C-u>tabfirst<CR>[tab]
+nmap <silent> !+tab+!n :<C-u>tabnext<CR>[tab]
+nmap <silent> !+tab+!N :<C-u>tablast<CR>[tab]
 "}}}
 "}}}
 " マウス{{{
@@ -1421,55 +1421,55 @@ if has('gui_running')
   endtry
 "}}}
   " term設定{{{
-  nnoremap [term] <Nop>
-  tnoremap [term] <Nop>
-  nmap <C-s> [term]
-  nmap <C-b> [term]
+  nnoremap !+term+! <Nop>
+  tnoremap !+term+! <Nop>
+  nmap <C-s> !+term+!
+  nmap <C-b> !+term+!
   " 一旦tnoremapしておく
-  tnoremap [term-esc] <C-\><C-n>
-  tmap <C-s> [term]
-  tmap <C-b> [term]
+  tnoremap !+term-esc+! <C-\><C-n>
+  tmap <C-s> !+term+!
+  tmap <C-b> !+term+!
 
-  tmap <C-s> [term-esc][term]
-  tmap <C-b> [term-esc][term]
+  tmap <C-s> !+term-esc+!!+term+!
+  tmap <C-b> !+term-esc+!!+term+!
 
   if has('nvim')
-    nnoremap [term]s <C-u>:split\|:terminal<CR>
-    nnoremap [term]v <C-u>:vsplit\|:terminal<CR>
+    nnoremap !+term+!s <C-u>:split\|:terminal<CR>
+    nnoremap !+term+!v <C-u>:vsplit\|:terminal<CR>
   else
-    nnoremap [term]c :<C-u>tab terminal ++close<CR>
-    nnoremap [term]t :<C-u>tab terminal ++close<CR>
-    nnoremap [term]v :<C-u>vert terminal ++close<CR>
-    nnoremap [term]s :<C-u>terminal ++close<CR>
+    nnoremap !+term+!c :<C-u>tab terminal ++close<CR>
+    nnoremap !+term+!t :<C-u>tab terminal ++close<CR>
+    nnoremap !+term+!v :<C-u>vert terminal ++close<CR>
+    nnoremap !+term+!s :<C-u>terminal ++close<CR>
   endif
 
-  nnoremap [term]h <C-w>h
-  nnoremap [term]j <C-w>j
-  nnoremap [term]k <C-w>k
-  nnoremap [term]l <C-w>l
-  nnoremap [term]p :<C-u>tabprevious<CR>
-  nnoremap [term]n :<C-u>tabnext<CR>
-  nnoremap [term]! <C-w>T
-  nnoremap [term]T <C-w>T
-  nnoremap [term]H <C-w>H
-  nnoremap [term]J <C-w>J
-  nnoremap [term]K <C-w>K
-  nnoremap [term]L <C-w>L
+  nnoremap !+term+!h <C-w>h
+  nnoremap !+term+!j <C-w>j
+  nnoremap !+term+!k <C-w>k
+  nnoremap !+term+!l <C-w>l
+  nnoremap !+term+!p :<C-u>tabprevious<CR>
+  nnoremap !+term+!n :<C-u>tabnext<CR>
+  nnoremap !+term+!! <C-w>T
+  nnoremap !+term+!T <C-w>T
+  nnoremap !+term+!H <C-w>H
+  nnoremap !+term+!J <C-w>J
+  nnoremap !+term+!K <C-w>K
+  nnoremap !+term+!L <C-w>L
 
-  tnoremap [term]h <C-w>h
-  tnoremap [term]j <C-w>j
-  tnoremap [term]k <C-w>k
-  tnoremap [term]l <C-w>l
-  tnoremap [term]H <C-w>H
-  tnoremap [term]J <C-w>J
-  tnoremap [term]K <C-w>K
-  tnoremap [term]L <C-w>L
-  " tnoremap [term]v <C-w>v
-  " tnoremap [term]s <C-w>s
-  tmap [term]p [term-esc][term]p
-  tmap [term]n [term-esc][term]n
-  tmap [term]! [term-esc][term]T
-  tmap [term]T [term-esc][term]T
+  tnoremap !+term+!h <C-w>h
+  tnoremap !+term+!j <C-w>j
+  tnoremap !+term+!k <C-w>k
+  tnoremap !+term+!l <C-w>l
+  tnoremap !+term+!H <C-w>H
+  tnoremap !+term+!J <C-w>J
+  tnoremap !+term+!K <C-w>K
+  tnoremap !+term+!L <C-w>L
+  " tnoremap !+term+!v <C-w>v
+  " tnoremap !+term+!s <C-w>s
+  tmap !+term+!p !+term-esc+!!+term+!p
+  tmap !+term+!n !+term-esc+!!+term+!n
+  tmap !+term+!! !+term-esc+!!+term+!T
+  tmap !+term+!T !+term-esc+!!+term+!T
   "}}}
   " メニューバーなどの設定{{{
   try
