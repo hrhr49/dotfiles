@@ -27,4 +27,4 @@ packages=(
     # fkill-cli # インタラクティブにプロセスを選んでkill
 )
 
-npm install -g ${packages[@]}
+npm install -g "${packages[@]}"

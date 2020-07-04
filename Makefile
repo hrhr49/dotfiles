@@ -1,4 +1,5 @@
 DOCKER_TAG_NAME='hrhr49-dotfiles'
+SHELL_SCRIPTS=`find . -name '*.sh'`
 
 .PHONY: install test docker-build shell clean
 
@@ -16,3 +17,7 @@ shell:
 
 clean:
 	rm -rf build/*
+
+# 未使用変数のエラー(SC2034)はチェックしない
+check:
+	shellcheck -e SC2034 ${SHELL_SCRIPTS}

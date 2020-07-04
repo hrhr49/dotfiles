@@ -16,7 +16,7 @@ get_focused_window_name() {
 
 rename_workspace() {
     new_workspace_name=$(zenity --entry --width=400 --title="Rename Window" --text="Input new workspace name.")
-    i3-msg rename workspace to $new_workspace_name
+    i3-msg rename workspace to "$new_workspace_name"
 }
 
 #!/bin/bash
@@ -24,7 +24,7 @@ rename_workspace() {
 win_name=$(xdotool getactivewindow getwindowname)
 
 msg(){
-    echo $1
+    echo "$1"
 }
 
 dispatch_command(){

@@ -7,4 +7,4 @@ packages=(
     tmuxinator
 )
 
-gem install ${packages[@]}
+gem install "${packages[@]}"

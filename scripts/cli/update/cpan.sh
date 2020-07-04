@@ -5,4 +5,4 @@ packages=(
     Graph::Easy
 )
 
-cpan install ${packages[@]}
+cpan install "${packages[@]}"

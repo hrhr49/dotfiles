@@ -32,4 +32,4 @@ packages=(
     pywal # 壁紙に合わせたカラースキームを使用
 )
 
-pip install ${packages[@]}
+pip install "${packages[@]}"

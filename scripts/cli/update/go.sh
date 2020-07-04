@@ -5,4 +5,4 @@ packages=(
     github.com/golang/dep/cmd/dep
 )
 
-go get -u ${packages[@]}
+go get -u "${packages[@]}"

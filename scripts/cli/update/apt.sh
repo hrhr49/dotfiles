@@ -95,4 +95,4 @@ packages=(
     # TODO: sudo tlp start
 )
 
-sudo apt install -y ${packages[@]}
+sudo apt install -y "${packages[@]}"

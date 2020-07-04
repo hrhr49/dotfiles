@@ -2,21 +2,19 @@
 
 # パッケージやプラグインなどをインストールするスクリプト
 
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
-ls $SCRIPT_DIR | while read scriptfile ; do
-    target=$SCRIPT_DIR/$scriptfile
-
+SCRIPT_DIR=$(cd "$(dirname "$0")" || exit; pwd)
+find "$SCRIPT_DIR" -maxdepth 1 | while read -r scriptfile ; do
     # 実行可能なら
-    if [ -x $target ]; then
+    if [ -x "$scriptfile" ]; then
         # このファイルじゃなければ
-        if [ $target != $0 ]; then
+        if [ "$scriptfile" != "$0" ]; then
             echo ""
             echo "***********************************************************"
             echo "Running $scriptfile ..."
             echo "***********************************************************"
             echo ""
             # 実行
-            $target
+            $scriptfile
         fi
     fi
 done
