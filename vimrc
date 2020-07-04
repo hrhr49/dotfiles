@@ -915,6 +915,7 @@ let g:coc_global_extensions = [
       \ "coc-snippets",
       \ "coc-cmake",
       \ "coc-docker",
+      \ "coc-sh",
       \ "https://github.com/xabikos/vscode-react",
       \ "https://github.com/infeng/vscode-react-typescript"
       \]

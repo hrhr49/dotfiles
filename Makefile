@@ -21,3 +21,6 @@ clean:
 # 未使用変数のエラー(SC2034)はチェックしない
 check:
 	shellcheck -e SC2034 ${SHELL_SCRIPTS}
+
+fix:
+	shellcheck -f diff ${SHELL_SCRIPTS} | git apply
