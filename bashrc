@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 if which nvim > /dev/null 2>&1; then
   export EDITOR=nvim
   export VISUAL=nvim
