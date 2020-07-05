@@ -13,9 +13,5 @@ jobs:
       - name: Run Shellcheck
         uses: ludeeus/action-shellcheck@master
         env:
-          SHELLCHECK_OPTS: -e SC2034
-        with:
-          ignore:
-            - zshrc
-            - zshenv
+          SHELLCHECK_OPTS: -e SC2034 -e SC1071
 
