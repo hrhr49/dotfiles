@@ -5,8 +5,8 @@ on:
       - master
 
 jobs:
-  shellcheck:
-    name: Shellcheck
+  check_scripts:
+    name: Check scripts
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -14,4 +14,11 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         env:
           SHELLCHECK_OPTS: -e SC2034 -e SC1071
-
+      - name: Run Installation Script
+        run: python3 install.py
+        shell: bash
+      - name: Run Installation Script Twice
+        run: |
+          python3 install.py
+          python3 install.py
+        shell: bash
