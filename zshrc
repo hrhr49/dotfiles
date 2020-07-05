@@ -1,5 +1,4 @@
 # vim:set foldmethod=marker foldlevel=0:
-# shellcheck shell=zsh
 
 # プロファイリング用(参考 https://qiita.com/vintersnow/items/7343b9bf60ea468a4180)
 if [ "$BENCH_ZSH" = "1" ]; then
@@ -42,7 +41,9 @@ zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
 zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
 zstyle ':vcs_info:*' formats "%F{green}%c%u%b%f "
 zstyle ':vcs_info:*' actionformats '%b|%a '
-function precmd () { vcs_info }
+function precmd() {
+    vcs_info
+}
 
 # プロンプト行右側に表示される内容
 # RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
