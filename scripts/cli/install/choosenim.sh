@@ -1,2 +1,2 @@
 #!/bin/bash
-curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+curl 'https://nim-lang.org/choosenim/init.sh' -sSf | sh
