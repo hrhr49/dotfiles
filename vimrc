@@ -392,6 +392,7 @@ autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathj
 autocmd FileType vim setlocal ts=2 sts=2 sw=2
 autocmd FileType qf noremap <buffer> p  <CR>zz<C-w>p
 autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
+autocmd BufRead,BufNewFile *.nim setlocal filetype=nim
 " autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
 autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<CR>
 autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
@@ -581,7 +582,7 @@ try
   "}}}
   " 言語{{{
   " 様々な言語のパック。
-  " Plug 'sheerun/vim-polyglot'
+  Plug 'sheerun/vim-polyglot'
   " Markdown{{{
   " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
   if executable('node') > 0 && executable('yarn') > 0

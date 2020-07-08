@@ -59,7 +59,7 @@ formulas=(
     perl
     # python3
     lua
-    nim
+    # nim # choosenimでインストールする(パッケージマネージャだとnimbleが正しく動かないっぽい)
 
     shellcheck # シェルスクリプトのLinter
 

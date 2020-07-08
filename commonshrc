@@ -24,6 +24,10 @@ if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
     export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 fi
 
+if [ -d /home/hirakawa/.nimble/bin ]; then
+    export PATH=/home/hirakawa/.nimble/bin:$PATH
+fi
+
 # nvimが存在すればそれをvimとして使用
 if type "nvim" > /dev/null 2>&1; then
     export EDITOR=nvim
