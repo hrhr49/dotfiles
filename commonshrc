@@ -5,28 +5,11 @@
 # 外部コマンド設定{{{
 # PATHに$HOME/binを追加
 
-if [ -d "$HOME/bin" ];
-then
-    export PATH=$PATH:~/bin
-fi
-
-if [ -d "$HOME/bin/scripts" ];
-then
-    export PATH=$PATH:~/bin/scripts
-fi
-
-if [ -d "$HOME/bin/scripts/cli/util" ];
-then
-    export PATH=$PATH:~/bin/scripts/cli/util
-fi
-
-if [ -d /home/linuxbrew/.linuxbrew/bin ]; then
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
-fi
-
-if [ -d /home/hirakawa/.nimble/bin ]; then
-    export PATH=/home/hirakawa/.nimble/bin:$PATH
-fi
+[ -d "$HOME/bin" ] && export PATH=$PATH:~/bin
+[ -d "$HOME/bin/scripts" ] && export PATH=$PATH:~/bin/scripts
+[ -d "$HOME/bin/scripts/cli/util" ] && export PATH=$PATH:~/bin/scripts/cli/util
+[ -d "/home/linuxbrew/.linuxbrew/bin" ] && export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+[ -d "$HOME/.nimble/bin" ] && export PATH=~/.nimble/bin:$PATH
 
 # nvimが存在すればそれをvimとして使用
 if type "nvim" > /dev/null 2>&1; then
@@ -62,31 +45,21 @@ if type "go" > /dev/null 2>&1; then
 fi
 
 # rustupで入れたcargoの設定
-if [ -d "$HOME/.cargo/bin" ];
-then
-    export PATH=$PATH:$HOME/.cargo/bin
-fi
+[ -d "$HOME/.cargo/bin" ] && export PATH=$PATH:$HOME/.cargo/bin
 
-if [ -e ${HOME}/anaconda3/etc/profile.d/conda.sh ]; then
-    source ~/anaconda3/etc/profile.d/conda.sh
-fi
-
-if [ -d ${HOME}/anaconda3/bin ]; then
-    export PATH=~/anaconda3/bin:$PATH
-fi
-
+# anaconda設定
+[ -e "${HOME}/anaconda3/etc/profile.d/conda.sh" ] && source ~/anaconda3/etc/profile.d/conda.sh
+[ -d "${HOME}/anaconda3/bin" ] && export PATH=~/anaconda3/bin:$PATH
 python37_site_packages=${HOME}/anaconda3/lib/python3.7/site-packages
 python38_site_packages=${HOME}/anaconda3/lib/python3.8/site-packages
-if [ -d ${python37_site_packages} ]; then
-    export PYTHONPATH=$PYTHONPATH:${python37_site_packages}
-fi
-if [ -d ${python38_site_packages} ]; then
-    export PYTHONPATH=$PYTHONPATH:${python38_site_packages}
-fi
+[ -d "${python37_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python37_site_packages}
+[ -d "${python38_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python38_site_packages}
+[ -d "/usr/lib/go/bin" ] && export PATH=/usr/lib/go/bin:$PATH
 
-if [ -d /usr/lib/go/bin ]; then
-    export PATH=/usr/lib/go/bin:$PATH
-fi
+# nvmの設定(遅いので一時保留)
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # pipenvのインストールディレクトリをプロジェクト直下にする
 export PIPENV_VENV_IN_PROJECT=1

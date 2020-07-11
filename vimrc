@@ -543,7 +543,7 @@ try
   Plug 'itchyny/lightline.vim'
   " Plug 'vim-airline/vim-airline'
   " Plug 'vim-airline/vim-airline-themes'
-  " Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 
   " スクロールをスムーズに
   " Plug 'yuttie/comfortable-motion.vim'
@@ -611,6 +611,7 @@ try
   " ターミナルデバッガ
   " Plug 'epheien/termdbg'
   " Plug 'vim-vdebug/vdebug'
+  Plug 'puremourning/vimspector'
   "}}}
   " その他{{{
   " Plug 'mtth/scratch.vim'
@@ -1155,6 +1156,9 @@ augroup END
 " comfortable-motion.vim {{{
   " デフォルトのキーバインドを上書きしない
   " let g:comfortable_motion_no_default_key_mappings = 1
+"}}}
+" vimspector{{{
+let g:vimspector_enable_mappings = 'HUMAN'
 "}}}
 " 組み込み{{{
 " let loaded_matchparen = 1

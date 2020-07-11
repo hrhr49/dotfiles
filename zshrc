@@ -69,9 +69,7 @@ PROMPT='%B%F{blue}%~%f ${vcs_info_msg_0_}%b'
 # コマンド補完{{{
 
 # brewでzsh-completionsをインストールしている場合はそれを使用する(参考 https://gist.github.com/juno/5546198)
-if [ -e ${HOMEBREW_PREFIX}/share/zsh-completions ]; then
-  fpath=(${HOMEBREW_PREFIX}/share/zsh-completions $fpath)
-fi
+[ -e ${HOMEBREW_PREFIX}/share/zsh-completions ] && fpath=(${HOMEBREW_PREFIX}/share/zsh-completions $fpath)
 
 # zplugで呼ぶため不要
 # autoload -U compinit
