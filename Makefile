@@ -5,6 +5,7 @@ SHELL_SCRIPTS=`find . -name '*.sh' \
 			  -or -name 'bashrc' \
 			  -or -name 'xinitrc' \
 			  -or -name 'commonshrc' \
+			  -or -path './scripts/cli/util/*' \
 			  | sed 's,./,,' \
 			  `
 
