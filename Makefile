@@ -1,5 +1,12 @@
 DOCKER_TAG_NAME='hrhr49-dotfiles'
-SHELL_SCRIPTS=`find . -name '*.sh'`
+
+# シェルスクリプトのリスト。git applyするときに'./'がつくとうまく行かない？
+SHELL_SCRIPTS=`find . -name '*.sh' \
+			  -or -name 'bashrc' \
+			  -or -name 'xinitrc' \
+			  -or -name 'commonshrc' \
+			  | sed 's,./,,' \
+			  `
 
 .PHONY: install test docker-build shell clean
 
@@ -19,8 +26,9 @@ clean:
 	rm -rf build/*
 
 # 未使用変数のエラー(SC2034)はチェックしない
+# 非定数のsourceコマンドのエラー(SC1090)はチェックしない
 check:
-	shellcheck -e SC2034 ${SHELL_SCRIPTS}
+	shellcheck -e SC2034 -e 1090 ${SHELL_SCRIPTS}
 
 fix:
 	shellcheck -f diff ${SHELL_SCRIPTS} | git apply

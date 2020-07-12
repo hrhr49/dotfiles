@@ -10,10 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - name: Install Shellcheck
+        run: sudo apt-get install shellcheck
       - name: Run Shellcheck
-        uses: ludeeus/action-shellcheck@master
-        env:
-          SHELLCHECK_OPTS: -e SC2034 -e SC1071
+        run: make check
+        shell: bash
       - name: Run Installation Script
         run: python3 install.py
         shell: bash

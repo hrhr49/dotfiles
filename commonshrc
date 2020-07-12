@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim:set foldmethod=marker foldlevel=0:
 # bashrc, zshrc共通の設定。source このファイルのパスを実行して読み込む
 # 注意: fasdの設定を行ったあとにz関数定義をしなければ上書きされてしまう
@@ -50,10 +51,10 @@ fi
 [ -d "$HOME/.cargo/bin" ] && export PATH=$PATH:$HOME/.cargo/bin
 
 # anaconda設定
-[ -e "${HOME}/anaconda3/etc/profile.d/conda.sh" ] && source ~/anaconda3/etc/profile.d/conda.sh
+[ -e "${HOME}/anaconda3/etc/profile.d/conda.sh" ] && source "$HOME/anaconda3/etc/profile.d/conda.sh"
 [ -d "${HOME}/anaconda3/bin" ] && export PATH=~/anaconda3/bin:$PATH
-python37_site_packages=${HOME}/anaconda3/lib/python3.7/site-packages
-python38_site_packages=${HOME}/anaconda3/lib/python3.8/site-packages
+python37_site_packages="${HOME}/anaconda3/lib/python3.7/site-packages"
+python38_site_packages="${HOME}/anaconda3/lib/python3.8/site-packages"
 [ -d "${python37_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python37_site_packages}
 [ -d "${python38_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python38_site_packages}
 [ -d "/usr/lib/go/bin" ] && export PATH=/usr/lib/go/bin:$PATH
@@ -89,9 +90,9 @@ alias z=
 unalias z
 z() {
   if [[ -z "$*" ]]; then
-    cd "$(fasd_cd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')"
+    cd "$(fasd_cd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')" || exit
   else
-    cd "$(fasd_cd -d | fzf --query="$*" -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')"
+    cd "$(fasd_cd -d | fzf --query="$*" -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')" || exit
   fi
 }
 
@@ -109,19 +110,19 @@ z() {
 # http://momota.github.io/blog/2013/08/31/shell-man-color/
 man() {
 env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+        LESS_TERMCAP_mb="$(printf "\e[1;31m")" \
+        LESS_TERMCAP_md="$(printf "\e[1;31m")" \
+        LESS_TERMCAP_me="$(printf "\e[0m")" \
+        LESS_TERMCAP_se="$(printf "\e[0m")" \
+        LESS_TERMCAP_so="$(printf "\e[1;44;33m")" \
+        LESS_TERMCAP_ue="$(printf "\e[0m")" \
+        LESS_TERMCAP_us="$(printf "\e[1;32m")" \
         man "$@"
 }
 
 # gitリポジトリのルートからの相対パスで移動
 gcd () {
-[[ ! -z $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1"
+[[ -n $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1" || exit
 }
 
 # cdnのURI取得
@@ -137,7 +138,7 @@ cdn () {
 # https://github.com/mtikekar/zathura-tabbed/blob/master/zathura-tabbed
 
 zathura-tabbed ()  {
-  xidfile="/run/user/"$(id -u)"/zathura-tabbed.xid"
+  xidfile="/run/user/$(id -u)/zathura-tabbed.xid"
   wmclass="zathura-tabbed"
   
   # check if a tabbed window is open
@@ -146,7 +147,7 @@ zathura-tabbed ()  {
   then
     wmctrl -i -R "$xid"
   else
-    read xid < <(tabbed -cdn "$wmclass" -p -1 2> /dev/null)
+    read -r xid < <(tabbed -cdn "$wmclass" -p -1 2> /dev/null)
     wmctrl -i -r "$xid" -b add,maximized_vert,maximized_horz
     echo "$xid" > "$xidfile"
   fi
@@ -159,11 +160,11 @@ vg() {
   local file
   local line
 
-  read -r file line <<<"$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
+  read -r file line <<<"$(ag --nobreak --noheading "$@" | fzf -0 -1 | awk -F: '{print $1, $2}')"
 
   if [[ -n $file ]]
   then
-     vim $file +$line
+     vim "$file" +"$line"
   fi
 }
 # }}}
