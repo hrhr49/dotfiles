@@ -33,3 +33,6 @@ check:
 
 fix:
 	shellcheck -f diff ${SHELL_SCRIPTS} | git apply
+
+permit:
+	chmod +x `find . -path './scripts/cli/util/*' `
