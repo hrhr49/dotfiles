@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # i3-msg -t get_tree | jq 'recurse(.name?)|.name'
 # i3-msg -t get_tree|jq '..|select(.name?)|select(.type=="con")|select(.name!="content")|{name, type}'

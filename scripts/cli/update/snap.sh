@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # snapでインストールするもの
 sudo snap install typora-alanzanattadev # Markdownエディタ

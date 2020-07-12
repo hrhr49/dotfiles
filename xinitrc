@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # gnomeの場合はこれを.profileに書かなければいけない
 setxkbmap -option ctrl:nocaps
 # キーリピートの設定 https://wiki.archlinux.jp/index.php/Xorg_%E3%81%A7%E3%81%AE%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E8%A8%AD%E5%AE%9A

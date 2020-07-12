@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # vim-plug for vim
 if [ -e ~/.vim/autoload/plug.vim ]; then

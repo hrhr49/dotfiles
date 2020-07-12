@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # vim:set foldmethod=marker foldlevel=0:
 # bashrc, zshrc共通の設定。source このファイルのパスを実行して読み込む
 # 注意: fasdの設定を行ったあとにz関数定義をしなければ上書きされてしまう
@@ -193,10 +193,10 @@ alias pipi="pip install"
 alias pips="pip search"
 # }}}
 # yarnのエイリアス{{{
-alias y=yarn
-alias ya=yarn add
-alias yi=yarn add
-alias yd=yarn add -D
+alias y='yarn'
+alias ya='yarn add'
+alias yi='yarn add'
+alias yd='yarn add -D'
 # }}}
 # gitのエイリアス{{{
 alias gits="git status"

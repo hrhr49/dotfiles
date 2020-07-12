@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # vim:set foldmethod=marker foldlevel=0:
 
 # プロファイリング用(参考 https://qiita.com/vintersnow/items/7343b9bf60ea468a4180)

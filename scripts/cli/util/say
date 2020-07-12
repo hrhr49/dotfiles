@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 HTS_VOICE_DIR=$HOME/.config/myfiles/hts-voice/
 # 注意、入力をそのまま標準出力に出すようにする。
 # (vimで範囲選択して!command_nameをしたときにテキストを消費したくないため)

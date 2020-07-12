@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # zshのプラグインマネージャzinit(zplugより速いらしい？)
 if [ -e ~/.zinit ]; then

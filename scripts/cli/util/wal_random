@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # pywalでランダムにファイルを選択して実行
 # 対象ディレクトリにはvarietyで自動ダウンロードする

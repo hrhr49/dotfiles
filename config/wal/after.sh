@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # dunstの設定
 mkdir -p "${HOME}/.config/dunst/"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Anaconda3のインストール
 # TODO: 最新版のAnacondaをインストールするように変更

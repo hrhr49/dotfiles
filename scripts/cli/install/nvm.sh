@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 if type "nvm" > /dev/null 2>&1; then
     echo "nvm is already installed"
 else
