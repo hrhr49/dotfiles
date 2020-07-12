@@ -16,6 +16,6 @@
   "python.linting.mypyEnabled": true,
   "coc.preferences.colorSupport": false,
   "coc.preferences.enableFloatHighlight": true,
-  "python.pythonPath": "/home/hirakawa/anaconda3/bin/python",
+  "python.pythonPath": "/home/hrhr49/anaconda3/bin/python",
   "python.jediEnabled": true
 }

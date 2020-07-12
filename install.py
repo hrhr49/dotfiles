@@ -91,7 +91,8 @@ def add_line_if_not_contained(line, filename, verbose=False):
     if os.path.exists(filename):
         with open(filename, encoding='utf-8') as f:
             contents = f.readlines()
-            if line.strip() not in [content.strip() for content in contents]:
+            contents = [content.rstrip() for content in contents]
+            if line.strip() not in contents:
                 contents.append(line)
                 should_add_line = True
     else:

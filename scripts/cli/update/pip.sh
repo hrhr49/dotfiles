@@ -21,6 +21,7 @@ packages=(
     neovim
     flask
     pyflakes
+    flake8
     pynvim
     jedi
     autopep8

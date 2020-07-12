@@ -8,9 +8,7 @@
 # fi
 
 # gnomeがいるときにはxinitrcが無視される可能性があるため,明示的に.profileから呼び出す
-if [ -e "$HOME/.xinitrc" ] ; then
-    source "$HOME/.xinitrc"
-fi
+[ -e "$HOME/.xinitrc" ] && source "$HOME/.xinitrc"
 
 
 if type "xfce4-terminal" > /dev/null 2>&1; then
