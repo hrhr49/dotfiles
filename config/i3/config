@@ -12,9 +12,11 @@ floating_modifier $mod
 # アプリ{{{
 
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
 # bindsym $mod+Shift+p exec arandr
-bindsym $mod+Ctrl+m exec i3-sensible-terminal -e 'alsamixer'
+# ボリューム調整
+for_window[title="alsamixer"] floating enable
+bindsym $mod+Ctrl+m exec xfce4-terminal --command=alsamixer --title=alsamixer
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

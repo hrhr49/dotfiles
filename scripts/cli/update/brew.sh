@@ -86,6 +86,9 @@ formulas=(
     figlet   # 文字をアスキーアートで出すやつ
     neofetch # アスキーアートでOSのアイコン出す
     emojify  # 絵文字を入力するため
+
+    # 静的サイトジェネレータ
+    hugo
 )
 
 installed_formulas=$(brew list)
