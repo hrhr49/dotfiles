@@ -39,7 +39,8 @@ links = [
     ['${PWD}/config/wal/after.sh', '${HOME}/.config/wal/after.sh'],
     ['${PWD}/config/wal/templates/dunstrc',
         '${HOME}/.config/wal/templates/dunstrc'],
-    ['${PWD}/hyper.js', '${HOME}/.hyper.js']
+    ['${PWD}/hyper.js', '${HOME}/.hyper.js'],
+    ['${PWD}/npmrc', '${HOME}/.npmrc'],
 ]
 
 lines_for_include = [

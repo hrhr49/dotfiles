@@ -52,7 +52,8 @@ formulas=(
 
     # 各種言語
     ruby
-    node
+    # node # バージョン12以下を使用するため保留
+    # node@12 # バージョン12でもだめなのがあったのでbrewで入れるのはひとまずやめた
     go
     # rust # rustよりrustupのほうがいい？ 
     rustup # rustup-initを実行する必要あり

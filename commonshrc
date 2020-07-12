@@ -9,7 +9,9 @@
 [ -d "$HOME/bin/scripts" ] && export PATH=$PATH:~/bin/scripts
 [ -d "$HOME/bin/scripts/cli/util" ] && export PATH=$PATH:~/bin/scripts/cli/util
 [ -d "/home/linuxbrew/.linuxbrew/bin" ] && export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+[ -d "/home/linuxbrew/.linuxbrew/opt/node@12/bin" ] && export PATH=/home/linuxbrew/.linuxbrew/opt/node@12/bin:$PATH
 [ -d "$HOME/.nimble/bin" ] && export PATH=~/.nimble/bin:$PATH
+[ -d "$HOME/.npm-packages" ] && export PATH=$PATH:${HOME}/.npm-packages/bin
 
 # nvimが存在すればそれをvimとして使用
 if type "nvim" > /dev/null 2>&1; then
@@ -83,6 +85,7 @@ export PIPENV_VENV_IN_PROJECT=1
 # シェル関数{{{
 # zコマンドでMRUファイルをfzfできる(fasdが必要)
 # 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
+alias z=
 unalias z
 z() {
   if [[ -z "$*" ]]; then
