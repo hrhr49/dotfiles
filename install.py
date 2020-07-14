@@ -41,6 +41,8 @@ links = [
         '${HOME}/.config/wal/templates/dunstrc'],
     ['${PWD}/hyper.js', '${HOME}/.hyper.js'],
     ['${PWD}/npmrc', '${HOME}/.npmrc'],
+    ['${PWD}/config/alacritty/alacritty.yml',
+        '${HOME}/.config/alacritty/alacritty.yml'],
 ]
 
 lines_for_include = [

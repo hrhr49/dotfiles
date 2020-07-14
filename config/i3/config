@@ -15,8 +15,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
 # bindsym $mod+Shift+p exec arandr
 # ボリューム調整
-for_window[title="alsamixer"] floating enable
-bindsym $mod+Ctrl+m exec xfce4-terminal --command=alsamixer --title=alsamixer
+bindsym $mod+Ctrl+m exec xfce4-terminal --command=alsamixer --title=dialog
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -258,6 +257,9 @@ bar {
 # ウィンドウに枠線をつける
 for_window [class="^.*" tiling] border pixel 3
 for_window [class="^.*" floating] border normal
+
+# 中央に表示するもの
+for_window [title="dialog"] border pixel 1 floating enable
 
 # 壁紙設定
 # exec --no-startup-id "feh --bg-scale ~/Pictures/hogehoge.png"

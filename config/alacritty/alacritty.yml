@@ -1,0 +1,60 @@
+window:
+  columns: 0
+  lines: 0
+
+  # position:
+  #   x: 0
+  #   y: 0
+
+  padding:
+    x: 0
+    y: 0
+
+  decorations: none
+
+  # Startup Mode (changes require restart)
+  #
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  #
+  # Values for `startup_mode` (macOS only):
+  #   - SimpleFullscreen
+  #startup_mode: Windowed
+
+font:
+  normal:
+    family: Cica
+    style: Regular
+  bold:
+    family: Cica
+    style: Bold
+  italic:
+    family: Cica
+    style: Italic
+  bold_italic:
+    family: Cica
+    style: Bold Italic
+
+  size: 16.0
+
+  offset:
+    x: 0 
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+#background_opacity: 1.0
+
+#selection:
+  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  #save_to_clipboard: false
+
+key_bindings:
+  - { key: Add,      mods: Control|Shift,       action: IncreaseFontSize }
+
