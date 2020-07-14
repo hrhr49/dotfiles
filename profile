@@ -11,6 +11,10 @@
 [ -e "$HOME/.xinitrc" ] && source "$HOME/.xinitrc"
 
 
-if type "xfce4-terminal" > /dev/null 2>&1; then
+[ -d "$HOME/bin" ] && export PATH=$PATH:~/bin
+
+if type "alacritty" > /dev/null 2>&1; then
+    export TERMINAL="alacritty"
+elif type "xfce4-terminal" > /dev/null 2>&1; then
     export TERMINAL="xfce4-terminal"
 fi
