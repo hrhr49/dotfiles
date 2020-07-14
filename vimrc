@@ -1047,7 +1047,8 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'workspace', 'cocstatus'] ]
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus'] ],
+      \   'right': [ ['workspace']],
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
