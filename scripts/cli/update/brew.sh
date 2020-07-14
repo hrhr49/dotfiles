@@ -42,6 +42,9 @@ formulas=(
     # Markdown
     mdp # CLIでのプレゼンツール
 
+    # ファイルマネージャ
+    lf
+
     # 検索
     ripgrep
     ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索

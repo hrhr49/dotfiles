@@ -116,6 +116,8 @@ set timeoutlen=9999999
 " その他{{{
 " ビープ音を無効化
 set belloff=all
+
+silent! set ttyfast
 " }}}
 " }}}
 " キーマッピング(一般){{{
@@ -1245,6 +1247,12 @@ silent set termguicolors
 " フォントが欠けるのを回避
 " fzfでfloating windowを使用するときにレイアウトが崩れるので様子見
 " set ambiwidth=double
+
+" マクロ実行時の描画処理をやめる
+silent! set lazyredraw
+
+" 一行が長いときには構文のハイライトなどしない
+set synmaxcol=256
 "}}}
 " 折りたたみ表示 {{{
 set foldtext=MyFoldText()

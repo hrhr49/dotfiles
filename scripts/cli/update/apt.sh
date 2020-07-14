@@ -32,6 +32,10 @@ packages=(
     qt5-default
     qtcreator
 
+    # alacrittyの依存
+    libxcb-shape0-dev
+    libxcb-xfixes0-dev
+
     git
     zsh
 
