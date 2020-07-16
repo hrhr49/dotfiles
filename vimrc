@@ -146,6 +146,16 @@ cnoremap <C-p> <up>
 vnoremap * "zy:let @/ = '\V' . @z<CR>n
 " 選択範囲に直前の操作を適用
 vnoremap . :normal .<CR>
+
+" F4キーで矩形選択領域にボックスのアスキーアートを作る
+" このような感じのアスキーアートを作る
+" (現状、左上から右下に選択したときしかうまく動かない)
+" +-----------+
+" |           |
+" |           |
+" +-----------+
+vnoremap <F4> r+gvkojr\|gvlkohjr-gvkojr<Space>
+
 "}}}
 "
 " vimrcをリロード
