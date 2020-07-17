@@ -15,7 +15,11 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
 # bindsym $mod+Shift+p exec arandr
 # ボリューム調整
-bindsym $mod+Ctrl+m exec xfce4-terminal --command=alsamixer --title=dialog
+bindsym $mod+Ctrl+m exec i3-sensible-terminal --command=alsamixer --title=dialog
+# ネットワーク設定
+bindsym $mod+Ctrl+n exec i3-sensible-terminal --command=nmtui --title=dialog
+# ファイルマネージャ
+bindsym $mod+Ctrl+f exec i3-sensible-terminal --command=ranger --title=dialog
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

@@ -87,6 +87,8 @@ packages=(
     unar # 圧縮ファイルの解凍
     preload # アプリ起動速度を改善
     flameshot # スクリーンショット
+    iftop # ネットワークインタフェースの情報表示
+    iptraf-ng # ip通信の情報表示
 
     # 日本語音声読み上げソフト
     open-jtalk
