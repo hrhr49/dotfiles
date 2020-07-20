@@ -23,6 +23,7 @@ window:
   #   - SimpleFullscreen
   #startup_mode: Windowed
 
+background_opacity: 0.8
 font:
   normal:
     family: Cica

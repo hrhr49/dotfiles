@@ -623,7 +623,7 @@ try
   " ターミナルデバッガ
   " Plug 'epheien/termdbg'
   " Plug 'vim-vdebug/vdebug'
-  Plug 'puremourning/vimspector'
+  " Plug 'puremourning/vimspector'
   "}}}
   " その他{{{
   " Plug 'mtth/scratch.vim'
