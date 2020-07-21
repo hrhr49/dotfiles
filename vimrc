@@ -41,6 +41,7 @@ set complete-=t
 "}}}
 " クリップボード{{{
 set clipboard&
+" set clipboard=exclude:.* 
 " プラットフォームによってクリップボード設定切り替え
 if has('unix') || has('mac')
 set clipboard^=unnamedplus
@@ -177,7 +178,9 @@ nnoremap N Nzzzv
 " nnoremap <Space>j <C-f>
 " nnoremap <Space>k <C-b>
 nnoremap <Space>z za
-nnoremap <F6> :make<CR>
+" nnoremap <F6> :make<CR>
+" vimspectorのデバッガ開始
+nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
 " nnoremap <C-S-e> :Ex<CR>
 
 function! ToggleLastStatus()
@@ -623,7 +626,7 @@ try
   " ターミナルデバッガ
   " Plug 'epheien/termdbg'
   " Plug 'vim-vdebug/vdebug'
-  " Plug 'puremourning/vimspector'
+  Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
   "}}}
   " その他{{{
   " Plug 'mtth/scratch.vim'
@@ -1172,6 +1175,9 @@ augroup END
 "}}}
 " vimspector{{{
 let g:vimspector_enable_mappings = 'HUMAN'
+function! LaunchFileDebug()
+  call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
+endfunction
 "}}}
 " 組み込み{{{
 " let loaded_matchparen = 1

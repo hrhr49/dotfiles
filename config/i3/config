@@ -177,8 +177,6 @@ bindsym Alt+Tab workspace back_and_forth
 
 # mod + t でステータスバーの表示/非表示
 bindsym $mod+t exec i3-msg bar mode toggle
-# mod + m でもOK
-bindsym $mod+m exec i3-msg bar mode toggle
 # }}}
 # リサイズ{{{
 # resize window (you can also use the mouse for that)
@@ -199,6 +197,90 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+
+# 以下のURLの設定を改造
+# https://www.reddit.com/r/i3wm/comments/3btki2/use_the_mouse_cursor_from_the_keyboard/
+mode "mouse" {
+    set $slow 4
+    set $normal 14
+    set $quick 100
+    set $fast 200
+
+    bindsym Ctrl+h exec xdotool mousemove_relative -- -$slow 0
+    bindsym Ctrl+j exec xdotool mousemove_relative 0 $slow
+    bindsym Ctrl+k exec xdotool mousemove_relative -- 0 -$slow
+    bindsym Ctrl+l exec xdotool mousemove_relative $slow 0
+
+    bindsym Ctrl+Left exec xdotool mousemove_relative -- -$slow 0
+    bindsym Ctrl+Down exec xdotool mousemove_relative 0 $slow
+    bindsym Ctrl+Up exec xdotool mousemove_relative -- 0 -$slow
+    bindsym Ctrl+Right exec xdotool mousemove_relative $slow 0
+
+    bindsym h exec xdotool mousemove_relative -- -$normal 0
+    bindsym j exec xdotool mousemove_relative 0 $normal
+    bindsym k exec xdotool mousemove_relative -- 0 -$normal
+    bindsym l exec xdotool mousemove_relative $normal 0
+
+    bindsym Left exec xdotool mousemove_relative -- -$normal 0
+    bindsym Down exec xdotool mousemove_relative 0 $normal
+    bindsym Up exec xdotool mousemove_relative -- 0 -$normal
+    bindsym Right exec xdotool mousemove_relative $normal 0
+
+    bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
+    bindsym Shift+j exec xdotool mousemove_relative 0 $quick
+    bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
+    bindsym Shift+l exec xdotool mousemove_relative $quick 0
+
+    bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
+    bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
+    bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$quick
+    bindsym Shift+Right exec xdotool mousemove_relative $quick 0
+
+    bindsym Shift+$mod+h exec xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+$mod+j exec xdotool mousemove_relative 0 $fast
+    bindsym Shift+$mod+k exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+$mod+l exec xdotool mousemove_relative $fast 0
+
+    bindsym Shift+$mod+Left exec xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+$mod+Down exec xdotool mousemove_relative 0 $fast
+    bindsym Shift+$mod+Up exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+$mod+Right exec xdotool mousemove_relative $fast 0
+
+    # Mouse movement (special down-right)
+    bindsym m exec xdotool mousemove_relative 10 10
+
+    # Left Click
+    bindsym f exec xdotool click 1
+
+    # Middle Click
+    bindsym d exec xdotool click 2
+
+    # Right Click
+    bindsym s exec xdotool click 3
+
+    # Left Click-and-drag
+    bindsym Shift+f exec xdotool mousedown 1
+
+    # Middle Click-and-drag 
+    bindsym Shift+d exec xdotool mousedown 2
+
+    # Right Click-and-drag
+    bindsym Shift+s exec xdotool mousedown 3
+
+    # Left Drag release
+    bindsym $mod+f exec xdotool mouseup 1
+
+    # Middle Drag release
+    bindsym $mod+d exec xdotool mouseup 2
+
+    # Right Drag release
+    bindsym $mod+s exec xdotool mouseup 3
+
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+}
+bindsym $mod+m mode "mouse"
 # }}}
 # }}}
 # 表示{{{

@@ -1,0 +1,83 @@
+{
+  "configurations": {
+    "python_file": {
+      "adapter": "debugpy",
+      "configuration": {
+        "name": "Python: Current File",
+        "type": "python",
+        "request": "launch",
+        "cwd": "${fileDirname}",
+        "program": "${file}",
+        "args": [],
+        "stopOnEntry": true,
+        "externalConsole": false,
+        "debugOptions": []
+      },
+      "breakpoints": {
+        "exception": {
+          "raised": "N",
+          "uncaught": "Y"
+        }
+      }
+    },
+    "python_test": {
+      "adapter": "debugpy",
+      "variables": {
+        "gitRootPath": {
+          "shell": [
+            "git",
+            "rev-parse",
+            "--show-toplevel"
+          ]
+        }
+      },
+      "configuration": {
+        "name": "Python: Test",
+        "type": "python",
+        "request": "launch",
+        "cwd": "${gitRootPath}",
+        "args": [
+          "-m",
+          "pytest"
+        ],
+        "stopOnEntry": true,
+        "externalConsole": true,
+        "debugOptions": []
+      },
+      "breakpoints": {
+        "exception": {
+          "raised": "N",
+          "uncaught": "Y"
+        }
+      }
+    },
+    "javascript_file": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "name": "JavaScript: Current File",
+        "request": "launch",
+        "cwd": "${fileDirname}",
+        "program": "${file}",
+        "args": [],
+        "protocol": "auto",
+        "stopOnEntry": true,
+        "externalConsole": false
+      },
+      "breakpoints": {
+        "exception": {
+          "all": "N",
+          "uncaught": "Y"
+        }
+      }
+    },
+    "go_file": {
+      "adapter": "vscode-go",
+      "configuration": {
+        "request": "launch",
+        "program": "${fileDirname}",
+        "mode": "debug",
+        "dlvToolPath": "$HOME/go/bin/dlv"
+      }
+    }
+  }
+}
