@@ -36,6 +36,10 @@ packages=(
     libxcb-shape0-dev
     libxcb-xfixes0-dev
 
+    # 開発
+    ccache # gccやg++の結果をキャッシュしてコンパイルを高速化
+    distcc # 複数のコンピュータで並列にgccやg++を実行できるらしい
+
     git
     zsh
 

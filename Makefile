@@ -15,7 +15,7 @@ install:
 	python3 install.py
 
 test:
-	docker run --name poppler-build --rm -v ${PWD}:/home/user/dotfiles ${DOCKER_TAG_NAME} python3 /home/user/dotfiles/install.py
+	docker run --name dotfiles-test --rm -v ${PWD}:/home/user/dotfiles ${DOCKER_TAG_NAME} python3 /home/user/dotfiles/install.py
 
 docker-build:
 	docker build -t ${DOCKER_TAG_NAME} .
