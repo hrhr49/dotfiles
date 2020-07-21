@@ -78,6 +78,15 @@
         "mode": "debug",
         "dlvToolPath": "$HOME/go/bin/dlv"
       }
+    },
+    "cpp_file": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "request": "launch",
+        // TODO バイナリファイルの設定
+        "program": "<path to binary>",
+        "stopAtEntry": true
+      }
     }
   }
 }

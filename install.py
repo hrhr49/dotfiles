@@ -39,11 +39,14 @@ links = [
     ['${PWD}/config/wal/after.sh', '${HOME}/.config/wal/after.sh'],
     ['${PWD}/config/wal/templates/dunstrc',
         '${HOME}/.config/wal/templates/dunstrc'],
+    ['${PWD}/config/nyaovim/nyaovimrc.html', 
+        '${HOME}/.config/nyaovim/nyaovimrc.html'],
     ['${PWD}/hyper.js', '${HOME}/.hyper.js'],
     ['${PWD}/npmrc', '${HOME}/.npmrc'],
     ['${PWD}/config/alacritty/alacritty.yml',
         '${HOME}/.config/alacritty/alacritty.yml'],
     ['${PWD}/vimspector.json', '${HOME}/.vimspector.json'],
+    ['${PWD}/atoolrc', '${HOME}/.atoolrc'],
 ]
 
 lines_for_include = [

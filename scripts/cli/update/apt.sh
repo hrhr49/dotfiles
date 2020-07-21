@@ -54,6 +54,11 @@ packages=(
     xsel              # クリップボード
     xfce4-terminal    # ターミナル
     mlterm            # ターミナル
+    mlterm-im-uim
+    mlterm-im-fcitx
+    mlterm-im-ibus
+    mlterm-im-m17nlib
+    mlterm-im-scim
     stterm            # ターミナル
     ffmpegthumbnailer # rangerでのサムネイル
     zenity            # コマンドラインからのGUIダイアログなどの表示
@@ -84,11 +89,18 @@ packages=(
 
     # ユーティリティ
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
-    unar # 圧縮ファイルの解凍
     preload # アプリ起動速度を改善
     flameshot # スクリーンショット
     iftop # ネットワークインタフェースの情報表示
     iptraf-ng # ip通信の情報表示
+    aria2 # curlやwgetの高速版(複数のコネクションを使うのでサーバの負荷で迷惑にならないよう気をつける)
+
+    unar # 圧縮ファイルの解凍
+    atool # 圧縮・伸長コマンドのラッパー
+    # 圧縮・伸長を並列でやって高速化するやつ(参考 http://mickey-happygolucky.hatenablog.com/entry/2018/04/21/011811)
+    pigz
+    pzip2
+    pxz
 
     # 日本語音声読み上げソフト
     open-jtalk
@@ -101,4 +113,8 @@ packages=(
     # TODO: sudo tlp start
 )
 
-sudo apt install -y "${packages[@]}"
+if type "apt-fast" > /dev/null 2>&1; then
+    sudo apt-fast install -y "${packages[@]}"
+else
+    sudo apt install -y "${packages[@]}"
+fi

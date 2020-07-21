@@ -41,7 +41,7 @@ set complete-=t
 "}}}
 " クリップボード{{{
 set clipboard&
-" set clipboard=exclude:.* 
+silent! set clipboard=exclude:.* 
 " プラットフォームによってクリップボード設定切り替え
 if has('unix') || has('mac')
 set clipboard^=unnamedplus
@@ -1174,7 +1174,21 @@ augroup END
   " let g:comfortable_motion_no_default_key_mappings = 1
 "}}}
 " vimspector{{{
+
+" Key         | API
+" ------------+----------------------
+" F5          | vimspector#Continue()
+" F3          | vimspector#Stop()
+" F4          | vimspector#Restart()
+" F6          | vimspector#Pause()
+" F9          | vimspector#ToggleBreakpoint()
+" <leader>F9  | vimspector#ToggleBreakpoint( { trigger expr   | hit count expr } )
+" F8          | vimspector#AddFunctionBreakpoint( '<cexpr>' )
+" F10         | vimspector#StepOver()
+" F11         | vimspector#StepInto()
+" F12         | vimspector#StepOut()
 let g:vimspector_enable_mappings = 'HUMAN'
+nnoremap <F17> :<C-u>call vimspector#Continue()<CR>
 function! LaunchFileDebug()
   call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
 endfunction
