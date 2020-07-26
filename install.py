@@ -39,7 +39,7 @@ links = [
     ['${PWD}/config/wal/after.sh', '${HOME}/.config/wal/after.sh'],
     ['${PWD}/config/wal/templates/dunstrc',
         '${HOME}/.config/wal/templates/dunstrc'],
-    ['${PWD}/config/nyaovim/nyaovimrc.html', 
+    ['${PWD}/config/nyaovim/nyaovimrc.html',
         '${HOME}/.config/nyaovim/nyaovimrc.html'],
     ['${PWD}/hyper.js', '${HOME}/.hyper.js'],
     ['${PWD}/npmrc', '${HOME}/.npmrc'],
@@ -106,8 +106,8 @@ def add_line_if_not_contained(line, filename, verbose=False):
         mkdir(os.path.dirname(filename))
 
     if should_add_line:
-        with open(filename, 'w', encoding='utf-8') as f:
-            f.writelines(contents)
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write('\n{}\n'.format(line))
 
 
 if __name__ == "__main__":

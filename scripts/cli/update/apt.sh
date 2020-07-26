@@ -145,8 +145,10 @@ packages=(
     # TODO: sudo tlp start
 )
 
-if type "apt-fast" > /dev/null 2>&1; then
-    sudo apt-fast install -y "${packages[@]}"
-else
-    sudo apt install -y "${packages[@]}"
+if type "apt" > /dev/null 2>&1; then
+    if type "apt-fast" > /dev/null 2>&1; then
+        sudo apt-fast install -y "${packages[@]}"
+    else
+        sudo apt install -y "${packages[@]}"
+    fi
 fi
