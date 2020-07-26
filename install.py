@@ -80,7 +80,14 @@ def symlink(src, dest, verbose=False):
             # remove old link
             os.remove(dest)
         else:
-            raise Exception('{} already exists!'.format(dest))
+            print('{} is already exists'.format(dest))
+            print('Backup original and replace? [y/N]')
+            ans = input()
+            if not ans.upper().startswith('Y'):
+                print('skip')
+                return
+            else:
+                os.rename(dest, dest + '.old')
 
     os.symlink(src, dest)
 
@@ -108,6 +115,7 @@ def add_line_if_not_contained(line, filename, verbose=False):
     if should_add_line:
         with open(filename, 'a', encoding='utf-8') as f:
             f.write('\n{}\n'.format(line))
+
 
 
 if __name__ == "__main__":
