@@ -316,27 +316,49 @@ set $color_workspace #555555
 set $color_urgent #ebcb8b
 # i3statusの設定
 bar {
-    # position top
-        colors {
-        # background #2f343f
-        # statusline #2f343f
-        # separator #4b5262
-        background $color_background
-        statusline #2f343f
-        separator #4b5262
+	i3bar_command i3bar
+	status_command i3status
+	position bottom
+    
+	bindsym button4 nop
+	bindsym button5 nop
+	strip_workspace_numbers yes
 
-        # colour of border, background, and text
-        # focused_workspace       #2f343f #bf616a #d8dee8
-        # active_workspace        #2f343f #2f343f #d8dee8
-        # inactive_workspace      #2f343f #2f343f #d8dee8
-        # urgent_workspacei       #2f343f #ebcb8b #2f343f
+    colors {
+        background #222D31
+        statusline #F9FAF9
+        separator  #454947
 
-        focused_workspace  $color_background $color_focus     $color_text
-        active_workspace   $color_background $color_workspace $color_text
-        inactive_workspace $color_background $color_workspace $color_text
-        urgent_workspacei  $color_background $color_urgent    $color_workspace
+#                      border  backgr. text
+        focused_workspace  #F9FAF9 #16a085 #292F34
+        active_workspace   #595B5B #353836 #FDF6E3
+        inactive_workspace #595B5B #222D31 #EEE8D5
+        binding_mode       #16a085 #2C2C2C #F9FAF9
+        urgent_workspace   #16a085 #FDF6E3 #E5201D
     }
-    status_command i3blocks
+
+    # # position top
+    #     colors {
+    #     # background #2f343f
+    #     # statusline #2f343f
+    #     # separator #4b5262
+    #     background $color_background
+    #     statusline #2f343f
+    #     separator #4b5262
+
+    #     # colour of border, background, and text
+    #     # focused_workspace       #2f343f #bf616a #d8dee8
+    #     # active_workspace        #2f343f #2f343f #d8dee8
+    #     # inactive_workspace      #2f343f #2f343f #d8dee8
+    #     # urgent_workspacei       #2f343f #ebcb8b #2f343f
+
+    #     focused_workspace  $color_background $color_focus     $color_text
+    #     active_workspace   $color_background $color_workspace $color_text
+    #     inactive_workspace $color_background $color_workspace $color_text
+    #     urgent_workspacei  $color_background $color_urgent    $color_workspace
+    # }
+    # # status_command i3blocks
+    # status_command i3status
 }
 
 # Set inner/outer gaps
