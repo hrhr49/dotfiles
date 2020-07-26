@@ -7,11 +7,6 @@ setxkbmap -option ctrl:nocaps
 # 200msで30Hzのキーリピート
 xset r rate 200 30
 
-#.xinitrc
-export DefaultImModule=fcitx
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
 
 # homebrew経由のpython3をデフォルトで使用するように、PATHの先頭にpython3のパスを追加
 # if [ -d "/home/linuxbrew/.linuxbrew/opt/python@3/libexec/bin" ] ; then

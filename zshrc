@@ -205,3 +205,8 @@ if type "direnv" > /dev/null 2>&1; then
   eval "$(direnv hook zsh)"
 fi
 # }}}
+# エイリアス{{{
+# ネットからコピペするときに$が先頭についていたら面倒なので消す
+# bashだとエラーが出る?
+alias '$'=' '
+# }}}
