@@ -39,6 +39,20 @@ packages=(
 
     unzip
     shellcheck
+    hub
+    bat
+    tig
+
+    tokei
+    tldr
+    fd
+    fasd
+
+    jq
+    neofetch
+    go
+    rust
+    nim
 )
 
 if type "pacman" > /dev/null 2>&1; then
