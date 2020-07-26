@@ -165,7 +165,12 @@ setopt no_beep
 # 外部コマンド設定 {{{
 
 # fzfの設定
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+else
+    [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+    [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+fi
 
 # invokeのzsh用入力補完(自動生成されたもの)
 # Invoke tab-completion script to be sourced with the Z shell.
