@@ -26,6 +26,33 @@ packages=(
     bison
     flex
 
+
+    # polybarの依存 https://gist.github.com/kuznero/f4e983c708cd2bdcadc97be695baacf8
+    cmake
+    cmake-data
+    libcairo2-dev
+    libxcb1-dev
+    libxcb-ewmh-dev
+    libxcb-icccm4-dev
+    libxcb-image0-dev
+    libxcb-randr0-dev
+    libxcb-util0-dev
+    libxcb-xkb-dev
+    pkg-config
+    # python-xcbgen
+    python3-xcbgen
+    xcb-proto
+    libxcb-xrm-dev
+    i3-wm
+    libasound2-dev
+    libmpdclient-dev
+    libiw-dev
+    libcurl4-openssl-dev
+    libpulse-dev
+    libxcb-composite0-dev
+    xcb
+    libxcb-ewmh2
+
     # QT
     qtbase5-dev
     qttools5-dev-tools
@@ -103,8 +130,9 @@ packages=(
     atool # 圧縮・伸長コマンドのラッパー
     # 圧縮・伸長を並列でやって高速化するやつ(参考 http://mickey-happygolucky.hatenablog.com/entry/2018/04/21/011811)
     pigz
-    pzip2
-    pxz
+    # pzip2
+    # pxz
+    entr # ファイルを監視して、変更時にコマンドの実行
 
     # 日本語音声読み上げソフト
     open-jtalk
