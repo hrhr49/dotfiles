@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 packages=(
     rofi
     fzf
@@ -37,6 +38,7 @@ packages=(
     fcitx-im
 
     unzip
+    shellcheck
 )
 
 if type "pacman" > /dev/null 2>&1; then
