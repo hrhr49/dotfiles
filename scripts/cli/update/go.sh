@@ -5,6 +5,8 @@ packages=(
     github.com/golang/dep/cmd/dep
     # デバッガ
     github.com/go-delve/delve/cmd/dlv
+    # gitリポジトリ管理
+    github.com/x-motemen/ghq
 )
 
 go get -u "${packages[@]}"
