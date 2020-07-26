@@ -17,6 +17,7 @@ os.environ['PWD'] = HERE
 
 links = [
     ['${PWD}/xinitrc', '${HOME}/.xinitrc'],
+    ['${PWD}/xprofile', '${HOME}/.xprofile'],
     ['${PWD}/Xresources', '${HOME}/.Xresources'],
     ['${PWD}/config/i3/config', '${HOME}/.config/i3/config'],
     ['${PWD}/config/i3status/config', '${HOME}/.config/i3status/config'],

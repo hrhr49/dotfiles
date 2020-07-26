@@ -53,6 +53,8 @@ packages=(
     go
     rust
     nim
+
+    variety
 )
 
 if type "pacman" > /dev/null 2>&1; then
