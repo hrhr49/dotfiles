@@ -192,6 +192,11 @@ alias brews="brew search"
 alias pipi="pip install"
 alias pips="pip search"
 # }}}
+# pipenvのエイリアス{{{
+alias pipenvi="pipenv install"
+alias pipenvr="pipenv run"
+alias pipr="pipenv run"
+# }}}
 # yarnのエイリアス{{{
 alias y='yarn'
 alias ya='yarn add'
