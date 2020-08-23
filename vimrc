@@ -992,6 +992,7 @@ augroup coc_group
   autocmd FileType typescript.tsx call s:my_coc_nvim_config()
   autocmd FileType javascript.jsx call s:my_coc_nvim_config()
   autocmd FileType rust call s:my_coc_nvim_config()
+  autocmd FileType nim call s:my_coc_nvim_config()
 
   " 折りたたみが勝手に発動してしまうため、一時無効化
   " Use auocmd to force lightline update.
@@ -1316,15 +1317,16 @@ endfunction
 " }}}
 " スクリプト{{{
 
+" 不要なのでコメントアウト
 " 折りたたみ情報を保持する 参考: http://nametake-1009.hatenablog.com/entry/2016/10/02/212629
-let tmp_viewdir=$HOME . '/.vim/view'
-execute 'set viewdir=' . tmp_viewdir
+" let tmp_viewdir=$HOME . '/.vim/view'
+" execute 'set viewdir=' . tmp_viewdir
 
-augroup SaveFoldings
-autocmd!
-autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
-autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | try | silent loadview | catch | endtry | endif
-augroup END
+" augroup SaveFoldings
+" autocmd!
+" autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+" autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | try | silent loadview | catch | endtry | endif
+" augroup END
 " Don't save options.
 set viewoptions-=options
 
@@ -1430,6 +1432,11 @@ command! DeleteMyTagFile call DeleteMyTagFile()
 " nnoremap mb :AddMyTagByInput<CR>
 " nnoremap mt :execute(printf(":Tags %s", g:mytag_prefix))<CR>
 " nnoremap mB :DeleteMyTagFile<CR>
+
+command! CopyPath let @+=expand('%')
+command! CopyAbsPath let @+=expand('%:p')
+command! CopyDir let @+=expand('%:h')
+command! CopyAbsDir let @+=expand('%:p:h')
 
 "}}}
 " GUI {{{
