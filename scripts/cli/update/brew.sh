@@ -12,6 +12,7 @@ formulas=(
     ghq
     hub
     tig
+    git-delta
 
     # 文字コード
     nkf

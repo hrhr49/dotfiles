@@ -12,6 +12,7 @@ let g:loaded_my_vimrc = 1
 filetype plugin indent on
 syntax on
 set backspace=2 " バックスペースで字下げや行末を消去できるようにする。
+set whichwrap=b,s,h,l,<,>,[,]   " 行頭、行末で行をまたぐ
 set shiftwidth=4
 set smartindent
 set smarttab
@@ -67,6 +68,8 @@ set ruler             " カーソルの位置を表示
 
 set wildignorecase
 set wildmenu
+set wildmode=longest:full,full " 初回の補完では共通部分まで、2回目は次の候補を全部補完
+set wildignore=*.o,*.obj,*.out " wild mode補完でいらないファイルパターン
 
 set hidden            " バッファ保存せずに移動できるようにする
 set autoread          " ファイルの変更を監視する
