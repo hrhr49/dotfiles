@@ -554,6 +554,9 @@ try
   " イタリックフォントを無効化
   Plug 'mattn/disableitalic-vim'
 
+  " GUIのフォントサイズ変更
+  Plug 'drmikehenry/vim-fontsize'
+
   " 最小限にするため、airlineじゃなくlightlineを使用
   Plug 'itchyny/lightline.vim'
   " Plug 'vim-airline/vim-airline'
@@ -1448,9 +1451,14 @@ if has('gui_running')
   silent! set antialias
   "}}}
   " フォント{{{
-  " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
-  nnoremap + :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')<CR>
-  nnoremap - :let &guifont = substitute(&guifont, '\d\+$', '\=max([submatch(0)-1, 1])', '')<CR>
+  if s:plug.is_installed('vim-fontsize')
+    nmap <silent> +  <Plug>FontsizeInc
+    nmap <silent> -  <Plug>FontsizeDec
+  else
+    " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
+    nnoremap + :let &guifont = substitute(&guifont, '\d\+', '\=submatch(0)+1', '')<CR>
+    nnoremap - :let &guifont = substitute(&guifont, '\d\+', '\=max([submatch(0)-1, 1])', '')<CR>
+  endif
 
   " 透明度を変更
   if exists('&transparency')
@@ -1459,7 +1467,7 @@ if has('gui_running')
   endif
 
   " イタリックフォントを無効化
-  if s:plug.is_installed('mattn/disableitalic-vim')
+  if s:plug.is_installed('disableitalic-vim')
     augroup DisableItalicGroup
     autocmd!
     autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
