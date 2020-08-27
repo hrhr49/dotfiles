@@ -11,60 +11,43 @@ let g:loaded_my_vimrc = 1
 " 一般{{{
 filetype plugin indent on
 syntax on
-" 文字{{{
-" バックスペースで字下げや行末を消去できるようにする。
-set backspace=2
+set backspace=2 " バックスペースで字下げや行末を消去できるようにする。
 set shiftwidth=4
 set smartindent
 set smarttab
 set tabstop=4
 set autoindent
 set expandtab
-" 矩形選択のときに文字がない箇所も選択できるようにする
-set virtualedit=block
-" コメントで自動整形されるのを回避
-set formatoptions-=cro
+set virtualedit=block " 矩形選択のときに文字がない箇所も選択できるようにする
+set formatoptions-=cro " コメントで自動整形されるのを回避
+set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》 " 全角カッコの設定
 
-" 全角カッコでも%で対応するものに移動できるようにする
-set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》
-"}}}
-" 折りたたみ{{{
 set foldmethod=marker
-" show foldings
-"set foldcolumn=1
-"}}}
-" 入力補完{{{
-" remove tag comeletion from default
-set complete-=i
-set complete-=t
-"set completeopt+=longest
-"}}}
-" クリップボード{{{
+set complete-=i " インクルードファイルを入力補完候補に入れない
+set complete-=t " タグを入力補完候補に入れない
+
 set clipboard&
 silent! set clipboard=exclude:.* 
 " プラットフォームによってクリップボード設定切り替え
 if has('unix') || has('mac')
-set clipboard^=unnamedplus
+  set clipboard^=unnamedplus
 elseif has('win32') || has('win64')
-set clipboard^=unnamed
+  set clipboard^=unnamed
 endif
-"}}}
-" 検索{{{
+
 set nohlsearch
 set ignorecase
-" 入力の小文字、大文字に合わせて補完
-" set infercase
 set smartcase
 set incsearch
 set wrapscan
+
 " 補完最中だけ大文字小文字区別
 augroup ComplNotIgnore
-autocmd!
-au InsertEnter * set noignorecase
-au InsertLeave * set ignorecase
+  autocmd!
+  au InsertEnter * set noignorecase
+  au InsertLeave * set ignorecase
 augroup END
-" }}}
-" バックアップ{{{
+" 
 set nobackup
 set nowritebackup
 set noswapfile
@@ -72,54 +55,38 @@ set noundofile
 " コマンド履歴の数
 set history=10000
 if has('win32') || has('win64')
-   set viminfo='999,<50,s10,h,rA:,rB:
+  set viminfo='999,<50,s10,h,rA:,rB:
 else
   set viminfo=!,'999,<50,s10,h
 endif
-"}}}
-" 行番号{{{
-set number
-set relativenumber
-" set scrolloff=0
-" カーソルの上または下に表示される最小行数
-set scrolloff=5
-" カーソルの位置を表示
-set ruler
-"}}}
-" ワイルドメニュー{{{
+
+set number            " 行番号表示
+set relativenumber    " 相対行番号を表示(現在の行以外)
+set scrolloff=5       " カーソルの上または下に表示される最小行数
+set ruler             " カーソルの位置を表示
+
 set wildignorecase
 set wildmenu
-"}}}
-" バッファ{{{
-" バッファ保存せずに移動できるようにする
-set hidden
-" ファイルの変更を監視する
-set autoread
-"}}}
-" タブ{{{
-" 使用可能なタブページの個数
-set tabpagemax=50
-"}}}
-" 環境{{{
+
+set hidden            " バッファ保存せずに移動できるようにする
+set autoread          " ファイルの変更を監視する
+set diffopt+=vertical " diffは縦分割にする
+
+set tabpagemax=50     " 使用可能なタブページの個数
+
 if executable($HOME . '/anaconda3/bin/python') > 0
   let g:python3_host_prog=$HOME . '/anaconda3/bin/python'
 endif
 set path+=~/memo/**
 set tags+=tags;
-" 自分用タグファイルを追加
-set tags+=mytags
-"}}}
-" マウス・キー入力{{{
-set mouse=a
-" キーマッピングなどのタイムアウト時間
-set timeoutlen=9999999
-"}}}
-" その他{{{
-" ビープ音を無効化
-set belloff=all
+set tags+=mytags       " 自分用タグファイルを追加
 
+set mouse=a
+set timeoutlen=9999999 " キーマッピングなどのタイムアウト時間
+
+set belloff=all        " ビープ音を無効化
 silent! set ttyfast
-" }}}
+
 " }}}
 " キーマッピング(一般){{{
 " 全般{{{
@@ -164,7 +131,8 @@ command! ReloadVimrc :unlet g:loaded_my_vimrc | :source $MYVIMRC
 nnoremap <M-r> :<C-u>ReloadVimrc<CR>
 nnoremap <M-w> :w<CR>
 
-nnoremap cd :<C-u>CD<CR>
+" cdで現在のファイルの場所へ移動
+nnoremap cd :<C-u>lcd %:p:h \| pwd<CR>
 nnoremap <C-l> :noh<CR><C-l>
 nnoremap <M-d> <C-d>
 nnoremap <M-u> <C-u>
@@ -175,25 +143,13 @@ nnoremap N Nzzzv
 " ペーストしたテキストをビジュアルモードで選択
 " nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " nnoremap <C-k> :lvim <C-r><C-w> ##<CR>
-" nnoremap <Space>j <C-f>
-" nnoremap <Space>k <C-b>
 nnoremap <Space>z za
 " nnoremap <F6> :make<CR>
 " vimspectorのデバッガ開始
 nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
 " nnoremap <C-S-e> :Ex<CR>
 
-function! ToggleLastStatus()
-  if &laststatus == 2
-    let &laststatus = 0
-  else
-    let &laststatus = 2
-  endif
-endfunction
-nnoremap <expr> <Space><F2> ToggleLastStatus()
-
 " 角括弧によるマッピング{{{
-
 " quick fix next/previous
 nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
@@ -206,13 +162,10 @@ nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 " タグジャンプ
-nnoremap ]t  <C-]>
-nnoremap [t  <C-t>
+nnoremap ]t <C-]>
+nnoremap [t <C-t>
 nnoremap [o <C-i>
 " }}}
-
-" nnoremap <M-Right> <C-o>
-" nnoremap <M-Left> <C-]>
 
 " ,からはじまるマッピング{{{
 nnoremap ,q :cw<CR>
@@ -262,15 +215,6 @@ nnoremap <silent> !+window+!S :<C-u>new<CR>
 nnoremap <silent> !+window+!t :<C-u>tabnew<CR>
 nnoremap <silent> !+window+!v :<C-u>vsplit<CR>
 nnoremap <silent> !+window+!V :<C-u>vnew<CR>
-" nnoremap !+window+!1 1gt
-" nnoremap !+window+!2 2gt
-" nnoremap !+window+!3 3gt
-" nnoremap !+window+!4 4gt
-" nnoremap !+window+!5 5gt
-" nnoremap !+window+!6 6gt
-" nnoremap !+window+!7 7gt
-" nnoremap !+window+!8 8gt
-" nnoremap !+window+!9 9gt
 
 nmap <silent> !+window+!p :<C-u>tabprevious<CR>!+tab+!
 nmap <silent> !+window+!P :<C-u>tabfirst<CR>!+tab+!
@@ -294,13 +238,6 @@ function! ScrollFunc(distance)
   let num = abs(a:distance)
   let key = a:distance > 0 ? "\<C-e>" : "\<C-y>"
   exec "normal ". num . key
-  " for i in range(num)
-  "   if i > 0
-  "     sleep 10m
-  "   endif
-  "   exec "normal " . key
-  "   redraw
-  " endfor
 endfunction
 
 nnoremap !+scroll+! <Nop>
@@ -327,8 +264,6 @@ nmap <silent> !+scroll+!k :<C-u>call ScrollFunc(-4)<CR>!+scroll+!
 " タブ{{{
 nnoremap !+tab+! <Nop>
 nmap t !+tab+!
-" nnoremap <silent> !+tab+!0 :<C-u>tabfirst<CR>
-" nnoremap <silent> !+tab+!$ :<C-u>tablast<CR>
 nnoremap <silent> !+tab+!1 :<C-u>tabnext 1<CR>
 nnoremap <silent> !+tab+!2 :<C-u>tabnext 2<CR>
 nnoremap <silent> !+tab+!3 :<C-u>tabnext 3<CR>
@@ -338,9 +273,6 @@ nnoremap <silent> !+tab+!6 :<C-u>tabnext 6<CR>
 nnoremap <silent> !+tab+!7 :<C-u>tabnext 7<CR>
 nnoremap <silent> !+tab+!8 :<C-u>tabnext 8<CR>
 nnoremap <silent> !+tab+!9 :<C-u>tabnext 9<CR>
-" 誤爆するので一旦無効化
-" nnoremap !+tab+!r :<C-u>+1,$tabdo tabclose<CR>
-" nnoremap !+tab+!l :<C-u>1,-1tabdo tabclose<CR>
 nnoremap <silent> !+tab+!o :<C-u>tabonly<CR>
 nnoremap <silent> !+tab+!q :<C-u>tabclose<CR>
 
@@ -382,229 +314,142 @@ endif
 "}}}
 " ファイル別設定{{{
 augroup RunProgram
-autocmd!
-autocmd FileType python nnoremap <buffer> <F5> :w\|!python %<CR>
-autocmd FileType ruby nnoremap <buffer> <F5> :w\|!ruby %<CR>
-autocmd FileType perl nnoremap <buffer> <F5> :w\|!perl %<CR>
-autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType go nnoremap <buffer> <F5> :w\|!go run %<CR>
-autocmd FileType javascript nnoremap <buffer> <F5> :w\|!node %<CR>
-autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType typescript setlocal ts=2 sts=2 sw=2 expandtab
-"autocmd FileType typescript.tsx setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
-autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
-autocmd FileType scss setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
-autocmd FileType less setlocal ts=2 sts=2 sw=2 expandtab iskeyword+=-
-autocmd FileType nim setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType html nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
-autocmd FileType markdown nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
-autocmd FileType markdown nnoremap <buffer> <F6> :w\|!pandoc -t html5 -s --mathjax
-            \ -f markdown+hard_line_breaks --highlight-style=pygments
-            \ -c ~/memo/pandoc/github.css --filter ~/memo/pandoc/my_pandoc_filter.py -o %:r.html %<CR>
-autocmd FileType vim setlocal ts=2 sts=2 sw=2
-autocmd FileType qf noremap <buffer> p  <CR>zz<C-w>p
-autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
-autocmd BufRead,BufNewFile *.nim setlocal filetype=nim
-" autocmd BufRead,BufNewFile *.md setlocal filetype=ghmarkdown
-autocmd FileType typescript nnoremap <buffer> <F5> :w \| !tsc % \| node %:r.js<CR>
-autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
-" autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
-"autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-autocmd BufNewFile,BufRead *.tsx,*.jsx setlocal ts=2 sts=2 sw=2 expandtab
-autocmd BufRead,BufNewFile *.pu nnoremap <buffer> <F5> :w \| !plantuml %<CR>
-autocmd BufRead,BufNewFile *.dot nnoremap <buffer> <F5> :w \| !dot % -O -Tpng<CR>
-autocmd BufRead,BufNewFile *.adoc nnoremap <buffer> <F5> :w \| !asciidoctor -r asciidoctor-diagram %<CR>
-autocmd BufRead,BufNewFile *.sh nnoremap <buffer> <F5> :w \| !%:p<CR>
-autocmd BufRead,BufNewFile *.c nnoremap <buffer> <F5> :w \| !gcc % && ./a.out<CR>
-autocmd BufRead,BufNewFile *.tcl nnoremap <buffer> <F5> :w \| !wish %<CR>
-autocmd BufRead,BufNewFile *.scm nnoremap <buffer> <F5> :w \| !gosh %<CR>
-autocmd BufRead,BufNewFile *.rs nnoremap <buffer> <F5> :w \| !rustc % \| !%:r<CR>
-autocmd BufRead,BufNewFile *.nim nnoremap <buffer> <F5> :w \| !nim c -r %<CR>
-autocmd BufRead,BufNewFile *.tsx setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType vim nnoremap <buffer> <F5> :w\|so %<CR>
+  autocmd!
+
+  " tabstop, softtabstop, shiftwidth, expandtab, iskeywordの設定
+  autocmd FileType ruby            setl ts=2 sts=2 sw=2 et
+  autocmd FileType json            setl ts=2 sts=2 sw=2 et
+  autocmd FileType javascript      setl ts=2 sts=2 sw=2 et
+  autocmd FileType typescript      setl ts=2 sts=2 sw=2 et
+  autocmd Filetype typescriptreact setl ts=2 sts=2 sw=2 et
+  autocmd FileType typescript.tsx  setl ts=2 sts=2 sw=2 et
+  autocmd FileType yaml            setl ts=2 sts=2 sw=2 et   iskeyword+=-
+  autocmd FileType html            setl ts=2 sts=2 sw=2 et   iskeyword+=-
+  autocmd FileType css             setl ts=2 sts=2 sw=2 et   iskeyword+=-
+  autocmd FileType scss            setl ts=2 sts=2 sw=2 et   iskeyword+=-
+  autocmd FileType less            setl ts=2 sts=2 sw=2 et   iskeyword+=-
+  autocmd FileType nim             setl ts=2 sts=2 sw=2 et
+  autocmd FileType vim             setl ts=2 sts=2 sw=2 et
+  autocmd FileType make            setl ts=4 sts=0 sw=4 noet
+
+  " F5でファイルを実行する設定
+  autocmd FileType typescript nnoremap <buffer> <F5> :w\|!tsc % \| node %:r.js<CR>
+  autocmd FileType python     nnoremap <buffer> <F5> :w\|!python %<CR>
+  autocmd FileType ruby       nnoremap <buffer> <F5> :w\|!ruby %<CR>
+  autocmd FileType perl       nnoremap <buffer> <F5> :w\|!perl %<CR>
+  autocmd FileType go         nnoremap <buffer> <F5> :w\|!go run %<CR>
+  autocmd FileType javascript nnoremap <buffer> <F5> :w\|!node %<CR>
+  autocmd FileType html       nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
+  autocmd FileType markdown   nnoremap <buffer> <F5> :w\|!google-chrome %<CR>
+  autocmd FileType plantuml   nnoremap <buffer> <F5> :w\|!plantuml %<CR>
+  autocmd FileType dot        nnoremap <buffer> <F5> :w\|!dot % -O -Tpng<CR>
+  autocmd FileType asciidoc   nnoremap <buffer> <F5> :w\|!asciidoctor -r asciidoctor-diagram %<CR>
+  autocmd FileType sh         nnoremap <buffer> <F5> :w\|!%:p<CR>
+  autocmd FileType c          nnoremap <buffer> <F5> :w\|!gcc % && ./a.out<CR>
+  autocmd FileType tcl        nnoremap <buffer> <F5> :w\|!wish %<CR>
+  autocmd FileType scheme     nnoremap <buffer> <F5> :w\|!gosh %<CR>
+  autocmd FileType rust       nnoremap <buffer> <F5> :w\|!rustc % \| !%:r<CR>
+  autocmd FileType nim        nnoremap <buffer> <F5> :w\|!nim c -r %<CR>
+  autocmd FileType vim        nnoremap <buffer> <F5> :w\|so %<CR>
+
+  " quickfixの設定
+  autocmd FileType qf noremap <buffer> p  <CR>zz<C-w>p
+
+  " filetypeの設定
+  autocmd BufRead,BufNewFile *.tsx       setl ft=typescriptreact
+  autocmd BufRead,BufNewFile *.tsx,*.jsx setl ft=typescript.tsx
+  autocmd BufRead,BufNewFile *.ts        setl ft=typescript
+  autocmd BufRead,BufNewFile *.md        setl ft=markdown
+  autocmd BufRead,BufNewFile *.nim       setl ft=nim
+  autocmd BufRead,BufNewFile *.pu        setl ft=plantuml
+  autocmd BufRead,BufNewFile *.dot       setl ft=dot
+  autocmd BufRead,BufNewFile *.adoc      setl ft=asciidoc
+  autocmd BufRead,BufNewFile *.sh        setl ft=sh
+  autocmd BufRead,BufNewFile *.c         setl ft=c
+  autocmd BufRead,BufNewFile *.tcl       setl ft=tcl
+  autocmd BufRead,BufNewFile *.scm       setl ft=scheme
+  autocmd BufRead,BufNewFile *.rs        setl ft=rust
 augroup END
 
 augroup MarkFile
-autocmd!
-autocmd BufLeave *.{c,cpp} mark C
-autocmd BufLeave *.h       mark H
-autocmd BufLeave vimrc     mark V
+  autocmd!
+  autocmd BufLeave *.{c,cpp} mark C
+  autocmd BufLeave *.h       mark H
+  autocmd BufLeave vimrc     mark V
 augroup END
 
 "}}}
 " プラグイン一覧{{{
-" vim-plugがない場合はインストール(参考 https://github.com/junegunn/vim-plug/wiki/tips)
-" if has('unix')
-"   if has('nvim')
-"     " silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-"     "   \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"   elseif empty(glob('~/.vim/autoload/plug.vim'))
-"       silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"   endif
-"   " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
 try
-  " Specify a directory for plugins
-  " - For Neovim: ~/.local/share/nvim/plugged
-  " - Avoid using standard Vim directory names like 'plugin'
   call plug#begin('~/.vim/plugged')
   " Make sure you use single quotes
-  " ヘルプ{{{
-  " vim-plugのヘルプ
   Plug 'junegunn/vim-plug'
-
-  " 日本語のヘルプ
   Plug 'vim-jp/vimdoc-ja'
-  "}}}
-  " 日本語{{{
-  " Plug 'koron/cmigemo'
-  " Plug 'haya14busa/vim-migemo'
-  "}}}
-  " ブラウジング{{{
-  " NERDTree{{{
-  Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTree']}
-  " NERDTreeでdeviconsを表示
-  " Plug 'ryanoasis/vim-devicons'
-  " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-  " if executable('git') > 0
-  "   Plug 'Xuyuanp/nerdtree-git-plugin'
-  " endif
-  "}}}
-  " Ranger{{{
-  " if executable('ranger')
-  "   Plug 'francoiscabrol/ranger.vim'
-  "   Plug 'rbgrouleff/bclose.vim'
-  " endif
-  "}}}
+  """"""""""""""""""""""""""""""
+  " 全般
+  """"""""""""""""""""""""""""""
+  Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTree']}
   Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
-  "}}}
-  " あいまい検索{{{
-  " fzfのインストールも同時にやりたい場合は以下のようにする
-  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  " Plug 'junegunn/fzf.vim'
-  " ファイルなどのあいまい検索
   if executable('fzf') > 0
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/fzf'
   else
     Plug 'ctrlpvim/ctrlp.vim'
-    " Plug 'ompugao/ctrlp-history'
   endif
-  " Denite
-  " if has('nvim')
-  "   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-  " else
-  "   Plug 'Shougo/denite.nvim'
-  "   Plug 'roxma/nvim-yarp'
-  "   Plug 'roxma/vim-hug-neovim-rpc'
-  " endif
- "}}}
-  " テキスト操作{{{
+  Plug 'easymotion/vim-easymotion'
+  " Plug 'mattn/benchvimrc-vim' " vimrcのベンチマーク
+
+  """""""""""""""""""""""""
+  " テキスト操作
+  """""""""""""""""""""""""
   " テキストオブジェクト
   " 一覧 https://github.com/kana/vim-textobj-user/wiki
   Plug 'kana/vim-textobj-user'
-  " ac, icなどでコメント内(word-columnの方とバッティングする)
-  " Plug 'glts/vim-textobj-comment'
-  " ai, ii, aI, iI でインデント
-  Plug 'michaeljsmith/vim-indent-object'
-  " au, iu でURL
-  " Plug 'mattn/vim-textobj-url'
-  " al, il で現在の行
-  " Plug 'kana/vim-textobj-line'
-  " gbで直近で貼り付けた範囲
-  Plug 'saaguero/vim-textobj-pastedtext'
-  " _ アンダースコア
-  " Plug 'lucapette/vim-textobj-underscore'
-  " ic, ac, iC, aC, で同一列の文字列
-  " Plug 'idbrii/textobj-word-column.vim/'
-  " af{char}, if{char}で任意の文字
-  Plug 'thinca/vim-textobj-between'
-  " Plug 'kana/vim-textobj-jabraces'
+  Plug 'michaeljsmith/vim-indent-object'         " ai, ii, aI, iI でインデント
+  Plug 'saaguero/vim-textobj-pastedtext'         " gbで直近で貼り付けた範囲
+  Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'h1mesuke/vim-alignta'
-  " Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-repeat'
-  " キャメルケースやスネークケースの変換
-  Plug 'tpope/vim-abolish'
-  "}}}
-  " 表示{{{
+  Plug 'tpope/vim-abolish'                       " キャメルケースやスネークケースの変換
+
+  """""""""""""""""""""""
+  " 表示
+  """""""""""""""""""""""
   Plug 'flazz/vim-colorschemes'
-  " pywalのカラースキーム
-  " if has('unix') && executable('wal')
-  "   Plug 'dylanaraps/wal.vim'
-  " endif
-  
-  " カラースキームを次々に変更
-  " Plug 'vim-scripts/ScrollColors'
-
-  " カッコを色分け
-  Plug 'luochen1990/rainbow'
-  " CSSの色を表示
-  Plug 'ap/vim-css-color', {'for': 'css'}
-  " CSVデータを列ごとに色分け
-  Plug 'mechatroner/rainbow_csv', {'for': 'csv'}
-  " ヤンクした場所をわかりやすくする。
-  Plug 'machakann/vim-highlightedyank'
-  " イタリックフォントを無効化
-  Plug 'mattn/disableitalic-vim'
-
-  " GUIのフォントサイズ変更
-  Plug 'drmikehenry/vim-fontsize'
-
-  " 最小限にするため、airlineじゃなくlightlineを使用
+  Plug 'luochen1990/rainbow'                     " カッコを色分け
+  Plug 'ap/vim-css-color', {'for': 'css'}        " CSSの色を表示
+  Plug 'mechatroner/rainbow_csv', {'for': 'csv'} " CSVデータを列ごとに色分け
+  Plug 'machakann/vim-highlightedyank'           " ヤンクした場所をわかりやすくする。
+  Plug 'mattn/disableitalic-vim'                 " イタリックフォントを無効化
+  Plug 'drmikehenry/vim-fontsize'                " GUIのフォントサイズ変更
   Plug 'itchyny/lightline.vim'
-  " Plug 'vim-airline/vim-airline'
-  " Plug 'vim-airline/vim-airline-themes'
   Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 
-  " スクロールをスムーズに
-  " Plug 'yuttie/comfortable-motion.vim'
-  "}}}
-  " 入力補完・補助{{{
-  " Use release branch
+  """""""""""""""""""""""""
+  " 入力補完・補助
+  """""""""""""""""""""""""
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'mattn/emmet-vim'
   Plug 'LeafCage/yankround.vim'
-  " カッコの自動入力
-  " Plug 'jiangmiao/auto-pairs'
-  " Tabで補完
   Plug 'ervandew/supertab'
-  " snippets
-  " Track the engine.
-  " Plug 'SirVer/ultisnips'
 
-  " Snippets are separated from the engine. Add this if you want them:
-  " Plug 'honza/vim-snippets'
-  " Plug 'lifepillar/vim-mucomplete'
-  "}}}
-  " バージョン管理・変更履歴{{{
+  """"""""""""""""""""""""""""""""""""
+  " バージョン管理・変更履歴
+  """"""""""""""""""""""""""""""""""""
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
-  " コミットブラウザ
-  Plug 'junegunn/gv.vim', {'on': 'GV'}
-  " Gbrowseをgithubで開くようにする
-  Plug 'tpope/vim-rhubarb', {'on': 'Gbrowse'}
-  " Undoツリー管理
-  " Plug 'sjl/gundo.vim'
-  " Undoツリー管理 こっちだとpython依存がない
-  Plug 'mbbill/undotree'
-  " }}}
-  " 移動{{{
-  Plug 'easymotion/vim-easymotion'
-  "}}}
-  " 言語{{{
-  " 様々な言語のパック。
-  Plug 'sheerun/vim-polyglot'
-  " Markdown{{{
-  " markdown-previewのほうがkatexやplantuml対応でいい感じ(node + yarnありが望ましい)
+  Plug 'junegunn/gv.vim', {'on': 'GV'}        " コミットブラウザ
+  Plug 'tpope/vim-rhubarb', {'on': 'Gbrowse'} " Gbrowseをgithubで開くようにする
+  Plug 'mbbill/undotree'                      " Undoツリー管理
+
+  """"""""""""""""""""""""""
+  " 言語
+  """"""""""""""""""""""""""
+  Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
   if executable('node') > 0 && executable('yarn') > 0
-    " If you have nodejs and yarn
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
   else
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
@@ -613,29 +458,16 @@ try
   " Plug 'godlygeek/tabular'
   " Plug 'plasticboy/vim-markdown'
   Plug 'ferrine/md-img-paste.vim'
-  "}}}
-  " typescript, jsxなど{{{
+
   Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
   Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
-  "}}}
-  " pug, stylus{{{
-  " pugとstylusについては一時見送り
-  " Plug 'digitaltoad/vim-pug'
-  " Plug 'dNitro/vim-pug-complete', {'for': ['jade', 'pug']}
-  " Plug 'iloginow/vim-stylus'
-  "}}}
-  "}}}
-  " デバッグ{{{
-  " ターミナルデバッガ
+
+  """"""""""""""""""""""""""
+  " デバッグ
+  """"""""""""""""""""""""""
   " Plug 'epheien/termdbg'
   " Plug 'vim-vdebug/vdebug'
   Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
-  "}}}
-  " その他{{{
-  " Plug 'mtth/scratch.vim'
-  " vimrcのベンチマーク
-  " Plug 'mattn/benchvimrc-vim'
-  "}}}
   call plug#end()
 catch
   echo 'vim-plug 実行中にエラー発生'
@@ -645,23 +477,16 @@ endtry
 "}}}
 " プラグイン設定{{{
 " プラグイン存在確認関数{{{
-let s:plug = {
-      \ "plugs": get(g:, 'plugs', {})
-      \ }
-
+let s:plug = { "plugs": get(g:, 'plugs', {}) }
 function! s:plug.is_installed(name)
   return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
 endfunction
-
-if s:plug.is_installed("vim-myplugin")
-  " setting
-endif
 "}}}
-  " fugitive{{{
-  nnoremap gcd :<C-u>Gcd<CR>
-  nnoremap gs :<C-u>Gstatus<CR>
-  "}}}
-  " あいまい検索{{{
+" fugitive{{{
+nnoremap gcd :<C-u>Gcd<CR>
+nnoremap gs :<C-u>Gstatus<CR>
+"}}}
+" あいまい検索{{{
 " fzf{{{
 if executable('fzf') > 0
   " fzf
@@ -697,16 +522,16 @@ if executable('fzf') > 0
   " Filesコマンドにもプレビューを出す(参考 https://qiita.com/kompiro/items/a09c0b44e7c741724c80)
   if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
     command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+          \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
     command! -bang -nargs=? -complete=dir GFiles
-      \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+          \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
     " ripgrepで検索中、?を押すとプレビュー:
     command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+          \ call fzf#vim#grep(
+          \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+          \   <bang>0 ? fzf#vim#with_preview('up:60%')
+          \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+          \   <bang>0)
   endif
 
   nnoremap <Space>t :<C-u>BTags<CR>
@@ -744,9 +569,9 @@ if executable('fzf') > 0
     " 参考(https://arimasou16.com/blog/2018/11/02/00268/)
     if has('win32') || has('win64')
       command! -bang -nargs=* FzfRg
-        \ call fzf#vim#grep(
-        \   'rg --column --line-number --no-heading --color=always --smart-case "'.<q-args>.'"', 1,
-        \   <bang>0)
+            \ call fzf#vim#grep(
+            \   'rg --column --line-number --no-heading --color=always --smart-case "'.<q-args>.'"', 1,
+            \   <bang>0)
       nnoremap <Space>a :<C-u>FzfRg<CR>
       nnoremap <C-k> :<C-u>FzfRg <C-r><C-w><CR>
     else
@@ -780,7 +605,6 @@ if executable('fzf') > 0
 
   command! -bang Registers call s:registers('<bang>' ==# '!')
 
-
   nnoremap <Space>y :<C-u>Registers<CR>
   nnoremap <Space>" :<C-u>Registers<CR>
 
@@ -793,10 +617,10 @@ if executable('fzf') > 0
   endfunction
 
   command! BD call fzf#run(fzf#wrap({
-    \ 'source': Bufs(),
-    \ 'sink*': { lines -> execute('bwipeout '.join(map(lines, {_, line -> split(line)[0]}))) },
-    \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
-  \ }))
+        \ 'source': Bufs(),
+        \ 'sink*': { lines -> execute('bwipeout '.join(map(lines, {_, line -> split(line)[0]}))) },
+        \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+        \ }))
 
   command! Inv call fzf#run(fzf#wrap({
         \ 'source': 'inv --list',
@@ -841,13 +665,13 @@ nnoremap <F8> :TagbarToggle<CR>
 nnoremap <Space>i :TagbarToggle<CR>
 nnoremap <Space>o :TagbarToggle<CR>
 let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading_L1',
-        \ 'i:Heading_L2',
-        \ 'k:Heading_L3'
-    \ ]
-\ }
+      \ 'ctagstype' : 'markdown',
+      \ 'kinds' : [
+      \ 'h:Heading_L1',
+      \ 'i:Heading_L2',
+      \ 'k:Heading_L3'
+      \ ]
+      \ }
 "}}}
 " NERDTree{{{
 nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
@@ -862,57 +686,35 @@ let g:NERDTreeLimitedSyntax = 1
 " gdb使用の設定
 " let g:termdebug_wide = 163
 " }}}
-" Gundo{{{
-let g:gundo_prefer_python3 = 1
-" nnoremap <F9> :<C-u>GundoToggle<CR>
-" nnoremap <Space>u :<C-u>GundoToggle<CR>
-"}}}
 " ranger{{{
 if executable("ranger") > 0
-    " nnoremap <Space>f :Ranger<CR>
+  " nnoremap <Space>f :Ranger<CR>
 endif
 "}}}
 " EasyMotion{{{
 let g:EasyMotion_smartcase = 1
-" <Leader>f{char} to move to {char}
-" map  <Leader>f <Plug>(easymotion-bd-f)
-" nmap <Leader>f <Plug>(easymotion-overwin-f)
-
-" s{char}{char} to move to {char}{char}
 nmap <Space>s <Plug>(easymotion-overwin-f2)
 nmap , <Plug>(easymotion-overwin-f2)
-
-" Move to line
-" map <Leader>L <Plug>(easymotion-bd-jk)
-" nmap <Leader>L <Plug>(easymotion-overwin-line)
-
-" Move to word
-" map  <Space>w <Plug>(easymotion-bd-w)
 map  <Space>f <Plug>(easymotion-bd-w)
-" map  <Space>w <Plug>(easymotion-bd-w)
-
-" nmap <Leader>w <Plug>(easymotion-overwin-w)
-" nmap <Leader>L <Plug>(easymotion-overwin-line)
 "}}}
 " Aligntaの設定{{{
 if s:plug.is_installed("vim-alignta")
-  " vnoremap gs :Alignta \s\+<CR>
   vnoremap sc :Alignta \s\+<CR>
 endif
 "}}}
 " yankroundの設定{{{
 if s:plug.is_installed("yankround.vim")
-nmap p <Plug>(yankround-p)
-xmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap gp <Plug>(yankround-gp)
-xmap gp <Plug>(yankround-gp)
-nmap gP <Plug>(yankround-gP)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
-let g:yankround_max_history = 50
-" 下なんかうまく動かない
-" nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
+  nmap p <Plug>(yankround-p)
+  xmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap gp <Plug>(yankround-gp)
+  xmap gp <Plug>(yankround-gp)
+  nmap gP <Plug>(yankround-gP)
+  nmap <C-p> <Plug>(yankround-prev)
+  nmap <C-n> <Plug>(yankround-next)
+  let g:yankround_max_history = 50
+  " 下なんかうまく動かない
+  " nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 endif
 "}}}
 " coc.nvimの設定{{{
@@ -924,8 +726,10 @@ let g:coc_global_extensions = [
       \ "coc-python",
       \ "coc-tsserver",
       \ "coc-json",
+      \ "coc-yaml",
       \ "coc-html",
       \ "coc-css",
+      \ "coc-tailwindcss",
       \ "coc-vimlsp",
       \ "coc-marketplace",
       \ "coc-highlight",
@@ -936,11 +740,14 @@ let g:coc_global_extensions = [
       \ "coc-cmake",
       \ "coc-docker",
       \ "coc-sh",
+      \ "coc-word",
+      \ "coc-spell-checker",
+      \ "coc-tabnine",
       \ "https://github.com/xabikos/vscode-react",
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
-      " \ "coc-python@1.2.9",
-      " \ "coc-explorer",
+" \ "coc-python@1.2.9",
+" \ "coc-explorer",
 
 
 function! s:my_coc_nvim_config()
@@ -983,6 +790,7 @@ augroup coc_group
   autocmd FileType cpp call s:my_coc_nvim_config()
   autocmd FileType javascript call s:my_coc_nvim_config()
   autocmd FileType json call s:my_coc_nvim_config()
+  autocmd FileType yaml call s:my_coc_nvim_config()
   autocmd FileType go call s:my_coc_nvim_config()
   autocmd FileType html call s:my_coc_nvim_config()
   autocmd FileType css call s:my_coc_nvim_config()
@@ -1015,41 +823,6 @@ function! s:show_documentation()
 endfunction
 
 "}}}
-" airline{{{
-
-" Theme参考 https://github.com/vim-airline/vim-airline/wiki/Screenshots
-
-" letg:airline_theme='papercolor' 色が変わらないのでわかりづらいので保留
-" let g:airline_theme='light' 色が変わりすぎて煩わしいので保留
-" if has('unix') && executable('wal')
-"   let g:airline_theme='wal'
-" else
-  let g:airline_theme='bubblegum'
-" endif
-
-let g:airline#extensions#whitespace#enabled = 0
-" 参考 https://www.reddit.com/r/vim/comments/crs61u/best_airline_settings/
-" let g:airline_powerline_fonts = 1
-let g:airline_powerline_fonts = 0
-let g:airline_section_c = '%-0.30{getcwd()}' " in section C of the status line display the CWD
-
-"TABLINE:
-
-let g:airline#extensions#tabline#enabled = 1           " enable airline tabline
-let g:airline#extensions#tabline#show_close_button = 0 " remove 'X' at the end of the tabline
-let g:airline#extensions#tabline#tabs_label = ''       " can put text here like BUFFERS to denote buffers (I clear it so nothing is shown)
-let g:airline#extensions#tabline#buffers_label = ''    " can put text here like TABS to denote tabs (I clear it so nothing is shown)
-let g:airline#extensions#tabline#fnamemod = ':t'       " disable file paths in the tab
-let g:airline#extensions#tabline#show_tab_count = 0    " dont show tab numbers on the right
-let g:airline#extensions#tabline#show_buffers = 0      " dont show buffers in the tabline
-let g:airline#extensions#tabline#tab_min_count = 2     " minimum of 2 tabs needed to display the tabline
-let g:airline#extensions#tabline#show_splits = 0       " disables the buffer name that displays on the right of the tabline
-let g:airline#extensions#tabline#show_tab_nr = 0       " disable tab numbers
-let g:airline#extensions#tabline#show_tab_type = 0     " disables the weird ornage arrow on the tabline
-
-let g:airline#extensions#branch#enabled = 1
-
-"}}}
 " lightline{{{
 function! GetCWD30()
   return getcwd()[-30:]
@@ -1080,59 +853,59 @@ let g:lightline = {
 "set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-\	'guis': [''],
-\	'cterms': [''],
-\	'operators': '_,_',
-\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-\	'separately': {
-\		'*': {},
-\		'markdown': {
-\			'parentheses_options': 'containedin=markdownCode contained',
-\		},
-\		'lisp': {
-\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-\		},
-\		'haskell': {
-\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
-\		},
-\		'vim': {
-\			'parentheses_options': 'containedin=vimFuncBody',
-\		},
-\		'perl': {
-\			'syn_name_prefix': 'perlBlockFoldRainbow',
-\		},
-\		'stylus': {
-\			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
-\		},
-\		'css': 0,
-\   'nerdtree': 0,
-\	}
-\}
+      \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+      \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+      \	'guis': [''],
+      \	'cterms': [''],
+      \	'operators': '_,_',
+      \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+      \	'separately': {
+      \		'*': {},
+      \		'markdown': {
+      \			'parentheses_options': 'containedin=markdownCode contained',
+      \		},
+      \		'lisp': {
+      \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+      \		},
+      \		'haskell': {
+      \			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
+      \		},
+      \		'vim': {
+      \			'parentheses_options': 'containedin=vimFuncBody',
+      \		},
+      \		'perl': {
+      \			'syn_name_prefix': 'perlBlockFoldRainbow',
+      \		},
+      \		'stylus': {
+      \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
+      \		},
+      \		'css': 0,
+      \   'nerdtree': 0,
+      \	}
+      \}
 " }}}
 " emmet{{{
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
 let g:user_emmet_settings = {
-\  'variables' : {
-\    'lang' : "ja"
-\  },
-\  'html' : {
-\    'indentation' : '  ',
-\    'snippets' : {
-\      'html:5': "<!DOCTYPE html>\n"
-\        ."<html lang=\"${lang}\">\n"
-\        ."<head>\n"
-\        ."\t<meta charset=\"${charset}\">\n"
-\        ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"
-\        ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
-\        ."\t<title></title>\n"
-\        ."</head>\n"
-\        ."<body>\n\t${child}|\n</body>\n"
-\        ."</html>",
-\    }
-\  }
-\}
+      \  'variables' : {
+      \    'lang' : "ja"
+      \  },
+      \  'html' : {
+      \    'indentation' : '  ',
+      \    'snippets' : {
+      \      'html:5': "<!DOCTYPE html>\n"
+      \        ."<html lang=\"${lang}\">\n"
+      \        ."<head>\n"
+      \        ."\t<meta charset=\"${charset}\">\n"
+      \        ."\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"
+      \        ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+      \        ."\t<title></title>\n"
+      \        ."</head>\n"
+      \        ."<body>\n\t${child}|\n</body>\n"
+      \        ."</html>",
+      \    }
+      \  }
+      \}
 " \    'block_all_childless' : 1,
 "}}}
 " markdown-preview{{{
@@ -1141,16 +914,6 @@ let g:mkdp_auto_close = 0
 "}}}
 " highlightedyank{{{
 let g:highlightedyank_highlight_duration = 150
-"}}}
-" mucomplete{{{
-if s:plug.is_installed("lifepillar/vim-mucomplete")
-  let g:mucomplete#enable_auto_at_startup = 1
-  set completeopt+=menuone
-  set completeopt+=noselect
-  set completeopt+=noinsert
-  set shortmess+=c
-  set belloff+=ctrlg
-endif
 "}}}
 " vim-markdown{{{
 let g:tex_conceal = ""
@@ -1174,8 +937,8 @@ augroup MdImgPasteGroup
 augroup END
 "}}}
 " comfortable-motion.vim {{{
-  " デフォルトのキーバインドを上書きしない
-  " let g:comfortable_motion_no_default_key_mappings = 1
+" デフォルトのキーバインドを上書きしない
+" let g:comfortable_motion_no_default_key_mappings = 1
 "}}}
 " vimspector{{{
 
@@ -1225,23 +988,7 @@ let g:loaded_getscriptPlugin   = 1
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
   if !has("gui_running") 
-    "&& !exists("$HYPER_RUNNING")
-    " pywalのカラースキーム
-    " if has('unix') && executable('wal')
-    "   colorscheme wal
-    " else
-      " colorscheme molokai
-      " colorscheme Monokai
-      " colorscheme ayu
-      " colorscheme gruvbox
-      " colorscheme nord
-      " colorscheme nordisk
-      " colorscheme vim-material
-      " colorscheme tender
-      " colorscheme wombat256i
-      colorscheme iceberg
-      " colorscheme itg_flat
-    " endif
+    colorscheme iceberg
   endif
 catch
 endtry
@@ -1312,41 +1059,13 @@ function! MyFoldText()
   let pad_width = w - (strwidth(line) + strwidth(tail)) - 2
 
   if pad_width > 0
-      let line = line . repeat(' ', pad_width) . tail
+    let line = line . repeat(' ', pad_width) . tail
   endif
   return line
 endfunction
 " }}}
 " }}}
 " スクリプト{{{
-
-" 不要なのでコメントアウト
-" 折りたたみ情報を保持する 参考: http://nametake-1009.hatenablog.com/entry/2016/10/02/212629
-" let tmp_viewdir=$HOME . '/.vim/view'
-" execute 'set viewdir=' . tmp_viewdir
-
-" augroup SaveFoldings
-" autocmd!
-" autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
-" autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | try | silent loadview | catch | endtry | endif
-" augroup END
-" Don't save options.
-set viewoptions-=options
-
-" CDコマンドでディレクトリ移動
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
-function! s:ChangeCurrentDir(directory, bang)
-    if a:directory == ''
-        lcd %:p:h
-    else
-        execute 'lcd' . a:directory
-    endif
-
-    if a:bang == ''
-        pwd
-    endif
-endfunction
-
 " ~/.local/.vimrcが存在すればそれを読み込む
 if filereadable(expand($HOME.'/.local/.vimrc'))
   source $HOME/.local/.vimrc
@@ -1367,26 +1086,26 @@ endfunction
 
 function! s:cdn_get_version(name)
   let l:opts = {
-    \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[].version'' ',
-    \ 'sink': {x -> s:cdn_get_path(a:name, x)}
-    \ }
+        \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[].version'' ',
+        \ 'sink': {x -> s:cdn_get_path(a:name, x)}
+        \ }
   call fzf#run(fzf#wrap(l:opts))
 endfunction
 
 function! s:cdn_get_path(name, version)
   let l:opts = {
-    \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[]|select(.version == "' . a:version . '")|.files[]'' ',
-    \ 'sink': {x -> append('.', s:cdn_tag(a:name, a:version, x))}
-    \ }
+        \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[]|select(.version == "' . a:version . '")|.files[]'' ',
+        \ 'sink': {x -> append('.', s:cdn_tag(a:name, a:version, x))}
+        \ }
   call fzf#run(fzf#wrap(l:opts))
 endfunction
 
 function! s:cdn(libname)
   " ライブラリ名を取得
   let l:opts = {
-    \ 'source': 'curl -s "https://api.cdnjs.com/libraries?search=' . a:libname . '"|jq --raw-output ''.results[].name'' ',
-    \ 'sink': {x -> s:cdn_get_version(x)}
-    \ }
+        \ 'source': 'curl -s "https://api.cdnjs.com/libraries?search=' . a:libname . '"|jq --raw-output ''.results[].name'' ',
+        \ 'sink': {x -> s:cdn_get_version(x)}
+        \ }
   call fzf#run(fzf#wrap(l:opts))
 endfunction
 
@@ -1469,8 +1188,8 @@ if has('gui_running')
   " イタリックフォントを無効化
   if s:plug.is_installed('disableitalic-vim')
     augroup DisableItalicGroup
-    autocmd!
-    autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
+      autocmd!
+      autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
     augroup END
   endif
 
@@ -1482,7 +1201,7 @@ if has('gui_running')
     endif
   catch
   endtry
-"}}}
+  "}}}
   " term設定{{{
   nnoremap !+term+! <Nop>
   tnoremap !+term+! <Nop>
@@ -1544,10 +1263,10 @@ if has('gui_running')
   endtry
   "}}}
   " IME設定{{{
-if has('multi_byte_ime') || has('xim') 
-  highlight Cursor guifg=NONE guibg=White
-  highlight CursorIM guifg=NONE guibg=DarkRed
-endif
-"}}}
+  if has('multi_byte_ime') || has('xim') 
+    highlight Cursor guifg=NONE guibg=White
+    highlight CursorIM guifg=NONE guibg=DarkRed
+  endif
+  "}}}
 endif
 "}}}
