@@ -743,12 +743,12 @@ let g:coc_global_extensions = [
       \ "coc-cmake",
       \ "coc-docker",
       \ "coc-sh",
-      \ "coc-word",
-      \ "coc-spell-checker",
-      \ "coc-tabnine",
       \ "https://github.com/xabikos/vscode-react",
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
+" \ "coc-tabnine",
+" \ "coc-word",
+" \ "coc-spell-checker",
 " \ "coc-python@1.2.9",
 " \ "coc-explorer",
 
@@ -1173,14 +1173,14 @@ if has('gui_running')
   silent! set antialias
   "}}}
   " フォント{{{
-  if s:plug.is_installed('vim-fontsize')
-    nmap <silent> +  <Plug>FontsizeInc
-    nmap <silent> -  <Plug>FontsizeDec
-  else
+  " if s:plug.is_installed('vim-fontsize')
+  "   nmap <silent> +  <Plug>FontsizeInc
+  "   nmap <silent> -  <Plug>FontsizeDec
+  " else
     " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
     nnoremap + :let &guifont = substitute(&guifont, '\d\+', '\=submatch(0)+1', '')<CR>
     nnoremap - :let &guifont = substitute(&guifont, '\d\+', '\=max([submatch(0)-1, 1])', '')<CR>
-  endif
+  " endif
 
   " 透明度を変更
   if exists('&transparency')
