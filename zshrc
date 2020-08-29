@@ -167,10 +167,14 @@ setopt no_beep
 # fzfの設定
 if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
+elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+    source /usr/share/doc/fzf/examples/completion.zsh
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
 else
     [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
     [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 fi
+
 
 # invokeのzsh用入力補完(自動生成されたもの)
 # Invoke tab-completion script to be sourced with the Z shell.
