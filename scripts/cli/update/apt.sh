@@ -89,6 +89,7 @@ packages=(
     w3m-img
     lynx
     visidata # スプレッドシート
+    pv # パイプの進捗を表示
 
     # 画像
     imagemagick
@@ -143,6 +144,7 @@ packages=(
     iptraf-ng # ip通信の情報表示
     aria2 # curlやwgetの高速版(複数のコネクションを使うのでサーバの負荷で迷惑にならないよう気をつける)
     rename # ファイル名変更
+    fzf
 
     unar # 圧縮ファイルの解凍
     atool # 圧縮・伸長コマンドのラッパー

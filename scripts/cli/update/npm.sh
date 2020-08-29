@@ -20,6 +20,9 @@ packages=(
 
     # 開発
     neovim
+    json-server # とりあえずJSONを返すモックがほしいときに使う
+    json2csv
+    jsondiffpatch
 
     # CLI
     undollar # コマンドライン先頭に「$」がついていたらそれを削除する

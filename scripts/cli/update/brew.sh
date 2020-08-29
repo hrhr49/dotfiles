@@ -20,11 +20,16 @@ formulas=(
     # 表示
     tree
     htop
-    bat
+    bat # catの色付き & 行番号や、git差分なども表示
+    ccat # catの色付き
     exa # lsのいい感じバージョン
     ncdu # ディスク使用量
     tldr # コマンドの使用例
     tokei # ファイル種別ごとの行数などを表示
+    silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
+    ccze # ログに色を付ける
+    hexyl # 16進数ダンプ
+    pastel # カラー表示(いい感じの色を探すときに便利そう)
 
     # 開発 効率化
     direnv
@@ -50,7 +55,7 @@ formulas=(
     ripgrep
     ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索
     the_silver_searcher
-    fzf
+    # fzf # aptの方で入れる
     peco
     fd
 
@@ -73,7 +78,7 @@ formulas=(
     trash-cli # ゴミ箱操作
     jq        # JSONをいい感じにフィルター
     fx        # jqみたいだけどインタラクティブにできたりする
-    navi      # チートシート
+    jo        # JSONオブジェクトを生成
     bitwise   # ビット表示
 
     # 図形作成

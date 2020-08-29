@@ -5,6 +5,7 @@
 packages=(
     # ユーティリティ
     csvkit
+    csvtotable # csvファイルから、ソートやフィルタ可能ないい感じのHTMLを生成
     watchdog
     pyyaml
     yq # jqのyaml用ラッパー
