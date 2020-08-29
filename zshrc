@@ -14,27 +14,23 @@ export TERM="xterm-256color"
 source "${HOME}/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-zinit light zsh-users/zsh-syntax-highlighting # 実行可能なコマンドに色付け
-zinit light zsh-users/zsh-completions # 補完
+# fzf-tabの前にemacsモードにしとかないとうまく行かない？
+# emacsモード
+bindkey -e
+zinit light Aloxaf/fzf-tab
+zinit light zdharma/fast-syntax-highlighting
+# zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
-# プロンプト(npmが必要？)
-# zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-# zinit light sindresorhus/pure
-#}}}
+# }}}
 # プラグイン設定{{{
 # zsh-users/zsh-syntax-highlighting{{{
-ZSH_HIGHLIGHT_STYLES[path]=none
-ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+# ZSH_HIGHLIGHT_STYLES[path]=none
+# ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 # }}}
 # }}}
 # プロンプト設定{{{
-# 参考 http://tkengo.github.io/blog/2013/05/12/zsh-vcs-info/
-# この行は現在のパスを表示する設定です。ブランチを表示して色をつける設定とは関係ありません
-# autoload -Uz colors
-# colors
-# RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
-
 autoload -Uz vcs_info
 setopt prompt_subst
 zstyle ':vcs_info:git:*' check-for-changes true
@@ -55,16 +51,7 @@ function precmd() {
 # %~: カレントディレクトリ
 # %n: ユーザ名
 
-# PROMPT='%B%F{green}%n@%m%f:%F{blue}%~%f${vcs_info_msg_0_}$%b'
 PROMPT='%B%F{blue}%~%f ${vcs_info_msg_0_}%b'
-# Power Lineっぽい感じ(参考 https://qiita.com/peony/items/031a55b61dff6053b883)
-#
-# PROMPT=""
-# PROMPT=$PROMPT"%{${bg[white]%}%}%{${fg[black]}%} %n %{${bg[blue]}%}%{${fg[white]}%} "
-# PROMPT=$PROMPT"%{${bg[blue]}%}%{${fg[black]}%}%~ %{${bg[black]}%}%{${fg[blue]}%} "
-# PROMPT=$PROMPT"%{${bg[black]}%}%{${fg[white]}%}"'${vcs_info_msg_0_}'"%{${reset_color}%}%{${fg[black]}%} "
-# PROMPT=$PROMPT"%{${reset_color}%}"
-
 # }}}
 # コマンド補完{{{
 
@@ -128,8 +115,6 @@ setopt inc_append_history
 setopt share_history
 # }}}
 # キーバインド{{{
-# emacsモード
-bindkey -e
 
 # <C-x> <C-e>でコマンドラインをエディタで編集
 autoload -Uz edit-command-line
