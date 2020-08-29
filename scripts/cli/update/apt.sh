@@ -70,8 +70,25 @@ packages=(
     git
     zsh
 
+    # gnome
+    gnome-tweaks
+    cairo-dock # 下の方にアイコンを置くやつ
+
+    # リモートデスクトップ
+    remmina # RDPクライアント
+
+    # 同期
+    syncthing
+
+    # QRコード
+    qtqr
+    qrencode
+
     # CUI
     w3m
+    w3m-img
+    lynx
+    visidata # スプレッドシート
 
     # 画像
     imagemagick
@@ -125,6 +142,7 @@ packages=(
     iftop # ネットワークインタフェースの情報表示
     iptraf-ng # ip通信の情報表示
     aria2 # curlやwgetの高速版(複数のコネクションを使うのでサーバの負荷で迷惑にならないよう気をつける)
+    rename # ファイル名変更
 
     unar # 圧縮ファイルの解凍
     atool # 圧縮・伸長コマンドのラッパー
@@ -138,6 +156,10 @@ packages=(
     open-jtalk
     open-jtalk-mecab-naist-jdic
     hts-voice-nitech-jp-atr503-m001
+
+    # USBカメラ
+    guvcview # 撮影
+    fswebcam # 画像取得
 
     # ノートPCの省電力用
     # powertop

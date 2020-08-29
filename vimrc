@@ -427,7 +427,7 @@ try
   Plug 'mechatroner/rainbow_csv', {'for': 'csv'} " CSVデータを列ごとに色分け
   Plug 'machakann/vim-highlightedyank'           " ヤンクした場所をわかりやすくする。
   Plug 'mattn/disableitalic-vim'                 " イタリックフォントを無効化
-  Plug 'drmikehenry/vim-fontsize'                " GUIのフォントサイズ変更
+  " Plug 'drmikehenry/vim-fontsize'                " GUIのフォントサイズ変更
   Plug 'itchyny/lightline.vim'
   Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 
@@ -784,6 +784,10 @@ function! s:my_coc_nvim_config()
   " Symbol renaming.
   nmap <buffer> <F2> <Plug>(coc-rename)
   hi clear CocUnderLine
+
+	nnoremap <expr><C-n> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-n>"
+	nnoremap <expr><C-p> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-p>"
+
 endfunction
 
 augroup coc_group
@@ -964,7 +968,7 @@ function! LaunchFileDebug()
 endfunction
 "}}}
 " 組み込み{{{
-" let loaded_matchparen = 1
+let loaded_matchparen = 1 " カッコのハイライトを消す
 let g:netrw_keepdir = 0
 "let g:markdown_folding=1
 "
@@ -1000,6 +1004,8 @@ endtry
 " 対応カッコの色設定を変更(そのままだとわかりづらいときあった)
 " 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+
+set showmatch " 閉じカッコ入力時に、対応する開きカッコにハイライト
 
 " hilight current line number
 " set cursorline
