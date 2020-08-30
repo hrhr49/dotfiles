@@ -18,6 +18,8 @@ packages=(
     # ユーティリティ
     # wifi-password-cli # wifi-passwordコマンドでwifiのパスワードを表示
 
+    daff # csvのdiff
+
     # 開発
     neovim
     json-server # とりあえずJSONを返すモックがほしいときに使う
