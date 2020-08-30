@@ -400,7 +400,7 @@ try
   else
     Plug 'ctrlpvim/ctrlp.vim'
   endif
-  Plug 'easymotion/vim-easymotion'
+  Plug 'easymotion/vim-easymotion', {'on': [ '<Plug>(easymotion-overwin-f2)', '<Plug>(easymotion-bd-w)' ]}
   " Plug 'mattn/benchvimrc-vim' " vimrcのベンチマーク
 
   """""""""""""""""""""""""
@@ -409,14 +409,14 @@ try
   " テキストオブジェクト
   " 一覧 https://github.com/kana/vim-textobj-user/wiki
   Plug 'kana/vim-textobj-user'
-  Plug 'michaeljsmith/vim-indent-object'         " ai, ii, aI, iI でインデント
-  Plug 'saaguero/vim-textobj-pastedtext'         " gbで直近で貼り付けた範囲
-  Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
+  Plug 'michaeljsmith/vim-indent-object' " ai, ii, aI, iI でインデント
+  Plug 'saaguero/vim-textobj-pastedtext' " gbで直近で貼り付けた範囲
+  Plug 'thinca/vim-textobj-between'      " af{char}, if{char}で任意の文字
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'h1mesuke/vim-alignta'
   Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-abolish'                       " キャメルケースやスネークケースの変換
+  Plug 'tpope/vim-abolish'               " キャメルケースやスネークケースの変換
 
   """""""""""""""""""""""
   " 表示
@@ -435,18 +435,23 @@ try
   " 入力補完・補助
   """""""""""""""""""""""""
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'mattn/emmet-vim'
+  Plug 'mattn/emmet-vim', {'on': '<Plug>(emmet-expand-abbr)'}
   Plug 'LeafCage/yankround.vim'
   Plug 'ervandew/supertab'
 
   """"""""""""""""""""""""""""""""""""
   " バージョン管理・変更履歴
   """"""""""""""""""""""""""""""""""""
-  Plug 'airblade/vim-gitgutter'
+  " gitgutterよりこっちのが速い
+  if has('nvim') || has('patch-8.0.902')
+    Plug 'mhinz/vim-signify'
+  else
+    Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+  endif
   Plug 'tpope/vim-fugitive'
-  Plug 'junegunn/gv.vim', {'on': 'GV'}        " コミットブラウザ
-  Plug 'tpope/vim-rhubarb', {'on': 'Gbrowse'} " Gbrowseをgithubで開くようにする
-  Plug 'mbbill/undotree'                      " Undoツリー管理
+  Plug 'junegunn/gv.vim', {'on': 'GV'}           " コミットブラウザ
+  Plug 'tpope/vim-rhubarb', {'on': 'Gbrowse'}    " Gbrowseをgithubで開くようにする
+  Plug 'mbbill/undotree', {'on': 'UndotreeShow'} " Undoツリー管理
 
   """"""""""""""""""""""""""
   " 言語
@@ -460,7 +465,7 @@ try
   " vim-markdownの依存
   " Plug 'godlygeek/tabular'
   " Plug 'plasticboy/vim-markdown'
-  Plug 'ferrine/md-img-paste.vim'
+  Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 
   Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
   Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
@@ -892,6 +897,7 @@ let g:rainbow_conf = {
       \}
 " }}}
 " emmet{{{
+imap <C-y>, <Plug>(emmet-expand-abbr)
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
 let g:user_emmet_settings = {
       \  'variables' : {
