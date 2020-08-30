@@ -967,6 +967,15 @@ function! LaunchFileDebug()
   call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
 endfunction
 "}}}
+" イタリックフォントを無効化
+  if s:plug.is_installed('disableitalic-vim')
+    augroup DisableItalicGroup
+      autocmd!
+      " ColorSchemeの方でautocmdすると、vim起動後コマンドが見つからないときがある？
+      autocmd BufRead,BufNewFile,ColorScheme * silent! DisableItalic
+    augroup END
+  endif
+
 " 組み込み{{{
 let loaded_matchparen = 1 " カッコのハイライトを消す
 let g:netrw_keepdir = 0
@@ -1192,14 +1201,6 @@ if has('gui_running')
   if exists('&transparency')
     nnoremap <S-Up> :let &transparency = min([&transparency + 5, 255])<CR>
     nnoremap <S-Down> :let &transparency = max([&transparency - 5, 0])<CR>
-  endif
-
-  " イタリックフォントを無効化
-  if s:plug.is_installed('disableitalic-vim')
-    augroup DisableItalicGroup
-      autocmd!
-      autocmd BufRead,BufNewFile,ColorScheme * DisableItalic
-    augroup END
   endif
 
   try
