@@ -422,6 +422,7 @@ try
   " 表示
   """""""""""""""""""""""
   Plug 'flazz/vim-colorschemes'
+  " Plug 'joshdick/onedark.vim'
   Plug 'luochen1990/rainbow'                     " カッコを色分け
   Plug 'ap/vim-css-color', {'for': 'css'}        " CSSの色を表示
   Plug 'mechatroner/rainbow_csv', {'for': 'csv'} " CSVデータを列ごとに色分け

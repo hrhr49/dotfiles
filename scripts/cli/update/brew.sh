@@ -55,7 +55,7 @@ formulas=(
     ripgrep
     ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索
     the_silver_searcher
-    # fzf # aptの方で入れる
+    fzf
     peco
     fd
 

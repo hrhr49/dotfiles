@@ -203,4 +203,17 @@ fi
 # ネットからコピペするときに$が先頭についていたら面倒なので消す
 # bashだとエラーが出る?
 alias '$'=' '
+
+# 拡張子ごとに使用するコマンド
+alias -s png=sxiv
+alias -s jpg=sxiv
+alias -s jpeg=sxiv
+
+alias -s mp4=mpv
+alias -s mp3=mpv
+alias -s wav=mpv
+
+alias -s pdf=zathura
+
+alias -s log=less
 # }}}
