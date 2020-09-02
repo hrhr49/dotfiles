@@ -23,6 +23,7 @@ formulas=(
     bat # catの色付き & 行番号や、git差分なども表示
     ccat # catの色付き
     exa # lsのいい感じバージョン
+    lsd # exaと同じ。こっちのがはやい？
     ncdu # ディスク使用量
     tldr # コマンドの使用例
     tokei # ファイル種別ごとの行数などを表示
@@ -74,6 +75,7 @@ formulas=(
 
     # ユーティリティ
     fasd
+    zoxide    # zコマンドで最近のディレクトリに移動
     httpie    # curlのようなやつ
     trash-cli # ゴミ箱操作
     jq        # JSONをいい感じにフィルター

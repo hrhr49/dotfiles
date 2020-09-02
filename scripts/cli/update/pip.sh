@@ -9,6 +9,7 @@ packages=(
     watchdog
     pyyaml
     yq # jqのyaml用ラッパー
+    rich # コンソールでリッチテキスト
 
     # 環境管理
     pipenv
@@ -29,6 +30,8 @@ packages=(
     mypy
     pylint
     python-language-server
+    better_exceptions
+
 
     # Linux
     pywal # 壁紙に合わせたカラースキームを使用

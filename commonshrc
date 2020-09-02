@@ -88,13 +88,13 @@ export PIPENV_VENV_IN_PROJECT=1
 # 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
 alias z=
 unalias z
-z() {
-  if [[ -z "$*" ]]; then
-    cd "$(fasd_cd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')" || exit
-  else
-    cd "$(fasd_cd -d | fzf --query="$*" -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')" || exit
-  fi
-}
+# z() {
+#   if [[ -z "$*" ]]; then
+#     cd "$(fasd_cd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')" || exit
+#   else
+#     cd "$(fasd_cd -d | fzf --query="$*" -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//')" || exit
+#   fi
+# }
 
 # rangerの多重起動を回避
 # 参考: https://wiki.archlinux.org/index.php/Ranger#Preventing_nested_ranger_instances
@@ -214,10 +214,17 @@ alias gitd="git diff"
 alias gitck='git checkout $(git branch|sed -e "s/[ *]//g"|fzf)'
 # }}}
 # lsのエイリアス{{{
-# 時々遅いので将来削除するかも
-alias ls="ls --color=auto"
-alias ll="ls -l"
-alias la="ls -a"
+
+if type "lsd" > /dev/null 2>&1; then
+    alias ls="lsd"
+    alias ll="lsd -l"
+    alias la="lsd -a"
+else
+    # 時々遅いので将来削除するかも
+    alias ls="ls --color=auto"
+    alias ll="ls -l"
+    alias la="ls -a"
+fi
 # }}}
 # cdのエイリアス{{{
 alias ..="cd .."
@@ -277,9 +284,13 @@ alias ztime='for i in $(seq 1 10); do time zsh -i -c exit; done'
 # aria2で複数コネクションを使ったダウンロード
 alias wget-fast='aria2c -x5'
 
+if type "bat" > /dev/null 2>&1; then
+    alias cat=bat
+fi
 # }}}
 # 環境変数{{{
-TERM=xterm-256color
+export TERM=xterm-256color
+export BETTER_EXCEPTIONS=1
 
 # 独自
 # いろいろなファイルを放り込んでおくディレクトリ

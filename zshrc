@@ -152,7 +152,12 @@ setopt no_beep
 # fzfの設定
 if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
-elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+elif [[ -f /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/completion.zsh \
+     && -f /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/key-bindings.zsh ]]; then
+    source /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/completion.zsh
+    source /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/key-bindings.zsh
+elif [[ -f /usr/share/doc/fzf/examples/completion.zsh \
+     && -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
     source /usr/share/doc/fzf/examples/completion.zsh
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 else
@@ -197,6 +202,12 @@ compctl -K _complete_invoke + -f invoke inv
 # direnvの設定
 if type "direnv" > /dev/null 2>&1; then
   eval "$(direnv hook zsh)"
+fi
+
+if type "zoxide" > /dev/null 2>&1; then
+  # zinitが勝手にziにエイリアスしているっぽい
+  unalias zi
+  eval "$(zoxide init zsh)"
 fi
 # }}}
 # エイリアス{{{
