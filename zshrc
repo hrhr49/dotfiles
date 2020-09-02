@@ -28,6 +28,8 @@ zinit light zsh-users/zsh-autosuggestions
 # zsh-users/zsh-syntax-highlighting{{{
 # ZSH_HIGHLIGHT_STYLES[path]=none
 # ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+# アンダーラインはつけない
+FAST_HIGHLIGHT_STYLES[path-to-dir]=fg=magenta
 # }}}
 # }}}
 # プロンプト設定{{{
