@@ -3,34 +3,28 @@
 
 # プロファイリング用(参考 https://qiita.com/vintersnow/items/7343b9bf60ea468a4180)
 if [ "$BENCH_ZSH" = "1" ]; then
-    if (which zprof > /dev/null 2>&1) ;then
-      zprof
-    fi
+  if (which zprof > /dev/null 2>&1) ;then
+    zprof
+  fi
 fi
 
+# emacsモード(色々設定する前にemacsモードの設定しとく)
+bindkey -e
 export TERM="xterm-256color"
 # プラグイン{{{
 # zinit
 source "${HOME}/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-# fzf-tabの前にemacsモードにしとかないとうまく行かない？
-# emacsモード
-bindkey -e
-zinit light Aloxaf/fzf-tab
-zinit light zdharma/fast-syntax-highlighting
-# zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-
-# }}}
-# プラグイン設定{{{
-# zsh-users/zsh-syntax-highlighting{{{
-# ZSH_HIGHLIGHT_STYLES[path]=none
-# ZSH_HIGHLIGHT_STYLES[path_prefix]=none
-# アンダーラインはつけない
-FAST_HIGHLIGHT_STYLES[path-to-dir]=fg=magenta
-# }}}
+zinit wait lucid for \
+  Aloxaf/fzf-tab \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+  atload"FAST_HIGHLIGHT_STYLES[path-to-dir]=fg=magenta" \
+  zdharma/fast-syntax-highlighting \
+  blockf \
+  zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+  zsh-users/zsh-autosuggestions
 # }}}
 # プロンプト設定{{{
 autoload -Uz vcs_info
@@ -41,7 +35,7 @@ zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
 zstyle ':vcs_info:*' formats "%F{green}%c%u%b%f "
 zstyle ':vcs_info:*' actionformats '%b|%a '
 function precmd() {
-    vcs_info
+  vcs_info
 }
 
 # プロンプト行右側に表示される内容
@@ -125,7 +119,7 @@ bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
 function exit_zsh() {
-    exit
+  exit
 }
 zle -N  exit_zsh
 # Alt + dでexit
@@ -138,7 +132,7 @@ setopt no_flow_control
 # ディレクトリ移動{{{
 # ディレクトリ名でcdになるのを無効。(コマンドとのバッティングがうざかったため)
 unsetopt auto_cd
- 
+
 # 移動したディレクトリを記録しておく。"cd -[Tab]"で移動履歴を一覧
 setopt auto_pushd
 # }}}
@@ -153,18 +147,18 @@ setopt no_beep
 
 # fzfの設定
 if [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh
+  source ~/.fzf.zsh
 elif [[ -f /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/completion.zsh \
-     && -f /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/key-bindings.zsh ]]; then
-    source /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/completion.zsh
-    source /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/key-bindings.zsh
+  && -f /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/key-bindings.zsh ]]; then
+  source /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/completion.zsh
+  source /home/linuxbrew/.linuxbrew/var/homebrew/linked/fzf/shell/key-bindings.zsh
 elif [[ -f /usr/share/doc/fzf/examples/completion.zsh \
-     && -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
-    source /usr/share/doc/fzf/examples/completion.zsh
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
+  && -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+  source /usr/share/doc/fzf/examples/completion.zsh
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
 else
-    [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
-    [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+  [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 fi
 
 
@@ -174,22 +168,22 @@ fi
 # it uses the older compctl completion system).
 
 _complete_invoke() {
-    # `words` contains the entire command string up til now (including
-    # program name).
-    #
-    # We hand it to Invoke so it can figure out the current context: spit back
-    # core options, task names, the current task's options, or some combo.
-    #
-    # Before doing so, we attempt to tease out any collection flag+arg so we
-    # can ensure it is applied correctly.
-    collection_arg=''
-    if [[ "${words}" =~ "(-c|--collection) [^ ]+" ]]; then
-        collection_arg=$MATCH
-    fi
-    # `reply` is the array of valid completions handed back to `compctl`.
-    # Use ${=...} to force whitespace splitting in expansion of
-    # $collection_arg
-    reply=( $(invoke ${=collection_arg} --complete -- ${words}) )
+  # `words` contains the entire command string up til now (including
+  # program name).
+  #
+  # We hand it to Invoke so it can figure out the current context: spit back
+  # core options, task names, the current task's options, or some combo.
+  #
+  # Before doing so, we attempt to tease out any collection flag+arg so we
+  # can ensure it is applied correctly.
+  collection_arg=''
+  if [[ "${words}" =~ "(-c|--collection) [^ ]+" ]]; then
+    collection_arg=$MATCH
+  fi
+  # `reply` is the array of valid completions handed back to `compctl`.
+  # Use ${=...} to force whitespace splitting in expansion of
+  # $collection_arg
+  reply=( $(invoke ${=collection_arg} --complete -- ${words}) )
 }
 
 
