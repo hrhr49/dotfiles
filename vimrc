@@ -2,7 +2,6 @@
 set encoding=utf-8
 scriptencoding utf-8
 " set shellslash "vim-plug使うときは指定しないほうがいい？
-
 if exists("g:loaded_my_vimrc")
   finish
 endif
@@ -12,7 +11,7 @@ let g:loaded_my_vimrc = 1
 filetype plugin indent on
 syntax on
 set backspace=2 " バックスペースで字下げや行末を消去できるようにする。
-set whichwrap=b,s,h,l,<,>,[,]   " 行頭、行末で行をまたぐ
+set whichwrap=b,s,h,l,<,>,[,] " 行頭、行末で行をまたぐ
 set shiftwidth=4
 set smartindent
 set smarttab
@@ -22,85 +21,64 @@ set expandtab
 set virtualedit=block " 矩形選択のときに文字がない箇所も選択できるようにする
 set formatoptions-=cro " コメントで自動整形されるのを回避
 set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》 " 全角カッコの設定
-
 set foldmethod=marker
 set complete-=i " インクルードファイルを入力補完候補に入れない
 set complete-=t " タグを入力補完候補に入れない
-
 set clipboard&
-silent! set clipboard=exclude:.* 
+silent! set clipboard=exclude:.*
 " プラットフォームによってクリップボード設定切り替え
 if has('unix') || has('mac')
   set clipboard^=unnamedplus
 elseif has('win32') || has('win64')
   set clipboard^=unnamed
 endif
-
 set nohlsearch
 set ignorecase
 set smartcase
 set incsearch
 set wrapscan
-
 " 補完最中だけ大文字小文字区別
 augroup ComplNotIgnore
   autocmd!
   au InsertEnter * set noignorecase
   au InsertLeave * set ignorecase
 augroup END
-" 
 set nobackup
 set nowritebackup
 set noswapfile
 set noundofile
-" コマンド履歴の数
-set history=10000
+set history=10000 " コマンド履歴の数
 if has('win32') || has('win64')
   set viminfo='999,<50,s10,h,rA:,rB:
 else
   set viminfo=!,'999,<50,s10,h
 endif
-
 set number            " 行番号表示
 set relativenumber    " 相対行番号を表示(現在の行以外)
 set scrolloff=5       " カーソルの上または下に表示される最小行数
 set ruler             " カーソルの位置を表示
-
 set wildignorecase
 set wildmenu
 set wildmode=longest:full,full " 初回の補完では共通部分まで、2回目は次の候補を全部補完
 set wildignore=*.o,*.obj,*.out " wild mode補完でいらないファイルパターン
-
 set hidden            " バッファ保存せずに移動できるようにする
 set autoread          " ファイルの変更を監視する
 set diffopt+=vertical " diffは縦分割にする
-
 set tabpagemax=50     " 使用可能なタブページの個数
-
-if executable($HOME . '/anaconda3/bin/python') > 0
-  let g:python3_host_prog=$HOME . '/anaconda3/bin/python'
-endif
 set path+=~/memo/**
 set tags+=tags;
 set tags+=mytags       " 自分用タグファイルを追加
-
 set mouse=a
 set timeoutlen=9999999 " キーマッピングなどのタイムアウト時間
-
 set belloff=all        " ビープ音を無効化
 silent! set ttyfast
-
 " }}}
 " キーマッピング(一般){{{
 " 全般{{{
 " インサートモード{{{
 inoremap jj <ESC>
-" offを入力できないので無効化
-" inoremap ff <ESC>
 inoremap jf <ESC>
 inoremap fj <ESC>
-" inoremap jk <ESC>
-" inoremap kj <ESC>
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
@@ -113,22 +91,18 @@ cnoremap <C-p> <up>
 " }}}
 " ビジュアルモード{{{
 " 選択中のテキストを*で検索
-" vnoremap * "zy:let @/ = @z<CR>n
 vnoremap * "zy:let @/ = '\V' . @z<CR>n
 " 選択範囲に直前の操作を適用
 vnoremap . :normal .<CR>
 
 " F4キーで矩形選択領域にボックスのアスキーアートを作る
-" このような感じのアスキーアートを作る
 " (現状、左上から右下に選択したときしかうまく動かない)
 " +-----------+
 " |           |
 " |           |
 " +-----------+
 vnoremap <F4> r+gvkojr\|gvlkohjr-gvkojr<Space>
-
 "}}}
-"
 " vimrcをリロード
 command! ReloadVimrc :unlet g:loaded_my_vimrc | :source $MYVIMRC
 nnoremap <M-r> :<C-u>ReloadVimrc<CR>
@@ -151,25 +125,17 @@ nnoremap <Space>z za
 " vimspectorのデバッガ開始
 nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
 " nnoremap <C-S-e> :Ex<CR>
-
 " 角括弧によるマッピング{{{
-" quick fix next/previous
 nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
-
-" location list next/previous
 nnoremap ]l :<C-u>lnext<CR>
 nnoremap [l :<C-u>lprevious<CR>
-
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-
-" タグジャンプ
 nnoremap ]t <C-]>
 nnoremap [t <C-t>
 nnoremap [o <C-i>
 " }}}
-
 " ,からはじまるマッピング{{{
 nnoremap ,q :cw<CR>
 nnoremap ,l :lw<CR>
@@ -177,17 +143,13 @@ nnoremap ,u :UndotreeShow<CR>
 "}}}
 "}}}
 " 外部コマンドとの連携{{{
-"
 " Graph::Easy
 vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge<CR>
 vnoremap gE :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy --boxart<CR> \| :'[,']s/薔//ge<CR>
-
 " Plantuml
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
-
 " yq(pipパッケージ) yamlからjsonへの変換
 vnoremap gy :!yq .<CR>
-
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 "}}}
@@ -201,22 +163,14 @@ inoremap <C-b> <Left>
 " ウィンドウ{{{
 nnoremap !+window+! <Nop>
 nmap s !+window+!
-nnoremap <silent> !+window+!H :<C-u>wincmd H<CR>
-nnoremap <silent> !+window+!J :<C-u>wincmd J<CR>
-nnoremap <silent> !+window+!K :<C-u>wincmd K<CR>
-nnoremap <silent> !+window+!L :<C-u>wincmd L<CR>
-nnoremap <silent> !+window+!T :<C-u>wincmd T<CR>
+
+for s:s in split('HJKLThjkloqsv', '\zs')
+  execute 'nnoremap <silent> !+window+!' . s:s . ' :<C-u>wincmd ' . s:s . '<CR>'
+endfor
+
 nnoremap <silent> !+window+!^ <C-^>
-nnoremap <silent> !+window+!h :<C-u>wincmd h<CR>
-nnoremap <silent> !+window+!j :<C-u>wincmd j<CR>
-nnoremap <silent> !+window+!k :<C-u>wincmd k<CR>
-nnoremap <silent> !+window+!l :<C-u>wincmd l<CR>
-nnoremap <silent> !+window+!o :<C-u>wincmd o<CR>
-nnoremap <silent> !+window+!q :<C-u>wincmd q<CR>
-nnoremap <silent> !+window+!s :<C-u>split<CR>
 nnoremap <silent> !+window+!S :<C-u>new<CR>
 nnoremap <silent> !+window+!t :<C-u>tabnew<CR>
-nnoremap <silent> !+window+!v :<C-u>vsplit<CR>
 nnoremap <silent> !+window+!V :<C-u>vnew<CR>
 
 nmap <silent> !+window+!p :<C-u>tabprevious<CR>!+tab+!
@@ -227,14 +181,11 @@ nmap <silent> !+window+!N :<C-u>tablast<CR>!+tab+!
 " リサイズ{{{
 " +, -, <, >でウィンドウリサイズ。連続入力可能
 nnoremap !+resize+! <Nop>
-nmap <silent> !+window+!+ :<C-u>wincmd +<CR>!+resize+!
-nmap <silent> !+window+!- :<C-u>wincmd -<CR>!+resize+!
-nmap <silent> !+window+!< :<C-u>wincmd <<CR>!+resize+!
-nmap <silent> !+window+!> :<C-u>wincmd ><CR>!+resize+!
-nmap <silent> !+resize+!+ :<C-u>wincmd +<CR>!+resize+!
-nmap <silent> !+resize+!- :<C-u>wincmd -<CR>!+resize+!
-nmap <silent> !+resize+!< :<C-u>wincmd <<CR>!+resize+!
-nmap <silent> !+resize+!> :<C-u>wincmd ><CR>!+resize+!
+for s:s in split('+-<>', '\zs')
+  execute 'nmap <silent> !+window+!' . s:s . ' :<C-u>wincmd ' . s:s . '<CR>!+resize+!'
+  execute 'nmap <silent> !+resize+!' . s:s . ' :<C-u>wincmd ' . s:s . '<CR>!+resize+!'
+endfor
+
 "}}}
 " スクロール{{{
 function! ScrollFunc(distance)
@@ -267,15 +218,9 @@ nmap <silent> !+scroll+!k :<C-u>call ScrollFunc(-4)<CR>!+scroll+!
 " タブ{{{
 nnoremap !+tab+! <Nop>
 nmap t !+tab+!
-nnoremap <silent> !+tab+!1 :<C-u>tabnext 1<CR>
-nnoremap <silent> !+tab+!2 :<C-u>tabnext 2<CR>
-nnoremap <silent> !+tab+!3 :<C-u>tabnext 3<CR>
-nnoremap <silent> !+tab+!4 :<C-u>tabnext 4<CR>
-nnoremap <silent> !+tab+!5 :<C-u>tabnext 5<CR>
-nnoremap <silent> !+tab+!6 :<C-u>tabnext 6<CR>
-nnoremap <silent> !+tab+!7 :<C-u>tabnext 7<CR>
-nnoremap <silent> !+tab+!8 :<C-u>tabnext 8<CR>
-nnoremap <silent> !+tab+!9 :<C-u>tabnext 9<CR>
+for s:s in split('123456789', '\zs')
+  execute 'nnoremap <silent> !+tab+!' . s:s . ' :<C-u>tabnext ' . s:s . '<CR>'
+endfor
 nnoremap <silent> !+tab+!o :<C-u>tabonly<CR>
 nnoremap <silent> !+tab+!q :<C-u>tabclose<CR>
 
@@ -316,7 +261,7 @@ endif
 "}}}
 "}}}
 " ファイル別設定{{{
-augroup RunProgram
+augroup FileTypeGroup
   autocmd!
 
   " tabstop, softtabstop, shiftwidth, expandtab, iskeywordの設定
@@ -326,14 +271,17 @@ augroup RunProgram
   autocmd FileType typescript      setl ts=2 sts=2 sw=2 et
   autocmd Filetype typescriptreact setl ts=2 sts=2 sw=2 et
   autocmd FileType typescript.tsx  setl ts=2 sts=2 sw=2 et
-  autocmd FileType yaml            setl ts=2 sts=2 sw=2 et   iskeyword+=-
-  autocmd FileType html            setl ts=2 sts=2 sw=2 et   iskeyword+=-
-  autocmd FileType css             setl ts=2 sts=2 sw=2 et   iskeyword+=-
-  autocmd FileType scss            setl ts=2 sts=2 sw=2 et   iskeyword+=-
-  autocmd FileType less            setl ts=2 sts=2 sw=2 et   iskeyword+=-
+  autocmd FileType yaml            setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType html            setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType css             setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType scss            setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType less            setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType nim             setl ts=2 sts=2 sw=2 et
   autocmd FileType vim             setl ts=2 sts=2 sw=2 et
   autocmd FileType make            setl ts=4 sts=0 sw=4 noet
+  autocmd FileType sh              setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType bash            setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType zsh             setl ts=2 sts=2 sw=2 et   isk+=-
 
   " F5でファイルを実行する設定
   autocmd FileType typescript nnoremap <buffer> <F5> :w\|!tsc % \| node %:r.js<CR>
@@ -381,6 +329,9 @@ augroup MarkFile
   autocmd BufLeave vimrc     mark V
 augroup END
 
+let g:python3_host_prog = exepath('python')
+let g:python_host_prog  = exepath('python2')
+let g:ruby_host_prog    = exepath('ruby')
 "}}}
 " プラグイン一覧{{{
 try
@@ -389,9 +340,7 @@ try
   Plug 'junegunn/vim-plug'
   Plug 'vim-jp/vimdoc-ja'
 
-  """"""""""""""""""""""""""""""
   " 全般
-  """"""""""""""""""""""""""""""
   Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTree']}
   Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
   if executable('fzf') > 0
@@ -401,13 +350,8 @@ try
     Plug 'ctrlpvim/ctrlp.vim'
   endif
   Plug 'easymotion/vim-easymotion', {'on': [ '<Plug>(easymotion-overwin-f2)', '<Plug>(easymotion-bd-w)' ]}
-  " Plug 'mattn/benchvimrc-vim' " vimrcのベンチマーク
 
-  """""""""""""""""""""""""
   " テキスト操作
-  """""""""""""""""""""""""
-  " テキストオブジェクト
-  " 一覧 https://github.com/kana/vim-textobj-user/wiki
   Plug 'kana/vim-textobj-user'
   Plug 'michaeljsmith/vim-indent-object' " ai, ii, aI, iI でインデント
   Plug 'saaguero/vim-textobj-pastedtext' " gbで直近で貼り付けた範囲
@@ -418,32 +362,23 @@ try
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-abolish'               " キャメルケースやスネークケースの変換
 
-  """""""""""""""""""""""
   " 表示
-  """""""""""""""""""""""
   Plug 'flazz/vim-colorschemes'
-  " Plug 'joshdick/onedark.vim'
   Plug 'luochen1990/rainbow'                     " カッコを色分け
   Plug 'ap/vim-css-color', {'for': 'css'}        " CSSの色を表示
   Plug 'mechatroner/rainbow_csv', {'for': 'csv'} " CSVデータを列ごとに色分け
   Plug 'machakann/vim-highlightedyank'           " ヤンクした場所をわかりやすくする。
   Plug 'mattn/disableitalic-vim'                 " イタリックフォントを無効化
-  " Plug 'drmikehenry/vim-fontsize'                " GUIのフォントサイズ変更
   Plug 'itchyny/lightline.vim'
   Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 
-  """""""""""""""""""""""""
   " 入力補完・補助
-  """""""""""""""""""""""""
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'mattn/emmet-vim', {'on': '<Plug>(emmet-expand-abbr)'}
   Plug 'LeafCage/yankround.vim'
   Plug 'ervandew/supertab'
 
-  """"""""""""""""""""""""""""""""""""
   " バージョン管理・変更履歴
-  """"""""""""""""""""""""""""""""""""
-  " gitgutterよりこっちのが速い
   if has('nvim') || has('patch-8.0.902')
     Plug 'mhinz/vim-signify'
   else
@@ -454,28 +389,18 @@ try
   Plug 'tpope/vim-rhubarb', {'on': 'Gbrowse'}    " Gbrowseをgithubで開くようにする
   Plug 'mbbill/undotree', {'on': 'UndotreeShow'} " Undoツリー管理
 
-  """"""""""""""""""""""""""
   " 言語
-  """"""""""""""""""""""""""
   Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
   if executable('node') > 0 && executable('yarn') > 0
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
   else
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
   endif
-  " vim-markdownの依存
-  " Plug 'godlygeek/tabular'
-  " Plug 'plasticboy/vim-markdown'
   Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
-
   Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
   Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
 
-  """"""""""""""""""""""""""
   " デバッグ
-  """"""""""""""""""""""""""
-  " Plug 'epheien/termdbg'
-  " Plug 'vim-vdebug/vdebug'
   Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
   call plug#end()
 catch
@@ -485,12 +410,10 @@ catch
 endtry
 "}}}
 " プラグイン設定{{{
-" プラグイン存在確認関数{{{
 let s:plug = { "plugs": get(g:, 'plugs', {}) }
 function! s:plug.is_installed(name)
   return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
 endfunction
-"}}}
 " fugitive{{{
 nnoremap gcd :<C-u>Gcd<CR>
 nnoremap gs :<C-u>Gstatus<CR>
@@ -513,18 +436,8 @@ if executable('fzf') > 0
   endif
 
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
-  if &ambiwidth == 'single'
-    if has('nvim')
+  if &ambiwidth == 'single' && (has('nvim') || v:versionlong >= 8020191)
       let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
-    else
-      try
-        " 参考 https://github.com/vim/vim/commit/219c7d063823498be22aae46dd024d77b5fb2a58
-        if v:versionlong >= 8020191
-          let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
-        endif
-      catch
-      endtry
-    endif
   endif
 
   " プレビューをする
@@ -688,18 +601,6 @@ nnoremap <Space>E :<C-u>NERDTree<CR>
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeLimitedSyntax = 1
 "}}}
-" gdb {{{
-" gdb使用の設定
-" packadd termdebug
-
-" gdb使用の設定
-" let g:termdebug_wide = 163
-" }}}
-" ranger{{{
-if executable("ranger") > 0
-  " nnoremap <Space>f :Ranger<CR>
-endif
-"}}}
 " EasyMotion{{{
 let g:EasyMotion_smartcase = 1
 nmap <Space>s <Plug>(easymotion-overwin-f2)
@@ -708,7 +609,7 @@ map  <Space>f <Plug>(easymotion-bd-w)
 "}}}
 " Aligntaの設定{{{
 if s:plug.is_installed("vim-alignta")
-  vnoremap sc :Alignta \s\+<CR>
+  vnoremap sc :Alignta <<0 \ <CR>
 endif
 "}}}
 " yankroundの設定{{{
@@ -758,74 +659,49 @@ let g:coc_global_extensions = [
 " \ "coc-python@1.2.9",
 " \ "coc-explorer",
 
+setl updatetime=300
+setl shortmess+=c
+setl signcolumn=yes
 
-function! s:my_coc_nvim_config()
-  " coc.nvimの設定
-  setl updatetime=300
-  setl shortmess+=c
-  setl signcolumn=yes
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
-  " Use <c-space> to trigger completion.
-  inoremap <silent><expr> <c-space> coc#refresh()
+" Use `[c` and `]c` to navigate diagnostics
+" nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
+" nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
 
-  " Use `[c` and `]c` to navigate diagnostics
-  " nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
-  " nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
+" Rem<buffer> ap keys for gotos
+nmap <buffer> <silent> gd <Plug>(coc-definition)
+nmap <buffer> <silent> gy <Plug>(coc-type-definition)
+nmap <buffer> <silent> gi <Plug>(coc-implementation)
+nmap <buffer> <silent> gr <Plug>(coc-references)
+xmap <buffer> <silent> gq <Plug>(coc-format-selected)
+nmap <buffer> <silent> gq <Plug>(coc-format-selected)
+" Use K to show documentation in preview window
+nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
 
-  " Rem<buffer> ap keys for gotos
-  nmap <buffer> <silent> gd <Plug>(coc-definition)
-  nmap <buffer> <silent> gy <Plug>(coc-type-definition)
-  nmap <buffer> <silent> gi <Plug>(coc-implementation)
-  nmap <buffer> <silent> gr <Plug>(coc-references)
-  xmap <buffer> <silent> gq <Plug>(coc-format-selected)
-  nmap <buffer> <silent> gq <Plug>(coc-format-selected)
-  " Use K to show documentation in preview window
-  nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
+" Use `[g` and `]g` to navigate diagnostics
+nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
 
-  " Use `[g` and `]g` to navigate diagnostics
-  nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
-  nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
-  nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
-
-  " Symbol renaming.
-  nmap <buffer> <F2> <Plug>(coc-rename)
-  hi clear CocUnderLine
-
-	nnoremap <expr><C-n> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-n>"
-	nnoremap <expr><C-p> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-p>"
-
-endfunction
-
-augroup coc_group
+" Symbol renaming.
+nmap <buffer> <F2> <Plug>(coc-rename)
+augroup CocHighlight
   autocmd!
-  autocmd FileType python call s:my_coc_nvim_config()
-  autocmd FileType c call s:my_coc_nvim_config()
-  autocmd FileType cpp call s:my_coc_nvim_config()
-  autocmd FileType javascript call s:my_coc_nvim_config()
-  autocmd FileType json call s:my_coc_nvim_config()
-  autocmd FileType yaml call s:my_coc_nvim_config()
-  autocmd FileType go call s:my_coc_nvim_config()
-  autocmd FileType html call s:my_coc_nvim_config()
-  autocmd FileType css call s:my_coc_nvim_config()
-  autocmd FileType scss call s:my_coc_nvim_config()
-  autocmd FileType less call s:my_coc_nvim_config()
-  autocmd FileType vim call s:my_coc_nvim_config()
-  autocmd FileType pug call s:my_coc_nvim_config()
-  autocmd FileType stylus call s:my_coc_nvim_config()
-  autocmd FileType typescript call s:my_coc_nvim_config()
-  autocmd FileType typescript.tsx call s:my_coc_nvim_config()
-  autocmd FileType javascript.jsx call s:my_coc_nvim_config()
-  autocmd FileType rust call s:my_coc_nvim_config()
-  autocmd FileType nim call s:my_coc_nvim_config()
+  autocmd BufRead,BufNewFile,ColorScheme * hi clear CocUnderLine
+augroup END
 
-  " 折りたたみが勝手に発動してしまうため、一時無効化
-  " Use auocmd to force lightline update.
-  " autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+nnoremap <expr><C-n> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-n>"
+nnoremap <expr><C-p> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-p>"
 
-  " ハイライトは別にいらないので削除
-  " Highlight symbol under cursor on CursorHold
-  " autocmd CursorHold * silent call CocActionAsync('highlight')
-augroup end
+" 折りたたみが勝手に発動してしまうため、一時無効化
+" Use auocmd to force lightline update.
+" autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
+" ハイライトは別にいらないので削除
+" Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -834,7 +710,6 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
 "}}}
 " lightline{{{
 function! GetCWD30()
@@ -874,24 +749,6 @@ let g:rainbow_conf = {
       \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
       \	'separately': {
       \		'*': {},
-      \		'markdown': {
-      \			'parentheses_options': 'containedin=markdownCode contained',
-      \		},
-      \		'lisp': {
-      \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-      \		},
-      \		'haskell': {
-      \			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
-      \		},
-      \		'vim': {
-      \			'parentheses_options': 'containedin=vimFuncBody',
-      \		},
-      \		'perl': {
-      \			'syn_name_prefix': 'perlBlockFoldRainbow',
-      \		},
-      \		'stylus': {
-      \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
-      \		},
       \		'css': 0,
       \   'nerdtree': 0,
       \	}
@@ -929,20 +786,6 @@ let g:mkdp_auto_close = 0
 " highlightedyank{{{
 let g:highlightedyank_highlight_duration = 150
 "}}}
-" vim-markdown{{{
-let g:tex_conceal = ""
-let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_conceal_code_blocks = 0
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_frontmatter = 0
-let g:vim_markdown_json_frontmatter = 0
-let g:vim_markdown_liquid = 1
-let g:vim_markdown_math = 0
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_no_default_key_mappings = 1
-let g:vim_markdown_toml_frontmatter = 0
-"}}}
 " md-img-paste{{{
 augroup MdImgPasteGroup
   autocmd!
@@ -950,12 +793,7 @@ augroup MdImgPasteGroup
   autocmd FileType markdown nmap <silent> <F1> :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 "}}}
-" comfortable-motion.vim {{{
-" デフォルトのキーバインドを上書きしない
-" let g:comfortable_motion_no_default_key_mappings = 1
-"}}}
 " vimspector{{{
-
 " Key         | API
 " ------------+----------------------
 " F5          | vimspector#Continue()
@@ -974,7 +812,7 @@ function! LaunchFileDebug()
   call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
 endfunction
 "}}}
-" イタリックフォントを無効化
+" イタリックフォントを無効化{{{
   if s:plug.is_installed('disableitalic-vim')
     augroup DisableItalicGroup
       autocmd!
@@ -982,9 +820,9 @@ endfunction
       autocmd BufRead,BufNewFile,ColorScheme * silent! DisableItalic
     augroup END
   endif
-
+"}}}
 " 組み込み{{{
-let loaded_matchparen = 1 " カッコのハイライトを消す
+let g:loaded_matchparen = 1 " カッコのハイライトを消す
 let g:netrw_keepdir = 0
 "let g:markdown_folding=1
 "
@@ -1010,7 +848,7 @@ let g:loaded_getscriptPlugin   = 1
 " カラースキーム{{{
 try
   " gvimの場合はgvimrcなどの方でカラースキームを設定する
-  if !has("gui_running") 
+  if !has("gui_running")
     colorscheme iceberg
   endif
 catch
@@ -1019,51 +857,29 @@ endtry
 " オプション{{{
 " 対応カッコの色設定を変更(そのままだとわかりづらいときあった)
 " 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
-
+augroup ChangeMatchParen
+  autocmd!
+  hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+augroup END
 set showmatch " 閉じカッコ入力時に、対応する開きカッコにハイライト
-
-" hilight current line number
 " set cursorline
 " hi clear CursorLine
-"
 set background=dark
-
 set conceallevel=0
-" 80列目の色を変える
-" set colorcolumn=80
-
-" 200桁以上の行はシンタックスハイライトしない
-set synmaxcol=250
+" set colorcolumn=80 " 80列目の色を変える
+set synmaxcol=250 " 長い行はシンタックスハイライトしない
 "set cursorline
 set laststatus=2
-" 入力した内容を表示
-set showcmd
-if has('nvim')
-  " 見づらかったので保留
-  " ポップアップメニューを半透明にする
-  " silent! set pumblend=5
-  " ウィンドウを半透明にする
-  " silent! set winblend=5
-endif
-
-" GUIカラーを使う
-silent set termguicolors
-
+set showcmd " 入力した内容を表示
+silent set termguicolors " GUIカラーを使う
 " フォントが欠けるのを回避
 " fzfでfloating windowを使用するときにレイアウトが崩れるので様子見
 " set ambiwidth=double
-
-" マクロ実行時の描画処理をやめる
-silent! set lazyredraw
-
-" 一行が長いときには構文のハイライトなどしない
-set synmaxcol=256
+silent! set lazyredraw " マクロ実行時の描画処理をやめる
 "}}}
 " 折りたたみ表示 {{{
 set foldtext=MyFoldText()
-" 折りたたみの空きスペースは半角スペース「 」で埋める
-set fillchars=fold:\
+let &fillchars='fold: ' " 折りたたみの空きスペースは半角スペースで埋める
 function! MyFoldText()
   let line = substitute(getline(v:foldstart), '^\s*', '', '')
   let comment_pat = '\V' . substitute(&commentstring, '%s', '\\(\\.\\*\\)', 'g')
@@ -1091,100 +907,10 @@ endfunction
 " }}}
 " }}}
 " スクリプト{{{
-" ~/.local/.vimrcが存在すればそれを読み込む
-if filereadable(expand($HOME.'/.local/.vimrc'))
-  source $HOME/.local/.vimrc
-endif
-
-" cdn貼り付け用コマンド
-function! s:cdn_tag(name, version, filename)
-  " htmlのタグを作成する
-  let l:uri = "https://cdnjs.cloudflare.com/ajax/libs/" . a:name . "/" . a:version . "/" . a:filename
-  if match(a:filename, 'js$') != -1
-    return '<script src="' . l:uri  . '" crossorigin="anonymous"></script>'
-  elseif match(a:filename, 'css$') != -1
-    return '<link rel="stylesheet" href="' . l:uri . '" crossorigin="anonymous" />'
-  else
-    return l:pathname
-  endif
-endfunction
-
-function! s:cdn_get_version(name)
-  let l:opts = {
-        \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[].version'' ',
-        \ 'sink': {x -> s:cdn_get_path(a:name, x)}
-        \ }
-  call fzf#run(fzf#wrap(l:opts))
-endfunction
-
-function! s:cdn_get_path(name, version)
-  let l:opts = {
-        \ 'source': 'curl -s "https://api.cdnjs.com/libraries/' . a:name . '"|jq --raw-output ''.assets[]|select(.version == "' . a:version . '")|.files[]'' ',
-        \ 'sink': {x -> append('.', s:cdn_tag(a:name, a:version, x))}
-        \ }
-  call fzf#run(fzf#wrap(l:opts))
-endfunction
-
-function! s:cdn(libname)
-  " ライブラリ名を取得
-  let l:opts = {
-        \ 'source': 'curl -s "https://api.cdnjs.com/libraries?search=' . a:libname . '"|jq --raw-output ''.results[].name'' ',
-        \ 'sink': {x -> s:cdn_get_version(x)}
-        \ }
-  call fzf#run(fzf#wrap(l:opts))
-endfunction
-
-command! -nargs=1 Cdn call s:cdn(<f-args>)
-
-" 自分用タグにつけるプレフィクス
-
-let g:mytag_prefix = "@@@"
-
-" 自分用のタグ作成
-function! AddMyTag(tagname, tagfile, tagaddress)
-  if a:tagname == "" || a:tagfile == "" || a:tagaddress == ""
-    return
-  endif
-  " 自分用タグファイルの存在確認
-  if findfile('mytags', getcwd()) == ""
-    " 自分用タグファイルを作成(パフォーマンスは落ちるが、簡単のためソートしない)
-    call writefile(["!_TAG_FILE_SORTED\t0"], "mytags", "a")
-  endif
-  " タグを追加
-  call writefile([printf("%s%s\t%s\t%s", g:mytag_prefix, a:tagname, a:tagfile, a:tagaddress)], "mytags", "a")
-endfunction
-
-" 入力から自分用タグ作成
-function! AddMyTagByInput()
-  let tagname = input("tagname? ")
-  let tagfile = expand("%:p")
-  let tagaddress = printf("/^%s/;\"\td", getline("."))
-  call AddMyTag(l:tagname, l:tagfile, l:tagaddress)
-endfunction
-
-" 自分用タグファイルを削除
-" function! DeleteMyTagFile()
-"   let mytagfile = findfile('mytags', getcwd())
-"   if mytagfile != ""
-"     " 0番目。つまりYesが選ばれたらタグファイルを削除
-"     if confirm(printf("delete %s? ", mytagfile), "&Yes\n&No\n&Cancel") == 0
-"       call delete(mytagfile)
-"     endif
-"   endif
-" endfunction
-
-command! AddMyTagByInput call AddMyTagByInput()
-command! DeleteMyTagFile call DeleteMyTagFile()
-
-" nnoremap mb :AddMyTagByInput<CR>
-" nnoremap mt :execute(printf(":Tags %s", g:mytag_prefix))<CR>
-" nnoremap mB :DeleteMyTagFile<CR>
-
 command! CopyPath let @+=expand('%')
 command! CopyAbsPath let @+=expand('%:p')
 command! CopyDir let @+=expand('%:h')
 command! CopyAbsDir let @+=expand('%:p:h')
-
 "}}}
 " GUI {{{
 if has('gui_running')
@@ -1195,14 +921,9 @@ if has('gui_running')
   silent! set antialias
   "}}}
   " フォント{{{
-  " if s:plug.is_installed('vim-fontsize')
-  "   nmap <silent> +  <Plug>FontsizeInc
-  "   nmap <silent> -  <Plug>FontsizeDec
-  " else
-    " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
-    nnoremap + :let &guifont = substitute(&guifont, '\d\+', '\=submatch(0)+1', '')<CR>
-    nnoremap - :let &guifont = substitute(&guifont, '\d\+', '\=max([submatch(0)-1, 1])', '')<CR>
-  " endif
+  " 参考 vim(gvim) フォントサイズ https://miwaokina.com/blog/wordpress/?p=2925
+  nnoremap + :let &guifont = substitute(&guifont, '\d\+', '\=submatch(0)+1', '')<CR>
+  nnoremap - :let &guifont = substitute(&guifont, '\d\+', '\=max([submatch(0)-1, 1])', '')<CR>
 
   " 透明度を変更
   if exists('&transparency')
@@ -1242,27 +963,15 @@ if has('gui_running')
     nnoremap !+term+!s :<C-u>terminal ++close<CR>
   endif
 
-  nnoremap !+term+!h <C-w>h
-  nnoremap !+term+!j <C-w>j
-  nnoremap !+term+!k <C-w>k
-  nnoremap !+term+!l <C-w>l
+  for s:s in split('HJKLThjkl', '\zs')
+    execute 'nnoremap !+term+!' . s:s . ' <C-w>' . s:s
+    execute 'tnoremap !+term+!' . s:s . ' <C-w>' . s:s
+  endfor
+
+  nnoremap !+term+!! <C-w>T
   nnoremap !+term+!p :<C-u>tabprevious<CR>
   nnoremap !+term+!n :<C-u>tabnext<CR>
-  nnoremap !+term+!! <C-w>T
-  nnoremap !+term+!T <C-w>T
-  nnoremap !+term+!H <C-w>H
-  nnoremap !+term+!J <C-w>J
-  nnoremap !+term+!K <C-w>K
-  nnoremap !+term+!L <C-w>L
 
-  tnoremap !+term+!h <C-w>h
-  tnoremap !+term+!j <C-w>j
-  tnoremap !+term+!k <C-w>k
-  tnoremap !+term+!l <C-w>l
-  tnoremap !+term+!H <C-w>H
-  tnoremap !+term+!J <C-w>J
-  tnoremap !+term+!K <C-w>K
-  tnoremap !+term+!L <C-w>L
   " tnoremap !+term+!v <C-w>v
   " tnoremap !+term+!s <C-w>s
   tmap !+term+!p !+term-esc+!!+term+!p
@@ -1271,18 +980,16 @@ if has('gui_running')
   tmap !+term+!T !+term-esc+!!+term+!T
   "}}}
   " メニューバーなどの設定{{{
-  try
-    if has("gui_running")
-      set guioptions-=m
-      set guioptions-=T
-    endif
-  catch
-  endtry
+  set guioptions-=m
+  set guioptions-=T
   "}}}
   " IME設定{{{
-  if has('multi_byte_ime') || has('xim') 
-    highlight Cursor guifg=NONE guibg=White
-    highlight CursorIM guifg=NONE guibg=DarkRed
+  if has('multi_byte_ime') || has('xim')
+    augroup IMEHighlight
+      autocmd!
+      highlight Cursor guifg=NONE guibg=White
+      highlight CursorIM guifg=NONE guibg=DarkRed
+    augroup END
   endif
   "}}}
 endif
