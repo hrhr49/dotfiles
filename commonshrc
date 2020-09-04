@@ -289,7 +289,6 @@ if type "bat" > /dev/null 2>&1; then
 fi
 # }}}
 # 環境変数{{{
-export TERM=xterm-256color
 export BETTER_EXCEPTIONS=1
 
 # 独自

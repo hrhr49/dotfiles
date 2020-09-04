@@ -10,7 +10,6 @@ fi
 
 # emacsモード(色々設定する前にemacsモードの設定しとく)
 bindkey -e
-export TERM="xterm-256color"
 # プラグイン{{{
 # zinit
 source "${HOME}/.zinit/bin/zinit.zsh"

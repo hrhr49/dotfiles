@@ -13,6 +13,7 @@ formulas=(
     hub
     tig
     git-delta
+    gibo # gitignore生成
 
     # 文字コード
     nkf
