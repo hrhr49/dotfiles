@@ -225,12 +225,12 @@ nnoremap <silent> !+tab+!o :<C-u>tabonly<CR>
 nnoremap <silent> !+tab+!q :<C-u>tabclose<CR>
 
 " n, p, <, >でタブ移動、もしくはタブ自体を移動。連続入力可能
-nmap <silent> !+tab+!> :<C-u>tabm+<CR>[tab]
-nmap <silent> !+tab+!< :<C-u>tabm-<CR>[tab]
-nmap <silent> !+tab+!p :<C-u>tabprevious<CR>[tab]
-nmap <silent> !+tab+!P :<C-u>tabfirst<CR>[tab]
-nmap <silent> !+tab+!n :<C-u>tabnext<CR>[tab]
-nmap <silent> !+tab+!N :<C-u>tablast<CR>[tab]
+nmap <silent> !+tab+!> :<C-u>tabm+<CR>!+tab+!
+nmap <silent> !+tab+!< :<C-u>tabm-<CR>!+tab+!
+nmap <silent> !+tab+!p :<C-u>tabprevious<CR>!+tab+!
+nmap <silent> !+tab+!P :<C-u>tabfirst<CR>!+tab+!
+nmap <silent> !+tab+!n :<C-u>tabnext<CR>!+tab+!
+nmap <silent> !+tab+!N :<C-u>tablast<CR>!+tab+!
 "}}}
 "}}}
 " マウス{{{
@@ -271,17 +271,17 @@ augroup FileTypeGroup
   autocmd FileType typescript      setl ts=2 sts=2 sw=2 et
   autocmd Filetype typescriptreact setl ts=2 sts=2 sw=2 et
   autocmd FileType typescript.tsx  setl ts=2 sts=2 sw=2 et
+  autocmd FileType nim             setl ts=2 sts=2 sw=2 et
+  autocmd FileType vim             setl ts=2 sts=2 sw=2 et
   autocmd FileType yaml            setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType html            setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType css             setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType scss            setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType less            setl ts=2 sts=2 sw=2 et   isk+=-
-  autocmd FileType nim             setl ts=2 sts=2 sw=2 et
-  autocmd FileType vim             setl ts=2 sts=2 sw=2 et
-  autocmd FileType make            setl ts=4 sts=0 sw=4 noet
   autocmd FileType sh              setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType bash            setl ts=2 sts=2 sw=2 et   isk+=-
   autocmd FileType zsh             setl ts=2 sts=2 sw=2 et   isk+=-
+  autocmd FileType make            setl ts=4 sts=0 sw=4 noet
 
   " F5でファイルを実行する設定
   autocmd FileType typescript nnoremap <buffer> <F5> :w\|!tsc % \| node %:r.js<CR>
@@ -689,7 +689,7 @@ nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
 nmap <buffer> <F2> <Plug>(coc-rename)
 augroup CocHighlight
   autocmd!
-  autocmd BufRead,BufNewFile,ColorScheme * hi clear CocUnderLine
+  autocmd BufRead,BufNewFile,ColorScheme * highlight clear CocUnderLine
 augroup END
 
 nnoremap <expr><C-n> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-n>"
@@ -859,7 +859,7 @@ endtry
 " 参考: https://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
 augroup ChangeMatchParen
   autocmd!
-  hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+  autocmd ColorScheme * highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 augroup END
 set showmatch " 閉じカッコ入力時に、対応する開きカッコにハイライト
 " set cursorline
@@ -987,8 +987,8 @@ if has('gui_running')
   if has('multi_byte_ime') || has('xim')
     augroup IMEHighlight
       autocmd!
-      highlight Cursor guifg=NONE guibg=White
-      highlight CursorIM guifg=NONE guibg=DarkRed
+      autocmd ColorScheme * highlight Cursor guifg=NONE guibg=White
+      autocmd ColorScheme * highlight CursorIM guifg=NONE guibg=DarkRed
     augroup END
   endif
   "}}}
