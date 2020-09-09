@@ -201,6 +201,7 @@ fi
 
 if type "zoxide" > /dev/null 2>&1; then
   # zinitが勝手にziにエイリアスしているっぽい
+  alias zi=''
   unalias zi
   eval "$(zoxide init zsh)"
 fi

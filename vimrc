@@ -62,7 +62,6 @@ set diffopt+=vertical          " diffは縦分割にする
 set tabpagemax=50              " 使用可能なタブページの個数
 set path+=~/memo/**
 set tags+=tags;
-set tags+=mytags               " 自分用タグファイルを追加
 set mouse=a
 set timeoutlen=9999999         " キーマッピングなどのタイムアウト時間
 set belloff=all                " ビープ音を無効化

@@ -216,12 +216,14 @@ alias gitck='git checkout $(git branch|sed -e "s/[ *]//g"|fzf)'
 # lsのエイリアス{{{
 
 if type "lsd" > /dev/null 2>&1; then
-    alias ls="lsd"
-    alias ll="lsd -l"
-    alias la="lsd -a"
+    alias ls="lsd --icon never"
+    alias sl="lsd --icon never"
+    alias ll="lsd -l --icon never"
+    alias la="lsd -a --icon never"
 else
     # 時々遅いので将来削除するかも
     alias ls="ls --color=auto"
+    alias sl="ls --color=auto"
     alias ll="ls -l"
     alias la="ls -a"
 fi
