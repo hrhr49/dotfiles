@@ -301,8 +301,8 @@ Plug 'easymotion/vim-easymotion', {'on': [ '<Plug>(easymotion-overwin-f2)', '<Pl
 " テキスト操作
 Plug 'kana/vim-textobj-user'
 Plug 'michaeljsmith/vim-indent-object'         " ai, ii, aI, iI でインデント
-Plug 'saaguero/vim-textobj-pastedtext'         " gbで直近で貼り付けた範囲
-Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
+" Plug 'saaguero/vim-textobj-pastedtext'         " gbで直近で貼り付けた範囲
+" Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'h1mesuke/vim-alignta'
@@ -419,13 +419,22 @@ let g:rainbow_conf = {
 if executable('fzf') > 0
   " fzf
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
-  let g:fzf_layout = { 'down': '~40%' }
   if has('win32') || has('win64')
     let g:fzf_preview_window = ''
   endif
+  function! GetNVimVersion()
+      redir => s
+      silent! version
+      redir END
+      return matchstr(s, 'NVIM v\zs[^\n]*')
+  endfunction
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
-  if &ambiwidth == 'single' && (has('nvim') || v:versionlong >= 8020191)
+  if &ambiwidth == 'single' && 
+        \ ((has('nvim') && GetNVimVersion() >= '0.4.0') ||
+        \ (!has('nvim') && v:versionlong >= 8020191))
     let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
+  else
+    let g:fzf_layout = { 'down': '~40%' }
   endif
 
   " プレビューをする
@@ -451,9 +460,9 @@ if executable('fzf') > 0
   nnoremap <Space>G :<C-u>GFiles?<CR>
   " 履歴はソートせずにプレビューも表示
   if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
-    nnoremap <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
+    nnoremap <silent> <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
   else
-    nnoremap <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
+    nnoremap <silent> <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
   endif
   nnoremap <Space>b :<C-u>Buffers<CR>
   nnoremap <Space>l :<C-u>BLines<CR>
@@ -462,9 +471,9 @@ if executable('fzf') > 0
   nnoremap <Space>? :<C-u>Helptags<CR>
   nnoremap <Space><S-c> :<C-u>Commits<CR>
   nnoremap <Space>' :<C-u>Marks<CR>
-  nnoremap <Space>h :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
-  nnoremap <Space>/ :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
-  nnoremap <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
+  nnoremap <silent> <Space>h :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
+  nnoremap <silent> <Space>/ :<C-u>call fzf#vim#search_history({'options': '--no-sort'})<CR>
+  nnoremap <silent> <Space>: :<C-u>call fzf#vim#command_history({'options': '--no-sort'})<CR>
   nnoremap <Space>m :<C-u>Files ~/memo/<CR>
   nnoremap <Space>w :<C-u>Windows<CR>
   if executable('rg')
