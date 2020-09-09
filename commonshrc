@@ -286,8 +286,8 @@ alias ztime='for i in $(seq 1 10); do time zsh -i -c exit; done'
 # aria2で複数コネクションを使ったダウンロード
 alias wget-fast='aria2c -x5'
 
-if type "bat" > /dev/null 2>&1; then
-    alias cat=bat
+if type "ccat" > /dev/null 2>&1; then
+    alias cat=ccat
 fi
 # }}}
 # 環境変数{{{
