@@ -80,6 +80,7 @@ formulas=(
     httpie    # curlのようなやつ
     trash-cli # ゴミ箱操作
     jq        # JSONをいい感じにフィルター
+    gron      # jsonをgrepしやすい形にする
     fx        # jqみたいだけどインタラクティブにできたりする
     jo        # JSONオブジェクトを生成
     bitwise   # ビット表示
