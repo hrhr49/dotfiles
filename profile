@@ -21,6 +21,8 @@ xset r rate 200 30
 
 if type "alacritty" > /dev/null 2>&1; then
     export TERMINAL="alacritty"
-elif type "xfce4-terminal" > /dev/null 2>&1; then
+fi
+
+if type "xfce4-terminal" > /dev/null 2>&1; then
     export TERMINAL="xfce4-terminal"
 fi

@@ -9,6 +9,8 @@ packages=(
     doctoc    # Markdown目次自動生成
     reveal-md # Markdownでプレゼン作成用
     textlint  # 文章校正
+    textlint-rule-preset-ja-technical-writing
+    textlint-rule-spellcheck-tech-word
     # mdr       # CLIでいい感じに表示 # pipのmdvの方を使う
 
     # Web
