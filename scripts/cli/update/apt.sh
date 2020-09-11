@@ -26,7 +26,41 @@ packages=(
     bison
     flex
 
+    # 開発
+    ccache # gccやg++の結果をキャッシュしてコンパイルを高速化
+    distcc # 複数のコンピュータで並列にgccやg++を実行できるらしい
 
+    git
+    zsh
+
+    # CUI
+    w3m
+    w3m-img
+    lynx
+    visidata # スプレッドシート
+    pv # パイプの進捗を表示
+
+    # 画像
+    imagemagick
+
+    # ユーティリティ
+    preload # アプリ起動速度を改善
+    iftop # ネットワークインタフェースの情報表示
+    iptraf-ng # ip通信の情報表示
+    aria2 # curlやwgetの高速版(複数のコネクションを使うのでサーバの負荷で迷惑にならないよう気をつける)
+    rename # ファイル名変更
+    # fzf # brewの方を入れる(fzf.vimの方とのバージョンの関係で、最新のほうが良さそう)
+
+    unar # 圧縮ファイルの解凍
+    atool # 圧縮・伸長コマンドのラッパー
+    # 圧縮・伸長を並列でやって高速化するやつ(参考 http://mickey-happygolucky.hatenablog.com/entry/2018/04/21/011811)
+    pigz
+    # pzip2
+    # pxz
+    entr # ファイルを監視して、変更時にコマンドの実行
+)
+
+gui_packages=(
     # polybarの依存 https://gist.github.com/kuznero/f4e983c708cd2bdcadc97be695baacf8
     cmake
     cmake-data
@@ -63,13 +97,6 @@ packages=(
     libxcb-shape0-dev
     libxcb-xfixes0-dev
 
-    # 開発
-    ccache # gccやg++の結果をキャッシュしてコンパイルを高速化
-    distcc # 複数のコンピュータで並列にgccやg++を実行できるらしい
-
-    git
-    zsh
-
     # gnome
     gnome-tweaks
     cairo-dock # 下の方にアイコンを置くやつ
@@ -83,16 +110,6 @@ packages=(
     # QRコード
     qtqr
     qrencode
-
-    # CUI
-    w3m
-    w3m-img
-    lynx
-    visidata # スプレッドシート
-    pv # パイプの進捗を表示
-
-    # 画像
-    imagemagick
 
     # GUI
     rofi              # ウィンドウスイッチャー
@@ -138,21 +155,7 @@ packages=(
 
     # ユーティリティ
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
-    preload # アプリ起動速度を改善
     flameshot # スクリーンショット
-    iftop # ネットワークインタフェースの情報表示
-    iptraf-ng # ip通信の情報表示
-    aria2 # curlやwgetの高速版(複数のコネクションを使うのでサーバの負荷で迷惑にならないよう気をつける)
-    rename # ファイル名変更
-    # fzf # brewの方を入れる(fzf.vimの方とのバージョンの関係で、最新のほうが良さそう)
-
-    unar # 圧縮ファイルの解凍
-    atool # 圧縮・伸長コマンドのラッパー
-    # 圧縮・伸長を並列でやって高速化するやつ(参考 http://mickey-happygolucky.hatenablog.com/entry/2018/04/21/011811)
-    pigz
-    # pzip2
-    # pxz
-    entr # ファイルを監視して、変更時にコマンドの実行
 
     # 日本語音声読み上げソフト
     open-jtalk
@@ -168,6 +171,11 @@ packages=(
     # tlp tlp-rdw
     # TODO: sudo tlp start
 )
+
+# GUI環境がある場合はgui_packagesもインストール
+if xset q > /dev/null 2>&1; then
+  packages=("${packages[@]}" "${gui_packages[@]}")
+fi
 
 if type "apt" > /dev/null 2>&1; then
     if type "apt-fast" > /dev/null 2>&1; then

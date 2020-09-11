@@ -2,10 +2,6 @@
 
 # aptでインストールするものリスト
 packages=(
-    # クロスプラットフォームGUIライブラリ
-    # nimxの方はWindowsだと別途SDL2を用意する必要がありそう？
-    nigui
-
     # マルチバイト文字を含む文字列の表示幅を取得
     eastasianwidth
 
@@ -18,6 +14,16 @@ packages=(
     # REPL
     inim
 )
+
+gui_packages=(
+    # クロスプラットフォームGUIライブラリ
+    # nimxの方はWindowsだと別途SDL2を用意する必要がありそう？
+    nigui
+)
+
+if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
+  packages=("${packages[@]}" "${gui_packages[@]}")
+fi
 
 if type "nimble" > /dev/null 2>&1; then
     nimble install -y "${packages[@]}"

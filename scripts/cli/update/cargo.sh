@@ -2,7 +2,6 @@
 
 # cargoでインストールするものリスト
 packages=(
-  alacritty
   ripgrep
   bat
   fd-find
@@ -10,11 +9,19 @@ packages=(
   lsd
   zoxide
   hexyl
-  silicon
   du-dust
   hyperfine
   ytop
 )
+
+gui_packages=(
+  alacritty
+  silicon
+)
+
+if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
+  packages=("${packages[@]}" "${gui_packages[@]}")
+fi
 
 if type "cargo" > /dev/null 2>&1; then
   cargo install "${packages[@]}"

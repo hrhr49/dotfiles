@@ -31,10 +31,16 @@ packages=(
     pylint
     python-language-server
     better_exceptions
+)
 
-
+gui_packages=(
     # Linux
     pywal # 壁紙に合わせたカラースキームを使用
 )
+
+# GUI環境がある場合はgui_packagesもインストール
+if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
+  packages=("${packages[@]}" "${gui_packages[@]}")
+fi
 
 pip install "${packages[@]}"
