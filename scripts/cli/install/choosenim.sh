@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-curl 'https://nim-lang.org/choosenim/init.sh' -sSf | sh
+
+if type choosenim > /dev/nlull 2>&1; then
+  echo 'choosenim is already installed'
+else
+  curl 'https://nim-lang.org/choosenim/init.sh' -sSf | sh
+fi
