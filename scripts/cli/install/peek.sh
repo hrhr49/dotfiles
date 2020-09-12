@@ -8,7 +8,7 @@ if xset q > /dev/null 2>&1; then
   else
       sudo add-apt-repository ppa:peek-developers/stable
       sudo apt update
-      sudo apt install peek
+      sudo apt install -y peek
   fi
 else
   # GUI環境がない場合はインストールしない

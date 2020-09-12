@@ -23,6 +23,7 @@ if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
   packages=("${packages[@]}" "${gui_packages[@]}")
 fi
 
-if type "cargo" > /dev/null 2>&1; then
-  cargo install "${packages[@]}"
-fi
+# 一時的にコメントアウト
+# if type "cargo" > /dev/null 2>&1; then
+#   cargo install "${packages[@]}"
+# fi
