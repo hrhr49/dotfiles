@@ -278,9 +278,20 @@ augroup MarkFileGroup
   autocmd BufLeave vimrc     mark V
 augroup END
 
-let g:python3_host_prog = exepath('python')
-let g:python_host_prog  = exepath('python2')
-let g:ruby_host_prog    = exepath('ruby')
+if exepath('python3') != ''
+  let g:python3_host_prog = exepath('python3')
+endif
+if exepath('python2') != ''
+  let g:python_host_prog = exepath('python2')
+endif
+if exepath('python') != ''
+  if system('python -V') =~ 'Python 3.*'
+    let g:python3_host_prog = exepath('python')
+  elseif system('python -V') =~ 'Python 2.*'
+    let g:python_host_prog = exepath('python')
+  endif
+endif
+let g:ruby_host_prog  = exepath('ruby')
 "}}}
 " プラグイン一覧{{{
 call plug#begin('~/.vim/plugged')
