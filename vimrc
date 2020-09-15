@@ -8,7 +8,7 @@ let g:loaded_my_vimrc = 1
 filetype plugin indent on
 syntax on
 set backspace=2
-set whichwrap=b,s,h,l,<,>,[,]  " 行頭、行末で行をまたぐ
+" set whichwrap=b,s,h,l,<,>,[,]  " 行頭、行末で行をまたぐ
 set shiftwidth=4
 set smartindent
 set smarttab
