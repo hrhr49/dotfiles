@@ -232,7 +232,7 @@ augroup FileTypeGroup
     execute 'autocmd FileType ' . s:s .' setl ts=2 sts=2 sw=2 et isk+=-'
   endfor
   for s:s in ['make', 'go']
-    execute 'autocmd FileType ' . s:s .' setl ts=2 sts=2 sw=2 noet'
+    execute 'autocmd FileType ' . s:s .' setl ts=4 sts=4 sw=4 noet'
   endfor
 
   autocmd FileType typescript nnoremap <buffer> <F5> :w\|!tsc % \| node %:r.js<CR>

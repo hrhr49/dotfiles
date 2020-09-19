@@ -21,7 +21,7 @@ docker-build:
 	docker build -t ${DOCKER_TAG_NAME} .
 
 shell:
-	docker run --name poppler-build -it --rm -v ${PWD}:/home/user/dotfiles ${DOCKER_TAG_NAME}
+	docker run --name ${DOCKER_TAG_NAME} -it --rm -v ${PWD}:/home/user/dotfiles ${DOCKER_TAG_NAME}
 
 clean:
 	rm -rf build/*

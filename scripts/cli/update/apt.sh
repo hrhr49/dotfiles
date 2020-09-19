@@ -27,8 +27,8 @@ packages=(
     flex
 
     # 開発
-    ccache # gccやg++の結果をキャッシュしてコンパイルを高速化
-    distcc # 複数のコンピュータで並列にgccやg++を実行できるらしい
+    # ccache # gccやg++の結果をキャッシュしてコンパイルを高速化
+    # distcc # 複数のコンピュータで並列にgccやg++を実行できるらしい
 
     git
     zsh
@@ -88,10 +88,10 @@ gui_packages=(
     libxcb-ewmh2
 
     # QT
-    qtbase5-dev
-    qttools5-dev-tools
-    qt5-default
-    qtcreator
+    # qtbase5-dev
+    # qttools5-dev-tools
+    # qt5-default
+    # qtcreator
 
     # alacrittyの依存
     libxcb-shape0-dev
@@ -99,7 +99,7 @@ gui_packages=(
 
     # gnome
     gnome-tweaks
-    cairo-dock # 下の方にアイコンを置くやつ
+    # cairo-dock # 下の方にアイコンを置くやつ
 
     # リモートデスクトップ
     remmina # RDPクライアント
@@ -163,8 +163,8 @@ gui_packages=(
     hts-voice-nitech-jp-atr503-m001
 
     # USBカメラ
-    guvcview # 撮影
-    fswebcam # 画像取得
+    # guvcview # 撮影
+    # fswebcam # 画像取得
 
     # ノートPCの省電力用
     # powertop

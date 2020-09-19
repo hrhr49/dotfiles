@@ -24,7 +24,7 @@ packages=(
     undollar # コマンドライン先頭に「$」がついていたらそれを削除する
     trash-cli
     # fkill-cli # インタラクティブにプロセスを選んでkill
-    cli-scrape # htmlのタグ抽出
+    # cli-scrape # htmlのタグ抽出
 
     slack-tui # slackのtui
 )
