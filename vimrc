@@ -228,6 +228,9 @@ augroup FileTypeGroup
         \'typescriptreact', 'typescript.tsx', 'nim', 'vim']
     execute 'autocmd FileType ' . s:s .' setl ts=2 sts=2 sw=2 et'
   endfor
+  for s:s in ['c', 'cpp', 'python']
+    execute 'autocmd FileType ' . s:s .' setl ts=4 sts=4 sw=4 et'
+  endfor
   for s:s in ['yaml', 'html', 'css', 'scss', 'less', 'sh', 'bash', 'zsh']
     execute 'autocmd FileType ' . s:s .' setl ts=2 sts=2 sw=2 et isk+=-'
   endfor
@@ -366,6 +369,9 @@ let s:plug = { "plugs": get(g:, 'plugs', {}) }
 function! s:plug.is_installed(name)
   return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
 endfunction
+
+" polyglot
+let g:vim_markdown_no_default_key_mappings = 1
 
 " fugitive
 nnoremap gcd :<C-u>Gcd<CR>
