@@ -129,15 +129,18 @@ RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
 # install vim-plug
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# nvimの方で同じことをしたら、うまく行かなかったっぽい
 RUN vim -c 'PlugInstall|qa'
+
+# 先にディレクトリ作っておかないと、Vim側でディレクトリ作成時にENTERキー入力待ちになってしまう。
 RUN mkdir -p /home/${USERNAME}/.config/coc
 # vimrcのg:coc_global_extensionsのを全部Installする。dockerビルド時に何も表示されない時間が数分続いたけど、ちゃんとできていた。
 RUN vim -c 'execute "CocInstall -sync " . join(g:coc_global_extensions, " ")|qa'
-# nvimの方で同じことをしたら、うまく行かなかったっぽい
 
 # install zinit
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
-# RUN zsh /home/${USERNAME}/.zshrc
+# 一旦、zshをインタラクティブモードで起動することで、zinitのパッケージインストール処理を実施する。
 RUN zsh -i -c exit
 
 # install tpm
