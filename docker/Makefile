@@ -9,6 +9,6 @@ shell:
 	docker run --name ${DOCKER_TAG_NAME} -it --rm ${DOCKER_TAG_NAME}
 
 run:
-	docker run --name ${DOCKER_TAG_NAME} -it --rm -v ${PWD}:/home/user/ ${DOCKER_TAG_NAME}
+	docker run --name ${DOCKER_TAG_NAME} -it --rm -v ${PWD}:/home/user/workspace ${DOCKER_TAG_NAME}
 
 
