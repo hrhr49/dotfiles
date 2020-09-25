@@ -5,6 +5,10 @@ scriptencoding utf-8
 if exists("g:loaded_my_vimrc") | finish | endif
 let g:loaded_my_vimrc = 1
 " 一般{{{
+let s:is_windows = has('win32') || has('win64')
+let s:is_mac = has('mac')
+" ↓ 厳密には正しくないけどとりあえずの対応
+let s:is_linux = !s:is_windows && !s:is_mac
 filetype plugin indent on
 syntax on
 set backspace=2
@@ -23,10 +27,10 @@ set complete-=i                " インクルードファイルで補完しな�
 set complete-=t                " タグを入力補完候補に入れない
 set clipboard&
 silent! set clipboard=exclude:.*
-if has('unix') || has('mac')
-  set clipboard^=unnamedplus
-elseif has('win32') || has('win64')
-  set clipboard^=unnamed
+if s:is_windows
+  silent! set clipboard^=unnamed
+else
+  silent! set clipboard^=unnamedplus
 endif
 set nohlsearch
 set ignorecase
@@ -43,7 +47,7 @@ set nowritebackup
 set noswapfile
 set noundofile
 set history=10000              " コマンド履歴の数
-if has('win32') || has('win64')
+if s:is_windows
   set viminfo='999,<50,s10,h,rA:,rB:
 else
   set viminfo=!,'999,<50,s10,h
@@ -207,7 +211,7 @@ endfor
 " ターミナルモード
 tnoremap <silent> jj <C-\><C-n>
 tnoremap <silent> <C-S-v> <C-w>""
-if has('win32') || has('win64')
+if s:is_windows
   tnoremap <C-p> <Up>
   tnoremap <C-n> <Down>
   tnoremap <C-m> <CR>
@@ -351,10 +355,12 @@ Plug 'mbbill/undotree', {'on': 'UndotreeShow'} " Undoツリー管理
 
 " 言語
 Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
-if executable('node') > 0 && executable('yarn') > 0
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
-else
-  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
+if !(s:is_linux && !executable('xset')) " ブラウザを開ける環境なら
+  if executable('node') > 0 && executable('yarn') > 0
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
+  else
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
+  endif
 endif
 Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
@@ -436,7 +442,7 @@ let g:rainbow_conf = {
 if executable('fzf') > 0
   " fzf
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
-  if has('win32') || has('win64')
+  if s:is_windows
     let g:fzf_preview_window = ''
   endif
   function! GetNVimVersion()
@@ -456,7 +462,7 @@ if executable('fzf') > 0
 
   " プレビューをする
   " Filesコマンドにもプレビューを出す(参考 https://qiita.com/kompiro/items/a09c0b44e7c741724c80)
-  if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
+  if executable('bat') && executable('bash') && !s:is_windows
     command! -bang -nargs=? -complete=dir Files
           \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
     command! -bang -nargs=? -complete=dir GFiles
@@ -476,7 +482,7 @@ if executable('fzf') > 0
   nnoremap <Space>g :<C-u>GFiles<CR>
   nnoremap <Space>G :<C-u>GFiles?<CR>
   " 履歴はソートせずにプレビューも表示
-  if executable('bat') && executable('bash') && !(has('win32') || has('win64'))
+  if executable('bat') && executable('bash') && !s:is_windows
     nnoremap <silent> <Space>r :<C-u>call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))<CR>
   else
     nnoremap <silent> <Space>r :<C-u>call fzf#vim#history({'options': '--no-sort'})<CR>
@@ -495,7 +501,7 @@ if executable('fzf') > 0
   nnoremap <Space>w :<C-u>Windows<CR>
   if executable('rg')
     " 参考(https://arimasou16.com/blog/2018/11/02/00268/)
-    if has('win32') || has('win64')
+    if s:is_windows
       command! -bang -nargs=* FzfRg
             \ call fzf#vim#grep(
             \   'rg --column --line-number --no-heading --color=always --smart-case "'.<q-args>.'"', 1,
@@ -750,7 +756,7 @@ command! CopyAbsDir let @+=expand('%:p:h')
 " GUI {{{
 if has('gui_running')
   " アンチエイリアス{{{
-  if has('win32') || has('win64')
+  if s:is_windows
     silent! set renderoptions=type:directx
   endif
   silent! set antialias
