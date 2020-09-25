@@ -73,6 +73,8 @@ RUN pacman -Syyu --noconfirm \
 # install packages for python
 RUN pip install \
     pynvim \
+    pylint \
+    pipenv \
     neovim
 
 # install packages for nodejs
@@ -121,8 +123,11 @@ RUN yay -Syuu --noconfirm \
     perl-graph-easy \
     gibo
 
+
 # install dotfiles
 RUN mkdir -p /home/${USERNAME}/memo
+
+ADD dummy.txt /tmp/
 RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
 RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
 
@@ -146,9 +151,5 @@ RUN zsh -i -c exit
 # install tpm
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# pylintを入れとかないと、coc-pythonがうるさい。
-RUN pip install \
-    pylint \
-    pipenv
 
 CMD ["/bin/zsh"]
