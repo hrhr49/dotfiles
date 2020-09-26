@@ -13,6 +13,7 @@ elif type "yum" > /dev/null 2>&1; then
     sudo yum install curl file git
     sudo yum install libxcrypt-compat # needed by Fedora 30 and up
 else
+  # aptとかyumじゃないときは入れない
     echo "package manager is not found!"
     exit
 fi
