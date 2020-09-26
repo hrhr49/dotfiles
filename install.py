@@ -48,6 +48,7 @@ links = [
         '${HOME}/.config/alacritty/alacritty.yml'],
     ['${PWD}/vimspector.json', '${HOME}/.vimspector.json'],
     ['${PWD}/atoolrc', '${HOME}/.atoolrc'],
+    ['${PWD}/docker/config.json', '${HOME}/.docker/config.json'],
 ]
 
 lines_for_include = [
