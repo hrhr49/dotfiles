@@ -92,5 +92,5 @@ if  xset q > /dev/null 2>&1; then
 fi
 
 if type "pacman" > /dev/null 2>&1; then
-  sudo pacman -Syyu --no-confirm "${packages[@]}"
+  sudo pacman -Syyu --noconfirm "${packages[@]}"
 fi
