@@ -198,10 +198,10 @@ nnoremap <silent> !+tab+!q :<C-u>tabclose<CR>
 " n, p, <, >でタブ移動、もしくはタブ自体を移動。連続入力可能
 nmap <silent> !+tab+!> :<C-u>tabm+<CR>!+tab+!
 nmap <silent> !+tab+!< :<C-u>tabm-<CR>!+tab+!
-nmap <silent> !+tab+!p :<C-u>tabprevious<CR>!+tab+!
-nmap <silent> !+tab+!P :<C-u>tabfirst<CR>!+tab+!
-nmap <silent> !+tab+!n :<C-u>tabnext<CR>!+tab+!
-nmap <silent> !+tab+!N :<C-u>tablast<CR>!+tab+!
+nnoremap !+tabnext+! <Nop>
+nmap <silent> !+tab+!n :<C-u>tabnext<CR>!+tabnext+!
+nnoremap !+tabprev+! <Nop>
+nmap <silent> !+tab+!p :<C-u>tabprevious<CR>!+tabprev+!
 "}}}
 " その他{{{
 for s:s in ['', '2-', '3-', '4-']
