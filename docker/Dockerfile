@@ -57,18 +57,26 @@ RUN mkdir -p /home/${USERNAME}/memo
 
 ADD dummy.txt /tmp/
 RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
+RUN sudo pacman -Syyu --noconfirm python
 RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
 
 # install pacman packages
-RUN /home/${USERNAME}/memo/dotfiles/update/pacman.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/pacman.sh
 
 # install yay packages
-RUN /home/${USERNAME}/memo/dotfiles/update/yay.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/yay.sh
 
 # install tools
-RUN /home/${USERNAME}/memo/dotfiles/install/all.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/install/all.sh
 
 # install packages
-RUN /home/${USERNAME}/memo/dotfiles/update/all.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/all.sh
+
+# 一旦、zshをインタラクティブモードで起動することで、zinitのパッケージインストール処理を実施する。
+RUN zsh -i -c exit
+
+# install tpm
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 
 CMD ["/bin/zsh"]
