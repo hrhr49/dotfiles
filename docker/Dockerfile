@@ -19,72 +19,6 @@ RUN echo ja_JP.UTF-8 UTF-8 > /etc/locale.gen &&\
     pacman -Syyu --noconfirm git openssh base-devel &&\
     pacman -Qtdq | xargs -r pacman --noconfirm -Rcns
 
-# install basic commands
-RUN pacman -Syyu --noconfirm \
-    which \
-    curl \
-    wget \
-    man \
-    zip \
-    unzip
-
-# install development environment
-RUN pacman -Syyu --noconfirm \
-    git \
-    python \
-    make \
-    cmake \
-    gcc \
-    nodejs \
-    npm \
-    yarn \
-    ruby \
-    go \
-    rust \
-    nim
-
-# install utility
-RUN pacman -Syyu --noconfirm \
-    zsh \
-    neovim \
-    python-pynvim \
-    ctags \
-    tmux \
-    fzf \
-    ripgrep \
-    bat \
-    tig \
-    tokei \
-    tldr \
-    fd \
-    ranger \
-    tree \
-    htop \
-    unarchiver \
-    jq
-    # fasd \
-
-# other
-RUN pacman -Syyu --noconfirm \
-    python-pip \
-    rubygems \
-    vim
-
-# install packages for python
-RUN pip install \
-    pynvim \
-    pylint \
-    pipenv \
-    neovim
-
-# install packages for nodejs
-RUN npm install -g \
-    neovim
-
-# install packages for ruby
-RUN gem install \
-    neovim
-
 ARG USERNAME=user
 # docker build --Build-arg USERNAME=${USERNAME} -t u1and0/archlinux .
 ARG UID=1000
@@ -118,12 +52,6 @@ RUN sudo -u ${USERNAME} makepkg --noconfirm -si &&\
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}
 
-RUN yay -Syuu --noconfirm \
-    nkf \
-    perl-graph-easy \
-    gibo
-
-
 # install dotfiles
 RUN mkdir -p /home/${USERNAME}/memo
 
@@ -131,25 +59,16 @@ ADD dummy.txt /tmp/
 RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
 RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
 
-# install vim-plug
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# install pacman packages
+RUN /home/${USERNAME}/memo/dotfiles/update/pacman.sh
 
-# nvimの方で同じことをしたら、うまく行かなかったっぽい
-RUN vim -c 'PlugInstall|qa'
+# install yay packages
+RUN /home/${USERNAME}/memo/dotfiles/update/yay.sh
 
-# 先にディレクトリ作っておかないと、Vim側でディレクトリ作成時にENTERキー入力待ちになってしまう。
-RUN mkdir -p /home/${USERNAME}/.config/coc
-# vimrcのg:coc_global_extensionsのを全部Installする。dockerビルド時に何も表示されない時間が数分続いたけど、ちゃんとできていた。
-RUN vim -c 'execute "CocInstall -sync " . join(g:coc_global_extensions, " ")|qa'
+# install tools
+RUN /home/${USERNAME}/memo/dotfiles/install/all.sh
 
-# install zinit
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
-# 一旦、zshをインタラクティブモードで起動することで、zinitのパッケージインストール処理を実施する。
-RUN zsh -i -c exit
-
-# install tpm
-RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
+# install packages
+RUN /home/${USERNAME}/memo/dotfiles/update/all.sh
 
 CMD ["/bin/zsh"]

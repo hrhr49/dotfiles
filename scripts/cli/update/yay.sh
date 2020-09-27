@@ -14,5 +14,5 @@ if  xset q > /dev/null 2>&1; then
 fi
 
 if type "yay" > /dev/null 2>&1; then
-  sudo yay -S "${packages[@]}"
+  yay -Syyu --no-confirm "${packages[@]}"
 fi
