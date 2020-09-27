@@ -24,6 +24,7 @@ packages=(
   rust
   nim
   nimble
+  perl
 
   # development tools
   zsh

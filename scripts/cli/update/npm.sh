@@ -44,4 +44,6 @@ if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
   packages=("${packages[@]}" "${gui_packages[@]}")
 fi
 
-npm install -g "${packages[@]}"
+if type "npm" > /dev/null 2>&1; then
+  npm install -g "${packages[@]}"
+fi

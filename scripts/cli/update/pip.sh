@@ -43,4 +43,6 @@ if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
   packages=("${packages[@]}" "${gui_packages[@]}")
 fi
 
-pip install "${packages[@]}"
+if type "pip" > /dev/null 2>&1; then
+  pip install "${packages[@]}"
+fi

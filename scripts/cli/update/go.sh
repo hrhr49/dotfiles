@@ -9,4 +9,6 @@ packages=(
     github.com/x-motemen/ghq
 )
 
-go get -u "${packages[@]}"
+if type "go" > /dev/null 2>&1; then
+  go get -u "${packages[@]}"
+fi

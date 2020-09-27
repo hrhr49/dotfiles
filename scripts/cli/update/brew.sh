@@ -105,12 +105,14 @@ formulas=(
 
 installed_formulas=$(brew list)
 
-# インストールしていないものだけインストール
-# 直接installコマンドに与えると警告やエラーが出るので、それを回避
-for formula in "${formulas[@]}"; do
-    if echo "$installed_formulas" | grep "$formula" > /dev/null 2>&1; then
-        echo "$formula already exists"
-    else
-        brew install "$formula"
-    fi
-done
+if type "brew" > /dev/null 2>&1; then
+  # インストールしていないものだけインストール
+  # 直接installコマンドに与えると警告やエラーが出るので、それを回避
+  for formula in "${formulas[@]}"; do
+      if echo "$installed_formulas" | grep "$formula" > /dev/null 2>&1; then
+          echo "$formula already exists"
+      else
+          brew install "$formula"
+      fi
+  done
+fi

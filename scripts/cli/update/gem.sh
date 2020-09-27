@@ -7,4 +7,6 @@ packages=(
     tmuxinator
 )
 
-gem install "${packages[@]}"
+if type "gem" > /dev/null 2>&1; then
+  gem install "${packages[@]}"
+fi

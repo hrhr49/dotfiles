@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-# vim-plug
-vim -c 'PlugInstall|qa'
+if type "vim" > /dev/null 2>&1; then
+  # vim-plug
+  vim -c 'PlugInstall|qa'
 
-# coc.nvimの更新
-# 先にディレクトリ作っておかないと、Vim側でディレクトリ作成時にENTERキー入力待ちになってしまう。
-mkdir -p ~/.config/coc
-# vimrcのg:coc_global_extensionsのを全部Installする。dockerビルド時だと、何も表示されない時間が数分続いたけど、ちゃんとできていた。
-vim -c 'execute "CocInstall -sync " . join(g:coc_global_extensions, " ")|qa'
+  # coc.nvimの更新
+  # 先にディレクトリ作っておかないと、Vim側でディレクトリ作成時にENTERキー入力待ちになってしまう。
+  mkdir -p ~/.config/coc
+  # vimrcのg:coc_global_extensionsのを全部Installする。dockerビルド時だと、何も表示されない時間が数分続いたけど、ちゃんとできていた。
+  vim -c 'execute "CocInstall -sync " . join(g:coc_global_extensions, " ")|qa'
+fi
