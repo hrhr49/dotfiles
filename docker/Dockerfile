@@ -72,11 +72,4 @@ RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/install/all.sh
 # install packages
 RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/all.sh
 
-# 一旦、zshをインタラクティブモードで起動することで、zinitのパッケージインストール処理を実施する。
-RUN zsh -i -c exit
-
-# install tpm
-RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-
 CMD ["/bin/zsh"]
