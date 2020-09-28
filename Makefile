@@ -29,8 +29,9 @@ clean:
 # 未使用変数のエラー(SC2034)はチェックしない
 # 非定数のsourceコマンドのエラー(SC1090)はチェックしない
 # sourceコマンドのアクセスできないエラー(SC1091)はチェックしない
+# shebangがshやbash以外の場合(zshなど)のときのエラー(SC1071)はチェックしない
 check:
-	shellcheck -e SC2034 -e SC1090 -e SC1091 ${SHELL_SCRIPTS}
+	shellcheck -e SC2034 -e SC1090 -e SC1091 -e 1071 ${SHELL_SCRIPTS}
 
 fix:
 	shellcheck -f diff ${SHELL_SCRIPTS} | git apply
