@@ -5,6 +5,9 @@ DOCKER_TAG_NAME='hrhr49-dev-archlinux'
 build:
 	docker build -t ${DOCKER_TAG_NAME} .
 
+build-nocache:
+	docker build --no-cache -t ${DOCKER_TAG_NAME} .
+
 shell:
 	docker run --name ${DOCKER_TAG_NAME} -it --rm ${DOCKER_TAG_NAME}
 
