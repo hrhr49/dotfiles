@@ -52,6 +52,11 @@ PROMPT='%B%F{blue}%~%f ${vcs_info_msg_0_}%b'
 if [ -f /.dockerenv ]; then
   PROMPT=$PROMPT'%B%F{yellow}docker%b '
 fi
+
+# sshでアクセスしているときには 'ssh' という文字列も表示する
+if [ -n "${SSH_CONNECTION}" ]; then
+  PROMPT=$PROMPT'%B%F{magenta}ssh%b '
+fi
 # }}}
 # コマンド補完{{{
 
