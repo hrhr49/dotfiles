@@ -61,6 +61,8 @@ formulas=(
     peco
     fd
 
+    sd # sedの代わり。でも置換しかできない？速度は速いみたい。
+
     # 各種言語
     ruby
     node
