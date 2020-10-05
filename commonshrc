@@ -25,6 +25,15 @@ fi
 # fasdが存在すれば初期化
 if type "fasd" > /dev/null 2>&1; then
     eval "$(fasd --init auto)"
+    # fasdのエイリアスを解除
+    unalias a  # any
+    unalias s  # show / search / select
+    unalias d  # directory
+    unalias f  # file
+    unalias sd # interactive directory selection
+    unalias sf # interactive file selection
+    unalias z  # cd, same functionality as j in autojump
+    unalias zz # cd with interactive selection
 fi
 
 # trash-cli(npmパッケージ)が存在すればrmを上書き
