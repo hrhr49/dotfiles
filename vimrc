@@ -9,6 +9,8 @@ let s:is_windows = has('win32') || has('win64')
 let s:is_mac = has('mac')
 " ↓ 厳密には正しくないけどとりあえずの対応
 let s:is_linux = !s:is_windows && !s:is_mac
+" WSLかどうか
+let s:is_wsl = findfile('/mnt/c/Windows/System32/cmd.exe') != ''
 filetype plugin indent on
 syntax on
 set backspace=2
@@ -25,12 +27,14 @@ set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》
 set foldmethod=marker
 set complete-=i                " インクルードファイルで補完しない
 set complete-=t                " タグを入力補完候補に入れない
-set clipboard&
-silent! set clipboard=exclude:.*
-if s:is_windows
-  silent! set clipboard^=unnamed
-else
-  silent! set clipboard^=unnamedplus
+if !s:is_wsl
+  set clipboard&
+  silent! set clipboard=exclude:.*
+  if s:is_windows
+    silent! set clipboard^=unnamed
+  else
+    silent! set clipboard^=unnamedplus
+  endif
 endif
 set nohlsearch
 set ignorecase
