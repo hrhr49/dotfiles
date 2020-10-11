@@ -49,6 +49,8 @@ links = [
     ['${PWD}/vimspector.json', '${HOME}/.vimspector.json'],
     ['${PWD}/atoolrc', '${HOME}/.atoolrc'],
     ['${PWD}/docker/config.json', '${HOME}/.docker/config.json'],
+    # root権限が必要なのでひとまず保留
+    # ['${PWD}/90-libinput.conf', '/etc/X11/xorg.conf.d/90-libinput.conf'],
 ]
 
 lines_for_include = [
