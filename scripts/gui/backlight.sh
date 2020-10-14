@@ -6,8 +6,8 @@
 brightness_percent=$(zenity --scale --value=100 --min-value=20 --max-value=100 --width=400 --title="Brightness" --text="Input Brightness [20~100]")
 display_name=$(xrandr -q | grep '\<connected' | awk '{print $1}')
 
-if [ -n $brightness_percent ]; then
+if [ -n "$brightness_percent" ]; then
   brightness_rate=$(echo "$brightness_percent/100" | bc -l)
-  echo $brightness_rate
-  xrandr --output $display_name --brightness $brightness_rate
+  echo "$brightness_rate"
+  xrandr --output "$display_name" --brightness "$brightness_rate"
 fi
