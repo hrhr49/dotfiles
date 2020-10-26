@@ -12,6 +12,10 @@ if type "setxkbmap" > /dev/null 2>&1; then
   # capsキーをctrlキーに
   setxkbmap -option ctrl:nocaps
 fi
+if type "gsettings" > /dev/null 2>&1; then
+  # capsキーをctrlキーに
+  gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
+fi
 if type "xset" > /dev/null 2>&1; then
   # 200msで30Hzのキーリピート
   xset r rate 200 30
