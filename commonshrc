@@ -302,6 +302,14 @@ fi
 # 環境変数{{{
 export BETTER_EXCEPTIONS=1
 
+# WSLでVcXsrv(無償のXサーバー)を動かすための設定
+if [ -f '/mnt/c/Windows/System32/cmd.exe' ]; then
+  unset LIBGL_ALWAYS_INDIRECT
+  DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0.0
+  export DISPLAY
+fi
+
+# https://qiita.com/momomo_rimoto/items/51d533ae9529872696ce#2-wsl2%E3%81%A7gui%E3%82%92%E4%BD%BF%E3%81%86
 # 独自
 # いろいろなファイルを放り込んでおくディレクトリ
 # MYFILES=$HOME/.config/myfiles/
