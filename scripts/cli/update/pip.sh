@@ -31,6 +31,18 @@ packages=(
     pylint
     python-language-server
     better_exceptions
+
+    # 機械学習関連で使うやつ
+    jupytext
+    numpy
+    pandas
+    matplotlib
+
+    # その他
+    requests
+    jinja2
+    flask
+    beautifulsoup4
 )
 
 gui_packages=(
