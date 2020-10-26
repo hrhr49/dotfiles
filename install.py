@@ -49,6 +49,18 @@ links = [
     ['${PWD}/vimspector.json', '${HOME}/.vimspector.json'],
     ['${PWD}/atoolrc', '${HOME}/.atoolrc'],
     ['${PWD}/docker/config.json', '${HOME}/.docker/config.json'],
+    ['${PWD}/config/coc/ultisnips/.snippets',
+        '${HOME}/.config/coc/ultisnips/.snippets'],
+    ['${PWD}/config/coc/ultisnips/vim.snippets',
+        '${HOME}/.config/coc/ultisnips/vim.snippets'],
+    ['${PWD}/config/coc/ultisnips/markdown.snippets',
+        '${HOME}/.config/coc/ultisnips/markdown.snippets'],
+    ['${PWD}/config/coc/ultisnips/html.snippets',
+        '${HOME}/.config/coc/ultisnips/html.snippets'],
+    ['${PWD}/config/coc/ultisnips/javascript.snippets',
+        '${HOME}/.config/coc/ultisnips/javascript.snippets'],
+    ['${PWD}/config/coc/ultisnips/python.snippets',
+        '${HOME}/.config/coc/ultisnips/python.snippets'],
     # root権限が必要なのでひとまず保留
     # ['${PWD}/90-libinput.conf', '/etc/X11/xorg.conf.d/90-libinput.conf'],
 ]

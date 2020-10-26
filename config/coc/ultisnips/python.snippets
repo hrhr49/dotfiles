@@ -1,0 +1,52 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet np
+import numpy as np
+endsnippet
+
+snippet pd
+import pandas as pd
+endsnippet
+
+snippet plt
+import matplotlib.pyplot as plt
+endsnippet
+
+snippet sns
+import seaborn as sns
+endsnippet
+
+snippet torch
+import torch
+from torch.autograd import Variable
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import torch.utils.data
+import torchvision
+from torchvision import datasets, models, transforms
+endsnippet
