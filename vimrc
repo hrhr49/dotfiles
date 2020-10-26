@@ -553,7 +553,7 @@ endif
 " https://github.com/neoclide/coc-python/issues/188
 " が解決するまでcoc-pythonのバージョンをアップしない
 let g:coc_global_extensions = [
-      \ "coc-pyright", "coc-python",      "coc-tsserver",  "coc-json",
+      \ "coc-python",      "coc-tsserver",  "coc-json",
       \ "coc-yaml",    "coc-html",        "coc-css",       "coc-tailwindcss",
       \ "coc-vimlsp",  "coc-marketplace", "coc-highlight", "coc-rls",
       \ "coc-go",      "coc-emoji",       "coc-snippets",  "coc-cmake",
@@ -562,6 +562,8 @@ let g:coc_global_extensions = [
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
 
+      " \ "coc-pyright", 
+      "
 setl updatetime=300
 setl shortmess+=c
 setl signcolumn=yes
@@ -574,22 +576,22 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Rem<buffer> ap keys for gotos
-nmap <buffer> <silent> gd <Plug>(coc-definition)
-nmap <buffer> <silent> gy <Plug>(coc-type-definition)
-nmap <buffer> <silent> gi <Plug>(coc-implementation)
-nmap <buffer> <silent> gr <Plug>(coc-references)
-xmap <buffer> <silent> gq <Plug>(coc-format-selected)
-nmap <buffer> <silent> gq <Plug>(coc-format-selected)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+xmap <silent> gq <Plug>(coc-format-selected)
+nmap <silent> gq <Plug>(coc-format-selected)
 " Use K to show documentation in preview window
-nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gh <Plug>(coc-diagnostic-info)
 
 " Symbol renaming.
-nmap <buffer> <F2> <Plug>(coc-rename)
+nmap <F2> <Plug>(coc-rename)
 augroup CocHighlightGroup
   autocmd!
   autocmd BufRead,BufNewFile,ColorScheme * highlight clear CocUnderLine
