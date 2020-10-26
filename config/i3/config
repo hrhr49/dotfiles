@@ -304,7 +304,7 @@ bindsym $mod+m mode "mouse"
 # client.background       $bg
 
 # フォント
-font pango:monospace 8
+font pango:monospace 12
 
 # ワークスペース0はフローティング用。GUIアプリ作成などに使用
 for_window [workspace="0"] floating enable
