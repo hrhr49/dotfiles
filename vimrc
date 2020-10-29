@@ -280,6 +280,7 @@ augroup FileTypeGroup
   autocmd BufRead,BufNewFile *.tcl       setl ft=tcl
   autocmd BufRead,BufNewFile *.scm       setl ft=scheme
   autocmd BufRead,BufNewFile *.rs        setl ft=rust
+  autocmd BufRead,BufNewFile *.ipynb     setl ft=jupyter
 augroup END
 
 augroup MarkFileGroup
@@ -369,7 +370,8 @@ endif
 Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
-
+Plug 'goerz/jupytext.vim'
+", {'for': ['jupyter']}
 " デバッグ
 Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
 call plug#end()
@@ -441,6 +443,18 @@ let g:rainbow_conf = {
       \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
       \	'separately': {'*': {}, 'css': 0, 'nerdtree': 0}
       \}
+
+" jupytext.vim
+" let g:jupytext_command = 'notedown'
+" let g:jupytext_fmt = 'markdown'
+" let g:jupytext_to_ipynb_opts = '--to=notebook'
+
+" セルの区切り文字をVSCode互換の # %% に指定する
+let g:jupytext_fmt = 'py:percent'
+
+" vimのPython向けシンタックスハイライトを有効にする
+let g:jupytext_filetype_map = {'py': 'python'}
+
 " あいまい検索{{{
 " fzf{{{
 if executable('fzf') > 0
