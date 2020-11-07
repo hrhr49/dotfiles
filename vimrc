@@ -81,6 +81,10 @@ silent! set ttyfast
 inoremap jj <ESC>
 inoremap jf <ESC>
 inoremap fj <ESC>
+
+nnoremap j gj
+nnoremap k gk
+
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
@@ -445,10 +449,7 @@ let g:rainbow_conf = {
       \}
 
 " jupytext.vim
-" let g:jupytext_command = 'notedown'
-" let g:jupytext_fmt = 'markdown'
-" let g:jupytext_to_ipynb_opts = '--to=notebook'
-
+"
 " セルの区切り文字をVSCode互換の # %% に指定する
 let g:jupytext_fmt = 'py:percent'
 
