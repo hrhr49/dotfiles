@@ -16,7 +16,7 @@ jobs:
         run: make check
         shell: bash
       - name: Run Installation Script
-        run: python3 install.py
+        run: 'yes | python3 install.py'
         shell: bash
       - name: Run Installation Script Twice
         run: |
