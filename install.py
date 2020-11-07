@@ -61,6 +61,8 @@ links = [
         '${HOME}/.config/coc/ultisnips/javascript.snippets'],
     ['${PWD}/config/coc/ultisnips/python.snippets',
         '${HOME}/.config/coc/ultisnips/python.snippets'],
+    ['${PWD}/config/aria2/aria2.conf',
+        '${HOME}/.config/aria2/aria2.conf'],
     # root権限が必要なのでひとまず保留
     # ['${PWD}/90-libinput.conf', '/etc/X11/xorg.conf.d/90-libinput.conf'],
 ]
