@@ -42,6 +42,7 @@ packages=(
 
     # 画像
     imagemagick
+    pinta
 
     # ユーティリティ
     preload # アプリ起動速度を改善

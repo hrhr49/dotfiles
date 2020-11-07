@@ -43,6 +43,11 @@ packages=(
     jinja2
     flask
     beautifulsoup4
+
+    # 音声関連
+    librosa # 音声信号処理
+    pyworld # 音声解析
+    simpleaudio # 音声再生
 )
 
 gui_packages=(
