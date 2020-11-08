@@ -137,7 +137,6 @@ def add_line_if_not_contained(line, filename, verbose=False):
             f.write('\n{}\n'.format(line))
 
 
-
 if __name__ == "__main__":
     for src, dest in links:
         symlink(src, dest, verbose=True)

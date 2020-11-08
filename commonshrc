@@ -131,7 +131,7 @@ env \
 
 # gitリポジトリのルートからの相対パスで移動
 gcd () {
-[[ -n $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1" || exit
+[[ -n $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1" || return
 }
 
 # cdnのURI取得
@@ -176,6 +176,12 @@ vg() {
      vim "$file" +"$line"
   fi
 }
+
+# 同一ネットワーク内のIPアドレス一覧を確認
+ipa() {
+  arp -a
+}
+
 # }}}
 # エイリアス{{{
 # aptのエイリアス{{{
