@@ -1,13 +1,13 @@
 name: 'Check, scripts'
 on:
   push:
-    branch:
+    branches:
       - master
 
 jobs:
   check_scripts:
     name: Check scripts
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@master
       - name: Install Shellcheck
