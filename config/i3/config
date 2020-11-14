@@ -13,6 +13,7 @@ floating_modifier $mod
 
 set $SCRIPT_DIR $HOME/bin/scripts
 bindsym $mod+z exec $SCRIPT_DIR/gui/show_help.sh
+bindsym $mod+o exec $SCRIPT_DIR/gui/show_help.sh
 
 bindsym $mod+Return exec i3-sensible-terminal
 
@@ -367,7 +368,6 @@ bar {
     # status_command i3status
 }
 
-# Set inner/outer gaps
 # ウィンドウに枠線をつける
 for_window [class="^.*" tiling] border pixel 3
 for_window [class="^.*" floating] border normal
@@ -375,6 +375,7 @@ for_window [class="^.*" floating] border normal
 # 中央に表示するもの
 for_window [title="dialog"] border pixel 1 floating enable
 
+# popup_during_fullscreen leave_fullscreen
 # 壁紙設定
 # exec --no-startup-id "feh --bg-scale ~/Pictures/hogehoge.png"
 

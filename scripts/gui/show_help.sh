@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # チートシートをおいておく場所
-CHEAT_SHEET_DIR="$HOME/ghq/github.com/hrhr49/memo/content/"
+CHEAT_SHEET_DIR="$HOME/memo/memo/"
+
+if [ ! -d "$CHEAT_SHEET_DIR" ]; then
+  # ディレクトリがない場合はエラーを表示
+  notify-send "directory '$CHEAT_SHEET_DIR' is not found" -t 3000
+fi
 
 # フォーカスがあたっているウィンドウのタイトルを取得
 title=$( \
@@ -25,9 +30,35 @@ done < <(find "$CHEAT_SHEET_DIR" -type f)
 
 if [ -n "$cheat_sheet_file" ]; then
   # 該当のチートシートをvimで開く
-  cmd="vim \"$cheat_sheet_file\""
-  $TERMINAL --command "$SHELL -i -c \"$cmd\""
+  # cmd="vim \"$cheat_sheet_file\""
+  # $TERMINAL --command "$SHELL -i -c \"$cmd\""
 
   # 行単位で見れる場合は、以下のほうがいい？
-  # cat "$cheat_sheet_file" | rofi -show -dmenu 
+  # rofiでインクリメントに絞り込むため、ローマ字表記をつける
+  # ローマ字表記は邪魔なので画面外になるように、長い空白で区切る(TODO: もう少しマシな方法を見つける)
+  lines="$(cat "$cheat_sheet_file" | grep '^*')"
+  paste -d " " \
+    <(echo "$lines") \
+    <(echo "$lines" | sed -e "s/.*/                                \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                                                   \
+                                   /") \
+    <(echo "$lines" | mecab -Oyomi | uconv -x latin) \
+  | rofi -show -i -matching fuzzy -dmenu --p "help"
+    # -markup-rows
+
+else
+  notify-send "no cheat sheet about '$title'" -t 3000
 fi

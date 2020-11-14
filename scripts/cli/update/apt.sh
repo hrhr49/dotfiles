@@ -163,6 +163,11 @@ gui_packages=(
     open-jtalk-mecab-naist-jdic
     hts-voice-nitech-jp-atr503-m001
 
+    # 自然言語
+    mecab # 形態素解析
+    icu-devtools # uconvコマンドで、日本語文字列とローマ字を変換できる
+    
+
     # USBカメラ
     # guvcview # 撮影
     # fswebcam # 画像取得

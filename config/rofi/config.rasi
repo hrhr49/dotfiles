@@ -1,4 +1,4 @@
-/* Copied from                                                                    */
+/* 以下のものを改造                                                               */
 /* https://github.com/davatorium/rofi-themes/blob/master/User%20Themes/slate.rasi */
 /* Copyright (c) 2015 Dave Davenport                                              */
 /* The MIT License (MIT)                                                          */
@@ -9,6 +9,8 @@
   border-color: #2e343f;
   text-color: #8ca0aa;
   spacing: 0;
+  width: 80%;
+  height: 80%;
 }
 
 inputbar {
@@ -40,10 +42,9 @@ listview {
 
 element {
   border: 0 0 1px 0;
-  padding: 12px;
+  padding: 10px;
 }
 
 element selected {
   background-color: #2e343f;
 }
-
