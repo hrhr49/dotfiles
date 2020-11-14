@@ -7,6 +7,7 @@ Install dotfiles
 
 import os
 import os.path
+import argparse
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 HOME = os.environ['HOME']
@@ -86,7 +87,8 @@ def mkdir(path):
     os.makedirs(os.path.expandvars(path), exist_ok=True)
 
 
-def symlink(src, dest, verbose=False):
+def symlink(src, dest, verbose=False, replace='manual'):
+    assert replace in ('manual', 'yes', 'no')
     src = os.path.expandvars(src)
     dest = os.path.expandvars(dest)
     if verbose:
@@ -100,14 +102,17 @@ def symlink(src, dest, verbose=False):
             # remove old link
             os.remove(dest)
         else:
-            print('{} is already exists'.format(dest))
-            print('Backup original and replace? [y/N]')
-            ans = input()
-            if not ans.upper().startswith('Y'):
+            if replace == 'manual':
+                print('{} is already exists'.format(dest))
+                print('Backup original and replace? [y/N]')
+                ans = input()
+            replace = 'yes' if ans.upper().startswith('Y') else 'no'
+
+            if replace == 'yes':
+                os.rename(dest, dest + '.old')
+            else:
                 print('skip')
                 return
-            else:
-                os.rename(dest, dest + '.old')
 
     os.symlink(src, dest)
 
@@ -138,6 +143,11 @@ def add_line_if_not_contained(line, filename, verbose=False):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-r', '--replace',
+                        choices=['manual', 'yes', 'no'],
+                        default='manual',
+                        help='replace files if already exists')
     for src, dest in links:
         symlink(src, dest, verbose=True)
 
