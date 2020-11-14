@@ -105,8 +105,7 @@ def symlink(src, dest, verbose=False, replace='manual'):
             if replace == 'manual':
                 print('{} is already exists'.format(dest))
                 print('Backup original and replace? [y/N]')
-                ans = input()
-            replace = 'yes' if ans.upper().startswith('Y') else 'no'
+                replace = 'yes' if input().upper().startswith('Y') else 'no'
 
             if replace == 'yes':
                 os.rename(dest, dest + '.old')
@@ -148,8 +147,9 @@ if __name__ == "__main__":
                         choices=['manual', 'yes', 'no'],
                         default='manual',
                         help='replace files if already exists')
+    args = parser.parse_args()
     for src, dest in links:
-        symlink(src, dest, verbose=True)
+        symlink(src, dest, verbose=True, replace=args.replace)
 
     for line, filename in lines_for_include:
         add_line_if_not_contained(line, filename, verbose=True)
