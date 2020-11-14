@@ -1,1 +1,3 @@
-prefix = ${HOME}/.npm-packages
+prefix=${HOME}/.npm-packages
+init.author.name=hrhr49
+init.author.email=hiro49410@gmail.com
