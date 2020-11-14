@@ -29,9 +29,9 @@ packages=(
   # development tools
   zsh
   vim
-  neovim
+  # neovim # yayの方で入れる
   python-pynvim
-  tmux
+  # tmux # yayの方で入れる
   git
   shellcheck
   ctags

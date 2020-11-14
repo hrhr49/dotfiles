@@ -3,6 +3,8 @@ packages=(
   nkf
   perl-graph-easy
   gibo
+  neovim-git
+  tmux-git
 )
 
 gui_packages=(
