@@ -9,11 +9,19 @@ if [ ! -d "$CHEAT_SHEET_DIR" ]; then
 fi
 
 # フォーカスがあたっているウィンドウのタイトルを取得
-title=$( \
-  xdotool getwindowfocus getwindowname \
-  | tr '[:upper:]' '[:lower:]' \
-  | tr ' ' '_'
-)
+# title=$( \
+#   xdotool getwindowfocus getwindowname \
+#   | tr '[:upper:]' '[:lower:]' \
+#   | tr ' ' '_'
+# )
+# 上のやり方だと、タイトル名にプログラム名が入らないため、以下のやり方に変更
+# 参考: https://unix.stackexchange.com/questions/38867/is-it-possible-to-retrieve-the-active-window-process-title-in-gnome
+title="$(cat /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm)"
+
+# 微妙にプログラム名が想定と違うものがあるのでその場合は名前を置き換える
+case $title in
+  chrome ) title=google-chrome ;;
+esac
 
 # チートシート名がタイトルに含まれているやつを探す
 cheat_sheet_file=''
@@ -56,7 +64,7 @@ if [ -n "$cheat_sheet_file" ]; then
                                                                    \
                                    /") \
     <(echo "$lines" | mecab -Oyomi | uconv -x latin) \
-  | rofi -show -i -dmenu --p "help"
+  | rofi -show -i -dmenu -p "help"
     # -markup-rows
 
 else
