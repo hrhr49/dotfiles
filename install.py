@@ -148,8 +148,9 @@ if __name__ == "__main__":
                         choices=['manual', 'yes', 'no'],
                         default='manual',
                         help='replace files if already exists')
+    args = parser.parse_args()
     for src, dest in links:
-        symlink(src, dest, verbose=True)
+        symlink(src, dest, verbose=True, replace=args.replace)
 
     for line, filename in lines_for_include:
         add_line_if_not_contained(line, filename, verbose=True)
