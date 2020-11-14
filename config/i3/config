@@ -11,7 +11,11 @@ floating_modifier $mod
 # }}}
 # アプリ{{{
 
+set $SCRIPT_DIR $HOME/bin/scripts
+bindsym $mod+z exec $SCRIPT_DIR/gui/show_help.sh
+
 bindsym $mod+Return exec i3-sensible-terminal
+
 bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
 # bindsym $mod+Shift+p exec arandr
 # ボリューム調整
@@ -34,15 +38,17 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+i exec rofi -show window
 
 # チートシート閲覧用
-bindsym $mod+z exec google-chrome `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu -p 'cheetsheet'`
+# bindsym $mod+z exec google-chrome `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu -p 'cheetsheet'`
 
 # 自作スクリプトを実行
 bindsym $mod+Shift+z exec eval `find -L ~/memo/dotfiles/scripts/gui/ -type f| rofi -dmenu -p 'run'`
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym Ctrl+Up exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym Ctrl+Down exec --no-startup-id pactl set-sink-volume 0 -5%
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+# bindsym Ctrl+Up exec --no-startup-id pactl set-sink-volume 0 +5%
+# bindsym Ctrl+Down exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym Ctrl+Up exec amixer sset Master 5%+
+bindsym Ctrl+Down exec amixer sset Master 5%-
 
 # put the system to sleep
 bindsym $mod+Shift+s exec systemctl suspend
