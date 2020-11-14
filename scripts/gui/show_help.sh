@@ -16,7 +16,7 @@ fi
 # )
 # 上のやり方だと、タイトル名にプログラム名が入らないため、以下のやり方に変更
 # 参考: https://unix.stackexchange.com/questions/38867/is-it-possible-to-retrieve-the-active-window-process-title-in-gnome
-title="$(cat /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm)"
+title="$(cat /proc/"$(xdotool getwindowpid "$(xdotool getwindowfocus)")"/comm)"
 
 # 微妙にプログラム名が想定と違うものがあるのでその場合は名前を置き換える
 case $title in
