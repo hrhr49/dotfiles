@@ -16,7 +16,7 @@ jobs:
         run: make check
         shell: bash
       - name: Run Installation Script
-        run: python3 install.py --replace yes
+        run: 'python3 install.py --replace yes'
         shell: bash
       - name: Run Installation Script Twice
         run: |
