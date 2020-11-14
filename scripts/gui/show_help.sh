@@ -36,7 +36,7 @@ if [ -n "$cheat_sheet_file" ]; then
   # 行単位で見れる場合は、以下のほうがいい？
   # rofiでインクリメントに絞り込むため、ローマ字表記をつける
   # ローマ字表記は邪魔なので画面外になるように、長い空白で区切る(TODO: もう少しマシな方法を見つける)
-  lines="$(cat "$cheat_sheet_file" | grep '^*')"
+  lines="$(grep '^\*' "$cheat_sheet_file")"
   paste -d " " \
     <(echo "$lines") \
     <(echo "$lines" | sed -e "s/.*/                                \
@@ -56,7 +56,7 @@ if [ -n "$cheat_sheet_file" ]; then
                                                                    \
                                    /") \
     <(echo "$lines" | mecab -Oyomi | uconv -x latin) \
-  | rofi -show -i -matching fuzzy -dmenu --p "help"
+  | rofi -show -i -dmenu --p "help"
     # -markup-rows
 
 else
