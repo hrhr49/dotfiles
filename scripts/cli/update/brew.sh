@@ -10,10 +10,13 @@ formulas=(
     # バージョン管理
 #    git
     ghq
-    hub
     tig
     git-delta
     gibo # gitignore生成
+
+    # 外部サービスとの連携
+    hub
+    slackcat
 
     # 文字コード
     nkf

@@ -48,6 +48,9 @@ packages=(
     librosa # 音声信号処理
     pyworld # 音声解析
     simpleaudio # 音声再生
+
+    # 入れるかどうか検討
+    # dominate # htmlを作るためのDSL
 )
 
 gui_packages=(
