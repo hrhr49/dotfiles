@@ -47,7 +47,7 @@ formulas=(
 
     # TUI
     # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
-    tmux
+    # tmux # クリップボードがなんか動かなかったので、aptの方で入れる
     sc-im # スプレッドシート
 
     # Markdown
