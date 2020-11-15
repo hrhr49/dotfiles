@@ -123,7 +123,6 @@ nnoremap <M-Left> <C-o>
 nnoremap <M-Right> <C-]>
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap <Space>z za
 
 nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
@@ -345,6 +344,7 @@ Plug 'machakann/vim-highlightedyank'           " ヤンクした場所をわか�
 Plug 'mattn/disableitalic-vim'                 " イタリックフォントを無効化
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
+Plug 'szw/vim-maximizer'                       " ウィンドウを一時的に最大化
 
 " 入力補完・補助
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -456,6 +456,15 @@ let g:jupytext_fmt = 'py:percent'
 
 " vimのPython向けシンタックスハイライトを有効にする
 let g:jupytext_filetype_map = {'py': 'python'}
+
+" vim-maximizerの設定
+" let g:maximizer_set_default_mapping = 0
+" Zキーでウィンドウ最大化をトグル
+let g:maximizer_default_mapping_key = 'Z'
+" <Space>zでもウィンドウ最大化をトグル
+nnoremap <silent><Space>z :MaximizerToggle<CR>
+vnoremap <silent><Space>z :MaximizerToggle<CR>gv
+inoremap <silent><Space>z <C-o>:MaximizerToggle<CR>
 
 " あいまい検索{{{
 " fzf{{{
