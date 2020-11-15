@@ -464,7 +464,6 @@ let g:maximizer_default_mapping_key = 'Z'
 " <Space>zでもウィンドウ最大化をトグル
 nnoremap <silent><Space>z :MaximizerToggle<CR>
 vnoremap <silent><Space>z :MaximizerToggle<CR>gv
-inoremap <silent><Space>z <C-o>:MaximizerToggle<CR>
 
 " あいまい検索{{{
 " fzf{{{
@@ -702,12 +701,27 @@ let g:user_emmet_settings = {
 " F10         | vimspector#StepOver()
 " F11         | vimspector#StepInto()
 " F12         | vimspector#StepOut()
-let g:vimspector_enable_mappings = 'HUMAN'
+" Fnのマッピングは使用しないようにしておく
+" let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <F17> :<C-u>call vimspector#Continue()<CR>
 function! LaunchFileDebug()
   call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
 endfunction
 nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
+
+nnoremap !+debug+! <Nop>
+nmap <Space>d !+debug+!
+nmap !+debug+!c <Plug>VimspectorContinue
+nmap !+debug+!q <Plug>VimspectorStop
+nmap !+debug+!r <Plug>VimspectorRestart
+nmap !+debug+!p <Plug>VimspectorPause
+nmap !+debug+!b <Plug>VimspectorToggleBreakpoint
+nmap !+debug+!B <Plug>VimspectorToggleConditionalBreakpoint
+nmap !+debug+!f <Plug>VimspectorAddFunctionBreakpoint
+nmap !+debug+!n <Plug>VimspectorStepOver
+nmap !+debug+!s <Plug>VimspectorStepInto
+nmap !+debug+!r <Plug>VimspectorStepOut
+nmap !+debug+!j <Plug>VimspectorRunToCursor
 "}}}
 " デフォルトプラグイン {{{
 let g:loaded_matchparen      = 1 " カッコのハイライトを消す
