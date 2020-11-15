@@ -83,7 +83,6 @@
       "adapter": "vscode-cpptools",
       "configuration": {
         "request": "launch",
-        // TODO バイナリファイルの設定
         "program": "<path to binary>",
         "stopAtEntry": true
       }

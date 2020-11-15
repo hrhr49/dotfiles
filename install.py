@@ -34,6 +34,8 @@ links = [
     ['${PWD}/config/zathura/zathurarc', '${HOME}/.config/zathura/zathurarc'],
     ['${PWD}/config/xfce4/terminal/accels.scm',
         '${HOME}/.config/xfce4/terminal/accels.scm'],
+    ['${PWD}/config/xfce4/terminal/terminalrc',
+        '${HOME}/.config/xfce4/terminal/terminalrc'],
     ['${PWD}/ctags', '${HOME}/.ctags'],
     ['${PWD}/config/compton/compton.conf',
         '${HOME}/.config/compton/compton.conf'],
