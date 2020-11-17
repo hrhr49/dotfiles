@@ -27,14 +27,12 @@ set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》
 set foldmethod=marker
 set complete-=i                " インクルードファイルで補完しない
 set complete-=t                " タグを入力補完候補に入れない
-if !s:is_wsl
-  set clipboard&
-  silent! set clipboard=exclude:.*
-  if s:is_windows
-    silent! set clipboard^=unnamed
-  else
-    silent! set clipboard^=unnamedplus
-  endif
+set clipboard&
+silent! set clipboard=exclude:.*
+if s:is_windows
+  silent! set clipboard^=unnamed
+else
+  silent! set clipboard^=unnamedplus
 endif
 set nohlsearch
 set ignorecase
