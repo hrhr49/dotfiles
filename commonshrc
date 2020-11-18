@@ -23,18 +23,18 @@ if type "nvim" > /dev/null 2>&1; then
 fi
 
 # fasdが存在すれば初期化
-if type "fasd" > /dev/null 2>&1; then
-    eval "$(fasd --init auto)"
-    # fasdのエイリアスを解除
-    unalias a  # any
-    unalias s  # show / search / select
-    unalias d  # directory
-    unalias f  # file
-    unalias sd # interactive directory selection
-    unalias sf # interactive file selection
-    unalias z  # cd, same functionality as j in autojump
-    unalias zz # cd with interactive selection
-fi
+# if type "fasd" > /dev/null 2>&1; then
+#     eval "$(fasd --init auto)"
+#     # fasdのエイリアスを解除
+#     unalias a  # any
+#     unalias s  # show / search / select
+#     unalias d  # directory
+#     unalias f  # file
+#     unalias sd # interactive directory selection
+#     unalias sf # interactive file selection
+#     unalias z  # cd, same functionality as j in autojump
+#     unalias zz # cd with interactive selection
+# fi
 
 # trash-cli(npmパッケージ)が存在すればrmを上書き
 if type trash > /dev/null 2>&1; then
@@ -74,7 +74,7 @@ python38_site_packages="${HOME}/anaconda3/lib/python3.8/site-packages"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # pipenvのインストールディレクトリをプロジェクト直下にする
-export PIPENV_VENV_IN_PROJECT=1
+# export PIPENV_VENV_IN_PROJECT=1
 
 # pywalの設定
 # if type "wal" > /dev/null 2>&1; then

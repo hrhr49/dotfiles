@@ -2,20 +2,40 @@
   "languageserver": {
     "clangd": {
       "command": "clangd",
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
+      "rootPatterns": [
+        "compile_flags.txt",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": [
+        "c",
+        "cpp",
+        "objc",
+        "objcpp"
+      ]
     },
     "nim": {
-    "command": "nimlsp",
-    "filetypes": ["nim"]
-  }
+      "command": "nimlsp",
+      "filetypes": [
+        "nim"
+      ]
+    }
   },
+  "python.condaPath": "conda",
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": true,
   "coc.preferences.colorSupport": false,
   "coc.preferences.enableFloatHighlight": true,
-  "python.pythonPath": "/home/hrhr49/anaconda3/bin/python",
-  "python.jediEnabled": true
+  "python.jediEnabled": true,
+  "python.venvFolders": [
+    "envs",
+    ".pyenv",
+    ".direnv",
+    ".local/share/virtualenv",
+    ".local/share/virtualenvs"
+  ]
 }

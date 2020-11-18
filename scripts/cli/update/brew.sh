@@ -80,7 +80,7 @@ formulas=(
     shellcheck # シェルスクリプトのLinter
 
     # ユーティリティ
-    fasd
+    # fasd
     zoxide    # zコマンドで最近のディレクトリに移動
     httpie    # curlのようなやつ
     trash-cli # ゴミ箱操作

@@ -70,25 +70,25 @@ import ranger.api
 old_hook_init = ranger.api.hook_init
 
 def hook_init(fm):
-    def fasd_add():
-        fm.execute_console("shell fasd --add '" + fm.thisfile.path + "'")
-    fm.signal_bind('execute.before', fasd_add)
+    # def fasd_add():
+    #     fm.execute_console("shell fasd --add '" + fm.thisfile.path + "'")
+    # fm.signal_bind('execute.before', fasd_add)
     return old_hook_init(fm)
 
 ranger.api.hook_init = hook_init
 
-class fasd(Command):
-    """
-    :fasd
+# class fasd(Command):
+#     """
+#     :fasd
 
-    Jump to directory using fasd
-    """
-    def execute(self):
-        import subprocess
-        arg = self.rest(1)
-        if arg:
-            directory = subprocess.check_output(["fasd", "-d"]+arg.split(), universal_newlines=True).strip()
-            self.fm.cd(directory)
+#     Jump to directory using fasd
+#     """
+#     def execute(self):
+#         import subprocess
+#         arg = self.rest(1)
+#         if arg:
+#             directory = subprocess.check_output(["fasd", "-d"]+arg.split(), universal_newlines=True).strip()
+#             self.fm.cd(directory)
 
 
 
@@ -150,25 +150,25 @@ class fzf_select(Command):
 自作コマンド
 '''
 
-class fcd(Command):
-    """
-    :fcd
+# class fcd(Command):
+#     """
+#     :fcd
 
-    fasdの履歴からfzfで絞り込んで移動
-    参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
-    """
-    def execute(self):
-        import subprocess
-        import os.path
-        fzf = self.fm.execute_command("fasd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//'",
-                shell=True, universal_newlines=True, stdout=subprocess.PIPE)
-        stdout, stderr = fzf.communicate()
-        if fzf.returncode == 0:
-            fzf_file = os.path.abspath(stdout.rstrip('\n'))
-            if os.path.isdir(fzf_file):
-                self.fm.cd(fzf_file)
-            else:
-                self.fm.select_file(fzf_file)
+#     fasdの履歴からfzfで絞り込んで移動
+#     参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
+#     """
+#     def execute(self):
+#         import subprocess
+#         import os.path
+#         fzf = self.fm.execute_command("fasd -d | fzf -1 -0 --no-sort --tac +m | sed 's/^[0-9,.]* *//'",
+#                 shell=True, universal_newlines=True, stdout=subprocess.PIPE)
+#         stdout, stderr = fzf.communicate()
+#         if fzf.returncode == 0:
+#             fzf_file = os.path.abspath(stdout.rstrip('\n'))
+#             if os.path.isdir(fzf_file):
+#                 self.fm.cd(fzf_file)
+#             else:
+#                 self.fm.select_file(fzf_file)
 
 class z(Command):
     """

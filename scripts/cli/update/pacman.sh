@@ -44,14 +44,13 @@ packages=(
   aria2
   pigz
   entr
-  fasd
+  # fasd
   hub
   bat
   tig
   tokei
   tldr
   fd
-  fasd
   jq
   htop
   unarchiver
