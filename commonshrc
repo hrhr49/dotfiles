@@ -194,6 +194,11 @@ alias paci="sudo pacman -S"
 alias pacu="sudo pacman -Syy"
 alias pacs="pacman -Ss"
 # }}}
+# yayのエイリアス{{{
+alias yayi="yay -S"
+alias yayu="yay -Syy"
+alias yays="yay -Ss"
+# }}}
 # snapのエイリアス{{{
 alias snapi="sudo snap install"
 alias snaps="snap search"
