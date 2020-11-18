@@ -11,6 +11,9 @@ let s:is_mac = has('mac')
 let s:is_linux = !s:is_windows && !s:is_mac
 " WSLかどうか
 let s:is_wsl = findfile('/mnt/c/Windows/System32/cmd.exe') != ''
+" 例 "0.4.4..." みたいな文字列でnvimのバージョンを取得
+let s:nvim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
+
 filetype plugin indent on
 syntax on
 set backspace=2
@@ -329,7 +332,7 @@ Plug 'michaeljsmith/vim-indent-object'         " ai, ii, aI, iI でインデン�
 " Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'h1mesuke/vim-alignta'
+Plug 'h1mesuke/vim-alignta', {'on': ['Alignta', 'Align']}
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'                       " キャメルケースやスネークケースの変換
 
@@ -342,7 +345,7 @@ Plug 'machakann/vim-highlightedyank'           " ヤンクした場所をわか�
 Plug 'mattn/disableitalic-vim'                 " イタリックフォントを無効化
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
-Plug 'szw/vim-maximizer'                       " ウィンドウを一時的に最大化
+Plug 'szw/vim-maximizer', {'on': ['MaximizerToggle']} " ウィンドウを一時的に最大化
 
 " 入力補完・補助
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -457,8 +460,6 @@ let g:jupytext_filetype_map = {'py': 'python'}
 
 " vim-maximizerの設定
 " let g:maximizer_set_default_mapping = 0
-" Zキーでウィンドウ最大化をトグル
-let g:maximizer_default_mapping_key = 'Z'
 " <Space>zでもウィンドウ最大化をトグル
 nnoremap <silent><Space>z :MaximizerToggle<CR>
 vnoremap <silent><Space>z :MaximizerToggle<CR>gv
@@ -471,17 +472,11 @@ if executable('fzf') > 0
   if s:is_windows
     let g:fzf_preview_window = ''
   endif
-  function! GetNVimVersion()
-      redir => s
-      silent! version
-      redir END
-      return matchstr(s, 'NVIM v\zs[^\n]*')
-  endfunction
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
   if &ambiwidth == 'single' && 
-        \ ((has('nvim') && GetNVimVersion() >= '0.4.0') ||
+        \ ((has('nvim') && s:nvim_version >= '0.4.0') ||
         \ (!has('nvim') && v:versionlong >= 8020191))
-    let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
+    let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9, 'border': 'sharp'} }
   else
     let g:fzf_layout = { 'down': '~40%' }
   endif
