@@ -11,6 +11,9 @@ let s:is_mac = has('mac')
 let s:is_linux = !s:is_windows && !s:is_mac
 " WSLかどうか
 let s:is_wsl = findfile('/mnt/c/Windows/System32/cmd.exe') != ''
+" GUIが使用可能かどうか
+let s:can_use_gui = !s:is_linux || executable('xset')
+
 " 例 "0.4.4..." みたいな文字列でnvimのバージョンを取得
 let s:nvim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
 
@@ -365,7 +368,7 @@ Plug 'mbbill/undotree', {'on': 'UndotreeShow'} " Undoツリー管理
 
 " 言語
 Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
-if !(s:is_linux && !executable('xset')) " ブラウザを開ける環境なら
+if s:can_use_gui " ブラウザを開ける環境なら
   if executable('node') > 0 && executable('yarn') > 0
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
   else
