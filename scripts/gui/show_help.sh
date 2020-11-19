@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # チートシートをおいておく場所
-CHEAT_SHEET_DIR="$HOME/memo/memo/"
+CHEAT_SHEET_DIR="$HOME/memo/memo/content/posts/"
 
 if [ ! -d "$CHEAT_SHEET_DIR" ]; then
   # ディレクトリがない場合はエラーを表示
@@ -24,19 +24,19 @@ case $title in
 esac
 
 # チートシート名がタイトルに含まれているやつを探す
-cheat_sheet_file=''
+cheat_sheet_file="$CHEAT_SHEET_DIR/$title.md"
 
-# 注意：findで見つけたものをパイプでwhileに流し込むと、
-# cheat_sheet_fileへの代入がうまく行かないので以下のやり方に変更。
-# これは、パイプでつながったwhileがサブシェルで実行されることが原因
-while read -r file; do
-  cheat_sheet_name=$(basename "$file" .md)
-  if echo "$title" | grep --quiet "$cheat_sheet_name"; then
-    cheat_sheet_file=$file
-  fi
-done < <(find "$CHEAT_SHEET_DIR" -type f)
+# # 注意：findで見つけたものをパイプでwhileに流し込むと、
+# # cheat_sheet_fileへの代入がうまく行かないので以下のやり方に変更。
+# # これは、パイプでつながったwhileがサブシェルで実行されることが原因
+# while read -r file; do
+#   cheat_sheet_name=$(basename "$file" .md)
+#   if echo "$title" | grep --quiet "$cheat_sheet_name"; then
+#     cheat_sheet_file=$file
+#   fi
+# done < <(find "$CHEAT_SHEET_DIR" -type f)
 
-if [ -n "$cheat_sheet_file" ]; then
+if [ -e "$cheat_sheet_file" ]; then
   # 該当のチートシートをvimで開く
   # cmd="vim \"$cheat_sheet_file\""
   # $TERMINAL --command "$SHELL -i -c \"$cmd\""
@@ -68,5 +68,5 @@ if [ -n "$cheat_sheet_file" ]; then
     # -markup-rows
 
 else
-  notify-send "no cheat sheet about '$title'" -t 3000
+  notify-send "no cheat sheet '$title.md'" -t 3000
 fi
