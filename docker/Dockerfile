@@ -58,7 +58,9 @@ RUN mkdir -p /home/${USERNAME}/memo
 # install python to run install.py
 RUN sudo pacman -Syyu --noconfirm python
 
+# disale cache under this line ---------------------
 ARG CACHEBUST=1
+
 RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
 RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
 
@@ -72,6 +74,15 @@ RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/yay.sh
 RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/install/all.sh
 
 # install packages
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/all.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/zinit.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/tpm.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/pip.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/npm.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cargo.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cpan.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/gem.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/go.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/nimble.sh
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/vim-plug.sh
 
 CMD ["/bin/zsh"]
