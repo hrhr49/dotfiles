@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # i3-msg -t get_tree | jq 'recurse(.name?)|.name'
 # i3-msg -t get_tree|jq '..|select(.name?)|select(.type=="con")|select(.name!="content")|{name, type}'
@@ -18,8 +19,6 @@ rename_workspace() {
     new_workspace_name=$(zenity --entry --width=400 --title="Rename Window" --text="Input new workspace name.")
     i3-msg rename workspace to "$new_workspace_name"
 }
-
-#!/bin/bash
 
 win_name=$(xdotool getactivewindow getwindowname)
 

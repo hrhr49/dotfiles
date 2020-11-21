@@ -2,7 +2,7 @@
 #set selection-clipboard clipboard
 
 set scroll-page-aware "true"
-set smooth-scroll "true"
+# set smooth-scroll "true"
 set scroll-full-overlap 0.01
 set scroll-step 100
 
@@ -27,7 +27,7 @@ map D toggle_page_mode
 # set adjust-open "width"
 set default-bg "#222222"
 set default-fg "#dddddd"
-# set font "Fixed 10"
+set font "Fixed 20"
 set inputbar-bg "#222222"
 set inputbar-fg "#dddddd"
 set statusbar-bg "#222222"

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # aptでインストールするものリスト
 packages=(
@@ -26,5 +27,12 @@ if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
 fi
 
 if type "nimble" > /dev/null 2>&1; then
-    nimble install -y "${packages[@]}"
+  installed_packages="$(nimble list --installed | awk '{print $1}')"
+  for package in "${packages[@]}"; do
+      if echo "$installed_packages" | grep "$package" > /dev/null 2>&1; then
+          echo "$package already exists"
+      else
+          nimble install -y "$package"
+      fi
+  done
 fi

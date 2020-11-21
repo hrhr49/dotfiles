@@ -7,6 +7,7 @@ Install dotfiles
 
 import os
 import os.path
+import argparse
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 HOME = os.environ['HOME']
@@ -33,13 +34,17 @@ links = [
     ['${PWD}/config/zathura/zathurarc', '${HOME}/.config/zathura/zathurarc'],
     ['${PWD}/config/xfce4/terminal/accels.scm',
         '${HOME}/.config/xfce4/terminal/accels.scm'],
+    ['${PWD}/config/xfce4/terminal/terminalrc',
+        '${HOME}/.config/xfce4/terminal/terminalrc'],
     ['${PWD}/ctags', '${HOME}/.ctags'],
     ['${PWD}/config/compton/compton.conf',
         '${HOME}/.config/compton/compton.conf'],
     ['${PWD}/config/conky/conky.conf', '${HOME}/.config/conky/conky.conf'],
-    ['${PWD}/config/wal/after.sh', '${HOME}/.config/wal/after.sh'],
-    ['${PWD}/config/wal/templates/dunstrc',
-        '${HOME}/.config/wal/templates/dunstrc'],
+    ['${PWD}/config/dunst/dunstrc',
+        '${HOME}/.config/dunst/dunstrc'],
+    # ['${PWD}/config/wal/after.sh', '${HOME}/.config/wal/after.sh'],
+    # ['${PWD}/config/wal/templates/dunstrc',
+    #     '${HOME}/.config/wal/templates/dunstrc'],
     ['${PWD}/config/nyaovim/nyaovimrc.html',
         '${HOME}/.config/nyaovim/nyaovimrc.html'],
     ['${PWD}/hyper.js', '${HOME}/.hyper.js'],
@@ -49,6 +54,22 @@ links = [
     ['${PWD}/vimspector.json', '${HOME}/.vimspector.json'],
     ['${PWD}/atoolrc', '${HOME}/.atoolrc'],
     ['${PWD}/docker/config.json', '${HOME}/.docker/config.json'],
+    ['${PWD}/config/coc/ultisnips/.snippets',
+        '${HOME}/.config/coc/ultisnips/.snippets'],
+    ['${PWD}/config/coc/ultisnips/vim.snippets',
+        '${HOME}/.config/coc/ultisnips/vim.snippets'],
+    ['${PWD}/config/coc/ultisnips/markdown.snippets',
+        '${HOME}/.config/coc/ultisnips/markdown.snippets'],
+    ['${PWD}/config/coc/ultisnips/html.snippets',
+        '${HOME}/.config/coc/ultisnips/html.snippets'],
+    ['${PWD}/config/coc/ultisnips/javascript.snippets',
+        '${HOME}/.config/coc/ultisnips/javascript.snippets'],
+    ['${PWD}/config/coc/ultisnips/python.snippets',
+        '${HOME}/.config/coc/ultisnips/python.snippets'],
+    ['${PWD}/config/aria2/aria2.conf',
+        '${HOME}/.config/aria2/aria2.conf'],
+    ['${PWD}/config/youtube-dl/config',
+        '${HOME}/.config/youtube/config'],
     # root権限が必要なのでひとまず保留
     # ['${PWD}/90-libinput.conf', '/etc/X11/xorg.conf.d/90-libinput.conf'],
 ]
@@ -70,7 +91,8 @@ def mkdir(path):
     os.makedirs(os.path.expandvars(path), exist_ok=True)
 
 
-def symlink(src, dest, verbose=False):
+def symlink(src, dest, verbose=False, replace='manual'):
+    assert replace in ('manual', 'yes', 'no')
     src = os.path.expandvars(src)
     dest = os.path.expandvars(dest)
     if verbose:
@@ -84,14 +106,16 @@ def symlink(src, dest, verbose=False):
             # remove old link
             os.remove(dest)
         else:
-            print('{} is already exists'.format(dest))
-            print('Backup original and replace? [y/N]')
-            ans = input()
-            if not ans.upper().startswith('Y'):
+            if replace == 'manual':
+                print('{} is already exists'.format(dest))
+                print('Backup original and replace? [y/N]')
+                replace = 'yes' if input().upper().startswith('Y') else 'no'
+
+            if replace == 'yes':
+                os.rename(dest, dest + '.old')
+            else:
                 print('skip')
                 return
-            else:
-                os.rename(dest, dest + '.old')
 
     os.symlink(src, dest)
 
@@ -121,10 +145,15 @@ def add_line_if_not_contained(line, filename, verbose=False):
             f.write('\n{}\n'.format(line))
 
 
-
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-r', '--replace',
+                        choices=['manual', 'yes', 'no'],
+                        default='manual',
+                        help='replace files if already exists')
+    args = parser.parse_args()
     for src, dest in links:
-        symlink(src, dest, verbose=True)
+        symlink(src, dest, verbose=True, replace=args.replace)
 
     for line, filename in lines_for_include:
         add_line_if_not_contained(line, filename, verbose=True)

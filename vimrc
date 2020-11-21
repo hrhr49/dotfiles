@@ -11,6 +11,12 @@ let s:is_mac = has('mac')
 let s:is_linux = !s:is_windows && !s:is_mac
 " WSLかどうか
 let s:is_wsl = findfile('/mnt/c/Windows/System32/cmd.exe') != ''
+" GUIが使用可能かどうか
+let s:can_use_gui = !s:is_linux || executable('xset')
+
+" 例 "0.4.4..." みたいな文字列でnvimのバージョンを取得
+let s:nvim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
+
 filetype plugin indent on
 syntax on
 set backspace=2
@@ -27,14 +33,12 @@ set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》
 set foldmethod=marker
 set complete-=i                " インクルードファイルで補完しない
 set complete-=t                " タグを入力補完候補に入れない
-if !s:is_wsl
-  set clipboard&
-  silent! set clipboard=exclude:.*
-  if s:is_windows
-    silent! set clipboard^=unnamed
-  else
-    silent! set clipboard^=unnamedplus
-  endif
+set clipboard&
+silent! set clipboard=exclude:.*
+if s:is_windows
+  silent! set clipboard^=unnamed
+else
+  silent! set clipboard^=unnamedplus
 endif
 set nohlsearch
 set ignorecase
@@ -81,6 +85,10 @@ silent! set ttyfast
 inoremap jj <ESC>
 inoremap jf <ESC>
 inoremap fj <ESC>
+
+nnoremap j gj
+nnoremap k gk
+
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
 " <C-u>のタイミングでUndoのセーブポイント
@@ -119,7 +127,6 @@ nnoremap <M-Left> <C-o>
 nnoremap <M-Right> <C-]>
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap <Space>z za
 
 nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
@@ -280,6 +287,7 @@ augroup FileTypeGroup
   autocmd BufRead,BufNewFile *.tcl       setl ft=tcl
   autocmd BufRead,BufNewFile *.scm       setl ft=scheme
   autocmd BufRead,BufNewFile *.rs        setl ft=rust
+  autocmd BufRead,BufNewFile *.ipynb     setl ft=jupyter
 augroup END
 
 augroup MarkFileGroup
@@ -327,7 +335,7 @@ Plug 'michaeljsmith/vim-indent-object'         " ai, ii, aI, iI でインデン�
 " Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'h1mesuke/vim-alignta'
+Plug 'h1mesuke/vim-alignta', {'on': ['Alignta', 'Align']}
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'                       " キャメルケースやスネークケースの変換
 
@@ -340,6 +348,7 @@ Plug 'machakann/vim-highlightedyank'           " ヤンクした場所をわか�
 Plug 'mattn/disableitalic-vim'                 " イタリックフォントを無効化
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
+Plug 'szw/vim-maximizer', {'on': ['MaximizerToggle']} " ウィンドウを一時的に最大化
 
 " 入力補完・補助
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -359,7 +368,7 @@ Plug 'mbbill/undotree', {'on': 'UndotreeShow'} " Undoツリー管理
 
 " 言語
 Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
-if !(s:is_linux && !executable('xset')) " ブラウザを開ける環境なら
+if s:can_use_gui " ブラウザを開ける環境なら
   if executable('node') > 0 && executable('yarn') > 0
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
   else
@@ -369,7 +378,8 @@ endif
 Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
-
+Plug 'goerz/jupytext.vim'
+", {'for': ['jupyter']}
 " デバッグ
 Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
 call plug#end()
@@ -382,6 +392,7 @@ endfunction
 
 " polyglot
 let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_new_list_item_indent = 0
 
 " fugitive
 nnoremap gcd :<C-u>Gcd<CR>
@@ -441,6 +452,21 @@ let g:rainbow_conf = {
       \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
       \	'separately': {'*': {}, 'css': 0, 'nerdtree': 0}
       \}
+
+" jupytext.vim
+"
+" セルの区切り文字をVSCode互換の # %% に指定する
+let g:jupytext_fmt = 'py:percent'
+
+" vimのPython向けシンタックスハイライトを有効にする
+let g:jupytext_filetype_map = {'py': 'python'}
+
+" vim-maximizerの設定
+" let g:maximizer_set_default_mapping = 0
+" <Space>zでもウィンドウ最大化をトグル
+nnoremap <silent><Space>z :MaximizerToggle<CR>
+vnoremap <silent><Space>z :MaximizerToggle<CR>gv
+
 " あいまい検索{{{
 " fzf{{{
 if executable('fzf') > 0
@@ -449,17 +475,11 @@ if executable('fzf') > 0
   if s:is_windows
     let g:fzf_preview_window = ''
   endif
-  function! GetNVimVersion()
-      redir => s
-      silent! version
-      redir END
-      return matchstr(s, 'NVIM v\zs[^\n]*')
-  endfunction
   " floating windowが使えるときには使う。ambiwidthがdoubleのときにはレイアウトが崩れる？
   if &ambiwidth == 'single' && 
-        \ ((has('nvim') && GetNVimVersion() >= '0.4.0') ||
+        \ ((has('nvim') && s:nvim_version >= '0.4.0') ||
         \ (!has('nvim') && v:versionlong >= 8020191))
-    let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9 } }
+    let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.9, 'border': 'sharp'} }
   else
     let g:fzf_layout = { 'down': '~40%' }
   endif
@@ -553,7 +573,7 @@ endif
 " https://github.com/neoclide/coc-python/issues/188
 " が解決するまでcoc-pythonのバージョンをアップしない
 let g:coc_global_extensions = [
-      \ "coc-pyright", "coc-python",      "coc-tsserver",  "coc-json",
+      \ "coc-python",      "coc-tsserver",  "coc-json",
       \ "coc-yaml",    "coc-html",        "coc-css",       "coc-tailwindcss",
       \ "coc-vimlsp",  "coc-marketplace", "coc-highlight", "coc-rls",
       \ "coc-go",      "coc-emoji",       "coc-snippets",  "coc-cmake",
@@ -562,6 +582,8 @@ let g:coc_global_extensions = [
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
 
+      " \ "coc-pyright", 
+      "
 setl updatetime=300
 setl shortmess+=c
 setl signcolumn=yes
@@ -574,22 +596,22 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Rem<buffer> ap keys for gotos
-nmap <buffer> <silent> gd <Plug>(coc-definition)
-nmap <buffer> <silent> gy <Plug>(coc-type-definition)
-nmap <buffer> <silent> gi <Plug>(coc-implementation)
-nmap <buffer> <silent> gr <Plug>(coc-references)
-xmap <buffer> <silent> gq <Plug>(coc-format-selected)
-nmap <buffer> <silent> gq <Plug>(coc-format-selected)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+xmap <silent> gq <Plug>(coc-format-selected)
+nmap <silent> gq <Plug>(coc-format-selected)
 " Use K to show documentation in preview window
-nnoremap <buffer> <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <buffer> <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <buffer> <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <buffer> <silent> gh <Plug>(coc-diagnostic-info)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gh <Plug>(coc-diagnostic-info)
 
 " Symbol renaming.
-nmap <buffer> <F2> <Plug>(coc-rename)
+nmap <F2> <Plug>(coc-rename)
 augroup CocHighlightGroup
   autocmd!
   autocmd BufRead,BufNewFile,ColorScheme * highlight clear CocUnderLine
@@ -675,12 +697,27 @@ let g:user_emmet_settings = {
 " F10         | vimspector#StepOver()
 " F11         | vimspector#StepInto()
 " F12         | vimspector#StepOut()
-let g:vimspector_enable_mappings = 'HUMAN'
+" Fnのマッピングは使用しないようにしておく
+" let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <F17> :<C-u>call vimspector#Continue()<CR>
 function! LaunchFileDebug()
   call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
 endfunction
 nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
+
+nnoremap !+debug+! <Nop>
+nmap <Space>d !+debug+!
+nmap !+debug+!c <Plug>VimspectorContinue
+nmap !+debug+!q <Plug>VimspectorStop
+nmap !+debug+!r <Plug>VimspectorRestart
+nmap !+debug+!p <Plug>VimspectorPause
+nmap !+debug+!b <Plug>VimspectorToggleBreakpoint
+nmap !+debug+!B <Plug>VimspectorToggleConditionalBreakpoint
+nmap !+debug+!f <Plug>VimspectorAddFunctionBreakpoint
+nmap !+debug+!n <Plug>VimspectorStepOver
+nmap !+debug+!s <Plug>VimspectorStepInto
+nmap !+debug+!r <Plug>VimspectorStepOut
+nmap !+debug+!j <Plug>VimspectorRunToCursor
 "}}}
 " デフォルトプラグイン {{{
 let g:loaded_matchparen      = 1 " カッコのハイライトを消す

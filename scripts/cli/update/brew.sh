@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # brewでインストールするものリスト
 formulas=(
@@ -10,10 +11,13 @@ formulas=(
     # バージョン管理
 #    git
     ghq
-    hub
     tig
     git-delta
     gibo # gitignore生成
+
+    # 外部サービスとの連携
+    hub
+    slackcat
 
     # 文字コード
     nkf
@@ -44,7 +48,7 @@ formulas=(
 
     # TUI
     # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
-    tmux
+    # tmux # クリップボードがなんか動かなかったので、aptの方で入れる
     sc-im # スプレッドシート
 
     # Markdown
@@ -77,7 +81,7 @@ formulas=(
     shellcheck # シェルスクリプトのLinter
 
     # ユーティリティ
-    fasd
+    # fasd
     zoxide    # zコマンドで最近のディレクトリに移動
     httpie    # curlのようなやつ
     trash-cli # ゴミ箱操作

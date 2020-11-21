@@ -1,8 +1,8 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 if type "zsh" > /dev/null 2>&1; then
   if [ -f ~/.zinit/bin/zinit.zsh ]; then
-    source ~/.zinit/bin/zinit.zsh
+    zsh -i ~/.zinit/bin/zinit.zsh
   fi
 fi
 

@@ -233,4 +233,10 @@ alias -s wav=mpv
 alias -s pdf=zathura
 
 alias -s log=less
+
+# bashだとエラーが出るのでzshでのみ設定
+alias ../="cd .."
+alias ../..="cd ../.."
+alias ../../..="cd ../../.."
+alias ../../../..="cd ../../../.."
 # }}}

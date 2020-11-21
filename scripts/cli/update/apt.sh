@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # aptでインストールするものリスト
 packages=(
@@ -42,6 +43,7 @@ packages=(
 
     # 画像
     imagemagick
+    pinta
 
     # ユーティリティ
     preload # アプリ起動速度を改善
@@ -161,6 +163,11 @@ gui_packages=(
     open-jtalk
     open-jtalk-mecab-naist-jdic
     hts-voice-nitech-jp-atr503-m001
+
+    # 自然言語
+    mecab # 形態素解析
+    icu-devtools # uconvコマンドで、日本語文字列とローマ字を変換できる
+    
 
     # USBカメラ
     # guvcview # 撮影

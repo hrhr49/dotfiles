@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 if snap > /dev/null 2>&1; then
   if xset q > /dev/null 2>&1; then
@@ -9,5 +10,6 @@ if snap > /dev/null 2>&1; then
     sudo snap install code --classic
     # sudo snap install pycharm-community --classic
     # sudo snap install skype --classic
+    sudo snap install drawio
   fi
 fi

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # xdg-openで開くアプリの設定
 # 参考: 

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # pipでインストールするものリスト
 
@@ -31,11 +32,31 @@ packages=(
     pylint
     python-language-server
     better_exceptions
+
+    # 機械学習関連で使うやつ
+    jupytext
+    numpy
+    pandas
+    matplotlib
+
+    # その他
+    requests
+    jinja2
+    flask
+    beautifulsoup4
+
+    # 音声関連
+    librosa # 音声信号処理
+    pyworld # 音声解析
+
+    # 入れるかどうか検討
+    # dominate # htmlを作るためのDSL
 )
 
 gui_packages=(
     # Linux
     pywal # 壁紙に合わせたカラースキームを使用
+    simpleaudio # 音声再生
 )
 
 # GUI環境がある場合はgui_packagesもインストール

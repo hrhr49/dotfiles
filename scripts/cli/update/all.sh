@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # パッケージやプラグインなどをインストールするスクリプト
 
@@ -13,8 +14,12 @@ find "$SCRIPT_DIR" -maxdepth 1 -type f | while read -r scriptfile ; do
             echo "Running $scriptfile ..."
             echo "***********************************************************"
             echo ""
-            # 実行
-            $scriptfile
+            if echo "$scriptfile" | grep --quiet "vim-plug"; then
+              echo "skipped"
+            else
+              # 実行
+              $scriptfile
+            fi
         fi
     fi
 done

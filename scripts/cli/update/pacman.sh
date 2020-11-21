@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 packages=(
   # basic commands
   which
@@ -21,7 +22,7 @@ packages=(
   ruby
   rubygems
   go
-  rust
+  rustup
   nim
   nimble
   perl
@@ -44,14 +45,13 @@ packages=(
   aria2
   pigz
   entr
-  fasd
+  # fasd
   hub
   bat
   tig
   tokei
   tldr
   fd
-  fasd
   jq
   htop
   unarchiver
@@ -93,5 +93,5 @@ if  xset q > /dev/null 2>&1; then
 fi
 
 if type "pacman" > /dev/null 2>&1; then
-  sudo pacman -Syyu --noconfirm "${packages[@]}"
+  sudo pacman -S --noconfirm "${packages[@]}"
 fi

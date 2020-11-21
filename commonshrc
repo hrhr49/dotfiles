@@ -7,6 +7,7 @@
 # PATHに$HOME/binを追加
 
 [ -d "$HOME/bin" ] && export PATH=$PATH:~/bin
+[ -d "$HOME/.local/bin" ] && export PATH=$PATH:~/.local/bin
 [ -d "$HOME/bin/scripts" ] && export PATH=$PATH:~/bin/scripts
 [ -d "$HOME/bin/scripts/cli/util" ] && export PATH=$PATH:~/bin/scripts/cli/util
 [ -d "/home/linuxbrew/.linuxbrew/bin" ] && export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
@@ -23,18 +24,18 @@ if type "nvim" > /dev/null 2>&1; then
 fi
 
 # fasdが存在すれば初期化
-if type "fasd" > /dev/null 2>&1; then
-    eval "$(fasd --init auto)"
-    # fasdのエイリアスを解除
-    unalias a  # any
-    unalias s  # show / search / select
-    unalias d  # directory
-    unalias f  # file
-    unalias sd # interactive directory selection
-    unalias sf # interactive file selection
-    unalias z  # cd, same functionality as j in autojump
-    unalias zz # cd with interactive selection
-fi
+# if type "fasd" > /dev/null 2>&1; then
+#     eval "$(fasd --init auto)"
+#     # fasdのエイリアスを解除
+#     unalias a  # any
+#     unalias s  # show / search / select
+#     unalias d  # directory
+#     unalias f  # file
+#     unalias sd # interactive directory selection
+#     unalias sf # interactive file selection
+#     unalias z  # cd, same functionality as j in autojump
+#     unalias zz # cd with interactive selection
+# fi
 
 # trash-cli(npmパッケージ)が存在すればrmを上書き
 if type trash > /dev/null 2>&1; then
@@ -62,10 +63,7 @@ fi
 # anaconda設定
 [ -e "${HOME}/anaconda3/etc/profile.d/conda.sh" ] && source "$HOME/anaconda3/etc/profile.d/conda.sh"
 [ -d "${HOME}/anaconda3/bin" ] && export PATH=~/anaconda3/bin:$PATH
-python37_site_packages="${HOME}/anaconda3/lib/python3.7/site-packages"
-python38_site_packages="${HOME}/anaconda3/lib/python3.8/site-packages"
-[ -d "${python37_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python37_site_packages}
-[ -d "${python38_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python38_site_packages}
+
 [ -d "/usr/lib/go/bin" ] && export PATH=/usr/lib/go/bin:$PATH
 
 # nvmの設定(遅いので一時保留)
@@ -131,7 +129,7 @@ env \
 
 # gitリポジトリのルートからの相対パスで移動
 gcd () {
-[[ -n $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1" || exit
+[[ -n $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1" || return
 }
 
 # cdnのURI取得
@@ -176,6 +174,12 @@ vg() {
      vim "$file" +"$line"
   fi
 }
+
+# 同一ネットワーク内のIPアドレス一覧を確認
+ipa() {
+  arp -a
+}
+
 # }}}
 # エイリアス{{{
 # aptのエイリアス{{{
@@ -187,6 +191,11 @@ alias aptu="sudo apt update"
 alias paci="sudo pacman -S"
 alias pacu="sudo pacman -Syy"
 alias pacs="pacman -Ss"
+# }}}
+# yayのエイリアス{{{
+alias yayi="yay -S"
+alias yayu="yay -Syy"
+alias yays="yay -Ss"
 # }}}
 # snapのエイリアス{{{
 alias snapi="sudo snap install"
@@ -243,8 +252,6 @@ alias ...="cd ../.."
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
-alias ..6="cd ../../../../../.."
 # }}}
 # 自作スクリプトを実行{{{
 myscripts() {
@@ -300,10 +307,29 @@ if type "ccat" > /dev/null 2>&1; then
 fi
 
 alias gopass-fzf='gopass show --clip $(gopass list --flat | fzf)'
+
+# クリップボードの内容をQRコードで表示
+alias qr='xsel -ob | qrencode -t ansiutf8'
+
+# dockerコマンド
+alias docker-kill-all='docker rm $(docker ps -q -a)'
+
+# dockerイメージたち
+alias docui='docker run --rm -itv /var/run/docker.sock:/var/run/docker.sock skanehira/docui'
+
+alias slack-term='docker run -it -v $HOME/.config/slack-term/config:/config erroneousboat/slack-term'
 # }}}
 # 環境変数{{{
 export BETTER_EXCEPTIONS=1
 
+# WSLでVcXsrv(無償のXサーバー)を動かすための設定
+if [ -f '/mnt/c/Windows/System32/cmd.exe' ]; then
+  unset LIBGL_ALWAYS_INDIRECT
+  DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0.0
+  export DISPLAY
+fi
+
+# https://qiita.com/momomo_rimoto/items/51d533ae9529872696ce#2-wsl2%E3%81%A7gui%E3%82%92%E4%BD%BF%E3%81%86
 # 独自
 # いろいろなファイルを放り込んでおくディレクトリ
 # MYFILES=$HOME/.config/myfiles/

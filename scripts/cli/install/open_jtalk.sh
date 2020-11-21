@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # Open JTalk(日本語音声読み上げソフト)のインストール(注意：root権限必要)
 # 参考： https://thr3a.hatenablog.com/entry/20180223/1519360909

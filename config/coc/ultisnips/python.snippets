@@ -1,0 +1,103 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet header
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+endsnippet
+
+snippet np
+import numpy as np
+endsnippet
+
+snippet pd
+import pandas as pd
+endsnippet
+
+snippet plt
+import matplotlib.pyplot as plt
+endsnippet
+
+snippet sns
+import seaborn as sns
+endsnippet
+
+snippet torch
+import torch
+from torch.autograd import Variable
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import torch.utils.data
+import torchvision
+from torchvision import datasets, models, transforms
+endsnippet
+
+snippet argparse
+import argparse
+
+parser = argparse.ArgumentParser(description='program description')
+
+parser.add_argument('-a', '--arg-name', help='this is help',
+					type=int, default=0)
+parser.add_argument('-f', '--flag', action='store_true')
+
+args = parser.parse_args()
+
+# print('arg_name='+args.arg_name)
+# print('flag='+args.flag)
+endsnippet
+
+snippet pulp
+import pulp
+
+# 問題の作成
+problem = pulp.LpProblem('problem_name', pulp.LpMinimize)
+
+# 変数の準備
+a = pulp.LpVariable('a')
+
+# 目的関数の設定
+problem += a
+
+# 制約式の設定
+problem += a >= 0
+problem += a <= 1
+
+# ソルバーの実行
+status = problem.solve()
+
+# Undefined
+# Unbounded
+# Infeasible
+# Not Solved
+# Optimal
+# のいずれかになる。
+print("Status", pulp.LpStatus[status])
+print(problem)
+print("Result")
+print("a", a.value())
+endsnippet

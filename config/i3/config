@@ -11,44 +11,52 @@ floating_modifier $mod
 # }}}
 # アプリ{{{
 
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
+set $SCRIPT_DIR $HOME/bin/scripts
+bindsym $mod+z exec --no-startup-id $SCRIPT_DIR/gui/show_help.sh
+bindsym $mod+o exec --no-startup-id $SCRIPT_DIR/gui/show_help.sh
+bindsym $mod+u exec --no-startup-id $SCRIPT_DIR/gui/show_qrcode.sh
+
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+
+bindsym $mod+d exec --no-startup-id "rofi -modi drun,run -show drun -show-icons"
 # bindsym $mod+Shift+p exec arandr
 # ボリューム調整
-bindsym $mod+Ctrl+m exec i3-sensible-terminal --command=alsamixer --title=dialog
+bindsym $mod+Ctrl+m exec --no-startup-id i3-sensible-terminal --command=alsamixer --title=dialog
 # ネットワーク設定
-bindsym $mod+Ctrl+n exec i3-sensible-terminal --command=nmtui --title=dialog
+bindsym $mod+Ctrl+n exec --no-startup-id i3-sensible-terminal --command=nmtui --title=dialog
 # ファイルマネージャ
-bindsym $mod+Ctrl+f exec i3-sensible-terminal --command=ranger --title=dialog
+bindsym $mod+Ctrl+f exec --no-startup-id i3-sensible-terminal --command=ranger --title=dialog
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # キーマップ。なぜかspaceのsを大文字にするとうまく行かない
 # アプリでのキーバインドとのバッティングのため変更
 # bindsym ctrl+space exec rofi -show window
-bindsym $mod+i exec rofi -show window
+bindsym $mod+i exec --no-startup-id rofi -show window
 
 # チートシート閲覧用
-bindsym $mod+z exec google-chrome `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu -p 'cheetsheet'`
+# bindsym $mod+z exec google-chrome `find -L ~/memo -name '*.md' -not -path '*/.git/*'| rofi -dmenu -p 'cheetsheet'`
 
 # 自作スクリプトを実行
-bindsym $mod+Shift+z exec eval `find -L ~/memo/dotfiles/scripts/gui/ -type f| rofi -dmenu -p 'run'`
+bindsym $mod+Shift+z exec --no-startup-id eval `find -L ~/memo/dotfiles/scripts/gui/ -type f| rofi -dmenu -p 'run'`
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym Ctrl+Up exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym Ctrl+Down exec --no-startup-id pactl set-sink-volume 0 -5%
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+# bindsym Ctrl+Up exec --no-startup-id pactl set-sink-volume 0 +5%
+# bindsym Ctrl+Down exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym Ctrl+Up exec --no-startup-id amixer sset Master 5%+
+bindsym Ctrl+Down exec --no-startup-id amixer sset Master 5%-
 
 # put the system to sleep
-bindsym $mod+Shift+s exec systemctl suspend
+bindsym $mod+Shift+s exec --no-startup-id systemctl suspend
 # スクリーンショット設定。scrotとxclipが必要
 # Multi-screen screenshots with scrot
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' \
+bindsym --release Print exec --no-startup-id scrot 'screenshot_%Y%m%d_%H%M%S.png' \
   -e 'mkdir -p ~/Pictures/screenshots && \
     mv $f ~/Pictures/screenshots && \
     xclip -selection clipboard -t image/png \
@@ -56,7 +64,7 @@ bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' \
     | notify-send "Saved $f" -t 1500' # All screens
 
 # OSX-like area selection screenshots
-bindsym --release Shift+Print exec notify-send 'Plese select window or rectangle area' -t 1000 && \
+bindsym --release Shift+Print exec --no-startup-id notify-send 'Plese select window or rectangle area' -t 1000 && \
   scrot -s 'screenshot_%Y%m%d_%H%M%S.png' \
     -e 'mkdir -p ~/Pictures/screenshots && \
       mv $f ~/Pictures/screenshots && \
@@ -65,8 +73,8 @@ bindsym --release Shift+Print exec notify-send 'Plese select window or rectangle
       | notify-send "Saved $f" -t 1500' # Area selection
 
 # vim-anywhere (https://github.com/cknadler/vim-anywhere)
-bindsym Ctrl+Alt+v exec ~/.vim-anywhere/bin/run
-bindsym $mod+Shift+v exec ~/.vim-anywhere/bin/run
+bindsym Ctrl+Alt+v exec --no-startup-id ~/.vim-anywhere/bin/run
+bindsym $mod+Shift+v exec --no-startup-id ~/.vim-anywhere/bin/run
 # }}}
 # ウィンドウ・コンテナ{{{
 # ウィンドウの削除
@@ -80,15 +88,15 @@ bindsym $mod+q kill
 bindsym --release button2 kill
 
 # 右クリックでフローティングかどうかをトグル
-# bindsym --border button3 exec "i3-msg floating toggle && i3-msg border normal"
-# bindsym --border button3 exec "i3-msg floating toggle && i3-msg 'for_window[floating]' border normal && i3-msg 'for_window[tiling]' border pixel 3"
+# bindsym --border button3 exec --no-startup-id "i3-msg floating toggle && i3-msg border normal"
+# bindsym --border button3 exec --no-startup-id "i3-msg floating toggle && i3-msg 'for_window[floating]' border normal && i3-msg 'for_window[tiling]' border pixel 3"
 
 # 右クリックでフローティングに
-# bindsym --border button3 exec "i3-msg floating enable && i3-msg border normal"
+# bindsym --border button3 exec --no-startup-id "i3-msg floating enable && i3-msg border normal"
 #
 # 左クリックでフローティング解除
-# bindsym --border button1 exec "i3-msg floating disable && i3-msg border pixel 3"
-# bindsym --release button1 exec "i3-msg floating disable && i3-msg border pixel 3"
+# bindsym --border button1 exec --no-startup-id "i3-msg floating disable && i3-msg border pixel 3"
+# bindsym --release button1 exec --no-startup-id "i3-msg floating disable && i3-msg border pixel 3"
 
 # マウスの中ボタンでウィンドウ削除
 # bindsym button2 kill
@@ -176,7 +184,7 @@ bindsym $mod+Shift+p move container to workspace prev; workspace prev
 bindsym Alt+Tab workspace back_and_forth
 
 # mod + t でステータスバーの表示/非表示
-bindsym $mod+t exec i3-msg bar mode toggle
+bindsym $mod+t exec --no-startup-id i3-msg bar mode toggle
 # }}}
 # リサイズ{{{
 # resize window (you can also use the mouse for that)
@@ -207,75 +215,75 @@ mode "mouse" {
     set $quick 100
     set $fast 200
 
-    bindsym Ctrl+h exec xdotool mousemove_relative -- -$slow 0
-    bindsym Ctrl+j exec xdotool mousemove_relative 0 $slow
-    bindsym Ctrl+k exec xdotool mousemove_relative -- 0 -$slow
-    bindsym Ctrl+l exec xdotool mousemove_relative $slow 0
+    bindsym Ctrl+h exec --no-startup-id xdotool mousemove_relative -- -$slow 0
+    bindsym Ctrl+j exec --no-startup-id xdotool mousemove_relative 0 $slow
+    bindsym Ctrl+k exec --no-startup-id xdotool mousemove_relative -- 0 -$slow
+    bindsym Ctrl+l exec --no-startup-id xdotool mousemove_relative $slow 0
 
-    bindsym Ctrl+Left exec xdotool mousemove_relative -- -$slow 0
-    bindsym Ctrl+Down exec xdotool mousemove_relative 0 $slow
-    bindsym Ctrl+Up exec xdotool mousemove_relative -- 0 -$slow
-    bindsym Ctrl+Right exec xdotool mousemove_relative $slow 0
+    bindsym Ctrl+Left exec --no-startup-id xdotool mousemove_relative -- -$slow 0
+    bindsym Ctrl+Down exec --no-startup-id xdotool mousemove_relative 0 $slow
+    bindsym Ctrl+Up exec --no-startup-id xdotool mousemove_relative -- 0 -$slow
+    bindsym Ctrl+Right exec --no-startup-id xdotool mousemove_relative $slow 0
 
-    bindsym h exec xdotool mousemove_relative -- -$normal 0
-    bindsym j exec xdotool mousemove_relative 0 $normal
-    bindsym k exec xdotool mousemove_relative -- 0 -$normal
-    bindsym l exec xdotool mousemove_relative $normal 0
+    bindsym h exec --no-startup-id xdotool mousemove_relative -- -$normal 0
+    bindsym j exec --no-startup-id xdotool mousemove_relative 0 $normal
+    bindsym k exec --no-startup-id xdotool mousemove_relative -- 0 -$normal
+    bindsym l exec --no-startup-id xdotool mousemove_relative $normal 0
 
-    bindsym Left exec xdotool mousemove_relative -- -$normal 0
-    bindsym Down exec xdotool mousemove_relative 0 $normal
-    bindsym Up exec xdotool mousemove_relative -- 0 -$normal
-    bindsym Right exec xdotool mousemove_relative $normal 0
+    bindsym Left exec --no-startup-id xdotool mousemove_relative -- -$normal 0
+    bindsym Down exec --no-startup-id xdotool mousemove_relative 0 $normal
+    bindsym Up exec --no-startup-id xdotool mousemove_relative -- 0 -$normal
+    bindsym Right exec --no-startup-id xdotool mousemove_relative $normal 0
 
-    bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
-    bindsym Shift+j exec xdotool mousemove_relative 0 $quick
-    bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
-    bindsym Shift+l exec xdotool mousemove_relative $quick 0
+    bindsym Shift+h exec --no-startup-id xdotool mousemove_relative -- -$quick 0
+    bindsym Shift+j exec --no-startup-id xdotool mousemove_relative 0 $quick
+    bindsym Shift+k exec --no-startup-id xdotool mousemove_relative -- 0 -$quick
+    bindsym Shift+l exec --no-startup-id xdotool mousemove_relative $quick 0
 
-    bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
-    bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
-    bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$quick
-    bindsym Shift+Right exec xdotool mousemove_relative $quick 0
+    bindsym Shift+Left exec --no-startup-id xdotool mousemove_relative -- -$quick 0
+    bindsym Shift+Down exec --no-startup-id xdotool mousemove_relative 0 $quick
+    bindsym Shift+Up exec --no-startup-id xdotool mousemove_relative -- 0 -$quick
+    bindsym Shift+Right exec --no-startup-id xdotool mousemove_relative $quick 0
 
-    bindsym Shift+$mod+h exec xdotool mousemove_relative -- -$fast 0
-    bindsym Shift+$mod+j exec xdotool mousemove_relative 0 $fast
-    bindsym Shift+$mod+k exec xdotool mousemove_relative -- 0 -$fast
-    bindsym Shift+$mod+l exec xdotool mousemove_relative $fast 0
+    bindsym Shift+$mod+h exec --no-startup-id xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+$mod+j exec --no-startup-id xdotool mousemove_relative 0 $fast
+    bindsym Shift+$mod+k exec --no-startup-id xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+$mod+l exec --no-startup-id xdotool mousemove_relative $fast 0
 
-    bindsym Shift+$mod+Left exec xdotool mousemove_relative -- -$fast 0
-    bindsym Shift+$mod+Down exec xdotool mousemove_relative 0 $fast
-    bindsym Shift+$mod+Up exec xdotool mousemove_relative -- 0 -$fast
-    bindsym Shift+$mod+Right exec xdotool mousemove_relative $fast 0
+    bindsym Shift+$mod+Left exec --no-startup-id xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+$mod+Down exec --no-startup-id xdotool mousemove_relative 0 $fast
+    bindsym Shift+$mod+Up exec --no-startup-id xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+$mod+Right exec --no-startup-id xdotool mousemove_relative $fast 0
 
     # Mouse movement (special down-right)
-    bindsym m exec xdotool mousemove_relative 10 10
+    bindsym m exec --no-startup-id xdotool mousemove_relative 10 10
 
     # Left Click
-    bindsym f exec xdotool click 1
+    bindsym f exec --no-startup-id xdotool click 1
 
     # Middle Click
-    bindsym d exec xdotool click 2
+    bindsym d exec --no-startup-id xdotool click 2
 
     # Right Click
-    bindsym s exec xdotool click 3
+    bindsym s exec --no-startup-id xdotool click 3
 
     # Left Click-and-drag
-    bindsym Shift+f exec xdotool mousedown 1
+    bindsym Shift+f exec --no-startup-id xdotool mousedown 1
 
     # Middle Click-and-drag 
-    bindsym Shift+d exec xdotool mousedown 2
+    bindsym Shift+d exec --no-startup-id xdotool mousedown 2
 
     # Right Click-and-drag
-    bindsym Shift+s exec xdotool mousedown 3
+    bindsym Shift+s exec --no-startup-id xdotool mousedown 3
 
     # Left Drag release
-    bindsym $mod+f exec xdotool mouseup 1
+    bindsym $mod+f exec --no-startup-id xdotool mouseup 1
 
     # Middle Drag release
-    bindsym $mod+d exec xdotool mouseup 2
+    bindsym $mod+d exec --no-startup-id xdotool mouseup 2
 
     # Right Drag release
-    bindsym $mod+s exec xdotool mouseup 3
+    bindsym $mod+s exec --no-startup-id xdotool mouseup 3
 
     bindsym Escape mode "default"
     bindsym q mode "default"
@@ -304,7 +312,7 @@ bindsym $mod+m mode "mouse"
 # client.background       $bg
 
 # フォント
-font pango:monospace 8
+font pango:monospace 12
 
 # ワークスペース0はフローティング用。GUIアプリ作成などに使用
 for_window [workspace="0"] floating enable
@@ -361,7 +369,6 @@ bar {
     # status_command i3status
 }
 
-# Set inner/outer gaps
 # ウィンドウに枠線をつける
 for_window [class="^.*" tiling] border pixel 3
 for_window [class="^.*" floating] border normal
@@ -369,6 +376,7 @@ for_window [class="^.*" floating] border normal
 # 中央に表示するもの
 for_window [title="dialog"] border pixel 1 floating enable
 
+# popup_during_fullscreen leave_fullscreen
 # 壁紙設定
 # exec --no-startup-id "feh --bg-scale ~/Pictures/hogehoge.png"
 
@@ -382,7 +390,7 @@ workspace 1 output HDMI-1
 # exec --no-startup-id xrandr --output VGA-1 --auto --right-of HDMI-1, mode "default"
 
 # arandr(xrandrのGUIでの設定)
-exec xrandr --output LVDS-1 --off --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 1920x0 --rotate normal
+exec --no-startup-id xrandr --output LVDS-1 --off --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 1920x0 --rotate normal
 # }}}
 # スタートアップ{{{
 # ネットワーク情報を表示
@@ -397,6 +405,8 @@ exec --no-startup-id pasystray
 # アプリで透明色を使えるようにする。comptonが必要
 exec --no-startup-id compton -b
 # 壁紙を設定するためのアプリ起動。fehとvarietyが必要
-exec --no-startup-id variety
+# exec --no-startup-id variety
+# バックグラウンドの色を設定
+exec --no-startup-id xsetroot -solid "#333333"
 # exec --no-startup-id conky
 # }}}
