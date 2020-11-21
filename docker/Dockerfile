@@ -55,9 +55,11 @@ USER ${USERNAME}
 # install dotfiles
 RUN mkdir -p /home/${USERNAME}/memo
 
-ADD dummy.txt /tmp/
-RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
+# install python to run install.py
 RUN sudo pacman -Syyu --noconfirm python
+
+ARG CACHEBUST=1
+RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
 RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
 
 # install pacman packages

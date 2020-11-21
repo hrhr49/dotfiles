@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 if type "rustup" > /dev/null 2>&1; then
   echo 'rustup is already installed'

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # チートシートをおいておく場所
 CHEAT_SHEET_DIR="$HOME/memo/memo/content/posts/"

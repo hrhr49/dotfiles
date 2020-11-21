@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 # Vimの起動時間を計測
 
 TEMPFILE=/tmp/tempfile

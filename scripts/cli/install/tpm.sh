@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # tpm
 if [ -e ~/.tmux/plugins/tpm ]; then

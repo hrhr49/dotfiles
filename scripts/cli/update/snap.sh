@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 if snap > /dev/null 2>&1; then
   if xset q > /dev/null 2>&1; then

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 if type choosenim > /dev/null 2>&1; then
   echo 'choosenim is already installed'

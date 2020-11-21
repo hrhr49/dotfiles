@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 packages=(
   # basic commands
   which
@@ -92,5 +93,5 @@ if  xset q > /dev/null 2>&1; then
 fi
 
 if type "pacman" > /dev/null 2>&1; then
-  sudo pacman -Syyu --noconfirm "${packages[@]}"
+  sudo pacman -S --noconfirm "${packages[@]}"
 fi

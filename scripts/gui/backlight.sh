@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 # ディスプレイの明るさ調整
 # xbacklightを使うやり方がうまく行かなかったのでxrandrを使うやり方の方にした
 # 参考 [Ubuntu 14.04 で LCD の明るさをコマンドラインから変えたい - Qiita](https://qiita.com/xr0038/items/7a22a63f121ce2c205c7)

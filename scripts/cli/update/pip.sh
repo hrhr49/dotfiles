@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # pipでインストールするものリスト
 
@@ -47,7 +48,6 @@ packages=(
     # 音声関連
     librosa # 音声信号処理
     pyworld # 音声解析
-    simpleaudio # 音声再生
 
     # 入れるかどうか検討
     # dominate # htmlを作るためのDSL
@@ -56,6 +56,7 @@ packages=(
 gui_packages=(
     # Linux
     pywal # 壁紙に合わせたカラースキームを使用
+    simpleaudio # 音声再生
 )
 
 # GUI環境がある場合はgui_packagesもインストール
