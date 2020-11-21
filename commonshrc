@@ -298,6 +298,8 @@ alias wget-fast='aria2c -x5'
 if type "ccat" > /dev/null 2>&1; then
     alias cat=ccat
 fi
+
+alias gopass-fzf='gopass show --clip $(gopass list --flat | fzf)'
 # }}}
 # 環境変数{{{
 export BETTER_EXCEPTIONS=1
