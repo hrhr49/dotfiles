@@ -36,6 +36,7 @@
     ".pyenv",
     ".direnv",
     ".local/share/virtualenv",
-    ".local/share/virtualenvs"
+    ".local/share/virtualenvs",
+    ".venv"
   ]
 }

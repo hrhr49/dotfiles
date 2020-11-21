@@ -63,10 +63,7 @@ fi
 # anaconda設定
 [ -e "${HOME}/anaconda3/etc/profile.d/conda.sh" ] && source "$HOME/anaconda3/etc/profile.d/conda.sh"
 [ -d "${HOME}/anaconda3/bin" ] && export PATH=~/anaconda3/bin:$PATH
-python37_site_packages="${HOME}/anaconda3/lib/python3.7/site-packages"
-python38_site_packages="${HOME}/anaconda3/lib/python3.8/site-packages"
-[ -d "${python37_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python37_site_packages}
-[ -d "${python38_site_packages}" ] && export PYTHONPATH=$PYTHONPATH:${python38_site_packages}
+
 [ -d "/usr/lib/go/bin" ] && export PATH=/usr/lib/go/bin:$PATH
 
 # nvmの設定(遅いので一時保留)
@@ -75,7 +72,7 @@ python38_site_packages="${HOME}/anaconda3/lib/python3.8/site-packages"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # pipenvのインストールディレクトリをプロジェクト直下にする
-# export PIPENV_VENV_IN_PROJECT=1
+export PIPENV_VENV_IN_PROJECT=1
 
 # pywalの設定
 # if type "wal" > /dev/null 2>&1; then
