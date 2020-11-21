@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 if type "zsh" > /dev/null 2>&1; then
   if [ -f ~/.zinit/bin/zinit.zsh ]; then

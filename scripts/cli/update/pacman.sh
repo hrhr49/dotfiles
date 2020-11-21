@@ -22,7 +22,7 @@ packages=(
   ruby
   rubygems
   go
-  rust
+  rustup
   nim
   nimble
   perl
