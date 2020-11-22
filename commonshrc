@@ -306,6 +306,8 @@ if type "ccat" > /dev/null 2>&1; then
     alias cat=ccat
 fi
 
+alias gopass-fzf='gopass show --clip $(gopass list --flat | fzf)'
+
 # クリップボードの内容をQRコードで表示
 alias qr='xsel -ob | qrencode -t ansiutf8'
 
