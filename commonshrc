@@ -315,7 +315,9 @@ alias docker-kill-all='docker rm $(docker ps -q -a)'
 # dockerイメージたち
 alias docui='docker run --rm -itv /var/run/docker.sock:/var/run/docker.sock skanehira/docui'
 
-alias slack-term='docker run -it -v $HOME/.config/slack-term/config:/config erroneousboat/slack-term'
+alias slack-term='docker run -it --rm -v $HOME/.config/slack-term/config:/config erroneousboat/slack-term'
+
+alias dotfiles='docker run -it --rm -e "TERM=xterm-256color" -v $(pwd):/home/user/workspace  -w /home/user/workspace hrhr49/dotfiles'
 # }}}
 # 環境変数{{{
 export BETTER_EXCEPTIONS=1

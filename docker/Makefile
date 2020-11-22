@@ -1,5 +1,5 @@
-DOCKER_TAG_NAME='hrhr49/develop'
-DOCKER_CONTAINER_NAME='hrhr49-develop'
+DOCKER_TAG_NAME='hrhr49/dotfiles-local'
+DOCKER_CONTAINER_NAME='hrhr49-dotfiles-local'
 
 .PHONY: install test docker-build shell clean
 
