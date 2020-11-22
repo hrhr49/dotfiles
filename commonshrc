@@ -177,9 +177,21 @@ vg() {
 
 # 同一ネットワーク内のIPアドレス一覧を確認
 ipa() {
-  arp -a
+  # 注意：サブネットマスクの長さは24で決め打ちしている
+  # TODO: 他の環境でも動くか確認
+  nmap "$(ip route | grep default | awk '{print $3}')/24" -sP
 }
 
+# hrhr49/dotfilesイメージからdockerコンテナを作成
+dotfiles() {
+  docker run \
+    -it --rm \
+    -e "TERM=xterm-256color" \
+    -v "$(pwd):/home/user/workspace" \
+    -w /home/user/workspace \
+    "$@" \
+    hrhr49/dotfiles
+}
 # }}}
 # エイリアス{{{
 # aptのエイリアス{{{
@@ -319,7 +331,6 @@ alias docui='docker run --rm -itv /var/run/docker.sock:/var/run/docker.sock skan
 
 alias slack-term='docker run -it --rm -v $HOME/.config/slack-term/config:/config erroneousboat/slack-term'
 
-alias dotfiles='docker run -it --rm -e "TERM=xterm-256color" -v $(pwd):/home/user/workspace  -w /home/user/workspace hrhr49/dotfiles'
 # }}}
 # 環境変数{{{
 export BETTER_EXCEPTIONS=1
