@@ -44,6 +44,7 @@ packages=(
     # 画像
     imagemagick
     pinta
+    libgraph-easy-perl
 
     # ユーティリティ
     preload # アプリ起動速度を改善
