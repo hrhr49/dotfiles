@@ -27,6 +27,7 @@ links = [
     ['${PWD}/config/ranger/commands.py', '${HOME}/.config/ranger/commands.py'],
     ['${PWD}/config/ranger/rc.conf', '${HOME}/.config/ranger/rc.conf'],
     ['${PWD}/config/ranger/scope.sh', '${HOME}/.config/ranger/scope.sh'],
+    ['${PWD}/config/lf/lfrc', '${HOME}/.config/lf/lfrc'],
     ['${PWD}/config/rofi/config.rasi', '${HOME}/.config/rofi/config.rasi'],
     ['${PWD}/config/qutebrowser/config.py',
         '${HOME}/.config/qutebrowser/config.py'],
