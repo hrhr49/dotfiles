@@ -20,6 +20,7 @@ packages=(
     json-server # とりあえずJSONを返すモックがほしいときに使う
     json2csv
     jsondiffpatch
+    @vue/cli
 
     # CLI
     undollar # コマンドライン先頭に「$」がついていたらそれを削除する
