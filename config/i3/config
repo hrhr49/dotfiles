@@ -377,8 +377,6 @@ for_window [class="^.*" floating] border normal
 for_window [title="dialog"] border pixel 1 floating enable
 
 # popup_during_fullscreen leave_fullscreen
-# 壁紙設定
-# exec --no-startup-id "feh --bg-scale ~/Pictures/hogehoge.png"
 
 # 文字表示
 exec --no-startup-id xsettingsd &
@@ -404,9 +402,13 @@ exec --no-startup-id parcellite
 exec --no-startup-id pasystray
 # アプリで透明色を使えるようにする。comptonが必要
 exec --no-startup-id compton -b
+
 # 壁紙を設定するためのアプリ起動。fehとvarietyが必要
 # exec --no-startup-id variety
-# バックグラウンドの色を設定
-exec --no-startup-id xsetroot -solid "#333333"
+# 固定の壁紙を使うとき
+exec --no-startup-id "feh --bg-scale ~/.config/i3/wallpaper.jpg"
+# 壁紙を単色にするとき
+# exec --no-startup-id xsetroot -solid "#4682B4"
+
 # exec --no-startup-id conky
 # }}}

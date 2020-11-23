@@ -21,6 +21,7 @@ links = [
     ['${PWD}/xprofile', '${HOME}/.xprofile'],
     ['${PWD}/Xresources', '${HOME}/.Xresources'],
     ['${PWD}/config/i3/config', '${HOME}/.config/i3/config'],
+    ['${PWD}/config/i3/wallpaper.jpg', '${HOME}/.config/i3/wallpaper.jpg'],
     ['${PWD}/config/i3status/config', '${HOME}/.config/i3status/config'],
     ['${PWD}/config/i3blocks/config', '${HOME}/.config/i3blocks/config'],
     ['${PWD}/config/ranger/commands.py', '${HOME}/.config/ranger/commands.py'],
