@@ -148,8 +148,12 @@ vnoremap ge :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy<CR> \| :'[,']s/薔//ge
 vnoremap gE :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!graph-easy --boxart<CR> \| :'[,']s/薔//ge<CR>
 " Plantuml
 vnoremap gp :s/[^\x01-\x7E]/&薔/ge<CR> \| gv:!plantuml -txt -p<CR> \| :'[,']s/薔//ge<CR>
+
 " yq(pipパッケージ) yamlからjsonへの変換
-vnoremap gy :!yq .<CR>
+vnoremap gyj :!yq .<CR>
+" yq(pipパッケージ) jsonからyamlへの変換
+vnoremap gjy :!yq -y .<CR>
+
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
 "}}}
