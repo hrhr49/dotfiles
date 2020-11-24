@@ -23,7 +23,7 @@ window:
   #   - SimpleFullscreen
   #startup_mode: Windowed
 
-background_opacity: 0.8
+background_opacity: 1.0
 font:
   normal:
     family: Cica
@@ -53,6 +53,7 @@ colors:
   # Default colors
   primary:
     background: '#161821'
+    # background: '#000000'
     foreground: '#d2d4de'
 
   # Normal colors
