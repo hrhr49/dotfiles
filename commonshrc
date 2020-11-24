@@ -192,6 +192,15 @@ dotfiles() {
     "$@" \
     hrhr49/dotfiles
 }
+
+# pythonファイルからJupyterノートブック経由でHTML形式に変換
+py2html() {
+  TMP_IPYNB_FILE=_tmp12342468.ipynb
+  jupytext --execute --to notebook "$1" --output "$TMP_IPYNB_FILE" \
+  && jupyter nbconvert --to html "$TMP_IPYNB_FILE" --output "${1/.py/.html}" \
+  && rm "$TMP_IPYNB_FILE"
+}
+
 # }}}
 # エイリアス{{{
 # aptのエイリアス{{{
