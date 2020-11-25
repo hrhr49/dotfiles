@@ -5,6 +5,7 @@
 # モディファイヤ{{{
 # WinキーをModに設定
 set $mod Mod4
+set $alt Mod1
 
 # `Mouse + $mod` でウィンドウ移動など
 floating_modifier $mod
@@ -73,13 +74,13 @@ bindsym --release Shift+Print exec --no-startup-id notify-send 'Plese select win
       | notify-send "Saved $f" -t 1500' # Area selection
 
 # vim-anywhere (https://github.com/cknadler/vim-anywhere)
-bindsym Ctrl+Alt+v exec --no-startup-id ~/.vim-anywhere/bin/run
+bindsym Ctrl+$alt+v exec --no-startup-id ~/.vim-anywhere/bin/run
 bindsym $mod+Shift+v exec --no-startup-id ~/.vim-anywhere/bin/run
 # }}}
 # ウィンドウ・コンテナ{{{
 # ウィンドウの削除
 bindsym $mod+Shift+q kill
-bindsym Alt+F4 kill
+bindsym $alt+F4 kill
 bindsym $mod+q kill
 
 # マウス設定 (参考: https://i3wm.org/docs/userguide.html#mousebindings)
@@ -180,11 +181,12 @@ bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+p workspace prev
 bindsym $mod+Shift+p move container to workspace prev; workspace prev
 
-# Alt + Tabで切り替え。うまく動かない
-bindsym Alt+Tab workspace back_and_forth
+# Alt + Tabでワークスペース切り替え。
+bindsym $alt+Tab workspace back_and_forth
 
 # mod + t でステータスバーの表示/非表示
 bindsym $mod+t exec --no-startup-id i3-msg bar mode toggle
+bindsym $mod+Shift+t exec --no-startup-id i3-msg bar mode invisible
 # }}}
 # リサイズ{{{
 # resize window (you can also use the mouse for that)
