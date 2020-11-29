@@ -71,8 +71,11 @@ fi
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# pipenvのインストールディレクトリをプロジェクト直下にする
-export PIPENV_VENV_IN_PROJECT=1
+# pipenvの仮想環境の場所をプロジェクト直下にする
+export PIPENV_VENV_IN_PROJECT=true
+
+# poetryの仮想環境の場所をプロジェクト直下にする
+export POETRY_VIRTUALENVS_IN_PROJECT=true
 
 # pywalの設定
 # if type "wal" > /dev/null 2>&1; then

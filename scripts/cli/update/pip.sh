@@ -14,6 +14,7 @@ packages=(
 
     # 環境管理
     pipenv
+    poetry
 
     # CLI
     mdv # Markdown表示
