@@ -24,6 +24,9 @@ zinit wait lucid for \
   zsh-users/zsh-completions \
   atload"!_zsh_autosuggest_start" \
   zsh-users/zsh-autosuggestions
+
+# 遅いので保留
+# zinit creinstall -Q ~/.zfunc
 # }}}
 # プロンプト設定{{{
 autoload -Uz vcs_info

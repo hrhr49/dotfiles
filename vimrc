@@ -577,7 +577,8 @@ endif
 " https://github.com/neoclide/coc-python/issues/188
 " が解決するまでcoc-pythonのバージョンをアップしない
 let g:coc_global_extensions = [
-      \ "coc-python",      "coc-tsserver",  "coc-json",
+      \ "coc-pyright", 
+      \ "coc-tsserver",  "coc-json",
       \ "coc-yaml",    "coc-html",        "coc-css",       "coc-tailwindcss",
       \ "coc-vimlsp",  "coc-marketplace", "coc-highlight", "coc-rls",
       \ "coc-go",      "coc-emoji",       "coc-snippets",  "coc-cmake",
@@ -586,8 +587,8 @@ let g:coc_global_extensions = [
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
 
-      " \ "coc-pyright", 
-      "
+      " \ "coc-python",
+
 setl updatetime=300
 setl shortmess+=c
 setl signcolumn=yes

@@ -30,7 +30,7 @@
   "python.linting.mypyEnabled": true,
   "coc.preferences.colorSupport": false,
   "coc.preferences.enableFloatHighlight": true,
-  "python.jediEnabled": true,
+  "python.jediEnabled": false,
   "python.venvFolders": [
     "envs",
     ".pyenv",
