@@ -83,13 +83,6 @@ fi
 # }}}
 # コマンド補完{{{
 
-# brewでzsh-completionsをインストールしている場合はそれを使用する(参考 https://gist.github.com/juno/5546198)
-[ -e ${HOMEBREW_PREFIX}/share/zsh-completions ] && fpath=(${HOMEBREW_PREFIX}/share/zsh-completions $fpath)
-
-# zplugで呼ぶため不要
-# autoload -U compinit
-# compinit
-
 # 矢印キーで自動補完
 zstyle ':completion:*' menu select
 
@@ -228,9 +221,9 @@ _complete_invoke() {
 compctl -K _complete_invoke + -f invoke inv
 
 # direnvの設定
-if type "direnv" > /dev/null 2>&1; then
-  eval "$(direnv hook zsh)"
-fi
+# if type "direnv" > /dev/null 2>&1; then
+#   eval "$(direnv hook zsh)"
+# fi
 
 if type "zoxide" > /dev/null 2>&1; then
   # zinitが勝手にziにエイリアスしているっぽい
@@ -262,4 +255,8 @@ alias ../="cd .."
 alias ../..="cd ../.."
 alias ../../..="cd ../../.."
 alias ../../../..="cd ../../../.."
+# }}}
+# その他{{{
+# PATHの重複を削除
+typeset -U path PATH
 # }}}
