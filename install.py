@@ -72,6 +72,8 @@ links = [
         '${HOME}/.config/aria2/aria2.conf'],
     ['${PWD}/config/youtube-dl/config',
         '${HOME}/.config/youtube/config'],
+    ['${PWD}/config/gtk-3.0/settings.ini',
+        '${HOME}/.config/gtk-3.0/settings.ini'],
     # root権限が必要なのでひとまず保留
     # ['${PWD}/90-libinput.conf', '/etc/X11/xorg.conf.d/90-libinput.conf'],
 ]

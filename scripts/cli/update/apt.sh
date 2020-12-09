@@ -100,6 +100,9 @@ gui_packages=(
     libxcb-shape0-dev
     libxcb-xfixes0-dev
 
+    # gtk
+    lxappearance # gtkの見た目を設定
+
     # gnome
     gnome-tweaks
     # cairo-dock # 下の方にアイコンを置くやつ
@@ -159,6 +162,7 @@ gui_packages=(
     # ユーティリティ
     urlview # URL抽出。tmux-urlviewに必要。linuxbrewのだとうまく動作しなかった。
     flameshot # スクリーンショット
+    meld # 差分ビューア
 
     # 日本語音声読み上げソフト
     open-jtalk
