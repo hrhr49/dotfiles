@@ -130,6 +130,7 @@ bindsym $mod+v split v
 
 # ウィンドウの最大化を切り替え
 bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle global
 
 # コンテナのレイアウト
 bindsym $mod+s layout stacking
