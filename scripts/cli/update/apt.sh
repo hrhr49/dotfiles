@@ -173,15 +173,27 @@ gui_packages=(
     mecab # 形態素解析
     icu-devtools # uconvコマンドで、日本語文字列とローマ字を変換できる
     
+    # 画像編集
+    pinta
+    gimp
+
+    # ベクター画像編集
+    inkscape
+
+    # お絵描き
+    krita
 
     # USBカメラ
     # guvcview # 撮影
     # fswebcam # 画像取得
 
     # ノートPCの省電力用
-    # powertop
-    # tlp tlp-rdw
+    powertop
+    tlp tlp-rdw
     # TODO: sudo tlp start
+
+    # メモリへのプリロードによるプログラム起動高速化
+    preload
 )
 
 # GUI環境がある場合はgui_packagesもインストール
