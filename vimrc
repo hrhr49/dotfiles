@@ -369,6 +369,7 @@ endif
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim', {'on': 'GV'}           " コミットブラウザ
 Plug 'mbbill/undotree', {'on': 'UndotreeShow'} " Undoツリー管理
+Plug 'will133/vim-dirdiff', {'on': 'DirDiff'}  " ディレクトリを再帰的にdiff
 
 " 言語
 Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
