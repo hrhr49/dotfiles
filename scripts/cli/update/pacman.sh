@@ -73,7 +73,8 @@ gui_packages=(
   zenity
   xdotool
   dunst
-  scrot
+  # scrot
+  maim
   xclip
   feh
   compton

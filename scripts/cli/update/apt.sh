@@ -152,7 +152,10 @@ gui_packages=(
     pasystray   # ボリュームアイコン
     rofi        # ウィンドウスイッチャー
     xclip       # クリップボード
-    scrot       # スクリーンショット
+    # scrot       # スクリーンショット
+    # scrotだと境界線が画像に入ってしまうのでmaimの方を使う
+    # https://github.com/dreamer/scrot/issues/2
+    maim        # スクリーンショット
     arandr      # マルチディスプレイ設定用
     parcellite  # クリップボードマネージャ
     conky       # 常に表示されるシステムモニタ
