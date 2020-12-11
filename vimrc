@@ -800,6 +800,22 @@ command! CopyPath let @+=expand('%')
 command! CopyAbsPath let @+=expand('%:p')
 command! CopyDir let @+=expand('%:h')
 command! CopyAbsDir let @+=expand('%:p:h')
+
+function EditFile()
+  let filename = expand("<cfile>")
+  if filename == '' | return | endif
+  let ext = split(filename, '\.')[-1]
+  let cmd = ''
+  if ext == 'png' || ext == 'jpg' || ext == 'jpeg'
+    let cmd = printf('!pinta %s', filename)
+  elseif ext == 'svg'
+    let cmd = printf('!inkscape %s', filename)
+  endif
+  execute cmd
+endfunction
+" 編集用のプログラムでファイルを開く
+nnoremap gX :call EditFile()<CR>
+
 "}}}
 " GUI {{{
 if has('gui_running')
