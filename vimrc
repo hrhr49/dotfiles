@@ -411,6 +411,7 @@ augroup MdImgPasteGroup " md-img-paste
   autocmd!
   autocmd FileType markdown nmap <silent> <M-v> :call mdip#MarkdownClipboardImage()<CR>
   autocmd FileType markdown nmap <silent> <F1> :call mdip#MarkdownClipboardImage()<CR>
+  autocmd FileType markdown nmap <silent> ,p :call mdip#MarkdownClipboardImage()<CR>
 augroup END
 
 let g:tagbar_autofocus = 1
