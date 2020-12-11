@@ -55,23 +55,21 @@ bindsym Ctrl+Down exec --no-startup-id amixer sset Master 5%-
 
 # put the system to sleep
 bindsym $mod+Shift+s exec --no-startup-id systemctl suspend
-# スクリーンショット設定。scrotとxclipが必要
-# Multi-screen screenshots with scrot
-bindsym --release Print exec --no-startup-id scrot 'screenshot_%Y%m%d_%H%M%S.png' \
-  -e 'mkdir -p ~/Pictures/screenshots && \
-    mv $f ~/Pictures/screenshots && \
-    xclip -selection clipboard -t image/png \
-      -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1` \
-    | notify-send "Saved $f" -t 1500' # All screens
 
-# OSX-like area selection screenshots
-bindsym --release Shift+Print exec --no-startup-id notify-send 'Plese select window or rectangle area' -t 1000 && \
-  scrot -s 'screenshot_%Y%m%d_%H%M%S.png' \
-    -e 'mkdir -p ~/Pictures/screenshots && \
-      mv $f ~/Pictures/screenshots && \
-      xclip -selection clipboard -t image/png \
-        -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1` \
-      | notify-send "Saved $f" -t 1500' # Area selection
+# 全範囲をスクショ
+bindsym --release Print exec --no-startup-id \
+  mkdir -p ~/Pictures/screenshots && \
+  maim -u | tee ~/Pictures/screenshots/$(date +%Y%m%d_%H%M%S).png | xclip -selection clipboard -t image/png -i
+
+# アクティブなウィンドウをスクショ
+bindsym --release Ctrl+Print exec --no-startup-id \
+  mkdir -p ~/Pictures/screenshots && \
+  maim -i $(xdotool getactivewindow) | tee ~/Pictures/screenshots/$(date +%Y%m%d_%H%M%S).png | xclip -selection clipboard -t image/png -i
+
+# 選択範囲をスクショ
+bindsym --release Shift+Print exec --no-startup-id \
+  mkdir -p ~/Pictures/screenshots && \
+  maim -s -u | tee ~/Pictures/screenshots/$(date +%Y%m%d_%H%M%S).png | xclip -selection clipboard -t image/png -i
 
 # vim-anywhere (https://github.com/cknadler/vim-anywhere)
 bindsym Ctrl+$alt+v exec --no-startup-id ~/.vim-anywhere/bin/run
