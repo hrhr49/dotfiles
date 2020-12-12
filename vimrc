@@ -275,6 +275,7 @@ augroup FileTypeGroup
   autocmd FileType rust       nnoremap <buffer> <F5> :w\|!rustc % \| !%:r<CR>
   autocmd FileType nim        nnoremap <buffer> <F5> :w\|!nim c -r %<CR>
   autocmd FileType vim        nnoremap <buffer> <F5> :w\|so %<CR>
+  nmap ,r <F5>
 
   autocmd FileType qf noremap <buffer> p  <CR>zz<C-w>p
 
