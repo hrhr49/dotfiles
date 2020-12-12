@@ -814,7 +814,7 @@ function EditFile()
   execute cmd
 endfunction
 " 編集用のプログラムでファイルを開く
-nnoremap gX :call EditFile()<CR>
+nnoremap <expr> gX EditFile()
 
 "}}}
 " GUI {{{
