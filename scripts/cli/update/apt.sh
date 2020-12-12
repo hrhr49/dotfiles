@@ -42,8 +42,6 @@ packages=(
     pv # パイプの進捗を表示
 
     # 画像
-    imagemagick
-    pinta
     libgraph-easy-perl
 
     # ユーティリティ
@@ -177,6 +175,7 @@ gui_packages=(
     icu-devtools # uconvコマンドで、日本語文字列とローマ字を変換できる
     
     # 画像編集
+    imagemagick
     pinta
     gimp
 
