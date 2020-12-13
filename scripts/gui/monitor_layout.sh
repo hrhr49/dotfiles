@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # copy from
 # https://github.com/davatorium/rofi-scripts/blob/master/monitor_layout.sh
+# shellcheck disable=SC2086,SC2004,SC2207,SC2091
 
 XRANDR=$(which xrandr)
 
