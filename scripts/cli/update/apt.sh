@@ -61,6 +61,9 @@ packages=(
     # pzip2
     # pxz
     entr # ファイルを監視して、変更時にコマンドの実行
+
+    xlsx2csv # xlsxをcsvに変換
+    mediainfo # 音声・動画ファイルの詳細表示
 )
 
 gui_packages=(
