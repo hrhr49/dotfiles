@@ -97,3 +97,10 @@ cmd zip ${{
     zip -r $1.zip $1
     rm -rf $1
 }}
+
+
+# 最近行ったディレクトリを選んで移動
+cmd z ${{
+    lf -remote "send $id cd $(zoxide query -i)"
+}}
+cmd zi :z
