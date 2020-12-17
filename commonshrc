@@ -21,6 +21,7 @@ if type "nvim" > /dev/null 2>&1; then
     export VISUAL=nvim
     alias vim=nvim
     alias vi=nvim
+    alias vimdiff='nvim -d'
 fi
 
 # fasdが存在すれば初期化
@@ -220,6 +221,19 @@ n()
     if [ -f "$NNN_TMPFILE" ]; then
             . "$NNN_TMPFILE"
             rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+
+# vimのDirDiffを実行
+dirdiff()
+{
+    # Shell-escape each path:
+    DIR1=$(printf '%q' "$1"); shift
+    DIR2=$(printf '%q' "$1"); shift
+    if type "nvim" > /dev/null 2>&1; then
+      nvim "$@" -c "DirDiff $DIR1 $DIR2"
+    else
+      vim "$@" -c "DirDiff $DIR1 $DIR2"
     fi
 }
 # }}}
