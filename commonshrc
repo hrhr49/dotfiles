@@ -209,6 +209,19 @@ mkcd() {
     mkdir -p "$1"
     cd "$_" || return
 }
+
+# nnnで移動
+n()
+{
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    nnn "$@"
+
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
 # }}}
 # エイリアス{{{
 # aptのエイリアス{{{
@@ -353,6 +366,9 @@ alias docui='docker run --rm -itv /var/run/docker.sock:/var/run/docker.sock skan
 
 alias slack-term='docker run -it --rm -v $HOME/.config/slack-term/config:/config erroneousboat/slack-term'
 
+# プレビューつきfzf
+alias fzp='fzf --preview "pistol {}"'
+
 # }}}
 # 環境変数{{{
 export BETTER_EXCEPTIONS=1
@@ -372,4 +388,12 @@ fi
 # MYBIN=$HOME/bin/
 # dotfilesをおいておくディレクトリ
 # MYDOTFILES=$HOME/dotfiles/
+
+export NNN_COLORS="2136"
+export NNN_TRASH=1
+export NNN_PLUG="1:bookmarks;2:ipinfo;p:my/pistol;o:fzz;b:nbak;z:autojump"
+# export NNN_PLUG="1:bookmarks;2:ipinfo;p:preview-tui;o:fzz;b:nbak;z:autojump"
+export NNN_FIFO=/tmp/nnn.fifo
+export USE_PISTOL=1
+
 # }}}

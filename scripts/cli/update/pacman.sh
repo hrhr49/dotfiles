@@ -59,6 +59,7 @@ packages=(
   # other
   neofetch
   w3m
+  catimg
 )
 
 gui_packages=(

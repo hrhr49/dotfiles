@@ -32,7 +32,10 @@ formulas=(
     ncdu # ディスク使用量
     tldr # コマンドの使用例
     tokei # ファイル種別ごとの行数などを表示
+    catimg # ターミナルで画像表示
+
     silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
+
     ccze # ログに色を付ける
     hexyl # 16進数ダンプ
     pastel # カラー表示(いい感じの色を探すときに便利そう)
@@ -48,6 +51,7 @@ formulas=(
 
     # TUI
     # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
+    nnn # 軽量なファイルマネージャ
     # tmux # クリップボードがなんか動かなかったので、aptの方で入れる
     sc-im # スプレッドシート
 

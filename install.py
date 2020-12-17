@@ -74,6 +74,10 @@ links = [
         '${HOME}/.config/youtube/config'],
     ['${PWD}/config/gtk-3.0/settings.ini',
         '${HOME}/.config/gtk-3.0/settings.ini'],
+    ['${PWD}/config/pistol/pistol.conf',
+        '${HOME}/.config/pistol/pistol.conf'],
+    ['${PWD}/config/nnn/plugins/my/pistol',
+        '${HOME}/.config/nnn/plugins/my/pistol'],
     ['${PWD}/scripts',
         '${HOME}/bin/scripts'],
     # root権限が必要なのでひとまず保留

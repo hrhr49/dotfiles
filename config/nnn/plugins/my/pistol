@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+preview_file () {
+    kill %- %+ 2>/dev/null && wait %- %+ 2>/dev/null
+    clear
+    pistol "$1"
+}
+
+if [ "$PREVIEW_MODE" ] ; then
+    if [ ! -r "$NNN_FIFO" ] ; then
+        echo "No FIFO available! (\$NNN_FIFO='$NNN_FIFO')" >&2
+        read -r
+        exit 1
+    fi
+
+    preview_file "$1"
+
+    # use cat instead of 'exec <' to avoid issues with dash shell
+    # shellcheck disable=SC2002
+    cat "$NNN_FIFO" |\
+    while read -r selection ; do
+        preview_file "$selection"
+    done
+    exit 0
+fi
+
+tmux split-window -e "NNN_FIFO=$NNN_FIFO" -e "PREVIEW_MODE=1" -dh "$0" "$1"

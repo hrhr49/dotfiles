@@ -26,6 +26,8 @@ packages=(
     # zlibbz2-dev
     bison
     flex
+    # MIMEタイプの判定
+    libmagic-dev
 
     # 開発
     # ccache # gccやg++の結果をキャッシュしてコンパイルを高速化
@@ -87,6 +89,16 @@ gui_packages=(
     libxcb-composite0-dev
     xcb
     libxcb-ewmh2
+
+    # フォント
+    fonts-noto
+    fonts-vlgothic
+    fonts-ipafont
+    fonts-ipaexfont
+    fonts-migmix
+    fonts-mikachan
+    fonts-sawarabi-gothic
+    fonts-misaki
 
     # QT
     # qtbase5-dev
