@@ -23,10 +23,11 @@ fi
 
 [ -d "$HOME/bin" ] && export PATH=$PATH:~/bin
 
+if type "alacritty" > /dev/null 2>&1; then
+    export TERMINAL="alacritty"
+fi
+
 if type "xfce4-terminal" > /dev/null 2>&1; then
     export TERMINAL="xfce4-terminal"
 fi
 
-if type "alacritty" > /dev/null 2>&1; then
-    export TERMINAL="alacritty"
-fi
