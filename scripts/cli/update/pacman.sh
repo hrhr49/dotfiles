@@ -26,6 +26,8 @@ packages=(
   nim
   nimble
   perl
+  llvm
+  llvm-libs
 
   # development tools
   zsh

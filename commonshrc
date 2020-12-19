@@ -405,7 +405,7 @@ fi
 
 export NNN_COLORS="2136"
 export NNN_TRASH=1
-export NNN_PLUG="1:bookmarks;2:ipinfo;p:my/pistol;o:fzz;b:nbak;z:autojump"
+export NNN_PLUG="1:bookmarks;2:ipinfo;p:my/pistol;v:preview-tui;o:fzz;b:nbak;z:autojump"
 # export NNN_PLUG="1:bookmarks;2:ipinfo;p:preview-tui;o:fzz;b:nbak;z:autojump"
 export NNN_FIFO=/tmp/nnn.fifo
 export USE_PISTOL=1

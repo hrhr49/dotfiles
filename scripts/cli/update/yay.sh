@@ -4,7 +4,7 @@ packages=(
   nkf
   perl-graph-easy
   gibo
-  # zoxide
+  zoxide-bin
 )
 
 gui_packages=(
