@@ -1,6 +1,6 @@
 " vim:set foldmethod=marker foldlevel=0:
 set encoding=utf-8
-set fileencodings=iso-2022-jp,ucs-bom,sjis,utf-8,euc-jp,cp932,default,latin1
+set fileencodings=ut-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
 scriptencoding utf-8
 " set shellslash "vim-plug使うときは指定しないほうがいい？
 if exists("g:loaded_my_vimrc") | finish | endif
@@ -31,6 +31,7 @@ set expandtab
 set virtualedit=block          " 文字がない箇所を矩形選択
 set formatoptions-=cro         " コメントで自動整形されるのを回避
 set matchpairs+=「:」,（:）,【:】,『:』,〈:〉,《:》
+set textwidth=0                " 一行の最大幅設定を無効化
 set foldmethod=marker
 set complete-=i                " インクルードファイルで補完しない
 set complete-=t                " タグを入力補完候補に入れない
@@ -106,6 +107,9 @@ cnoremap <C-p> <up>
 
 " 選択中のテキストを*で検索
 vnoremap * "zy:let @/ = '\V' . @z<CR>n
+" 選択中のテキストを#で検索(逆順)
+vnoremap # "zy:let @/ = '\V' . @z\|let v:searchforward=0<CR>n
+
 " 選択範囲に直前の操作を適用
 vnoremap . :normal .<CR>
 " F4キーで矩形選択領域にボックスのアスキーアートを作る
