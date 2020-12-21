@@ -24,6 +24,7 @@ packages=(
   python
   ranger
   lf
+  nnn
   ripgrep
   tig
   tmux
