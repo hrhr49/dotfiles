@@ -1,5 +1,6 @@
 " vim:set foldmethod=marker foldlevel=0:
 set encoding=utf-8
+set fileencodings=iso-2022-jp,ucs-bom,sjis,utf-8,euc-jp,cp932,default,latin1
 scriptencoding utf-8
 " set shellslash "vim-plug使うときは指定しないほうがいい？
 if exists("g:loaded_my_vimrc") | finish | endif
@@ -659,14 +660,14 @@ if s:plug.is_installed("lightline.vim")
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
         \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus'] ],
-        \   'right': [ ['workspace']],
+        \   'right': [ ['workspace'], ['fileformat', 'fileencoding']],
         \ },
         \ 'component_function': {
         \   'gitbranch': 'fugitive#head',
-        \   'workspace': 'GetCWD30',
         \   'cocstatus': 'coc#status'
         \ },
         \ }
+        " \   'workspace': 'GetCWD30',
 endif
 "}}}
 " emmet{{{
