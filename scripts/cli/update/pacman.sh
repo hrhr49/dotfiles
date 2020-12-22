@@ -45,6 +45,8 @@ packages=(
   fzf
   ripgrep
   ranger
+  nnn
+
   imagemagick
   aria2
   pigz
