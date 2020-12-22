@@ -1,6 +1,6 @@
 " vim:set foldmethod=marker foldlevel=0:
 set encoding=utf-8
-set fileencodings=ut-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
+set fileencodings=utf-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
 scriptencoding utf-8
 " set shellslash "vim-plug使うときは指定しないほうがいい？
 if exists("g:loaded_my_vimrc") | finish | endif
