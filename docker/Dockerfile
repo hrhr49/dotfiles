@@ -73,16 +73,16 @@ RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/yay.sh
 # install tools
 RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/install/all.sh
 
-# install packages
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/zinit.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/tpm.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/pip.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/npm.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cargo.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cpan.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/gem.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/go.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/nimble.sh
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/vim-plug.sh
+# install packages(suppress errors)
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/zinit.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/tpm.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/pip.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/npm.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cargo.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cpan.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/gem.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/go.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/nimble.sh || true
+RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/vim-plug.sh || true
 
 CMD ["/bin/zsh"]

@@ -66,5 +66,5 @@ if  xset q > /dev/null 2>&1 || [ "$(uname)" == 'Darwin' ]; then
 fi
 
 if type "pip" > /dev/null 2>&1; then
-  pip install "${packages[@]}"
+  pip install --no-warn-script-location "${packages[@]}"
 fi

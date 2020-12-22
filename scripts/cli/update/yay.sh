@@ -5,6 +5,8 @@ packages=(
   perl-graph-easy
   gibo
   zoxide-bin
+  lf
+  pistol-git
 )
 
 gui_packages=(

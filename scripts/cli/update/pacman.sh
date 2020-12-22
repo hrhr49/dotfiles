@@ -28,6 +28,8 @@ packages=(
   perl
   llvm
   llvm-libs
+  llvm10
+  llvm10-libs
 
   # development tools
   zsh
