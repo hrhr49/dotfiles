@@ -39,31 +39,52 @@ packages=(
   shellcheck
   ctags
 
-  # utility
+  # search
   fzf
   ripgrep
+  fd
+
+  # file manager
   ranger
   nnn
 
+  # image
   imagemagick
-  aria2
-  pigz
-  entr
-  # fasd
-  hub
-  bat
-  tig
-  tokei
-  tldr
-  fd
+  catimg
+
+  # file format
   jq
+
+  # visualization
+  tokei
   htop
+  exa
+  lsd
+  bat
+  ncdu
+  ccze
+  neofetch
+
+  # git
+  tig
+  hub
+
+  # help
+  tldr
+
+  # compression
   unarchiver
+  pigz
+
+  # downloader
+  aria2
+
+  # web browser
+  w3m
 
   # other
-  neofetch
-  w3m
-  catimg
+  entr
+  # fasd
 )
 
 gui_packages=(

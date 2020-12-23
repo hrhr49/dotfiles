@@ -7,6 +7,7 @@ packages=(
   zoxide-bin
   lf
   pistol-git
+  ghq
 )
 
 gui_packages=(
