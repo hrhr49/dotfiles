@@ -11,3 +11,6 @@ if type "vim" > /dev/null 2>&1; then
   # vimrcのg:coc_global_extensionsのを全部Installする。dockerビルド時だと、何も表示されない時間が数分続いたけど、ちゃんとできていた。
   vim -c 'execute "CocInstall -sync " . join(g:coc_global_extensions, " ")' -c 'q' -c 'q'
 fi
+
+# 端末の表示がおかしくなるのをリセット
+reset
