@@ -8,22 +8,16 @@ create_symlink() {
   dst="$2"
   mkdir -p "$(dirname "$dst")"
 
-  should_create_symlink=false
   if [ -f "$dst" ] && [ ! -L "$dst" ]; then
     echo "\"$dst\" already exists."
     read -r -p "backup original file and replace? (y/N): " yn
     case "$yn" in
       [yY]*) cp "$dst" "${dst}.org"
-             should_create_symlink=true ;;
+             ln -snvf "$src" "$dst" ;;
       *)     echo "cancel" ;;
     esac
   else
-    should_create_symlink=true
-  fi
-
-  if "$should_create_symlink"; then
-    echo "symlink $src -> $dst"
-    ln -snf "$src" "$dst"
+   ln -snvf "$src" "$dst"
   fi
 }
 
@@ -46,15 +40,21 @@ do
 done
 
 # other symlinks
-create_symlink "${PWD}/xinitrc" "${HOME}/.xinitrc"
-create_symlink "${PWD}/xprofile" "${HOME}/.xprofile"
-create_symlink "${PWD}/Xresources" "${HOME}/.Xresources"
-create_symlink "${PWD}/ctags" "${HOME}/.ctags"
-create_symlink "${PWD}/hyper.js" "${HOME}/.hyper.js"
-create_symlink "${PWD}/npmrc" "${HOME}/.npmrc"
-create_symlink "${PWD}/vimspector.json" "${HOME}/.vimspector.json"
-create_symlink "${PWD}/atoolrc" "${HOME}/.atoolrc"
-create_symlink "${PWD}/tmux.conf" "${HOME}/.tmux.conf"
+files=(
+  xinitrc
+  xprofile
+  Xresources
+  ctags
+  hyper.js
+  npmrc
+  vimspector.json
+  atoolrc
+  tmux.conf
+)
+for file in "${files[@]}"
+do
+  create_symlink "${PWD}/${file}" "${HOME}/.${file}"
+done
 create_symlink "${PWD}/scripts" "${HOME}/bin/scripts"
 
 # root権限が必要なのでひとまず保留
