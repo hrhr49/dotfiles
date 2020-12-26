@@ -52,37 +52,8 @@ RUN sudo -u ${USERNAME} makepkg --noconfirm -si &&\
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}
 
+# NOTE: Dockerイメージビルド時に-no-cacheオプションを指定してキャッシュを無効しないと、情報を更新できないので注意。
 # install dotfiles
-RUN mkdir -p /home/${USERNAME}/memo
-
-# install python to run install.py
-RUN sudo pacman -Syyu --noconfirm python
-
-# disale cache under this line ---------------------
-ARG CACHEBUST=1
-
-RUN git clone https://github.com/hrhr49/dotfiles /home/${USERNAME}/memo/dotfiles
-RUN cd /home/${USERNAME}/memo/dotfiles && python install.py
-
-# install pacman packages
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/pacman.sh
-
-# install yay packages
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/yay.sh
-
-# install tools
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/install/all.sh
-
-# install packages(suppress errors)
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/zinit.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/tpm.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/pip.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/npm.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cargo.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/cpan.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/gem.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/go.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/nimble.sh || true
-RUN /home/${USERNAME}/memo/dotfiles/scripts/cli/update/vim-plug.sh || true
+RUN curl -L raw.github.com/hrhr49/dotfiles/master/download_and_deploy.sh | bash
 
 CMD ["/bin/zsh"]

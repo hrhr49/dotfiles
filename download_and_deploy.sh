@@ -12,19 +12,23 @@ has() {
   type "$1" > /dev/null 2>&1
 }
 
+# 後の作業でgitはどのみち必要なのでgitのみ使う
 if has git; then
     git clone --recursive "$GITHUB_URL" "$DOTPATH"
-elif has curl || has wget; then
-    if has curl; then
-        curl -L "$TARBALL"
-    elif has wget ; then
-        wget -O - "$TARBALL"
-    fi | tar xvz
-    mkdir -p "$DOTPATH"
-    mv -f -T dotfiles-master "$DOTPATH"
+    cd "$DOTPATH"
+    ./install.sh
+    ./scripts/cli/install/all.sh
+    ./scripts/cli/update/all.sh
+# elif has curl || has wget; then
+#     if has curl; then
+#         curl -L "$TARBALL"
+#     elif has wget ; then
+#         wget -O - "$TARBALL"
+#     fi | tar xvz
+#     mkdir -p "$DOTPATH"
+#     mv -f -T dotfiles-master "$DOTPATH"
 else
-    echo "curl or wget required"
+    # echo "curl or wget required"
+    echo "git required"
 fi
 
-cd "$DOTPATH"
-./install.sh

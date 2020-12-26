@@ -11,8 +11,11 @@ SHELL_SCRIPTS=`find . -name '*.sh' \
 
 .PHONY: install test docker-build shell clean
 
+default:
+	echo 'do nothing'
+
 install:
-	python3 install.py
+	./install.sh
 
 test:
 	docker run --name dotfiles-test --rm -v ${PWD}:/home/user/dotfiles ${DOCKER_TAG_NAME} python3 /home/user/dotfiles/install.py

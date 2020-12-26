@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-set -e
+# set -eu
+# 暫定的にエラーは許すことにする
+set -u
 
 # パッケージやプラグインなどをインストールするスクリプト
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" || exit; pwd)
-find "$SCRIPT_DIR" -maxdepth 1 -type f | while read -r scriptfile ; do
+find "$SCRIPT_DIR" -type f | sort | while read -r scriptfile ; do
     # 実行可能なら
     if [ -x "$scriptfile" ]; then
         # このファイルじゃなければ
@@ -14,12 +16,8 @@ find "$SCRIPT_DIR" -maxdepth 1 -type f | while read -r scriptfile ; do
             echo "Running $scriptfile ..."
             echo "***********************************************************"
             echo ""
-            if echo "$scriptfile" | grep --quiet "vim-plug"; then
-              echo "skipped"
-            else
-              # 実行
-              $scriptfile
-            fi
+            # 実行
+            $scriptfile
         fi
     fi
 done
