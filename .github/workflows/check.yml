@@ -16,10 +16,10 @@ jobs:
         run: make check
         shell: bash
       - name: Run Installation Script
-        run: 'yes | ./install.sh'
+        run: './install.sh overwrite'
         shell: bash
       - name: Run Installation Script Twice
         run: |
-         'yes | ./install.sh'
-         'yes | ./install.sh'
+          './install.sh overwrite'
+          './install.sh overwrite'
         shell: bash

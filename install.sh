@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
-set -eu
+set -e
 # change directory to the location of this script
 cd "$(dirname "$0")" || exit
+
+if [ "$1" = "overwrite" ]; then
+  manual=false
+else
+  manual=true
+fi
 
 create_symlink() {
   src="$1"
   dst="$2"
   mkdir -p "$(dirname "$dst")"
 
-  if [ -f "$dst" ] && [ ! -L "$dst" ]; then
+  if "$manual" && [ -f "$dst" ] && [ ! -L "$dst" ]; then
     echo "\"$dst\" already exists."
     read -r -p "backup original file and replace? (y/N): " yn
     case "$yn" in
