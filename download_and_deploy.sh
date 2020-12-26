@@ -19,9 +19,9 @@ elif has curl || has wget; then
         curl -L "$TARBALL"
     elif has wget ; then
         wget -O - "$TARBALL"
-    fi | tar xvz -
+    fi | tar xvz
     mkdir -p "$DOTPATH"
-    mv -f dotfiles-master "$DOTPATH"
+    mv -f -T dotfiles-master "$DOTPATH"
 else
     echo "curl or wget required"
 fi
