@@ -3,6 +3,8 @@ set -e
 
 # brewでインストールするものリスト
 formulas=(
+    # gcc-5がないとgo getとかで怒られるときがある
+    gcc@5
     # シェル
     # "--without-etcdir zsh"
     # zsh
@@ -113,7 +115,7 @@ formulas=(
     hugo
 )
 
-installed_formulas=$(brew list)
+installed_formulas=$(brew list --formula)
 
 if type "brew" > /dev/null 2>&1; then
   # インストールしていないものだけインストール
