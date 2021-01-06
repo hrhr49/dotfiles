@@ -1,38 +1,10 @@
-#!/usr/bin/env python3
-'''
-使い方
+#!/usr/bin/env bash
+set -eu
 
-1. templatesにテンプレートファイルを格納しておく。
+here="$(dirname "$0")"
+templates="$(dirname  "$0")/../../../templates"
+filename="$(find "$templates" | fzf)"
 
-2. このプログラム実行時に指定したテンプレート名に対応したテンプレートファイルが指定されたファイル名でコピーされる。
-'''
-
-from pathlib import Path
-import argparse
-import shutil
-
-if __name__ == '__main__':
-    template_dir = Path(__file__).parent / '../../../templates'
-    template_files = template_dir.glob('*')
-    template_dict = {template_file.stem: template_file for template_file in template_files}
-
-    parser = argparse.ArgumentParser(description='テンプレートファイルの生成')
-
-    parser.add_argument('template',
-                        help='template name',
-                        choices=template_dict.keys())
-    parser.add_argument('file',
-                        help='file name to generate',
-                        default=None,
-                        nargs='?')
-
-    args = parser.parse_args()
-
-    template_file = template_dict[args.template]
-    file_to_generate = Path(args.file) if args.file else Path(template_file.name)
-
-    if file_to_generate.exists():
-        raise FileExistsError(f'{file_to_generate} is already exists.')
-    else:
-        shutil.copy(template_file, file_to_generate)
-
+if [ -n "$filename" ]; then
+  cp -i "$filename" ./
+fi
