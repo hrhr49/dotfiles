@@ -323,6 +323,8 @@ endif
 let g:ruby_host_prog  = exepath('ruby')
 "}}}
 " プラグイン一覧{{{
+if !empty(glob('~/.vim/autoload/plug.vim'))
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 Plug 'vim-jp/vimdoc-ja'
@@ -395,6 +397,8 @@ Plug 'goerz/jupytext.vim'
 " デバッグ
 Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
 call plug#end()
+
+endif " !empty(glob('~/.vim/autoload/plug.vim'))
 "}}}
 " プラグイン設定{{{
 let s:plug = { "plugs": get(g:, 'plugs', {}) }
