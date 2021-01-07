@@ -411,29 +411,37 @@ let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_new_list_item_indent = 0
 
 " fugitive
-nnoremap gcd :<C-u>Gcd<CR>
-nnoremap gs :<C-u>Gstatus<CR>
+if s:plug.is_installed('vim-fugitive')
+  nnoremap gcd :<C-u>Gcd<CR>
+  nnoremap gs :<C-u>Gstatus<CR>
+endif
 
 let g:mkdp_auto_close = 0 " markdown-preview バッファ移動時に勝手に閉じないようにする
 let g:highlightedyank_highlight_duration = 150 " highlightedyankの時間
 let g:SuperTabDefaultCompletionType = "<c-n>" " supertab
 
-augroup MdImgPasteGroup " md-img-paste
-  autocmd!
-  autocmd FileType markdown nmap <silent> <M-v> :call mdip#MarkdownClipboardImage()<CR>
-  autocmd FileType markdown nmap <silent> <F1> :call mdip#MarkdownClipboardImage()<CR>
-  autocmd FileType markdown nmap <silent> ,p :call mdip#MarkdownClipboardImage()<CR>
-augroup END
+if s:plug.is_installed('md-img-paste.vim')
+  augroup MdImgPasteGroup " md-img-paste
+    autocmd!
+    autocmd FileType markdown nmap <silent> <M-v> :call mdip#MarkdownClipboardImage()<CR>
+    autocmd FileType markdown nmap <silent> <F1> :call mdip#MarkdownClipboardImage()<CR>
+    autocmd FileType markdown nmap <silent> ,p :call mdip#MarkdownClipboardImage()<CR>
+  augroup END
+endif
 
 let g:tagbar_autofocus = 1
-nnoremap <F8> :TagbarToggle<CR>
-nnoremap <Space>i :TagbarToggle<CR>
-nnoremap <Space>o :TagbarToggle<CR>
+if s:plug.is_installed('tagbar')
+  nnoremap <F8> :TagbarToggle<CR>
+  nnoremap <Space>i :TagbarToggle<CR>
+  nnoremap <Space>o :TagbarToggle<CR>
+endif
 let g:tagbar_type_markdown = {'ctagstype' : 'markdown',
       \ 'kinds' : ['h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3']}
 
-nnoremap <silent> <Space>e :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
-nnoremap <silent> <Space>E :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
+if s:plug.is_installed('fern.vim')
+  nnoremap <silent> <Space>e :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
+  nnoremap <silent> <Space>E :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
+endif
 
 " nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
 " nnoremap <Space>E :<C-u>NERDTree<CR>
@@ -441,10 +449,14 @@ let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeLimitedSyntax = 1
 
 let g:EasyMotion_smartcase = 1
-nmap <Space>s <Plug>(easymotion-overwin-f2)
-map  <Space>f <Plug>(easymotion-bd-w)
+if s:plug.is_installed('vim-easymotion')
+  nmap <Space>s <Plug>(easymotion-overwin-f2)
+  map  <Space>f <Plug>(easymotion-bd-w)
+endif
 
-vnoremap sc :Alignta <<0 \ <CR>
+if s:plug.is_installed('vim-alignta')
+  vnoremap sc :Alignta <<0 \ <CR>
+endif
 
 if s:plug.is_installed('disableitalic-vim') " イタリックフォントを無効化
   augroup DisableItalicGroup
@@ -483,13 +495,14 @@ let g:jupytext_filetype_map = {'py': 'python'}
 
 " vim-maximizerの設定
 " let g:maximizer_set_default_mapping = 0
-" <Space>zでもウィンドウ最大化をトグル
-nnoremap <silent><Space>z :MaximizerToggle<CR>
-vnoremap <silent><Space>z :MaximizerToggle<CR>gv
+if s:plug.is_installed('vim-maximizer') " ウィンドウ最大化をトグル
+  nnoremap <silent><Space>z :MaximizerToggle<CR>
+  vnoremap <silent><Space>z :MaximizerToggle<CR>gv
+endif
 
 " あいまい検索{{{
 " fzf{{{
-if executable('fzf') > 0
+if executable('fzf') > 0 && s:plug.is_installed('fzf')
   " fzf
   let $FZF_DEFAULT_OPTS = '--bind ctrl-o:select-all,ctrl-d:deselect-all'
   if s:is_windows
@@ -569,7 +582,7 @@ if executable('fzf') > 0
   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
   " imap <c-x><c-l> <plug>(fzf-complete-line)
   "}}}
-else
+elseif s:plug.is_installed('ctrlp.vim')
   " CtrlP{{{
   let g:ctrlp_map = ''
   " let g:ctrlp_cmd = 'CtrlPMixed'
@@ -609,53 +622,55 @@ setl updatetime=300
 setl shortmess+=c
 setl signcolumn=yes
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+if s:plug.is_installed('coc.nvim')
+  " Use <c-space> to trigger completion.
+  inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use `[c` and `]c` to navigate diagnostics
-" nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
-" nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
+  " Use `[c` and `]c` to navigate diagnostics
+  " nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
+  " nmap <buffer> <silent> ]c <Plug>(coc-diagnostic-next)
 
-" Rem<buffer> ap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-xmap <silent> gq <Plug>(coc-format-selected)
-nmap <silent> gq <Plug>(coc-format-selected)
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+  " Rem<buffer> ap keys for gotos
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  xmap <silent> gq <Plug>(coc-format-selected)
+  nmap <silent> gq <Plug>(coc-format-selected)
+  " Use K to show documentation in preview window
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> gh <Plug>(coc-diagnostic-info)
+  " Use `[g` and `]g` to navigate diagnostics
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  nmap <silent> gh <Plug>(coc-diagnostic-info)
 
-" Symbol renaming.
-nmap <F2> <Plug>(coc-rename)
-augroup CocHighlightGroup
-  autocmd!
-  autocmd BufRead,BufNewFile,ColorScheme * highlight clear CocUnderLine
-augroup END
+  " Symbol renaming.
+  nmap <F2> <Plug>(coc-rename)
+  augroup CocHighlightGroup
+    autocmd!
+    autocmd BufRead,BufNewFile,ColorScheme * highlight clear CocUnderLine
+  augroup END
 
-nnoremap <expr><C-n> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-n>"
-nnoremap <expr><C-p> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-p>"
+  nnoremap <expr><C-n> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-n>"
+  nnoremap <expr><C-p> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-p>"
 
-" 折りたたみが勝手に発動してしまうため、一時無効化
-" Use auocmd to force lightline update.
-" autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+  " 折りたたみが勝手に発動してしまうため、一時無効化
+  " Use auocmd to force lightline update.
+  " autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
-" ハイライトは別にいらないので削除
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
+  " ハイライトは別にいらないので削除
+  " Highlight symbol under cursor on CursorHold
+  " autocmd CursorHold * silent call CocActionAsync('highlight')
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
+endif
 "}}}
 " lightline{{{
 if s:plug.is_installed("lightline.vim")
@@ -683,7 +698,9 @@ if s:plug.is_installed("lightline.vim")
 endif
 "}}}
 " emmet{{{
-imap <C-y>, <Plug>(emmet-expand-abbr)
+if s:plug.is_installed('emmet-vim')
+  imap <C-y>, <Plug>(emmet-expand-abbr)
+endif
 " HTML5のスニペット変更(参考: https://laboradian.com/change-html-of-emmet-vim/)
 let g:user_emmet_settings = {
       \  'variables' : {'lang' : "ja"},
@@ -720,25 +737,27 @@ let g:user_emmet_settings = {
 " F12         | vimspector#StepOut()
 " Fnのマッピングは使用しないようにしておく
 " let g:vimspector_enable_mappings = 'HUMAN'
-nnoremap <F17> :<C-u>call vimspector#Continue()<CR>
-function! LaunchFileDebug()
-  call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
-endfunction
-nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
+if s:plug.is_installed('vimspector')
+  nnoremap <F17> :<C-u>call vimspector#Continue()<CR>
+  function! LaunchFileDebug()
+    call vimspector#LaunchWithSettings({'configuration': &filetype.'_file'})
+  endfunction
+  nnoremap <F6> :<C-u>call LaunchFileDebug()<CR>
 
-nnoremap !+debug+! <Nop>
-nmap <Space>d !+debug+!
-nmap !+debug+!c <Plug>VimspectorContinue
-nmap !+debug+!q <Plug>VimspectorStop
-nmap !+debug+!r <Plug>VimspectorRestart
-nmap !+debug+!p <Plug>VimspectorPause
-nmap !+debug+!b <Plug>VimspectorToggleBreakpoint
-nmap !+debug+!B <Plug>VimspectorToggleConditionalBreakpoint
-nmap !+debug+!f <Plug>VimspectorAddFunctionBreakpoint
-nmap !+debug+!n <Plug>VimspectorStepOver
-nmap !+debug+!s <Plug>VimspectorStepInto
-nmap !+debug+!r <Plug>VimspectorStepOut
-nmap !+debug+!j <Plug>VimspectorRunToCursor
+  nnoremap !+debug+! <Nop>
+  nmap <Space>d !+debug+!
+  nmap !+debug+!c <Plug>VimspectorContinue
+  nmap !+debug+!q <Plug>VimspectorStop
+  nmap !+debug+!r <Plug>VimspectorRestart
+  nmap !+debug+!p <Plug>VimspectorPause
+  nmap !+debug+!b <Plug>VimspectorToggleBreakpoint
+  nmap !+debug+!B <Plug>VimspectorToggleConditionalBreakpoint
+  nmap !+debug+!f <Plug>VimspectorAddFunctionBreakpoint
+  nmap !+debug+!n <Plug>VimspectorStepOver
+  nmap !+debug+!s <Plug>VimspectorStepInto
+  nmap !+debug+!r <Plug>VimspectorStepOut
+  nmap !+debug+!j <Plug>VimspectorRunToCursor
+endif
 "}}}
 " デフォルトプラグイン {{{
 let g:loaded_matchparen      = 1 " カッコのハイライトを消す
