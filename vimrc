@@ -328,7 +328,8 @@ Plug 'junegunn/vim-plug'
 Plug 'vim-jp/vimdoc-ja'
 
 " 全般
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTree']}
+Plug 'lambdalisue/fern.vim', {'on': 'Fern'}
+" Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTree']}
 Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 if executable('fzf') > 0
   Plug 'junegunn/fzf.vim'
@@ -427,8 +428,11 @@ nnoremap <Space>o :TagbarToggle<CR>
 let g:tagbar_type_markdown = {'ctagstype' : 'markdown',
       \ 'kinds' : ['h:Heading_L1', 'i:Heading_L2', 'k:Heading_L3']}
 
-nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
-nnoremap <Space>E :<C-u>NERDTree<CR>
+nnoremap <silent> <Space>e :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
+nnoremap <silent> <Space>E :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
+
+" nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
+" nnoremap <Space>E :<C-u>NERDTree<CR>
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeLimitedSyntax = 1
 
