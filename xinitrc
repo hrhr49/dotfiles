@@ -10,7 +10,7 @@ fi
 if type "xset" > /dev/null 2>&1; then
   # 200msで30Hzのキーリピート
   # xset r rate 200 30
-  xset r rate 150 50
+  xset r rate 180 50
 fi
 
 # 必要ならi3の設定ファイルを動的に作成
