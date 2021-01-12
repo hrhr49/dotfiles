@@ -441,6 +441,34 @@ let g:tagbar_type_markdown = {'ctagstype' : 'markdown',
 if s:plug.is_installed('fern.vim')
   nnoremap <silent> <Space>e :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
   nnoremap <silent> <Space>E :execute printf('Fern . -drawer %s -toggle -width=40', expand('%') != '' ? '-reveal=%' : '')<CR>
+
+  command! -nargs=? -complete=customlist,fern#internal#command#fern#complete FernReveal Fern %:h <args> -reveal=%:t
+  command! -nargs=? -complete=customlist,fern#internal#command#fern#complete FernCWD execute printf('Fern %s <args>', escape(getcwd(), ' '))
+  command! -nargs=? -complete=customlist,fern#internal#command#fern#complete FernDrawerToggle Fern <args> -drawer -toggle
+  command! FernDrawerReveal FernReveal -drawer
+  command! FernDrawerCWD    FernCWD    -drawer
+
+	function! s:init_fern() abort
+	  " Write custom code here
+    nmap <buffer> <Plug>(fern-action-reload-and-redraw)
+                \ <Plug>(fern-action-reload:all)
+                \ <Plug>(fern-action-redraw)
+
+    nmap     <buffer> <silent> o  <Plug>(fern-action-open-or-expand)
+    nmap     <buffer> e  <Plug>(fern-action-open:edit)
+          \:Fern . -drawer -toggle<CR>
+    nmap     <buffer> <silent> p  <Plug>(fern-action-leave)
+    nmap     <buffer> <silent> u  <Plug>(fern-action-leave)
+    nmap     <buffer> <silent> r  <Plug>(fern-action-reload-and-redraw)
+    nmap     <buffer> <silent> I  <Plug>(fern-action-hidden-toggle)
+    nmap     <buffer> <silent> cd <Plug>(fern-action-cd)
+    nnoremap <buffer> <silent> q  :<C-u>quit<CR>
+	endfunction
+
+	augroup my-fern
+	  autocmd! *
+	  autocmd FileType fern call s:init_fern()
+	augroup END
 endif
 
 " nnoremap <Space>e :<C-u>NERDTreeToggle<CR>
