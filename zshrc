@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 # vim:set foldmethod=marker foldlevel=0:
 
+source "${HOME}/.commonshrc"
+
 # プロファイリング用(参考 https://qiita.com/vintersnow/items/7343b9bf60ea468a4180)
 if [ "$BENCH_ZSH" = "1" ]; then
   if (which zprof > /dev/null 2>&1) ;then
@@ -263,4 +265,9 @@ alias ../../../..="cd ../../../.."
 # その他{{{
 # PATHの重複を削除
 typeset -U path PATH
+# }}}
+# ローカルの設定 {{{
+if [ -e "${HOME}/.zshrc_local" ]; then
+  source "${HOME}/.zshrc_local"
+fi
 # }}}

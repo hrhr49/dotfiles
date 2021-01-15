@@ -22,21 +22,10 @@ if type "nvim" > /dev/null 2>&1; then
     alias vim=nvim
     alias vi=nvim
     alias vimdiff='nvim -d'
+elif type "vim" > /dev/null 2>&1; then
+    export EDITOR=vim
+    export VISUAL=vim
 fi
-
-# fasdが存在すれば初期化
-# if type "fasd" > /dev/null 2>&1; then
-#     eval "$(fasd --init auto)"
-#     # fasdのエイリアスを解除
-#     unalias a  # any
-#     unalias s  # show / search / select
-#     unalias d  # directory
-#     unalias f  # file
-#     unalias sd # interactive directory selection
-#     unalias sf # interactive file selection
-#     unalias z  # cd, same functionality as j in autojump
-#     unalias zz # cd with interactive selection
-# fi
 
 # trash-cli(npmパッケージ)が存在すればrmを上書き
 if type trash > /dev/null 2>&1; then
@@ -78,22 +67,6 @@ export PIPENV_VENV_IN_PROJECT=true
 # poetryの仮想環境の場所をプロジェクト直下にする
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 
-# pywalの設定
-# if type "wal" > /dev/null 2>&1; then
-#     # Import colorscheme from 'wal' asynchronously
-#     # &   # Run the process in the background.
-#     # ( ) # Hide shell job control messages.
-#     (cat ~/.cache/wal/sequences &)
-#     # なんか起動時に文字が表示されちゃうので一旦clear
-#     clear
-# 
-#     # Alternative (blocks terminal for 0-3ms)
-#     # cat ~/.cache/wal/sequences
-# 
-#     # To add support for TTYs this line can be optionally added.
-#     source ~/.cache/wal/colors-tty.sh
-# fi
-# }}}
 # シェル関数{{{
 # zコマンドでMRUファイルをfzfできる(fasdが必要)
 # 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)

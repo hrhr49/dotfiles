@@ -31,3 +31,7 @@ if type "xfce4-terminal" > /dev/null 2>&1; then
     export TERMINAL="xfce4-terminal"
 fi
 
+# ローカルの設定
+if [ -e "${HOME}/.profile_local" ]; then
+  source "${HOME}/.profile_local"
+fi

@@ -3,3 +3,6 @@
 if [ "$BENCH_ZSH" = "1" ]; then
     zmodload zsh/zprof && zprof
 fi
+if [ -e "${HOME}/.zshenv_local" ]; then
+  source "${HOME}/.zshenv_local"
+fi

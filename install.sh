@@ -56,6 +56,8 @@ files=(
   vimspector.json
   atoolrc
   tmux.conf
+  vimrc
+  commonshrc
 )
 for file in "${files[@]}"
 do
@@ -65,12 +67,3 @@ create_symlink "${PWD}/scripts" "${HOME}/bin/scripts"
 
 # root権限が必要なのでひとまず保留
 # create_symlink "${PWD}/90-libinput.conf" "/etc/X11/xorg.conf.d/90-libinput.conf"
-
-# append line to file
-add_line_if_not_contained "source ${PWD}/commonshrc" "${HOME}/.bashrc"
-add_line_if_not_contained "source ${PWD}/bashrc" "${HOME}/.bashrc"
-add_line_if_not_contained "source ${PWD}/commonshrc" "${HOME}/.zshrc"
-add_line_if_not_contained "source ${PWD}/zshrc" "${HOME}/.zshrc"
-add_line_if_not_contained "source ${PWD}/zshenv" "${HOME}/.zshenv"
-add_line_if_not_contained "source ${PWD}/vimrc" "${HOME}/.vimrc"
-add_line_if_not_contained "source ${PWD}/profile" "${HOME}/.profile"
