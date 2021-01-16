@@ -410,6 +410,9 @@ exec --no-startup-id pasystray
 # アプリで透明色を使えるようにする。comptonが必要
 exec --no-startup-id compton -b --config $HOME/.config/compton/compton.conf
 
+# マウスジェスチャー存在存在
+exec --no-startup-id easystroke
+
 # 壁紙を設定するためのアプリ起動。fehとvarietyが必要
 # exec --no-startup-id variety
 # 固定の壁紙を使うとき
