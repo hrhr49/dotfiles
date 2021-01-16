@@ -92,6 +92,10 @@ bindsym --release button2 kill
 # bindsym --border button3 exec --no-startup-id "i3-msg floating toggle && i3-msg border normal"
 bindsym --border button3 exec --no-startup-id "i3-msg floating toggle && i3-msg border normal"
 
+# 左クリックでボーダーをpixel 3に
+bindsym --release button1 exec --no-startup-id "i3-msg border pixel 3"
+# bindsym --border button1 exec --no-startup-id "i3-msg border pixel 3"
+
 # 右クリックでフローティングに
 # bindsym --border button3 exec --no-startup-id "i3-msg floating enable && i3-msg border normal"
 
