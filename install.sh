@@ -50,6 +50,7 @@ files=(
   xinitrc
   xprofile
   Xresources
+  profile
   ctags
   hyper.js
   npmrc
@@ -57,6 +58,8 @@ files=(
   atoolrc
   tmux.conf
   vimrc
+  bashrc
+  zshrc
   commonshrc
 )
 for file in "${files[@]}"
