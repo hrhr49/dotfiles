@@ -9,6 +9,11 @@ set $alt Mod1
 
 # `Mouse + $mod` でウィンドウ移動など
 floating_modifier $mod
+
+# focus_follows_mouseを無効化しないと、スクリーンをまたいで `move left/right` したときに
+# ウィンドウのフォーカスが維持されない
+# https://github.com/i3/i3/issues/3518
+focus_follows_mouse no
 # }}}
 # アプリ{{{
 
