@@ -324,7 +324,7 @@ bindsym $mod+m mode "mouse"
 # client.background       $bg
 
 # フォント
-font pango:monospace 12
+font pango:monospace 20
 
 # ワークスペース0はフローティング用。GUIアプリ作成などに使用
 for_window [workspace="0"] floating enable
@@ -400,7 +400,9 @@ workspace 1 output HDMI-1
 # exec --no-startup-id xrandr --output VGA-1 --auto --right-of HDMI-1, mode "default"
 
 # arandr(xrandrのGUIでの設定)
-exec --no-startup-id xrandr --output LVDS-1 --off --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 1920x0 --rotate normal
+# exec --no-startup-id xrandr --output LVDS-1 --off --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output VGA-1 --mode 1920x1080 --pos 1920x0 --rotate normal
+
+exec --no-startup-id xrandr --output HDMI-0 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --mode 1920x1080 --pos 3840x0 --rotate normal --output DP-3 --off --output DP-4 --off --output DP-5 --off
 # }}}
 # スタートアップ{{{
 # ネットワーク情報を表示
