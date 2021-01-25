@@ -109,6 +109,7 @@ gui_packages=(
     # qttools5-dev-tools
     # qt5-default
     # qtcreator
+    qt5ct # qtの見た目をQT5 Settingで設定
 
     # alacrittyの依存
     libxcb-shape0-dev
