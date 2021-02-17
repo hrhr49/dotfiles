@@ -20,6 +20,7 @@ fi
 # gnomeがいるときにはxinitrcが無視される可能性があるため,明示的に.profileから呼び出す
 # [ -e "$HOME/.xinitrc" ] && source "$HOME/.xinitrc"
 
+export QT_QPA_PLATFORMTHEME="qt5ct"
 
 [ -d "$HOME/bin" ] && export PATH=$PATH:~/bin
 
@@ -31,3 +32,8 @@ if type "xfce4-terminal" > /dev/null 2>&1; then
     export TERMINAL="xfce4-terminal"
 fi
 
+# ローカルの設定
+if [ -e "${HOME}/.profile_local" ]; then
+  source "${HOME}/.profile_local"
+fi
+export QT_QPA_PLATFORMTHEME=gtk2

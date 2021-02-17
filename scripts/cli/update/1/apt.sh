@@ -53,6 +53,7 @@ packages=(
     aria2 # curlやwgetの高速版(複数のコネクションを使うのでサーバの負荷で迷惑にならないよう気をつける)
     rename # ファイル名変更
     # fzf # brewの方を入れる(fzf.vimの方とのバージョンの関係で、最新のほうが良さそう)
+    trash-cli # ゴミ箱へファイルを入れたりする
 
     unar # 圧縮ファイルの解凍
     atool # 圧縮・伸長コマンドのラッパー
@@ -108,6 +109,7 @@ gui_packages=(
     # qttools5-dev-tools
     # qt5-default
     # qtcreator
+    qt5ct # qtの見た目をQT5 Settingで設定
 
     # alacrittyの依存
     libxcb-shape0-dev

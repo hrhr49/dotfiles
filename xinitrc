@@ -10,7 +10,7 @@ fi
 if type "xset" > /dev/null 2>&1; then
   # 200msで30Hzのキーリピート
   # xset r rate 200 30
-  xset r rate 150 50
+  xset r rate 180 50
 fi
 
 # 必要ならi3の設定ファイルを動的に作成
@@ -30,3 +30,5 @@ export DefaultIMModule=fcitx
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
+
+export QT_QPA_PLATFORMTHEME="qt5ct"

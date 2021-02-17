@@ -957,3 +957,8 @@ if has('gui_running')
   "}}}
 endif
 "}}}
+" ローカルの設定 {{{
+if filereadable(expand($HOME . '/.vimrc_local'))
+  source $HOME/.vimrc_local
+endif
+"}}}
