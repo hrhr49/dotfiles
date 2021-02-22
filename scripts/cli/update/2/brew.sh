@@ -4,7 +4,8 @@ set -e
 # brewでインストールするものリスト
 formulas=(
     # gcc-5がないとgo getとかで怒られるときがある
-    gcc@5
+    # MacOSだとだめっぽい
+    # gcc@5
     # シェル
     # "--without-etcdir zsh"
     # zsh
@@ -36,7 +37,7 @@ formulas=(
     tokei # ファイル種別ごとの行数などを表示
     catimg # ターミナルで画像表示
 
-    silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
+    # silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
 
     ccze # ログに色を付ける
     hexyl # 16進数ダンプ
@@ -65,7 +66,7 @@ formulas=(
 
     # 検索
     ripgrep
-    ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索
+    # ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索
     the_silver_searcher
     fzf
     peco
@@ -84,7 +85,7 @@ formulas=(
     lua
     # nim # choosenimでインストールする(パッケージマネージャだとnimbleが正しく動かないっぽい)
 
-    shellcheck # シェルスクリプトのLinter
+    # shellcheck # シェルスクリプトのLinter
 
     # ユーティリティ
     # fasd
@@ -100,10 +101,10 @@ formulas=(
     # 図形作成
     graphviz
     plantuml
-    ditaa
+    # ditaa
 
     # 文書
-    pandoc
+    # pandoc
     # redpen # 文章校正
 
     # 見た目
@@ -114,6 +115,15 @@ formulas=(
     # 静的サイトジェネレータ
     hugo
 )
+
+formulas_only_mac=(
+  koekeishiya/formulae/yabai
+  koekeishiya/formulae/skhd
+)
+
+if [ "$(uname)" == 'Darwin' ]; then
+  formulas=("${formulas[@]}" "${formulas_only_mac[@]}")
+fi
 
 installed_formulas=$(brew list --formula)
 
@@ -128,3 +138,23 @@ if type "brew" > /dev/null 2>&1; then
       fi
   done
 fi
+
+# brewでインストールするものリスト(cask)
+casks=(
+  google-chrome
+  iterm2
+  google-japanese-ime
+  mpv
+)
+if [ "$(uname)" == 'Darwin' ]; then
+  if type "brew" > /dev/null 2>&1; then
+    for cask in "${casks[@]}"; do
+        if echo "$installed_formulas" | grep "$cask" > /dev/null 2>&1; then
+            echo "$cask already exists"
+        else
+            brew install --cask "$cask"
+        fi
+    done
+  fi
+fi
+
