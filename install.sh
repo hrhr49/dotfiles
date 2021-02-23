@@ -61,6 +61,8 @@ files=(
   bashrc
   zshrc
   commonshrc
+  yabairc
+  skhdrc
 )
 for file in "${files[@]}"
 do
