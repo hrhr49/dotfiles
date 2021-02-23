@@ -187,6 +187,10 @@ elif [[ -f /data/data/com.termux/files/usr/share/fzf/completion.zsh \
   && -f /data/data/com.termux/files/usr/share/fzf/key-bindings.zsh ]]; then
   source /data/data/com.termux/files/usr/share/fzf/completion.zsh
   source /data/data/com.termux/files/usr/share/fzf/key-bindings.zsh
+elif [[ -f /opt/homebrew/Cellar/fzf/0.25.1/shell/completion.zsh \
+  && -f /opt/homebrew/Cellar/fzf/0.25.1/shell/key-bindings.zsh ]]; then
+  source /opt/homebrew/Cellar/fzf/0.25.1/shell/completion.zsh
+  source /opt/homebrew/Cellar/fzf/0.25.1/shell/key-bindings.zsh
 else
   [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
   [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
