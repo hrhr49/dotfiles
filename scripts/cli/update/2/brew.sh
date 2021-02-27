@@ -36,6 +36,7 @@ formulas=(
     tldr # コマンドの使用例
     tokei # ファイル種別ごとの行数などを表示
     catimg # ターミナルで画像表示
+    colordiff # diffの色付きバージョン
 
     # silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
 
@@ -97,6 +98,7 @@ formulas=(
     fx        # jqみたいだけどインタラクティブにできたりする
     jo        # JSONオブジェクトを生成
     bitwise   # ビット表示
+    unar      # ファイルの解凍
 
     # 図形作成
     graphviz
@@ -119,6 +121,11 @@ formulas=(
 formulas_only_mac=(
   koekeishiya/formulae/yabai
   koekeishiya/formulae/skhd
+  wget
+  cmake
+  emscripten # C/C++をWebAssemblyに変換するツールチェーン
+  llvm
+  ffmpeg
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -145,7 +152,11 @@ casks=(
   iterm2
   google-japanese-ime
   mpv
+  zoom
+  visual-studio-code
 )
+
+
 if [ "$(uname)" == 'Darwin' ]; then
   if type "brew" > /dev/null 2>&1; then
     for cask in "${casks[@]}"; do
