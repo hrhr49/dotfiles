@@ -183,6 +183,17 @@ bindsym $mod+Shift+8 move container to workspace 8; workspace 8
 bindsym $mod+Shift+9 move container to workspace 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
+# move workspace to another output/monitor
+bindsym $mod+Ctrl+h     move workspace to output left
+bindsym $mod+Ctrl+j     move workspace to output down
+bindsym $mod+Ctrl+k     move workspace to output up
+bindsym $mod+Ctrl+l     move workspace to output right
+
+bindsym $mod+Ctrl+Left  move workspace to output left
+bindsym $mod+Ctrl+Down  move workspace to output down
+bindsym $mod+Ctrl+Up    move workspace to output up
+bindsym $mod+Ctrl+Right move workspace to output right
+
 # cycle between workspace
 bindsym $mod+Tab workspace next
 bindsym $mod+n workspace next
