@@ -56,7 +56,7 @@ formulas=(
     # TUI
     # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
     nnn # 軽量なファイルマネージャ
-    # tmux # クリップボードがなんか動かなかったので、aptの方で入れる
+    tmux
     sc-im # スプレッドシート
 
     # Markdown
@@ -116,6 +116,9 @@ formulas=(
 
     # 静的サイトジェネレータ
     hugo
+
+    # パスワード管理
+    gopass
 )
 
 formulas_only_mac=(
