@@ -157,6 +157,8 @@ casks=(
   mpv
   zoom
   visual-studio-code
+  imageoptim  # 画像サイズの削減
+  flux  # ブルーライトカット
 )
 
 

@@ -22,6 +22,8 @@ packages=(
     jsondiffpatch
     @vue/cli
 
+    nodemon  # ファイル変更時にサーバーを再起動
+
     # CLI
     undollar # コマンドライン先頭に「$」がついていたらそれを削除する
     trash-cli
@@ -29,6 +31,7 @@ packages=(
     # cli-scrape # htmlのタグ抽出
 
     slack-tui # slackのtui
+    forever  # Node.jsアプリの常駐
 )
 
 gui_packages=(
