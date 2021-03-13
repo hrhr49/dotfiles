@@ -3,6 +3,7 @@
 # https://github.com/davatorium/rofi-scripts/blob/master/monitor_layout.sh
 # shellcheck disable=SC2086,SC2004,SC2207,SC2091
 
+# shellcheck disable=SC2230
 XRANDR=$(which xrandr)
 
 MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
