@@ -99,7 +99,7 @@ formulas=(
     fx        # jqみたいだけどインタラクティブにできたりする
     jo        # JSONオブジェクトを生成
     bitwise   # ビット表示
-    unar      # ファイルの解凍
+    # unar      # ファイルの解凍
 
     # 図形作成
     graphviz
@@ -162,6 +162,8 @@ casks=(
   visual-studio-code
   clipy
   cheatsheet
+  imageoptim  # 画像サイズの削減
+  flux  # ブルーライトカット
 )
 
 

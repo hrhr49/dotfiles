@@ -106,6 +106,7 @@ env \
 
 # gitリポジトリのルートからの相対パスで移動
 gcd () {
+# shellcheck disable=SC2230
 [[ -n $(which git 2> /dev/null) ]] && [[ $(git status 2> /dev/null) ]] && cd "./$(git rev-parse --show-cdup)/$1" || return
 }
 
