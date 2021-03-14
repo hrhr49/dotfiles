@@ -79,6 +79,7 @@ formulas=(
     ruby
     node
     go
+    golang
     # rust # rustよりrustupのほうがいい？ 
     rustup # rustup-initを実行する必要あり
     perl
@@ -119,6 +120,7 @@ formulas=(
 
     # パスワード管理
     gopass
+    gpg
 )
 
 formulas_only_mac=(
@@ -129,6 +131,7 @@ formulas_only_mac=(
   emscripten # C/C++をWebAssemblyに変換するツールチェーン
   llvm
   ffmpeg
+  libmagic
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -157,6 +160,8 @@ casks=(
   mpv
   zoom
   visual-studio-code
+  clipy
+  cheatsheet
 )
 
 
