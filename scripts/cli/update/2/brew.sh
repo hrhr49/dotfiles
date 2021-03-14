@@ -132,6 +132,7 @@ formulas_only_mac=(
   llvm
   ffmpeg
   libmagic
+  # mono  # C#関連で必要 no bottle available!が出るため一時無効
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -164,6 +165,9 @@ casks=(
   cheatsheet
   imageoptim  # 画像サイズの削減
   flux  # ブルーライトカット
+  karabiner-elements  # キー配列の設定
+  appcleaner  # アプリを削除＆ゴミも一緒に削除
+  skitch  # ちょっとした画像作成
 )
 
 
