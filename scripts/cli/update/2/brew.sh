@@ -168,6 +168,7 @@ casks=(
   karabiner-elements  # キー配列の設定
   appcleaner  # アプリを削除＆ゴミも一緒に削除
   skitch  # ちょっとした画像作成
+  kindle
 )
 
 
