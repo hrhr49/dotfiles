@@ -11,6 +11,7 @@ packages=(
     pyyaml
     yq # jqのyaml用ラッパー
     rich # コンソールでリッチテキスト
+    trypackage # パッケージをお試しで使う
 
     # 環境管理
     pipenv
@@ -32,7 +33,10 @@ packages=(
     mypy
     pylint
     python-language-server
-    better_exceptions
+
+    # デバッグ
+    better_exceptions  # 例外のメッセージをより詳しく
+    icecream  # print関数よりもいい感じの表示
 
     # 機械学習関連で使うやつ
     jupytext

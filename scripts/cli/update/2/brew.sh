@@ -169,6 +169,8 @@ casks=(
   appcleaner  # アプリを削除＆ゴミも一緒に削除
   skitch  # ちょっとした画像作成
   kindle
+  # bettertouchtool  # ウィンドウのサイズ変更 有料
+  # xquartz  # Xサーバー
 )
 
 
