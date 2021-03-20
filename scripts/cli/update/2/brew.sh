@@ -100,6 +100,7 @@ formulas=(
     jo        # JSONオブジェクトを生成
     bitwise   # ビット表示
     # unar      # ファイルの解凍
+    dust      # ファイル容量一覧を表示
 
     # 図形作成
     graphviz

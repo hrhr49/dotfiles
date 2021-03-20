@@ -108,6 +108,9 @@ unsetopt auto_cd
 # コマンドスペルの訂正を使用
 setopt CORRECT
 
+# コマンドラインの引数でも補完を有効にする（--prefix=/userなど）
+setopt magic_equal_subst
+
 # }}}
 # 履歴{{{
 # 履歴サイズ
