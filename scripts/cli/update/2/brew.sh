@@ -100,6 +100,7 @@ formulas=(
     bitwise   # ビット表示
     # unar      # ファイルの解凍
     dust      # ファイル容量一覧を表示
+    choose-rust  # Pythonのスライスのような感じで、シーケンスから要素を抽出
 
     # Web
     monolith  # Webページを一つのHTMLファイルにしてダウンロード
