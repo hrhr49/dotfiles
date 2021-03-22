@@ -92,7 +92,6 @@ formulas=(
     # ユーティリティ
     # fasd
     zoxide    # zコマンドで最近のディレクトリに移動
-    httpie    # curlのようなやつ
     trash-cli # ゴミ箱操作
     jq        # JSONをいい感じにフィルター
     gron      # jsonをgrepしやすい形にする
@@ -101,6 +100,11 @@ formulas=(
     bitwise   # ビット表示
     # unar      # ファイルの解凍
     dust      # ファイル容量一覧を表示
+
+    # Web
+    monolith  # Webページを一つのHTMLファイルにしてダウンロード
+    httpie    # curlのようなやつ
+    hugo  # 静的サイトジェネレータ
 
     # 図形作成
     graphviz
@@ -115,9 +119,6 @@ formulas=(
     figlet   # 文字をアスキーアートで出すやつ
     neofetch # アスキーアートでOSのアイコン出す
     emojify  # 絵文字を入力するため
-
-    # 静的サイトジェネレータ
-    hugo
 
     # パスワード管理
     gopass
