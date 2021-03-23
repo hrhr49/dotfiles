@@ -47,6 +47,13 @@ zinit wait lucid for \
   atload"!_zsh_autosuggest_start" \
   zsh-users/zsh-autosuggestions
 
+# dockerの入力補完
+zinit wait lucid has'docker' for \
+  as'completion' is-snippet \
+  'https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker' \
+  as'completion' is-snippet \
+  'https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose' \
+
 # 遅いので保留
 # zinit creinstall -Q %HOME/.zfunc
 # }}}
