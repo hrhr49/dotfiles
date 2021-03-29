@@ -136,6 +136,7 @@ formulas_only_mac=(
   ffmpeg
   libmagic
   # mono  # C#関連で必要 no bottle available!が出るため一時無効
+  mas  # App Storeのアプリをインストール
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -174,6 +175,7 @@ casks=(
   kindle
   # bettertouchtool  # ウィンドウのサイズ変更 有料
   # xquartz  # Xサーバー
+  scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
 )
 
 
