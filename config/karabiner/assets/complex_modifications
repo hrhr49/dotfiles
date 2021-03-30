@@ -1,0 +1,26 @@
+{
+  "title": "自分用",
+  "rules": [
+    {
+      "description": "ctrl-M を return に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "m",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
