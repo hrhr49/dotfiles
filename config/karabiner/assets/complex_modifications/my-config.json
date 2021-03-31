@@ -21,6 +21,27 @@
           ]
         }
       ]
+    },
+    {
+      "description": "ctrl-[ を escに変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "close_bracket",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "escape"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
