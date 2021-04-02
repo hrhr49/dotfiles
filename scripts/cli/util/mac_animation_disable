@@ -22,6 +22,12 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 defaults write com.apple.Mail DisableSendAnimations -bool true
 defaults write com.apple.Mail DisableReplyAnimations -bool true
 
+# アルファベットのキー長押しでアクセントメニューが出るのを無効化
+# https://yasuharu519.hatenablog.com/entry/2016/05/02/085639
+defaults write -g ApplePressAndHoldEnabled -bool false
+# 上記を戻す
+# defaults write -g ApplePressAndHoldEnabled -bool true
+
 # もしもとに戻したい場合は、以下を実行する
 # defaults delete -g NSAutomaticWindowAnimationsEnabled
 # defaults delete -g NSScrollAnimationEnabled
