@@ -19,7 +19,7 @@ packages=(
   man
   neofetch
   neovim
-  nodejs
+  nodejs-lts
   perl
   python
   ranger
