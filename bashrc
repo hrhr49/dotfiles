@@ -128,4 +128,3 @@ if [ -e "${HOME}/.bashrc_local" ]; then
   source "${HOME}/.bashrc_local"
 fi
 
-source /Users/hrhr49/.config/broot/launcher/bash/br
