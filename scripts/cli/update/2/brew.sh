@@ -177,6 +177,7 @@ casks=(
   # xquartz  # Xサーバー
   scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
   rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加
+  alfred  # spotlightの強化版
 )
 
 
