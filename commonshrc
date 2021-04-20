@@ -69,6 +69,7 @@ export PIPENV_VENV_IN_PROJECT=true
 # poetryの仮想環境の場所をプロジェクト直下にする
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 
+# }}}
 # シェル関数{{{
 # zコマンドでMRUファイルをfzfできる(fasdが必要)
 # 参考: [bashでもfzf+fasdで簡単ディレクトリ移動](https://qiita.com/thesaitama/items/e139646ed6bc9c5dbf83)
@@ -308,6 +309,10 @@ cheatsheets() {
 alias c='vim $(cheatsheets | fzf)'
 alias m='vim $(cheatsheets | fzf)'
 alias anyenv-hash='eval "$(anyenv init -)"'
+# }}}
+# AWS関連{{{
+# EC2インスタンスIDを選択
+alias ec2-iid="aws ec2 describe-instances | jq --raw-output '.Reservations[].Instances[].InstanceId' | fzf"
 # }}}
 # xコマンドでアプリで開く
 alias x='xdg-open'

@@ -140,6 +140,7 @@ formulas_only_mac=(
   libmagic
   # mono  # C#関連で必要 no bottle available!が出るため一時無効
   mas  # App Storeのアプリをインストール
+  # sshfs
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -181,6 +182,7 @@ casks=(
   scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
   rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加
   alfred  # spotlightの強化版
+  # osxfuse  # sshfsの依存
 )
 
 
