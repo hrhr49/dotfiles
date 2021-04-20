@@ -56,6 +56,9 @@ packages=(
 
     # 入れるかどうか検討
     # dominate # htmlを作るためのDSL
+
+    # AWS
+    ec2instanceconnectcli  # インスタンスID指定でssh接続
 )
 
 gui_packages=(

@@ -124,6 +124,9 @@ formulas=(
     # パスワード管理
     gopass
     gpg
+
+    # AWS
+    awscli
 )
 
 formulas_only_mac=(
