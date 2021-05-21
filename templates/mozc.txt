@@ -10,7 +10,8 @@ Composition	Ctrl f	MoveCursorToEnd
 Composition	Ctrl g	Delete
 Composition	Ctrl h	Backspace
 Composition	Ctrl i	ConvertToFullKatakana
-Composition	Ctrl k	MoveCursorLeft
+Composition	Ctrl k	ConvertToFullKatakana
+Composition	Left	MoveCursorLeft
 Composition	Ctrl l	MoveCursorRight
 Composition	Ctrl Left	MoveCursorToBeginning
 Composition	Ctrl m	Commit
@@ -22,6 +23,7 @@ Composition	Ctrl s	MoveCursorLeft
 Composition	Ctrl Shift Space	InsertFullSpace
 Composition	Ctrl Space	InsertHalfSpace
 Composition	Ctrl t	ConvertToHalfAlphanumeric
+Composition	Ctrl :	ConvertToHalfAlphanumeric
 Composition	Ctrl u	ConvertToHiragana
 Composition	Ctrl Up	MoveCursorToBeginning
 Composition	Ctrl x	MoveCursorToEnd
