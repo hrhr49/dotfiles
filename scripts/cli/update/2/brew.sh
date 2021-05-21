@@ -141,6 +141,7 @@ formulas_only_mac=(
   # mono  # C#関連で必要 no bottle available!が出るため一時無効
   mas  # App Storeのアプリをインストール
   # sshfs
+  iproute2mac  # ipコマンドをmacで使うため
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -183,6 +184,7 @@ casks=(
   rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加
   alfred  # spotlightの強化版
   # osxfuse  # sshfsの依存
+  pinta  # 簡易的なペイント
 )
 
 
