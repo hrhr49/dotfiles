@@ -130,8 +130,8 @@ formulas=(
 )
 
 formulas_only_mac=(
-  koekeishiya/formulae/yabai
-  koekeishiya/formulae/skhd
+  # koekeishiya/formulae/yabai  # タイル型ウィンドウマネージャ
+  # koekeishiya/formulae/skhd  # 上記のyabaiを使うときに一緒に使う。キーバインド設定ツール
   wget
   cmake
   emscripten # C/C++をWebAssemblyに変換するツールチェーン
@@ -185,13 +185,16 @@ casks=(
   alfred  # spotlightの強化版
   # osxfuse  # sshfsの依存
   pinta  # 簡易的なペイント
+  # krita  # お絵かき
+  # firealpaca  # お絵かき
+  medibangpaintpro  # お絵かき
 )
 
-
+installed_casks=$(brew list --cask)
 if [ "$(uname)" == 'Darwin' ]; then
   if type "brew" > /dev/null 2>&1; then
     for cask in "${casks[@]}"; do
-        if echo "$installed_formulas" | grep "$cask" > /dev/null 2>&1; then
+        if echo "$installed_casks" | grep "$cask" > /dev/null 2>&1; then
             echo "$cask already exists"
         else
             brew install --cask "$cask"
