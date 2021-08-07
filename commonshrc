@@ -17,6 +17,9 @@
 [ -d "$HOME/.nimble/bin" ] && export PATH=~/.nimble/bin:$PATH
 [ -d "$HOME/.npm-packages" ] && export PATH=$PATH:${HOME}/.npm-packages/bin
 
+# homebrewで入れたllvmのパス
+[ -d "/opt/homebrew/opt/llvm/bin" ] && export PATH=$PATH:/opt/homebrew/opt/llvm/bin
+
 # nvimが存在すればそれをvimとして使用
 if type "nvim" > /dev/null 2>&1; then
     export EDITOR=nvim
@@ -393,5 +396,29 @@ export NNN_PLUG="1:bookmarks;2:ipinfo;p:my/pistol;v:preview-tui;o:fzz;b:nbak;z:a
 # export NNN_PLUG="1:bookmarks;2:ipinfo;p:preview-tui;o:fzz;b:nbak;z:autojump"
 export NNN_FIFO=/tmp/nnn.fifo
 export USE_PISTOL=1
+
+if [ "$(uname)" = 'Darwin' ]; then
+  # Mac
+  # 特にM1 Macbook用
+
+  # pupeteerをインストール時にchromiumもダウンロードしようとして失敗するのを回避
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+  # export PUPPETEER_EXECUTABLE_PATH=`which chromium`
+  export PUPPETEER_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+
+  # Tensorflow依存のgrpcioの環境変数
+  export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+  export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+  export HDF5_DIR=/opt/homebrew/opt/hdf5
+
+elif [ "$(expr substr $(uname -s) 1 5)" = 'Linux' ]; then
+  # Linux
+  :
+elif [ "$(expr substr $(uname -s) 1 10)" = 'MINGW32_NT' ]; then 
+  # Cygwin
+  :
+else
+  echo "Your platform ($(uname -a)) is not supported."
+fi
 
 # }}}
