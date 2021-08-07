@@ -142,6 +142,14 @@ formulas_only_mac=(
   mas  # App Storeのアプリをインストール
   # sshfs
   iproute2mac  # ipコマンドをmacで使うため
+
+  # TensorFlow for MacOSの依存
+  openssl
+  zlib
+  hdf5
+
+  # matplotlibの依存
+  libjpeg
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -188,6 +196,8 @@ casks=(
   # krita  # お絵かき
   # firealpaca  # お絵かき
   medibangpaintpro  # お絵かき
+  audacity  # 音声ファイル編集
+  miniforge  # M1Macで使うanacondaの代わり
 )
 
 installed_casks=$(brew list --cask)
