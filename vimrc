@@ -84,12 +84,12 @@ silent! set ttyfast
 " キーマッピング(一般){{{
 " 全般{{{
 " インサートモード
-inoremap jj <ESC>
-inoremap jf <ESC>
-inoremap fj <ESC>
+inoremap <silent> jj <ESC>
+inoremap <silent> jf <ESC>
+inoremap <silent> fj <ESC>
 
-nnoremap j gj
-nnoremap k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
 
 inoremap <C-r> <C-r><C-p>
 inoremap <C-l> <C-x><C-l>
