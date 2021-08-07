@@ -13,6 +13,7 @@ packages=(
   du-dust
   hyperfine
   ytop
+  cargo-edit  # Cargo.tomlの編集用, add, rm, upgradeなどのサブコマンドを追加する。
 )
 
 gui_packages=(
