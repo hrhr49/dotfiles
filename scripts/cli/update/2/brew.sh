@@ -198,6 +198,7 @@ casks=(
   medibangpaintpro  # お絵かき
   audacity  # 音声ファイル編集
   miniforge  # M1Macで使うanacondaの代わり
+  utm  # 仮想マシンを動かすアプリ
 )
 
 installed_casks=$(brew list --cask)
