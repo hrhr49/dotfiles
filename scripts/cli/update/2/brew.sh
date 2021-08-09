@@ -179,7 +179,7 @@ casks=(
   zoom
   visual-studio-code
   clipy
-  cheatsheet
+  # cheatsheet  # cmdキー長押しで、ショートカット一覧表示
   imageoptim  # 画像サイズの削減
   flux  # ブルーライトカット
   karabiner-elements  # キー配列の設定
