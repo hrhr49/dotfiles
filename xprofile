@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 export LANG="ja_JP.UTF-8"
-export LC_CTYPE="ja_JP.UTF-8"
+# sudo locale-gen ja_JP.UTF-8などで日本語ロケールを
+# 追加していない環境だとエラーになるので無効化↓
+# export LC_CTYPE="ja_JP.UTF-8"
 export XMODIFIERS="@im=fcitx"
 export XMODIFIER="@im=fcitx"
 export GTK_IM_MODULE=fcitx
