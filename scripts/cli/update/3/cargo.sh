@@ -14,6 +14,7 @@ packages=(
   hyperfine
   ytop
   cargo-edit  # Cargo.tomlの編集用, add, rm, upgradeなどのサブコマンドを追加する。
+  cargo-generate  # テンプレートリポジトリからプロジェクトを始める
 )
 
 gui_packages=(
