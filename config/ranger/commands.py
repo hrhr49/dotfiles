@@ -186,7 +186,9 @@ class z(Command):
         import os.path
         import shutil
 
-        if shutil.which("zoxide"):
+        # if shutil.which("zoxide"):
+        # ↑ whichが見つからないというエラーが出たので一時的に無効化
+        if True:
             query = self.fm.execute_command(
                 "zoxide query -i",
                 shell=True, universal_newlines=True,
