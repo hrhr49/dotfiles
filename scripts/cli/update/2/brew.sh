@@ -127,6 +127,9 @@ formulas=(
 
     # AWS
     awscli
+
+    # ビデオストリーミングをビデオプレイヤーなどにパイプするツール
+    streamlink
 )
 
 formulas_only_mac=(
