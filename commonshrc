@@ -3,6 +3,28 @@
 # bashrc, zshrc共通の設定。source このファイルのパスを実行して読み込む
 # 注意: fasdの設定を行ったあとにz関数定義をしなければ上書きされてしまう
 
+# プラットフォームの判定 {{{
+IS_MACOS=false
+IS_LINUX=false
+case "$OSTYPE" in
+  solaris*)
+    ;;
+  darwin*)
+    # Mac
+    IS_MACOS=true
+    ;;
+  linux*)
+    # Linux
+    IS_LINUX=true
+    ;;
+  bsd*)
+    ;;
+  msys*)
+    ;;
+  *)
+    ;;
+esac
+# }}}
 # 外部コマンド設定{{{
 # PATHに$HOME/binを追加
 
@@ -280,9 +302,12 @@ if type "lsd" > /dev/null 2>&1; then
     alias ll="lsd -l --icon never"
     alias la="lsd -a --icon never"
 else
-    # 時々遅いので将来削除するかも
-    alias ls="ls --color=auto"
-    alias sl="ls --color=auto"
+    if "${IS_LINUX}"; then
+      # 時々遅いので将来削除するかも
+      # NOTE: Macのlsコマンドは--colorオプションを持たない
+      alias ls="ls --color=auto"
+      alias sl="ls --color=auto"
+    fi
     alias ll="ls -l"
     alias la="ls -a"
 fi
@@ -397,10 +422,8 @@ export NNN_PLUG="1:bookmarks;2:ipinfo;p:my/pistol;v:preview-tui;o:fzz;b:nbak;z:a
 export NNN_FIFO=/tmp/nnn.fifo
 export USE_PISTOL=1
 
-case "$OSTYPE" in
-  solaris*)
-    ;;
-  darwin*)
+# プラットフォームごとの環境変数など
+if "${IS_MACOS}"; then
     # Mac
     # 特にM1 Macbook用
 
@@ -413,17 +436,9 @@ case "$OSTYPE" in
     export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
     export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
     export HDF5_DIR=/opt/homebrew/opt/hdf5
-    ;;
-  linux*)
-    # Linux
-    ;;
-  bsd*)
-    ;;
-  msys*)
-    ;;
-  *)
-    ;;
-esac
-
+elif "${IS_LINUX}"; then
+  # 何もしない
+  :
+fi
 
 # }}}
