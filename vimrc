@@ -413,7 +413,7 @@ let g:vim_markdown_new_list_item_indent = 0
 " fugitive
 if s:plug.is_installed('vim-fugitive')
   nnoremap gcd :<C-u>Gcd<CR>
-  nnoremap gs :<C-u>Gstatus<CR>
+  nnoremap gs :<C-u>Git<CR>
 endif
 
 let g:mkdp_auto_close = 0 " markdown-preview バッファ移動時に勝手に閉じないようにする
