@@ -5,5 +5,5 @@ set -e
 if [ -e ~/.zinit ]; then
     echo 'zinit already exists'
 else
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+    sh -c "$(curl -fsSL https://git.io/zinit-install)"
 fi
