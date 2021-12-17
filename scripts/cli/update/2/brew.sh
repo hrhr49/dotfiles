@@ -40,7 +40,7 @@ formulas=(
 
     # silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
 
-    ccze # ログに色を付ける
+    # ccze # ログに色を付ける
     hexyl # 16進数ダンプ
     pastel # カラー表示(いい感じの色を探すときに便利そう)
 
@@ -202,6 +202,8 @@ casks=(
   audacity  # 音声ファイル編集
   miniforge  # M1Macで使うanacondaの代わり
   utm  # 仮想マシンを動かすアプリ
+  discord
+  keycastr  # キーキャストを表示するやつ
 )
 
 installed_casks=$(brew list --cask)
