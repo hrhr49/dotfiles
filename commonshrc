@@ -94,6 +94,10 @@ export PIPENV_VENV_IN_PROJECT=true
 # poetryの仮想環境の場所をプロジェクト直下にする
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 
+# denoの設定
+[ -d "$HOME/.deno/bin" ] && export PATH=$PATH:$HOME/.deno/bin
+
+
 # }}}
 # シェル関数{{{
 # zコマンドでMRUファイルをfzfできる(fasdが必要)
