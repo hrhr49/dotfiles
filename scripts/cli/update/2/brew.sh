@@ -50,8 +50,8 @@ formulas=(
 
     # テキストエディタ
     neovim
-    kakoune # vim インスパイアなエディタ
-    micro # ベーシックな感じのキーバインドのエディタ。nanoの代わりに使えそう？
+    # kakoune # vim インスパイアなエディタ
+    # micro # ベーシックな感じのキーバインドのエディタ。nanoの代わりに使えそう？
 
     # TUI
     # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
@@ -78,6 +78,7 @@ formulas=(
     # 各種言語
     ruby
     node
+    deno
     go
     golang
     # rust # rustよりrustupのほうがいい？ 
@@ -97,7 +98,7 @@ formulas=(
     gron      # jsonをgrepしやすい形にする
     fx        # jqみたいだけどインタラクティブにできたりする
     jo        # JSONオブジェクトを生成
-    bitwise   # ビット表示
+    # bitwise   # ビット表示
     # unar      # ファイルの解凍
     dust      # ファイル容量一覧を表示
     choose-rust  # Pythonのスライスのような感じで、シーケンスから要素を抽出
@@ -193,17 +194,19 @@ casks=(
   # xquartz  # Xサーバー
   scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
   rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加
-  alfred  # spotlightの強化版
+  # alfred  # spotlightの強化版
   # osxfuse  # sshfsの依存
-  pinta  # 簡易的なペイント
+  # pinta  # 簡易的なペイント
   # krita  # お絵かき
   # firealpaca  # お絵かき
-  medibangpaintpro  # お絵かき
+  # medibangpaintpro  # お絵かき
   audacity  # 音声ファイル編集
   miniforge  # M1Macで使うanacondaの代わり
   utm  # 仮想マシンを動かすアプリ
   discord
   keycastr  # キーキャストを表示するやつ
+  spotify  # 音楽
+  docker
 )
 
 installed_casks=$(brew list --cask)

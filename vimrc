@@ -644,6 +644,7 @@ let g:coc_global_extensions = [
       \ "https://github.com/infeng/vscode-react-typescript"
       \]
 
+      " \ "coc-deno",
       " \ "coc-python",
 
 setl updatetime=300

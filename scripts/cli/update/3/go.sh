@@ -18,6 +18,7 @@ go11packages=(
 )
 
 if type "go" > /dev/null 2>&1; then
+  # TODO: バージョン 1.18 からは go installに変更する
   go get -u "${packages[@]}"
   env GO111MODULE=on go get -u "${go11packages[@]}"
 fi
