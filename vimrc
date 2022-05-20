@@ -120,6 +120,8 @@ vnoremap . :normal .<CR>
 " +-----------+
 vnoremap <F4> r+gvkojr\|gvlkohjr-gvkojr<Space>
 
+vnoremap v <C-v>
+
 command! ReloadVimrc :unlet g:loaded_my_vimrc | :source $MYVIMRC
 nnoremap <M-r> :<C-u>ReloadVimrc<CR>
 nnoremap <M-w> :w<CR>
@@ -344,7 +346,7 @@ Plug 'easymotion/vim-easymotion', {'on': [ '<Plug>(easymotion-overwin-f2)', '<Pl
 " テキスト操作
 Plug 'kana/vim-textobj-user'
 Plug 'michaeljsmith/vim-indent-object'         " ai, ii, aI, iI でインデント
-" Plug 'saaguero/vim-textobj-pastedtext'         " gbで直近で貼り付けた範囲
+Plug 'saaguero/vim-textobj-pastedtext'         " gbで直近で貼り付けた範囲
 " Plug 'thinca/vim-textobj-between'              " af{char}, if{char}で任意の文字
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
