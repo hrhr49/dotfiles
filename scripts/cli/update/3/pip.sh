@@ -59,6 +59,9 @@ packages=(
 
     # AWS
     ec2instanceconnectcli  # インスタンスID指定でssh接続
+
+    # 競技プログラミングのオンラインジャッジ
+    online-judge-tools
 )
 
 gui_packages=(

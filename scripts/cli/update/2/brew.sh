@@ -78,7 +78,7 @@ formulas=(
     # 各種言語
     ruby
     node
-    deno
+    # deno
     go
     golang
     # rust # rustよりrustupのほうがいい？ 
@@ -207,6 +207,9 @@ casks=(
   keycastr  # キーキャストを表示するやつ
   spotify  # 音楽
   docker
+  bitwarden
+  gyazo  # スクショを撮ってURL作る
+  cyberduck  # FTP
 )
 
 installed_casks=$(brew list --cask)
