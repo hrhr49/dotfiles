@@ -251,10 +251,11 @@ augroup FileTypeGroup
 
   " tabstop, softtabstop, shiftwidth, expandtab, iskeywordの設定
   for s:s in ['ruby', 'json', 'javascript', 'typescript',
-        \'typescriptreact', 'typescript.tsx', 'nim', 'vim']
+        \'typescriptreact', 'typescript.tsx', 'nim', 'vim'
+        \'c', 'cpp']
     execute 'autocmd FileType ' . s:s .' setl ts=2 sts=2 sw=2 et'
   endfor
-  for s:s in ['c', 'cpp', 'python']
+  for s:s in ['python']
     execute 'autocmd FileType ' . s:s .' setl ts=4 sts=4 sw=4 et'
   endfor
   for s:s in ['yaml', 'html', 'css', 'scss', 'less', 'sh', 'bash', 'zsh']
