@@ -642,7 +642,7 @@ let g:coc_global_extensions = [
       \ "coc-yaml",    "coc-html",        "coc-css",       "coc-tailwindcss",
       \ "coc-vimlsp",  "coc-marketplace", "coc-highlight", "coc-rls",
       \ "coc-go",      "coc-emoji",       "coc-snippets",  "coc-cmake",
-      \ "coc-docker",  "coc-sh",
+      \ "coc-docker",  "coc-sh", "coc-lua",
       \ "https://github.com/xabikos/vscode-react",
       \ "https://github.com/infeng/vscode-react-typescript"
       \]

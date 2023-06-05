@@ -63,6 +63,7 @@ files=(
   commonshrc
   yabairc
   skhdrc
+  hammerspoon
 )
 for file in "${files[@]}"
 do
