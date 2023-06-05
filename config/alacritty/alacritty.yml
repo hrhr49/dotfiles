@@ -23,20 +23,20 @@ window:
   #   - SimpleFullscreen
   #startup_mode: Windowed
 
-background_opacity: 1.0
+  opacity: 1.0
 font:
-  normal:
-    family: Cica
-    style: Regular
-  bold:
-    family: Cica
-    style: Bold
-  italic:
-    family: Cica
-    style: Italic
-  bold_italic:
-    family: Cica
-    style: Bold Italic
+  # normal:
+  #   family: Cica
+  #   style: Regular
+  # bold:
+  #   family: Cica
+  #   style: Bold
+  # italic:
+  #   family: Cica
+  #   style: Italic
+  # bold_italic:
+  #   family: Cica
+  #   style: Bold Italic
 
   size: 16.0
 
@@ -78,6 +78,6 @@ colors:
     cyan:    '#95c4ce'
     white:   '#d2d4de'
 
-key_bindings:
-  - { key: Add,      mods: Control|Shift,       action: IncreaseFontSize }
+# key_bindings:
+#   - { key: Add,      mods: Control|Shift,       action: IncreaseFontSize }
 
