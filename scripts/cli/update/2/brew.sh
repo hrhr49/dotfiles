@@ -20,7 +20,7 @@ formulas=(
 
     # 外部サービスとの連携
     hub
-    slackcat
+    # slackcat
 
     # 文字コード
     nkf
@@ -41,8 +41,8 @@ formulas=(
     # silicon # ソースコードをいい感じの画像に変換(フォントを指定しないと日本語がないフォントだとエラーになる)
 
     # ccze # ログに色を付ける
-    hexyl # 16進数ダンプ
-    pastel # カラー表示(いい感じの色を探すときに便利そう)
+    # hexyl # 16進数ダンプ
+    # pastel # カラー表示(いい感じの色を探すときに便利そう)
 
     # 開発 効率化
     direnv
@@ -57,7 +57,7 @@ formulas=(
     # ranger # localeの設定がうまく行ってない？のでpipの方で入れる(https://github.com/ranger/ranger/issues/937)
     nnn # 軽量なファイルマネージャ
     tmux
-    sc-im # スプレッドシート
+    # sc-im # スプレッドシート
 
     # Markdown
     mdp # CLIでのプレゼンツール
@@ -96,15 +96,15 @@ formulas=(
     trash-cli # ゴミ箱操作
     jq        # JSONをいい感じにフィルター
     gron      # jsonをgrepしやすい形にする
-    fx        # jqみたいだけどインタラクティブにできたりする
-    jo        # JSONオブジェクトを生成
+    # fx        # jqみたいだけどインタラクティブにできたりする
+    # jo        # JSONオブジェクトを生成
     # bitwise   # ビット表示
     # unar      # ファイルの解凍
     dust      # ファイル容量一覧を表示
     choose-rust  # Pythonのスライスのような感じで、シーケンスから要素を抽出
 
     # Web
-    monolith  # Webページを一つのHTMLファイルにしてダウンロード
+    # monolith  # Webページを一つのHTMLファイルにしてダウンロード
     httpie    # curlのようなやつ
     hugo  # 静的サイトジェネレータ
 
@@ -131,6 +131,9 @@ formulas=(
 
     # ビデオストリーミングをビデオプレイヤーなどにパイプするツール
     streamlink
+
+    # Azure
+    # azure-cli
 )
 
 formulas_only_mac=(
@@ -154,6 +157,9 @@ formulas_only_mac=(
 
   # matplotlibの依存
   libjpeg
+
+  # ファイル監視
+  fswatch
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -184,15 +190,15 @@ casks=(
   visual-studio-code
   clipy
   # cheatsheet  # cmdキー長押しで、ショートカット一覧表示
-  imageoptim  # 画像サイズの削減
+  # imageoptim  # 画像サイズの削減
   flux  # ブルーライトカット
   karabiner-elements  # キー配列の設定
   appcleaner  # アプリを削除＆ゴミも一緒に削除
-  skitch  # ちょっとした画像作成
+  # skitch  # ちょっとした画像作成
   kindle
   # bettertouchtool  # ウィンドウのサイズ変更 有料
   # xquartz  # Xサーバー
-  scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
+  # scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
   rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加
   # alfred  # spotlightの強化版
   # osxfuse  # sshfsの依存
@@ -200,16 +206,19 @@ casks=(
   # krita  # お絵かき
   # firealpaca  # お絵かき
   # medibangpaintpro  # お絵かき
-  audacity  # 音声ファイル編集
-  miniforge  # M1Macで使うanacondaの代わり
-  utm  # 仮想マシンを動かすアプリ
+  # audacity  # 音声ファイル編集
+  # miniforge  # M1Macで使うanacondaの代わり
+  # utm  # 仮想マシンを動かすアプリ
   discord
-  keycastr  # キーキャストを表示するやつ
+  # keycastr  # キーキャストを表示するやつ
   spotify  # 音楽
-  docker
+  # docker
   bitwarden
-  gyazo  # スクショを撮ってURL作る
-  cyberduck  # FTP
+  # gyazo  # スクショを撮ってURL作る
+  # cyberduck  # FTP
+  # microsoft-remote-desktop
+  # renpy
+  hammerspoon  # キーバインドで各種操作を実行
 )
 
 installed_casks=$(brew list --cask)
