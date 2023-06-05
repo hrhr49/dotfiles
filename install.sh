@@ -71,9 +71,9 @@ do
 done
 create_symlink "${PWD}/scripts" "${HOME}/bin/scripts"
 
-# なぜかディレクトリでシンボリックリンクしないとうまく行かない？
-rm -rf "${HOME}/.easystroke"
-ln -snvf "${PWD}/easystroke" "${HOME}/.easystroke"
+# # なぜかディレクトリでシンボリックリンクしないとうまく行かない？
+# rm -rf "${HOME}/.easystroke"
+# ln -snvf "${PWD}/easystroke" "${HOME}/.easystroke"
 
 # root権限が必要なのでひとまず保留
 # create_symlink "${PWD}/90-libinput.conf" "/etc/X11/xorg.conf.d/90-libinput.conf"
