@@ -38,11 +38,11 @@ packages=(
     better_exceptions  # 例外のメッセージをより詳しく
     icecream  # print関数よりもいい感じの表示
 
-    # 機械学習関連で使うやつ
-    jupytext
-    numpy
-    pandas
-    matplotlib
+    # # 機械学習関連で使うやつ
+    # jupytext
+    # numpy
+    # pandas
+    # matplotlib
 
     # その他
     requests
@@ -50,9 +50,9 @@ packages=(
     flask
     beautifulsoup4
 
-    # 音声関連
-    librosa # 音声信号処理
-    pyworld # 音声解析
+    # # 音声関連
+    # librosa # 音声信号処理
+    # pyworld # 音声解析
 
     # 入れるかどうか検討
     # dominate # htmlを作るためのDSL
@@ -62,6 +62,8 @@ packages=(
 
     # 競技プログラミングのオンラインジャッジ
     online-judge-tools
+
+    streamlit
 )
 
 gui_packages=(
@@ -77,4 +79,7 @@ fi
 
 if type "pip" > /dev/null 2>&1; then
   pip install --no-warn-script-location "${packages[@]}"
+fi
+if type "pip3" > /dev/null 2>&1; then
+  pip3 install --no-warn-script-location "${packages[@]}"
 fi

@@ -81,7 +81,17 @@ fi
 [ -e "${HOME}/anaconda3/etc/profile.d/conda.sh" ] && source "$HOME/anaconda3/etc/profile.d/conda.sh"
 [ -d "${HOME}/anaconda3/bin" ] && export PATH=~/anaconda3/bin:$PATH
 
+if type "python" > /dev/null 2>&1; then
+  # 何もしない
+  :
+else
+  # pythonコマンドがない場合は、python3コマンドでエイリアス
+  alias python=python3
+  alias pip=pip3
+fi
+
 [ -d "/usr/lib/go/bin" ] && export PATH=/usr/lib/go/bin:$PATH
+
 
 # nvmの設定(遅いので一時保留)
 # export NVM_DIR="$HOME/.nvm"
