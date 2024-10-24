@@ -266,7 +266,14 @@ augroup FileTypeGroup
   endfor
 
   autocmd FileType typescript nnoremap <buffer> <F5> :w\|!tsc % \| node %:r.js<CR>
-  autocmd FileType python     nnoremap <buffer> <F5> :w\|!python %<CR>
+
+
+  if exepath('python3') != ''
+    autocmd FileType python     nnoremap <buffer> <F5> :w\|!python3 %<CR>
+  else
+    autocmd FileType python     nnoremap <buffer> <F5> :w\|!python %<CR>
+  endif
+
   autocmd FileType ruby       nnoremap <buffer> <F5> :w\|!ruby %<CR>
   autocmd FileType perl       nnoremap <buffer> <F5> :w\|!perl %<CR>
   autocmd FileType go         nnoremap <buffer> <F5> :w\|!go run %<CR>
