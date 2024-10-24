@@ -2,3 +2,4 @@ config/nvim/coc-settings.json
 .mypy_cache/
 __pycache__/
 log
+.DS_Store
