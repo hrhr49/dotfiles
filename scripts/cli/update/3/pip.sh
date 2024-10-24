@@ -64,6 +64,19 @@ packages=(
     online-judge-tools
 
     streamlit
+
+    datamodel-code-generator
+
+    pytype
+
+    # pipパッケージの依存関係可視化
+    pipdeptree
+
+    # インポートの可視化
+    pydeps
+
+    # 関数呼び出しの可視化
+    pyan3
 )
 
 gui_packages=(

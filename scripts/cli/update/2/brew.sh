@@ -67,6 +67,7 @@ formulas=(
 
     # 検索
     ripgrep
+    rga
     # ripgrep-all # テキスト以外のファイルもrgaコマンドで一気に検索
     the_silver_searcher
     fzf
@@ -114,7 +115,7 @@ formulas=(
     # ditaa
 
     # 文書
-    # pandoc
+    pandoc
     # redpen # 文章校正
 
     # 見た目
@@ -160,6 +161,9 @@ formulas_only_mac=(
 
   # ファイル監視
   fswatch
+
+  # PDF
+  poppler
 )
 
 if [ "$(uname)" == 'Darwin' ]; then
@@ -198,8 +202,8 @@ casks=(
   kindle
   # bettertouchtool  # ウィンドウのサイズ変更 有料
   # xquartz  # Xサーバー
-  # scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
-  rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加
+  scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
+  # rectangle  # ウィンドウのサイズ変更や移動のショートカットを追加。hammerspoonで代替可能なので削除
   # alfred  # spotlightの強化版
   # osxfuse  # sshfsの依存
   # pinta  # 簡易的なペイント
