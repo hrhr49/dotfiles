@@ -64,6 +64,7 @@ files=(
   yabairc
   skhdrc
   hammerspoon
+  termux
 )
 for file in "${files[@]}"
 do
