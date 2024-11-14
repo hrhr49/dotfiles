@@ -333,7 +333,9 @@ endif
 let g:ruby_host_prog  = exepath('ruby')
 "}}}
 " プラグイン一覧{{{
-if !empty(glob('~/.vim/autoload/plug.vim'))
+" なぜかtermuxでglob('~/...')がうまく動かないため$HOMEでも確認している
+if (!empty(glob('~/.vim/autoload/plug.vim')) ||
+      \ filereadable($HOME . '/.vim/autoload/plug.vim'))
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
@@ -647,7 +649,7 @@ let g:coc_global_extensions = [
       \ "coc-pyright", 
       \ "coc-tsserver",  "coc-json",
       \ "coc-yaml",    "coc-html",        "coc-css",       "coc-tailwindcss",
-      \ "coc-vimlsp",  "coc-marketplace", "coc-highlight", "coc-rls",
+      \ "coc-vimlsp",  "coc-marketplace", "coc-highlight", "coc-rust-analyzer",
       \ "coc-go",      "coc-emoji",       "coc-snippets",  "coc-cmake",
       \ "coc-docker",  "coc-sh", "coc-lua",
       \ "https://github.com/xabikos/vscode-react",
