@@ -107,7 +107,7 @@ formulas=(
     # Web
     # monolith  # Webページを一つのHTMLファイルにしてダウンロード
     httpie    # curlのようなやつ
-    hugo  # 静的サイトジェネレータ
+    # hugo  # 静的サイトジェネレータ
 
     # 図形作成
     graphviz
@@ -124,8 +124,8 @@ formulas=(
     emojify  # 絵文字を入力するため
 
     # パスワード管理
-    gopass
-    gpg
+    # gopass
+    # gpg
 
     # AWS
     awscli
@@ -199,7 +199,7 @@ casks=(
   karabiner-elements  # キー配列の設定
   appcleaner  # アプリを削除＆ゴミも一緒に削除
   # skitch  # ちょっとした画像作成
-  kindle
+  # kindle  # App Storeからインストールするので削除
   # bettertouchtool  # ウィンドウのサイズ変更 有料
   # xquartz  # Xサーバー
   scroll-reverser  # トラックパッドとマウスでスクロール方向を個別設定
@@ -211,7 +211,7 @@ casks=(
   # firealpaca  # お絵かき
   # medibangpaintpro  # お絵かき
   # audacity  # 音声ファイル編集
-  # miniforge  # M1Macで使うanacondaの代わり
+  miniforge  # M1Macで使うanacondaの代わり
   # utm  # 仮想マシンを動かすアプリ
   discord
   # keycastr  # キーキャストを表示するやつ

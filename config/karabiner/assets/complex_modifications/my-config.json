@@ -2,6 +2,27 @@
   "title": "自分用",
   "rules": [
     {
+      "description": "円マークをバックスラッシュに",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "international3",
+            "modifiers": {
+              "mandatory": [
+                "option"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "backslash"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description": "ctrl-M を return に変換",
       "manipulators": [
         {
@@ -126,6 +147,28 @@
           ]
         }
       ]
+    },
+    {
+      "description": "aaa ctrl-b を ←に変換",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "b",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_arrow"
+            }
+          ]
+        }
+      ]
     }
+
   ]
 }

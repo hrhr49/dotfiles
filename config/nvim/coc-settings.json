@@ -1,4 +1,5 @@
 {
+  "suggest.noselect": true,
   "languageserver": {
     "clangd": {
       "command": "clangd",
@@ -38,8 +39,12 @@
     ".local/share/virtualenv",
     ".local/share/virtualenvs",
     ".venv"
-  ]
-  /* "deno.enable": true, */
-  /* "deno.lint": true, */
-  /* "deno.unstable": true */
+  ],
+  "pyright.inlayHints.variableTypes": false,
+  // "pyright.inlayHints.parameterTypes": false,
+  "tsserver.log": "verbose",
+  "tsserver.trace.server": "verbose",
+  "tsserver.enable": true,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "inlayHint.display": false
 }

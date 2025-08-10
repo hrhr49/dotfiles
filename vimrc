@@ -268,10 +268,10 @@ augroup FileTypeGroup
   autocmd FileType typescript nnoremap <buffer> <F5> :w\|!tsc % \| node %:r.js<CR>
 
 
-  if exepath('python3') != ''
-    autocmd FileType python     nnoremap <buffer> <F5> :w\|!python3 %<CR>
-  else
+  if exepath('python') != ''
     autocmd FileType python     nnoremap <buffer> <F5> :w\|!python %<CR>
+  else
+    autocmd FileType python     nnoremap <buffer> <F5> :w\|!python3 %<CR>
   endif
 
   autocmd FileType ruby       nnoremap <buffer> <F5> :w\|!ruby %<CR>
@@ -379,7 +379,7 @@ Plug 'szw/vim-maximizer', {'on': ['MaximizerToggle']} " ウィンドウを一時
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mattn/emmet-vim', {'on': '<Plug>(emmet-expand-abbr)'}
 Plug 'LeafCage/yankround.vim'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 
 " バージョン管理・変更履歴
 if has('nvim') || has('patch-8.0.902')
@@ -665,7 +665,29 @@ setl signcolumn=yes
 
 if s:plug.is_installed('coc.nvim')
   " Use <c-space> to trigger completion.
-  inoremap <silent><expr> <c-space> coc#refresh()
+  " inoremap <silent><expr> <c-space> coc#refresh()
+
+  " Use tab for trigger completion with characters ahead and navigate
+  " NOTE: There's always complete item selected by default, you may want to enable
+  " no select by `"suggest.noselect": true` in your configuration file
+  " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+  " other plugin before putting this into your config
+  inoremap <silent><expr> <TAB>
+        \ coc#pum#visible() ? coc#pum#next(1) :
+        \ CheckBackspace() ? "\<Tab>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+  " Make <CR> to accept selected completion item or notify coc.nvim to format
+  " <C-g>u breaks current undo, please make your own choice
+  inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+  function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
 
   " Use `[c` and `]c` to navigate diagnostics
   " nmap <buffer> <silent> [c <Plug>(coc-diagnostic-prev)
@@ -832,7 +854,7 @@ augroup ChangeMatchParenGroup
   autocmd BufRead,BufNewFile,ColorScheme * highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 augroup END
 set showmatch " 閉じカッコ入力時に、対応する開きカッコにハイライト
-" set cursorline
+set cursorline
 set background=dark
 set conceallevel=0
 " set colorcolumn=80 " 80列目の色を変える
