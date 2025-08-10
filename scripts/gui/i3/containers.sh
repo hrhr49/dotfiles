@@ -47,4 +47,4 @@ packages[1]=on
 # get_focused_window_name
 # rename_workspace
 IFS=':'
-echo ${packages[*]}
+echo "${packages[*]}"

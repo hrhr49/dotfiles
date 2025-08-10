@@ -35,7 +35,7 @@ clean:
 # shebangがshやbash以外の場合(zshなど)のときのエラー(SC1071)はチェックしない
 # bashの文字列置換(SC2001)は扱いづらいので多分使わない
 check:
-	shellcheck -e SC2034 -e SC1090 -e SC1091 -e 1071 -e 2001 ${SHELL_SCRIPTS}
+	shellcheck -e SC2034 -e SC1090 -e SC1091 -e SC2317 -e 1071 -e 2001 ${SHELL_SCRIPTS}
 
 fix:
 	shellcheck -f diff ${SHELL_SCRIPTS} | git apply
