@@ -1,18 +1,23 @@
 -- vim:set foldmethod=marker foldlevel=0:
 
-local canvas = require "hs.canvas"
-local eventtap = require "hs.eventtap"
-local alert = require "hs.alert"
-local window = require "hs.window"
-local screen = require "hs.screen"
-local hotkey = require "hs.hotkey"
-local logger = require "hs.logger"
-local mouse = require "hs.mouse"
-local chooser = require "hs.chooser"
-local pasteboard = require "hs.pasteboard"
-local caffeinate = require "hs.caffeinate"
-local timer = require "hs.timer"
+local alert = require("hs.alert")
+local application = require("hs.application")
+local caffeinate = require("hs.caffeinate")
+local canvas = require("hs.canvas")
+local chooser = require("hs.chooser")
+local drawing = require("hs.drawing")
+local eventtap = require("hs.eventtap")
+local geometry = require("hs.geometry")
+local hotkey = require("hs.hotkey")
+local image = require("hs.image")
+local logger = require("hs.logger")
+local mouse = require("hs.mouse")
+local pasteboard = require("hs.pasteboard")
+local screen = require("hs.screen")
 local styledtext = require("hs.styledtext")
+local timer = require("hs.timer")
+local window = require("hs.window")
+----------------------
 
 local myLogger = logger.new('MyScript', 'debug')
 
@@ -22,6 +27,7 @@ myLogger.i("MyScript Start")
 local mash = { 'ctrl', 'option' }
 local mash2 = { 'ctrl', 'option' , 'shift'}
 -- local mash3 = { 'ctrl', 'option' , 'cmd'}
+----------------------
 
 -- Utils {{{
 local function camelToTitle(str)
@@ -595,6 +601,7 @@ end)
 
 -- ホットキーで呼び出し（例：Ctrl + Space）
 local commandPalette = function()
+  commandChooser:choices(commandPaletteChoices)
   commandChooser:query("")
   commandChooser:show()
 end
@@ -652,11 +659,91 @@ for name, command in pairs(commandPaletteCommands) do
   end
   table.insert(commandPaletteChoices, {text = text, uuid = name})
 end
-
-commandChooser:choices(commandPaletteChoices)
 -- }}}
+-- Dock App Launcher {{{
+
+-- Dockの順番からアプリのバンドルIDを取得
+local function getDockAppBundleIDs()
+    local output = hs.execute("defaults read com.apple.dock persistent-apps")
+    local bundleIDs = {}
+
+    -- persistent-apps の中の _CFURLString をパース
+    for appPath in output:gmatch("_CFURLString\" = \"file://(.-)\";") do
+        -- URLエンコードをデコード
+        local decodedPath = appPath:gsub("%%(%x%x)", function(hex)
+            return string.char(tonumber(hex, 16))
+        end)
+        decodedPath = decodedPath:gsub("/$", "") -- 末尾のスラッシュ除去
+
+        -- バンドルIDを取得
+        local info = application.infoForBundlePath(decodedPath)
+        if info and info.CFBundleIdentifier then
+            table.insert(bundleIDs, info.CFBundleIdentifier)
+        end
+    end
+    return bundleIDs
+end
+
+
+-- 中央にアプリのアイコンを一瞬表示
+local function showAppIcon(bundleID)
+    local path = application.pathForBundleID(bundleID)
+    if not path then return end
+
+    local icon = image.imageFromAppBundle(bundleID)
+    if not icon then return end
+
+    local mainScreenFrame = screen.mainScreen():frame()
+    local size = 192
+    local x = mainScreenFrame.x + (mainScreenFrame.w - size) / 2
+    local y = mainScreenFrame.y + (mainScreenFrame.h - size) / 2
+
+    local imageDrawing = drawing.image(geometry.rect(x, y, size, size), icon)
+    imageDrawing:setAlpha(0.9)
+    imageDrawing:show()
+
+    -- 0.3秒後に削除
+    timer.doAfter(0.3, function()
+        imageDrawing:delete()
+    end)
+end
+
+-- DockのアプリのバンドルID配列を取得
+local dockBundleIDs = getDockAppBundleIDs()
+
+-- Command+数字にバインド（1〜9）
+for i = 1, 9 do
+  local bundleID = dockBundleIDs[i]
+  if bundleID then
+    -- local appPath = application.pathForBundleID(bundleID)
+    -- if not appPath then return end
+    -- local appName = hs.fs.displayName(appPath)
+
+    local callback = function()
+      local app = application.get(bundleID)
+      local frontApp = application.frontmostApplication()
+
+      if app then
+        if app:bundleID() == frontApp:bundleID() then
+          app:hide()
+        else
+          app:activate()
+          showAppIcon(bundleID)
+        end
+      else
+        application.launchOrFocusByBundleID(bundleID)
+        showAppIcon(bundleID)
+      end
+    end
+    -- alert(appName)
+    -- commandPaletteCommands[appName] = { mods = {'cmd'}, key=tostring(i), fn=callback}
+    hotkey.bind({ "cmd" }, tostring(i), callback)
+  end
+end
+-- }}}
+
+----------------------
 alert('Hammerspoon Config Loaded')
 myLogger.i('MyScript End')
-
 ----------------------
 
