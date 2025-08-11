@@ -2,20 +2,173 @@
 
 local canvas = require "hs.canvas"
 local eventtap = require "hs.eventtap"
+local alert = require "hs.alert"
+local window = require "hs.window"
+local screen = require "hs.screen"
+local hotkey = require "hs.hotkey"
+local logger = require "hs.logger"
+local mouse = require "hs.mouse"
+local chooser = require "hs.chooser"
+local pasteboard = require "hs.pasteboard"
+local caffeinate = require "hs.caffeinate"
+local timer = require "hs.timer"
+local styledtext = require("hs.styledtext")
 
-local logger = hs.logger.new('MyScript', 'debug')
-logger.i("MyScript Start")
+local myLogger = logger.new('MyScript', 'debug')
+
+myLogger.i("MyScript Start")
 
 -- mash = { 'shift', 'ctrl', 'cmd' }
 local mash = { 'ctrl', 'option' }
 local mash2 = { 'ctrl', 'option' , 'shift'}
-local mash3 = { 'ctrl', 'option' , 'cmd'}
+-- local mash3 = { 'ctrl', 'option' , 'cmd'}
 
+-- Utils {{{
+local function camelToTitle(str)
+  -- 小文字＋大文字の組み合わせの間にスペースを挿入
+  -- "hogeFugaPiyo" -> "Hoge Fuga Piyo"
+  -- "fooBar"       -> "Foo Bar"
+  -- "HelloWorld"   -> "Hello World"
+  local spaced = str:gsub("([a-z])([A-Z])", "%1 %2")
+  -- 各単語の先頭を大文字に変換
+  local titled = spaced:gsub("(%w)(%w*)", function(first, rest)
+    return first:upper() .. rest:lower()
+  end)
+  return titled
+end
+-- fuzzy スコア計算
+-- query: 検索文字列、target: 候補文字列
+-- 戻り値: score (higher better) または nil（マッチしない）
+--
+-- #query * #target の計算量でDPアルゴリズム使えば最大スコア出せそうだけど
+-- 処理が重くなるのが嫌なので、一旦その案は保留
+local function fuzzyScore(query, target)
+  if query == "" then return 0 end
+  local qi = 1
+  local score = 0
+  local lastPos = 0
+  -- 連続した文字にヒットしたときのボーナス
+  local contiguousBonus = 3
+  -- 1文字目にヒットしたときのボーナス
+  local headBonus = 10
+  -- 単語の先頭文字(つまり大文字)にヒットしたときのボーナス
+  local wordHeadBonus = 5
+
+  for ti = 1, #target do
+    if qi <= #query and target:sub(ti, ti):lower() == query:sub(qi, qi):lower() then
+      -- 基本点：文字が見つかるたびに +1
+      score = score + 1
+
+      -- もし先頭に近ければボーナス
+      if ti == 1 then score = score + headBonus end
+
+      -- 単語の先頭(つまり大文字)ならボーナス
+      if target:sub(ti, ti) == target:sub(ti, ti):upper() then
+        score = score + wordHeadBonus
+      end
+
+      -- 連続マッチならさらにボーナス
+      if lastPos == ti - 1 then
+        score = score + contiguousBonus
+      end
+      lastPos = ti
+      qi = qi + 1
+    end
+  end
+
+  if qi <= #query then
+    return nil     -- 全ての query 文字が見つからなかった -> 不一致
+  end
+
+  -- 距離ペナルティ（マッチが散らばっているほど減点）
+  -- local span = lastPos - (lastPos - (score - (#query + headBonus/1))) -- rough
+  -- 最低限のスコアは #query を基準にしておく（ってことでここではそのまま返す）
+  return score
+end
+-- マッチ部分を太字にする（hs.styledtext）
+local function highlightMatch(original, query)
+  local lowOrig = original:lower()
+  local q = query:lower()
+  local qi = 1
+  local parts = {}
+  local acc = ""
+
+  local normalStyle = {
+    font = { name = "Menlo", size = 24 },
+    color = { hex = "#aaaaaa" },
+    paragraphStyle = { minimumLineHeight = 32 },
+  }
+  local hittedStyle = {
+    font = { name = "Menlo-Bold", size = 24 },
+    color = { hex = "#e9a326" },
+    paragraphStyle = { minimumLineHeight = 32 },
+  }
+
+  for i = 1, #original do
+    local ch = original:sub(i, i)
+    if qi <= #q and lowOrig:sub(i, i) == q:sub(qi, qi) then
+      -- flush acc as normal
+      if acc ~= "" then
+        table.insert(parts, { text = acc, style = normalStyle })
+        acc = ""
+      end
+      -- matched char as bold
+      table.insert(parts, {
+        text = ch,
+        style = hittedStyle,
+      })
+      qi = qi + 1
+    else
+      acc = acc .. ch
+    end
+  end
+  if acc ~= "" then table.insert(parts, { text = acc, style = normalStyle }) end
+
+  -- 組み立て
+  local styled = styledtext.new("")
+  for _, p in ipairs(parts) do
+    styled = styled .. styledtext.new(p.text, p.style)
+  end
+  return styled
+end
+
+-- 実際の queryChangedCallback：query が変わるたびに候補を作り直す
+local function fuzzyQueryChanged(chooserObj, origChoices, query)
+  local q = (query or "")
+  local choices = {}
+
+  for _, item in ipairs(origChoices) do
+    local target = item.text
+    local sc = fuzzyScore(q, target)
+    if sc ~= nil then
+      table.insert(choices, {
+        text = highlightMatch(item.text, q),
+        subText = item.subText,
+        score = sc,
+        raw = item, -- 元データ残す
+      })
+    end
+  end
+
+  -- スコア降順、同スコアならuuid順
+  table.sort(choices, function(a, b)
+    if a.score == b.score then return a.raw.uuid < b.raw.uuid end
+    return a.score > b.score
+  end)
+
+  chooserObj:choices(choices)
+end
+
+-- }}}
 -- Window Operation{{{
-hs.window.animationDuration = 0
+window.animationDuration = 0
+
+local moveWindow = function(rect)
+  window.focusedWindow():move(rect, nil, true)
+end
 
 local moveWindowEdge = function(dx, dy)
-  local win = hs.window.focusedWindow()
+  local win = window.focusedWindow()
   local s = win:screen()
   local f = win:frame()
   f = s:toUnitRect(f)
@@ -39,43 +192,43 @@ local moveWindowEdge = function(dx, dy)
 end
 
 local windowLeftHalf = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.00, w = 0.50, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.00, w = 0.50, h = 1.00 })
 end
 
 local windowRightHalf = function()
-  hs.window.focusedWindow():move({ x = 0.50, y = 0.00, w = 0.50, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.50, y = 0.00, w = 0.50, h = 1.00 })
 end
 
 local windowTopHalf = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.00, w = 1.00, h = 0.50 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.00, w = 1.00, h = 0.50 })
 end
 
 local windowBottomHalf = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.50, w = 1.00, h = 0.50 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.50, w = 1.00, h = 0.50 })
 end
 
 local windowCenterHalf = function()
-  hs.window.focusedWindow():move({ x = 0.25, y = 0.00, w = 0.50, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.25, y = 0.00, w = 0.50, h = 1.00 })
 end
 
 local windowFirstThird = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.00, w = 0.33, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.00, w = 0.33, h = 1.00 })
 end
 
 local windowCenterThird = function()
-  hs.window.focusedWindow():move({ x = 0.33, y = 0.00, w = 0.33, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.33, y = 0.00, w = 0.33, h = 1.00 })
 end
 
 local windowLastThird = function()
-  hs.window.focusedWindow():move({ x = 0.67, y = 0.00, w = 0.33, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.67, y = 0.00, w = 0.33, h = 1.00 })
 end
 
 local windowFirstTwoThirds = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.00, w = 0.67, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.00, w = 0.67, h = 1.00 })
 end
 
 local windowLastTwoThirds = function()
-  hs.window.focusedWindow():move({ x = 0.33, y = 0.00, w = 0.67, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.33, y = 0.00, w = 0.67, h = 1.00 })
 end
 
 local windowEdgeLeft = function()
@@ -95,53 +248,53 @@ local windowEdgeBottom = function()
 end
 
 local windowTopLeft = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.00, w = 0.50, h = 0.50 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.00, w = 0.50, h = 0.50 })
 end
 
 local windowTopRight = function()
-  hs.window.focusedWindow():move({ x = 0.50, y = 0.00, w = 0.50, h = 0.50 }, nil, true)
+  moveWindow({ x = 0.50, y = 0.00, w = 0.50, h = 0.50 })
 end
 
 local windowBottomLeft = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.50, w = 0.50, h = 0.50 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.50, w = 0.50, h = 0.50 })
 end
 
 local windowBottomRight = function()
-  hs.window.focusedWindow():move({ x = 0.50, y = 0.50, w = 0.50, h = 0.50 }, nil, true)
+  moveWindow({ x = 0.50, y = 0.50, w = 0.50, h = 0.50 })
 end
 
 local windowMaximize = function()
-  hs.window.focusedWindow():move({ x = 0.00, y = 0.00, w = 1.00, h = 1.00 }, nil, true)
+  moveWindow({ x = 0.00, y = 0.00, w = 1.00, h = 1.00 })
 end
 -- }}}
 -- Mouse Operation{{{
 -- local moveMouseRel = function(dx, dy)
---   local p = hs.mouse.getRelativePosition()
+--   local p = mouse.getRelativePosition()
 
 --   p.x = p.x + dx
 --   p.y = p.y + dy
---   hs.mouse.setRelativePosition(p)
+--   mouse.setRelativePosition(p)
 -- end
 
--- hs.hotkey.bind(mash3, 'l', function() moveMouseRel(15, 0) end)
--- hs.hotkey.bind(mash3, 'h', function() moveMouseRel(-15, 0) end)
--- hs.hotkey.bind(mash3, 'k', function() moveMouseRel(0, -15) end)
--- hs.hotkey.bind(mash3, 'j', function() moveMouseRel(0, 15) end)
--- hs.hotkey.bind(mash3, 'return', function() eventtap.leftClick(hs.mouse.absolutePosition()) end)
--- hs.hotkey.bind(mash3, 'm', function() eventtap.leftClick(hs.mouse.absolutePosition()) end)
--- hs.hotkey.bind(mash3, ',', function() eventtap.middleClick(hs.mouse.absolutePosition()) end)
--- hs.hotkey.bind(mash3, '.', function() eventtap.rightClick(hs.mouse.absolutePosition()) end)
+-- hotkey.bind(mash3, 'l', function() moveMouseRel(15, 0) end)
+-- hotkey.bind(mash3, 'h', function() moveMouseRel(-15, 0) end)
+-- hotkey.bind(mash3, 'k', function() moveMouseRel(0, -15) end)
+-- hotkey.bind(mash3, 'j', function() moveMouseRel(0, 15) end)
+-- hotkey.bind(mash3, 'return', function() eventtap.leftClick(mouse.absolutePosition()) end)
+-- hotkey.bind(mash3, 'm', function() eventtap.leftClick(mouse.absolutePosition()) end)
+-- hotkey.bind(mash3, ',', function() eventtap.middleClick(mouse.absolutePosition()) end)
+-- hotkey.bind(mash3, '.', function() eventtap.rightClick(mouse.absolutePosition()) end)
 
--- hs.hotkey.bind(mash, 'o', function() hs.mouse.setRelativePosition({x = 0.5, y = 0.5}) end)
--- hs.hotkey.bind(mash, 'p', function() hs.mouse.setRelativePosition({x = -10, y = 100}) end)
--- hs.hotkey.bind(mash, 'u', function() moveMouseRel(0, -1) end)
--- hs.hotkey.bind(mash, 'd', function() moveMouseRel(0, 1) end)
+-- hotkey.bind(mash, 'o', function() mouse.setRelativePosition({x = 0.5, y = 0.5}) end)
+-- hotkey.bind(mash, 'p', function() mouse.setRelativePosition({x = -10, y = 100}) end)
+-- hotkey.bind(mash, 'u', function() moveMouseRel(0, -1) end)
+-- hotkey.bind(mash, 'd', function() moveMouseRel(0, 1) end)
 -- }}}
 -- Grid Click{{{
-local gridMode = hs.hotkey.modal.new(nil) -- トリガーキーは 'alt-ctrl + o'
+local gridMode = hotkey.modal.new(nil) -- トリガーキーは 'alt-ctrl + o'
 
 -- スクリーン情報とグリッド設定
-local screenFrame = hs.screen.mainScreen():fullFrame()
+local screenFrame = screen.mainScreen():fullFrame()
 local overlayCanvas = nil
 -- どの文字列が入力されたらどこの座標をクリックするか
 local keyMap = {}
@@ -292,7 +445,7 @@ function gridMode:keyInput(key)
     if cell then
         step = step + 1
         if step <= #grids then
-          hs.mouse.absolutePosition(cell.clickPos)
+          mouse.absolutePosition(cell.clickPos)
           unshowGrid()
           showGrid(cell.x, cell.y, cell.w, cell.h, step)
         else
@@ -319,45 +472,34 @@ end
 local mouseGridClick = function() gridMode:enter() end
 -- }}}
 -- Clipboard History{{{
-local function camelToTitle(str)
-    -- 小文字＋大文字の組み合わせの間にスペースを挿入
-    local spaced = str:gsub("([a-z])([A-Z])", "%1 %2")
-    -- 各単語の先頭を大文字に変換
-    local titled = spaced:gsub("(%w)(%w*)", function(first, rest)
-        return first:upper() .. rest:lower()
-    end)
-    return titled
-end
 
--- -- 動作確認
--- print(camelToTitle("hogeFugaPiyo")) -- "Hoge Fuga Piyo"
--- print(camelToTitle("fooBar"))       -- "Foo Bar"
--- print(camelToTitle("HelloWorld"))   -- "Hello World"
 -- クリップボード履歴を保持するテーブル
 
-local clipboardHistoryTable = {}
+local clipboardHistoryChoices = {}
 
-
-local clipboardChooser = hs.chooser.new(function(choice)
-    if not choice then return end
-    if choice.text then
-        hs.pasteboard.setContents(choice.text)
-    end
+local clipboardChooser = chooser.new(function(choice)
+  if choice then
+    local origChoice = choice.raw
+    pasteboard.setContents(origChoice.text)
+    eventtap.keyStroke({'cmd'}, 'v')
+  end
+end)
+clipboardChooser:queryChangedCallback(function(query)
+  fuzzyQueryChanged(clipboardChooser, clipboardHistoryChoices, query)
 end)
 
-clipboardChooser:choices(commands)
-
 -- クリップボード監視
-hs.pasteboard.watcher.new(function(changeType)
-  if changeType then
-    local content = hs.pasteboard.getContents()
-    if content then
-      table.insert(clipboardHistoryTable, 1, { text = content })
-      if #clipboardHistoryTable > 20 then
-        table.remove(clipboardHistoryTable, 21)
+pasteboard.watcher.new(function(content)
+  -- myLogger.i(content)
+  local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+  if content then
+    -- if #clipboardHistoryTable == 0 or clipboardHistoryTable[1] ~= content then
+      table.insert(clipboardHistoryChoices, 1, { text = content, uuid = timestamp })
+
+      if #clipboardHistoryChoices > 20 then
+        table.remove(clipboardHistoryChoices)
       end
-    end
-    clipboardChooser:choices(clipboardHistoryTable)
+    -- end
   end
 end):start()
 
@@ -371,19 +513,84 @@ local hammerspoonConfigReload = function()
   hs.reload()
 end
 local sleepMac = function()
-  hs.timer.doAfter(0.5, function() hs.caffeinate.systemSleep() end)
+  timer.doAfter(0.5, function() caffeinate.systemSleep() end)
+end
+-- ショートカットよく忘れるので用意
+local focusMenuBar = function()
+  eventtap.keyStroke({'ctrl', 'fn'}, 'f2')
+end
+local focusDock = function()
+  eventtap.keyStroke({'ctrl', 'fn'}, 'f3')
+end
+local showDesktop = function()
+  eventtap.keyStroke({'fn'}, 'f11')
 end
 -- }}}
 -- Command Palette{{{
 
-local commands = {}
-local choices = {}
-local commandChooser = hs.chooser.new(function(choice)
-    if not choice then return end
+local function keyText(mods, key)
+  -- キーボードショートカットを見やすいように
+  -- Command等のキーを記号表示にする。
+  -- アルファベットは大文字にする。
 
-    if choice.uuid then
-      commands[choice.uuid].fn()
+  local text = ""
+  if mods and key then
+    local keyTextMap = {
+        cmd = "\u{2318}", -- ⌘ Command
+        command = "\u{2318}", -- ⌘ Command
+        rightcmd = "\u{2318}", -- ⌘ Command
+        leftcmd = "\u{2318}", -- ⌘ Command
+
+        shift= "\u{21E7}", -- ⇧ Shift
+        rightshift= "\u{21E7}", -- ⇧ Shift
+        leftshift= "\u{21E7}", -- ⇧ Shift
+
+        option= "\u{2325}", -- ⌥ Option
+        alt = "\u{2325}", -- ⌥ Option
+        rightalt = "\u{2325}", -- ⌥ Option
+        leftalt = "\u{2325}", -- ⌥ Option
+
+        ctrl= "\u{2303}", -- ⌃ Control
+        control = "\u{2303}", -- ⌃ Control
+
+        caps= "\u{21EA}", -- ⇪ Caps Lock
+
+        enter = "\u{21A9}", -- ↩ Return/Enter
+        ["return"] = "\u{21A9}", -- ↩ Return/Enter
+
+        delete = "\u{232B}", -- ⌫ Delete
+        escape = "\u{238B}", -- ⎋ Escape
+    }
+    for _, metaKey in ipairs(mods) do
+      if keyTextMap[metaKey] then
+        text = text .. keyTextMap[metaKey]
+      else
+        text = text .. metaKey .. " "
+      end
     end
+
+    if keyTextMap[key] then
+      text = text .. keyTextMap[key]
+    else
+      text = text .. key:upper()
+    end
+  end
+  return text
+end
+
+
+local commandPaletteCommands = {}
+local commandPaletteChoices = {}
+local commandChooser = chooser.new(function(choice)
+    if not choice then return end
+    local origChoice = choice.raw
+
+    if origChoice.uuid then
+      commandPaletteCommands[origChoice.uuid].fn()
+    end
+end)
+commandChooser:queryChangedCallback(function (query)
+  fuzzyQueryChanged(commandChooser, commandPaletteChoices, query)
 end)
 
 -- ホットキーで呼び出し（例：Ctrl + Space）
@@ -392,12 +599,13 @@ local commandPalette = function()
   commandChooser:show()
 end
 
-commands = {
+commandPaletteCommands = {
   -- Window Resize
   windowLeftHalf          = {mods = mash, key = 'h', fn = windowLeftHalf},
   windowRightHalf         = {mods = mash, key = 'l', fn = windowRightHalf},
   windowTopHalf           = {mods = mash, key = 'k', fn = windowTopHalf},
   windowBottomHalf        = {mods = mash, key = 'j', fn = windowBottomHalf},
+  windowCenterHalf        = {mods = nil, key = nil, fn = windowCenterHalf},
   windowTopLeft           = {mods = mash, key = '1', fn = windowTopLeft},
   windowTopRight          = {mods = mash, key = '2', fn = windowTopRight},
   windowBottomLeft        = {mods = mash, key = '3', fn = windowBottomLeft},
@@ -427,18 +635,28 @@ commands = {
   -- Others
   hammerspoonConfigReload = {mods = mash, key = 'r', fn = hammerspoonConfigReload},
   sleepMac                = {mods = nil, key = nil, fn = sleepMac},
+  focusMenuBar = {mods = nil, key = nil, fn = focusMenuBar},
+  focusDock = {mods = nil, key = nil, fn = focusDock},
+  showDesktop = {mods = nil, key = nil, fn = showDesktop},
 }
 
-for name, command in pairs(commands) do
-  local subText = nil
+for name, command in pairs(commandPaletteCommands) do
+  local text = camelToTitle(name)
+  local totalWidth = 48
+
   if command.mods and command.key then
-    hs.hotkey.bind(command.mods, command.key, command.fn)
-    subText = table.concat(command.mods, " ") .. " " .. command.key
+    hotkey.bind(command.mods, command.key, command.fn)
+    local tmpKeyText = keyText(command.mods, command.key)
+
+    text = text .. string.rep(" ", totalWidth - #text) .. tmpKeyText
   end
-  table.insert(choices, {text = camelToTitle(name), subText = subText, uuid = name})
+  table.insert(commandPaletteChoices, {text = text, uuid = name})
 end
 
-commandChooser:choices(choices)
+commandChooser:choices(commandPaletteChoices)
 -- }}}
-hs.alert("Hammerspoon Config Loaded")
-logger.i("MyScript End")
+alert('Hammerspoon Config Loaded')
+myLogger.i('MyScript End')
+
+----------------------
+
