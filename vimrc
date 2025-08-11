@@ -339,7 +339,7 @@ if (!empty(glob('~/.vim/autoload/plug.vim')) ||
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
-Plug 'vim-jp/vimdoc-ja'
+" Plug 'vim-jp/vimdoc-ja'
 
 " 全般
 Plug 'lambdalisue/fern.vim', {'on': 'Fern'}
@@ -394,20 +394,20 @@ Plug 'will133/vim-dirdiff', {'on': 'DirDiff'}  " ディレクトリを再帰的�
 
 " 言語
 Plug 'sheerun/vim-polyglot' " 様々な言語のパック。
-if s:can_use_gui " ブラウザを開ける環境なら
-  if executable('node') > 0 && executable('yarn') > 0
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
-  else
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
-  endif
-endif
+" if s:can_use_gui " ブラウザを開ける環境なら
+"   if executable('node') > 0 && executable('yarn') > 0
+"     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown'}
+"   else
+"     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 'markdown'}
+"   endif
+" endif
 Plug 'ferrine/md-img-paste.vim', {'for': 'markdown'}
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 Plug 'peitalin/vim-jsx-typescript', {'for': ['typescript', 'jsx']}
 Plug 'goerz/jupytext.vim'
 ", {'for': ['jupyter']}
 " デバッグ
-Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
+" Plug 'puremourning/vimspector', { 'do': './install_gadget.py --all --disable-tcl' }
 call plug#end()
 
 endif " !empty(glob('~/.vim/autoload/plug.vim'))
