@@ -1,5 +1,4 @@
 -- vim:set foldmethod=marker foldlevel=0:
-
 local alert = require("hs.alert")
 local application = require("hs.application")
 local caffeinate = require("hs.caffeinate")
@@ -25,11 +24,27 @@ myLogger.i("MyScript Start")
 
 -- mash = { 'shift', 'ctrl', 'cmd' }
 local mash = { 'ctrl', 'option' }
-local mash2 = { 'ctrl', 'option' , 'shift'}
+local mash2 = { 'ctrl', 'option', 'shift' }
 -- local mash3 = { 'ctrl', 'option' , 'cmd'}
 ----------------------
 
 -- Utils {{{
+
+local charRange = function(startChar, endChar)
+  local range = {}
+  for c = string.byte(startChar), string.byte(endChar) do
+    table.insert(range, string.char(c))
+  end
+  return range
+end
+
+-- "A", "B", "C", ..., "Z"
+local largeAlphabets = charRange("A", "Z")
+-- "a", "b", "c", ..., "z"
+local smallAlphabets = charRange("a", "z")
+-- "0", "1", "2", ..., "9"
+local numberChars = charRange("0", "9")
+
 local function camelToTitle(str)
   -- 小文字＋大文字の組み合わせの間にスペースを挿入
   -- "hogeFugaPiyo" -> "Hoge Fuga Piyo"
@@ -83,7 +98,7 @@ local function fuzzyScore(query, target)
   end
 
   if qi <= #query then
-    return nil     -- 全ての query 文字が見つからなかった -> 不一致
+    return nil -- 全ての query 文字が見つからなかった -> 不一致
   end
 
   -- 距離ペナルティ（マッチが散らばっているほど減点）
@@ -304,55 +319,45 @@ local screenFrame = screen.mainScreen():fullFrame()
 local overlayCanvas = nil
 -- どの文字列が入力されたらどこの座標をクリックするか
 local keyMap = {}
-local inputBuffer = "" -- 入力を保持するバッファ
+local inputBuffer = ""   -- 入力を保持するバッファ
 local inputBufferMax = 0 -- 入力を保持するバッファの最大サイズ
-local step = 1 -- 何回目のステップか
+local step = 1           -- 何回目のステップか
 
 local grids = {
+  -- {
+  --   { "AA", "AB", "AC", ..., "AZ", },
+  --   { "BA", "BB", "BC", ..., "BZ", },
+  --   { "CA", "CB", "CC", ..., "CZ", },
+  --   ...
+  --   { "ZA", "ZB", "ZZ", ..., "ZZ", },
+  -- }
+  (function()
+    local rows = {}
+    for _, rowAlphabet in ipairs(largeAlphabets) do
+      local row = {}
+      for _, colAlphabet in ipairs(largeAlphabets) do
+        table.insert(row, rowAlphabet .. colAlphabet)
+      end
+      table.insert(rows, row)
+    end
+    return rows
+  end)(),
   {
-    {"AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AL", "AK", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ",},
-    {"BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BK", "BM", "BN", "BO", "BP", "BQ", "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY", "BZ",},
-    {"CA", "CB", "CC", "CD", "CE", "CF", "CG", "CH", "CI", "CJ", "CL", "CK", "CM", "CN", "CO", "CP", "CQ", "CR", "CS", "CT", "CU", "CV", "CW", "CX", "CY", "CZ",},
-    {"DA", "DB", "DC", "DD", "DE", "DF", "DG", "DH", "DI", "DJ", "DL", "DK", "DM", "DN", "DO", "DP", "DQ", "DR", "DS", "DT", "DU", "DV", "DW", "DX", "DY", "DZ",},
-    {"EA", "EB", "EC", "ED", "EE", "EF", "EG", "EH", "EI", "EJ", "EL", "EK", "EM", "EN", "EO", "EP", "EQ", "ER", "ES", "ET", "EU", "EV", "EW", "EX", "EY", "EZ",},
-    {"FA", "FB", "FC", "FD", "FE", "FF", "FG", "FH", "FI", "FJ", "FL", "FK", "FM", "FN", "FO", "FP", "FQ", "FR", "FS", "FT", "FU", "FV", "FW", "FX", "FY", "FZ",},
-    {"GA", "GB", "GC", "GD", "GE", "GF", "GG", "GH", "GI", "GJ", "GL", "GK", "GM", "GN", "GO", "GP", "GQ", "GR", "GS", "GT", "GU", "GV", "GW", "GX", "GY", "GZ",},
-    {"HA", "HB", "HC", "HD", "HE", "HF", "HG", "HH", "HI", "HJ", "HL", "HK", "HM", "HN", "HO", "HP", "HQ", "HR", "HS", "HT", "HU", "HV", "HW", "HX", "HY", "HZ",},
-    {"IA", "IB", "IC", "ID", "IE", "IF", "IG", "IH", "II", "IJ", "IL", "IK", "IM", "IN", "IO", "IP", "IQ", "IR", "IS", "IT", "IU", "IV", "IW", "IX", "IY", "IZ",},
-    {"JA", "JB", "JC", "JD", "JE", "JF", "JG", "JH", "JI", "JJ", "JL", "JK", "JM", "JN", "JO", "JP", "JQ", "JR", "JS", "JT", "JU", "JV", "JW", "JX", "JY", "JZ",},
-    {"LA", "LB", "LC", "LD", "LE", "LF", "LG", "LH", "LI", "LJ", "LL", "LK", "LM", "LN", "LO", "LP", "LQ", "LR", "LS", "LT", "LU", "LV", "LW", "LX", "LY", "LZ",},
-    {"KA", "KB", "KC", "KD", "KE", "KF", "KG", "KH", "KI", "KJ", "KL", "KK", "KM", "KN", "KO", "KP", "KQ", "KR", "KS", "KT", "KU", "KV", "KW", "KX", "KY", "KZ",},
-    {"MA", "MB", "MC", "MD", "ME", "MF", "MG", "MH", "MI", "MJ", "ML", "MK", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ",},
-    {"NA", "NB", "NC", "ND", "NE", "NF", "NG", "NH", "NI", "NJ", "NL", "NK", "NM", "NN", "NO", "NP", "NQ", "NR", "NS", "NT", "NU", "NV", "NW", "NX", "NY", "NZ",},
-    {"OA", "OB", "OC", "OD", "OE", "OF", "OG", "OH", "OI", "OJ", "OL", "OK", "OM", "ON", "OO", "OP", "OQ", "OR", "OS", "OT", "OU", "OV", "OW", "OX", "OY", "OZ",},
-    {"PA", "PB", "PC", "PD", "PE", "PF", "PG", "PH", "PI", "PJ", "PL", "PK", "PM", "PN", "PO", "PP", "PQ", "PR", "PS", "PT", "PU", "PV", "PW", "PX", "PY", "PZ",},
-    {"QA", "QB", "QC", "QD", "QE", "QF", "QG", "QH", "QI", "QJ", "QL", "QK", "QM", "QN", "QO", "QP", "QQ", "QR", "QS", "QT", "QU", "QV", "QW", "QX", "QY", "QZ",},
-    {"RA", "RB", "RC", "RD", "RE", "RF", "RG", "RH", "RI", "RJ", "RL", "RK", "RM", "RN", "RO", "RP", "RQ", "RR", "RS", "RT", "RU", "RV", "RW", "RX", "RY", "RZ",},
-    {"SA", "SB", "SC", "SD", "SE", "SF", "SG", "SH", "SI", "SJ", "SL", "SK", "SM", "SN", "SO", "SP", "SQ", "SR", "SS", "ST", "SU", "SV", "SW", "SX", "SY", "SZ",},
-    {"TA", "TB", "TC", "TD", "TE", "TF", "TG", "TH", "TI", "TJ", "TL", "TK", "TM", "TN", "TO", "TP", "TQ", "TR", "TS", "TT", "TU", "TV", "TW", "TX", "TY", "TZ",},
-    {"UA", "UB", "UC", "UD", "UE", "UF", "UG", "UH", "UI", "UJ", "UL", "UK", "UM", "UN", "UO", "UP", "UQ", "UR", "US", "UT", "UU", "UV", "UW", "UX", "UY", "UZ",},
-    {"VA", "VB", "VC", "VD", "VE", "VF", "VG", "VH", "VI", "VJ", "VL", "VK", "VM", "VN", "VO", "VP", "VQ", "VR", "VS", "VT", "VU", "VV", "VW", "VX", "VY", "VZ",},
-    {"WA", "WB", "WC", "WD", "WE", "WF", "WG", "WH", "WI", "WJ", "WL", "WK", "WM", "WN", "WO", "WP", "WQ", "WR", "WS", "WT", "WU", "WV", "WW", "WX", "WY", "WZ",},
-    {"XA", "XB", "XC", "XD", "XE", "XF", "XG", "XH", "XI", "XJ", "XL", "XK", "XM", "XN", "XO", "XP", "XQ", "XR", "XS", "XT", "XU", "XV", "XW", "XX", "XY", "XZ",},
-    {"YA", "YB", "YC", "YD", "YE", "YF", "YG", "YH", "YI", "YJ", "YL", "YK", "YM", "YN", "YO", "YP", "YQ", "YR", "YS", "YT", "YU", "YV", "YW", "YX", "YY", "YZ",},
-    {"ZA", "ZB", "ZC", "ZD", "ZE", "ZF", "ZG", "ZH", "ZI", "ZJ", "ZL", "ZK", "ZM", "ZN", "ZO", "ZP", "ZQ", "ZR", "ZS", "ZT", "ZU", "ZV", "ZW", "ZX", "ZY", "ZZ",},
-  },
-  {
-    {"A", "B", "C", "D", "E", "F",},
-    {"G", "H", "I", "J", "K", "L",},
-    {"M", "N", "O", "P", "Q", "R",},
+    { "A", "B", "C", "D", "E", "F", },
+    { "G", "H", "I", "J", "K", "L", },
+    { "M", "N", "O", "P", "Q", "R", },
   }
 }
 
 local unshowGrid = function()
   if overlayCanvas then
-      -- overlayCanvas:delete()
-      -- overlayCanvas = nil
-      overlayCanvas:hide()
+    -- overlayCanvas:delete()
+    -- overlayCanvas = nil
+    overlayCanvas:hide()
   end
   inputBuffer = "" -- バッファをクリア
   inputBufferMax = 0
-  keyMap = {} -- キーマップ初期化
+  keyMap = {}      -- キーマップ初期化
 end
 
 -- overlayCanvas, keyMap, inputBufferMax
@@ -426,7 +431,6 @@ local showGrid = function(x, y, w, h, gridIndex)
       newKeyMap,
       newInputBufferMax,
     }
-
   end
 
   overlayCanvas, keyMap, inputBufferMax = table.unpack(cache[cacheKey])
@@ -446,33 +450,31 @@ end
 
 -- キー入力の処理
 function gridMode:keyInput(key)
-    inputBuffer = inputBuffer .. key
-    local cell = keyMap[inputBuffer]
-    if cell then
-        step = step + 1
-        if step <= #grids then
-          mouse.absolutePosition(cell.clickPos)
-          unshowGrid()
-          showGrid(cell.x, cell.y, cell.w, cell.h, step)
-        else
-          eventtap.leftClick(cell.clickPos) -- 指定座標をクリック
-          gridMode:exit() -- 操作終了
-        end
-    elseif #inputBuffer >= inputBufferMax then
-      -- 最大サイズまで入力を受けても該当がなければ終了
-      gridMode:exit()
+  inputBuffer = inputBuffer .. key
+  local cell = keyMap[inputBuffer]
+  if cell then
+    step = step + 1
+    if step <= #grids then
+      mouse.absolutePosition(cell.clickPos)
+      unshowGrid()
+      showGrid(cell.x, cell.y, cell.w, cell.h, step)
+    else
+      eventtap.leftClick(cell.clickPos) -- 指定座標をクリック
+      gridMode:exit()                   -- 操作終了
     end
+  elseif #inputBuffer >= inputBufferMax then
+    -- 最大サイズまで入力を受けても該当がなければ終了
+    gridMode:exit()
+  end
 end
 
 -- モード中のキー操作
 gridMode:bind('', 'escape', function() gridMode:exit() end) -- Escでキャンセル
-for j = 0, 25 do
-    local key = string.char(65 + j) -- A-Z
-    gridMode:bind('', key, function() gridMode:keyInput(key) end)
+for _, key in ipairs(largeAlphabets) do
+  gridMode:bind('', key, function() gridMode:keyInput(key) end)
 end
-for j = 0, 9 do
-    local key = string.char(48 + j) -- 0-9
-    gridMode:bind('', key, function() gridMode:keyInput(key) end)
+for _, key in ipairs(numberChars) do
+  gridMode:bind('', key, function() gridMode:keyInput(key) end)
 end
 
 local mouseGridClick = function() gridMode:enter() end
@@ -487,7 +489,7 @@ local clipboardChooser = chooser.new(function(choice)
   if choice then
     local origChoice = choice.raw
     pasteboard.setContents(origChoice.text)
-    eventtap.keyStroke({'cmd'}, 'v')
+    eventtap.keyStroke({ 'cmd' }, 'v')
   end
 end)
 clipboardChooser:queryChangedCallback(function(query)
@@ -500,11 +502,11 @@ pasteboard.watcher.new(function(content)
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
   if content then
     -- if #clipboardHistoryTable == 0 or clipboardHistoryTable[1] ~= content then
-      table.insert(clipboardHistoryChoices, 1, { text = content, uuid = timestamp })
+    table.insert(clipboardHistoryChoices, 1, { text = content, uuid = timestamp })
 
-      if #clipboardHistoryChoices > 20 then
-        table.remove(clipboardHistoryChoices)
-      end
+    if #clipboardHistoryChoices > 20 then
+      table.remove(clipboardHistoryChoices)
+    end
     -- end
   end
 end):start()
@@ -523,13 +525,13 @@ local sleepMac = function()
 end
 -- ショートカットよく忘れるので用意
 local focusMenuBar = function()
-  eventtap.keyStroke({'ctrl', 'fn'}, 'f2')
+  eventtap.keyStroke({ 'ctrl', 'fn' }, 'f2')
 end
 local focusDock = function()
-  eventtap.keyStroke({'ctrl', 'fn'}, 'f3')
+  eventtap.keyStroke({ 'ctrl', 'fn' }, 'f3')
 end
 local showDesktop = function()
-  eventtap.keyStroke({'fn'}, 'f11')
+  eventtap.keyStroke({ 'fn' }, 'f11')
 end
 -- }}}
 -- Command Palette{{{
@@ -542,30 +544,30 @@ local function keyText(mods, key)
   local text = ""
   if mods and key then
     local keyTextMap = {
-        cmd = "\u{2318}", -- ⌘ Command
-        command = "\u{2318}", -- ⌘ Command
-        rightcmd = "\u{2318}", -- ⌘ Command
-        leftcmd = "\u{2318}", -- ⌘ Command
+      cmd = "\u{2318}",        -- ⌘ Command
+      command = "\u{2318}",    -- ⌘ Command
+      rightcmd = "\u{2318}",   -- ⌘ Command
+      leftcmd = "\u{2318}",    -- ⌘ Command
 
-        shift= "\u{21E7}", -- ⇧ Shift
-        rightshift= "\u{21E7}", -- ⇧ Shift
-        leftshift= "\u{21E7}", -- ⇧ Shift
+      shift = "\u{21E7}",      -- ⇧ Shift
+      rightshift = "\u{21E7}", -- ⇧ Shift
+      leftshift = "\u{21E7}",  -- ⇧ Shift
 
-        option= "\u{2325}", -- ⌥ Option
-        alt = "\u{2325}", -- ⌥ Option
-        rightalt = "\u{2325}", -- ⌥ Option
-        leftalt = "\u{2325}", -- ⌥ Option
+      option = "\u{2325}",     -- ⌥ Option
+      alt = "\u{2325}",        -- ⌥ Option
+      rightalt = "\u{2325}",   -- ⌥ Option
+      leftalt = "\u{2325}",    -- ⌥ Option
 
-        ctrl= "\u{2303}", -- ⌃ Control
-        control = "\u{2303}", -- ⌃ Control
+      ctrl = "\u{2303}",       -- ⌃ Control
+      control = "\u{2303}",    -- ⌃ Control
 
-        caps= "\u{21EA}", -- ⇪ Caps Lock
+      caps = "\u{21EA}",       -- ⇪ Caps Lock
 
-        enter = "\u{21A9}", -- ↩ Return/Enter
-        ["return"] = "\u{21A9}", -- ↩ Return/Enter
+      enter = "\u{21A9}",      -- ↩ Return/Enter
+      ["return"] = "\u{21A9}", -- ↩ Return/Enter
 
-        delete = "\u{232B}", -- ⌫ Delete
-        escape = "\u{238B}", -- ⎋ Escape
+      delete = "\u{232B}",     -- ⌫ Delete
+      escape = "\u{238B}",     -- ⎋ Escape
     }
     for _, metaKey in ipairs(mods) do
       if keyTextMap[metaKey] then
@@ -588,14 +590,14 @@ end
 local commandPaletteCommands = {}
 local commandPaletteChoices = {}
 local commandChooser = chooser.new(function(choice)
-    if not choice then return end
-    local origChoice = choice.raw
+  if not choice then return end
+  local origChoice = choice.raw
 
-    if origChoice.uuid then
-      commandPaletteCommands[origChoice.uuid].fn()
-    end
+  if origChoice.uuid then
+    commandPaletteCommands[origChoice.uuid].fn()
+  end
 end)
-commandChooser:queryChangedCallback(function (query)
+commandChooser:queryChangedCallback(function(query)
   fuzzyQueryChanged(commandChooser, commandPaletteChoices, query)
 end)
 
@@ -608,43 +610,43 @@ end
 
 commandPaletteCommands = {
   -- Window Resize
-  windowLeftHalf          = {mods = mash, key = 'h', fn = windowLeftHalf},
-  windowRightHalf         = {mods = mash, key = 'l', fn = windowRightHalf},
-  windowTopHalf           = {mods = mash, key = 'k', fn = windowTopHalf},
-  windowBottomHalf        = {mods = mash, key = 'j', fn = windowBottomHalf},
-  windowCenterHalf        = {mods = nil, key = nil, fn = windowCenterHalf},
-  windowTopLeft           = {mods = mash, key = '1', fn = windowTopLeft},
-  windowTopRight          = {mods = mash, key = '2', fn = windowTopRight},
-  windowBottomLeft        = {mods = mash, key = '3', fn = windowBottomLeft},
-  windowBottomRight       = {mods = mash, key = '4', fn = windowBottomRight},
-  windowFirstThird        = {mods = mash, key = '5', fn = windowFirstThird},
-  windowCenterThird       = {mods = mash, key = '6', fn = windowCenterThird},
-  windowLastThird         = {mods = mash, key = '7', fn = windowLastThird},
-  windowFirstTwoThirds    = {mods = mash, key = '8', fn = windowFirstTwoThirds},
-  windowLastTwoThirds     = {mods = mash, key = '9', fn = windowLastTwoThirds},
-  windowMaximize          = {mods = mash, key = 'm', fn = windowMaximize},
+  windowLeftHalf          = { mods = mash, key = 'h', fn = windowLeftHalf },
+  windowRightHalf         = { mods = mash, key = 'l', fn = windowRightHalf },
+  windowTopHalf           = { mods = mash, key = 'k', fn = windowTopHalf },
+  windowBottomHalf        = { mods = mash, key = 'j', fn = windowBottomHalf },
+  windowCenterHalf        = { mods = nil, key = nil, fn = windowCenterHalf },
+  windowTopLeft           = { mods = mash, key = '1', fn = windowTopLeft },
+  windowTopRight          = { mods = mash, key = '2', fn = windowTopRight },
+  windowBottomLeft        = { mods = mash, key = '3', fn = windowBottomLeft },
+  windowBottomRight       = { mods = mash, key = '4', fn = windowBottomRight },
+  windowFirstThird        = { mods = mash, key = '5', fn = windowFirstThird },
+  windowCenterThird       = { mods = mash, key = '6', fn = windowCenterThird },
+  windowLastThird         = { mods = mash, key = '7', fn = windowLastThird },
+  windowFirstTwoThirds    = { mods = mash, key = '8', fn = windowFirstTwoThirds },
+  windowLastTwoThirds     = { mods = mash, key = '9', fn = windowLastTwoThirds },
+  windowMaximize          = { mods = mash, key = 'm', fn = windowMaximize },
 
   -- Window Edge
-  windowEdgeLeft          = {mods = mash2, key = 'h', fn = windowEdgeLeft},
-  windowEdgeRight         = {mods = mash2, key = 'l', fn = windowEdgeRight},
-  windowEdgeTop           = {mods = mash2, key = 'k', fn = windowEdgeTop},
-  windowEdgeBottom        = {mods = mash2, key = 'j', fn = windowEdgeBottom},
+  windowEdgeLeft          = { mods = mash2, key = 'h', fn = windowEdgeLeft },
+  windowEdgeRight         = { mods = mash2, key = 'l', fn = windowEdgeRight },
+  windowEdgeTop           = { mods = mash2, key = 'k', fn = windowEdgeTop },
+  windowEdgeBottom        = { mods = mash2, key = 'j', fn = windowEdgeBottom },
 
   -- Grid Click
-  mouseGridClick          = {mods = mash, key = 'o', fn = mouseGridClick},
+  mouseGridClick          = { mods = mash, key = 'o', fn = mouseGridClick },
 
   -- Command Palette
-  commandPalette          = {mods = mash, key = 'p', fn = commandPalette},
+  commandPalette          = { mods = mash, key = 'p', fn = commandPalette },
 
   -- Clipboard
-  clipboardHistory        = {mods = mash, key = 'v', fn = clipboardHistory},
+  clipboardHistory        = { mods = mash, key = 'v', fn = clipboardHistory },
 
   -- Others
-  hammerspoonConfigReload = {mods = mash, key = 'r', fn = hammerspoonConfigReload},
-  sleepMac                = {mods = nil, key = nil, fn = sleepMac},
-  focusMenuBar = {mods = nil, key = nil, fn = focusMenuBar},
-  focusDock = {mods = nil, key = nil, fn = focusDock},
-  showDesktop = {mods = nil, key = nil, fn = showDesktop},
+  hammerspoonConfigReload = { mods = mash, key = 'r', fn = hammerspoonConfigReload },
+  sleepMac                = { mods = nil, key = nil, fn = sleepMac },
+  focusMenuBar            = { mods = nil, key = nil, fn = focusMenuBar },
+  focusDock               = { mods = nil, key = nil, fn = focusDock },
+  showDesktop             = { mods = nil, key = nil, fn = showDesktop },
 }
 
 for name, command in pairs(commandPaletteCommands) do
@@ -657,55 +659,55 @@ for name, command in pairs(commandPaletteCommands) do
 
     text = text .. string.rep(" ", totalWidth - #text) .. tmpKeyText
   end
-  table.insert(commandPaletteChoices, {text = text, uuid = name})
+  table.insert(commandPaletteChoices, { text = text, uuid = name })
 end
 -- }}}
 -- Dock App Launcher {{{
 
 -- Dockの順番からアプリのバンドルIDを取得
 local function getDockAppBundleIDs()
-    local output = hs.execute("defaults read com.apple.dock persistent-apps")
-    local bundleIDs = {}
+  local output = hs.execute("defaults read com.apple.dock persistent-apps")
+  local bundleIDs = {}
 
-    -- persistent-apps の中の _CFURLString をパース
-    for appPath in output:gmatch("_CFURLString\" = \"file://(.-)\";") do
-        -- URLエンコードをデコード
-        local decodedPath = appPath:gsub("%%(%x%x)", function(hex)
-            return string.char(tonumber(hex, 16))
-        end)
-        decodedPath = decodedPath:gsub("/$", "") -- 末尾のスラッシュ除去
+  -- persistent-apps の中の _CFURLString をパース
+  for appPath in output:gmatch("_CFURLString\" = \"file://(.-)\";") do
+    -- URLエンコードをデコード
+    local decodedPath = appPath:gsub("%%(%x%x)", function(hex)
+      return string.char(tonumber(hex, 16))
+    end)
+    decodedPath = decodedPath:gsub("/$", "") -- 末尾のスラッシュ除去
 
-        -- バンドルIDを取得
-        local info = application.infoForBundlePath(decodedPath)
-        if info and info.CFBundleIdentifier then
-            table.insert(bundleIDs, info.CFBundleIdentifier)
-        end
+    -- バンドルIDを取得
+    local info = application.infoForBundlePath(decodedPath)
+    if info and info.CFBundleIdentifier then
+      table.insert(bundleIDs, info.CFBundleIdentifier)
     end
-    return bundleIDs
+  end
+  return bundleIDs
 end
 
 
 -- 中央にアプリのアイコンを一瞬表示
 local function showAppIcon(bundleID)
-    local path = application.pathForBundleID(bundleID)
-    if not path then return end
+  local path = application.pathForBundleID(bundleID)
+  if not path then return end
 
-    local icon = image.imageFromAppBundle(bundleID)
-    if not icon then return end
+  local icon = image.imageFromAppBundle(bundleID)
+  if not icon then return end
 
-    local mainScreenFrame = screen.mainScreen():frame()
-    local size = 192
-    local x = mainScreenFrame.x + (mainScreenFrame.w - size) / 2
-    local y = mainScreenFrame.y + (mainScreenFrame.h - size) / 2
+  local mainScreenFrame = screen.mainScreen():frame()
+  local size = 192
+  local x = mainScreenFrame.x + (mainScreenFrame.w - size) / 2
+  local y = mainScreenFrame.y + (mainScreenFrame.h - size) / 2
 
-    local imageDrawing = drawing.image(geometry.rect(x, y, size, size), icon)
-    imageDrawing:setAlpha(0.9)
-    imageDrawing:show()
+  local imageDrawing = drawing.image(geometry.rect(x, y, size, size), icon)
+  imageDrawing:setAlpha(0.9)
+  imageDrawing:show()
 
-    -- 0.3秒後に削除
-    timer.doAfter(0.3, function()
-        imageDrawing:delete()
-    end)
+  -- 0.3秒後に削除
+  timer.doAfter(0.3, function()
+    imageDrawing:delete()
+  end)
 end
 
 -- DockのアプリのバンドルID配列を取得
@@ -746,4 +748,3 @@ end
 alert('Hammerspoon Config Loaded')
 myLogger.i('MyScript End')
 ----------------------
-
